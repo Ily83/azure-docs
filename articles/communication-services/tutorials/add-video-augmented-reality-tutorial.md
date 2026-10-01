@@ -15,6 +15,8 @@ ms.custom: mode-other
 
 # Add augmented reality filters to video calls
 
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
+
 > [!NOTE]
 > DeepAR SDK is third-party software, which is licensed under its own terms. Microsoft doesn't make any representations or warranties concerning the use of third-party software.
 
@@ -27,7 +29,7 @@ Let's try DeepAR to enrich your video with Augmented Reality!
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An Azure Communication Service resource. Further details can be found in the [Create an Azure Communication Services resource](../quickstarts/create-communication-resource.md) quickstart.
 - An Azure Communication Services voice and video calling enabled client. [Add video calling to your app](../quickstarts/voice-video-calling/get-started-with-video-calling.md?pivots=platform-web).
 - DeepAR license key. [Getting started | DeepAR](https://docs.deepar.ai/deepar-sdk/platforms/web/getting-started).

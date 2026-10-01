@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: amagginetti
 ms.date: 02/04/2025
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 
 ---
 
 # Billing usage log schema
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 The billing usage log schema give an overview of the different services you use. 
 
 ## Data concepts

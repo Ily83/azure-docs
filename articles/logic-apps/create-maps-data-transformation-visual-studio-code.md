@@ -1,16 +1,17 @@
 ---
-title: Create maps for data transformation
+title: Create Maps for Data Transformation
 description: Create maps to convert data elements between schemas for Standard workflows in Azure Logic Apps with Visual Studio Code.
 services: logic-apps
 ms.service: azure-logic-apps
 ms.suite: integration
-ms.reviewer: estfan, shahparth, azla
+ms.reviewer: estfan, azla
 ms.topic: how-to
-ms.date: 07/15/2025
-# Customer intent: As a developer, I want to convert data between different formats for a Standard workflow in Azure Logic Apps by creating a map with Visual Studio Code.
+ms.update-cycle: 1095-days
+ms.date: 07/10/2026
+# Customer intent: As an automation and integration developer who works in Azure Logic Apps, I want to convert data between different formats in Standard workflows by creating a map with Visual Studio Code.
 ---
 
-# Create maps to transform data in logic app workflows with Visual Studio Code
+# Create maps to transform data for workflows in Azure Logic Apps with Visual Studio Code
 
 [!INCLUDE [logic-apps-sku-standard](../../includes/logic-apps-sku-standard.md)]
 
@@ -52,7 +53,7 @@ For non-blocking bugs or feature requests, [open an item with the **Data Mapper*
 
 ## Prerequisites
 
-- An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - [Visual Studio Code and the Azure Logic Apps (Standard) extension](create-single-tenant-workflows-visual-studio-code.md#prerequisites) to create Standard logic app workflows.
 

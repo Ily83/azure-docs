@@ -2,15 +2,17 @@
 title: Teams interoperability
 titleSuffix: An Azure Communication Services concept document
 description: Teams interoperability
-author: tophpalmer
-ms.author: chpalm
+author: sundiraman
+ms.author: sundraman
 ms.date: 06/30/2021
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: teams-interop
 ---
 
 # Teams interoperability
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services can be used to build custom applications and experiences that enable interaction with Microsoft Teams users over voice, video, chat, and screen sharing. The [Communication Services UI Library](ui-library/ui-library-overview.md) provides customizable, production-ready UI components that can be easily added to these applications. The following video demonstrates some of the capabilities of Teams interoperability:
 

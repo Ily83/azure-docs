@@ -2,12 +2,20 @@
 title: 'Quickstart: Deploy a Python (Django, Flask, or FastAPI) web app to Azure'
 description: Get started with Azure App Service by deploying your first Python app to Azure App Service.
 ms.topic: quickstart
-ms.date: 04/24/2025
+ms.date: 07/27/2026
 ms.author: msangapu
 author: msangapu-msft
 ms.devlang: python
-ms.custom: devx-azure-cli, devx-azure-portal, devx-vscode-azure-extension, devdivchpfy22, vscode-azure-extension-update-completed, devx-track-azurecli, devx-track-python
 ms.service: azure-app-service
+ms.custom:
+  - devx-azure-cli
+  - devx-azure-portal
+  - devx-vscode-azure-extension
+  - devdivchpfy22
+  - vscode-azure-extension-update-completed
+  - devx-track-azurecli
+  - devx-track-python
+  - sfi-image-nochange
 ---
 
 # Quickstart: Deploy a Python (Django, Flask, or FastAPI) web app to Azure App Service
@@ -16,8 +24,8 @@ In this quickstart, you deploy a Python web app (Django, Flask, or FastAPI) to [
 
 To complete this quickstart, you need:
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio).
-- <a href="https://www.python.org/downloads/" target="_blank">Python 3.9 or higher</a> installed locally.
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
+- <a href="https://www.python.org/downloads/" target="_blank">Python 3.14 or higher</a> installed locally.
 
 > [!NOTE]
 > This article contains current instructions on deploying a Python web app using Azure App Service. Python on Windows is no longer supported.
@@ -251,7 +259,10 @@ Having issues? Refer first to the [Troubleshooting guide](./configure-language-p
 
 ## Configure startup script
 
-Based on the presence of certain files in a deployment, App Service automatically detects whether an app is a Django or Flask app and performs default steps to run your app. For apps based on other web frameworks like FastAPI, you need to configure a startup script for App Service to run your app; otherwise, App Service runs a default read-only app located in the *opt/defaultsite* folder.
+Based on the presence of certain files in a deployment, App Service automatically detects whether an app is a Django or Flask app and performs default steps to run your app. For apps based on other web frameworks like FastAPI, you might need to configure a startup script for App Service to run your app. Otherwise, App Service runs a default read-only app located in the *opt/defaultsite* folder.
+
+- **Python 3.14 and later**: App Service automatically detects and runs FastAPI apps. No startup command is required.
+- **Python 3.13 and earlier**: You must configure a custom startup command.
 
 To learn more about how App Service runs Python apps and how you can configure and customize its behavior with your app, see [Configure a Linux Python app for Azure App Service](configure-language-python.md).
 
@@ -265,7 +276,9 @@ App Service automatically detects the presence of a Django app. No additional co
 
 ### [Azure CLI](#tab/azure-cli/fastapi)
 
-For FastAPI, you must configure a custom startup command for App Service to run your app. The following command starts Gunicorn with 2 Uvicorn worker processes: `gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app`.
+If you're using **Python 3.14 or later**, App Service automatically detects and runs your FastAPI app. No extra configuration is needed for this quickstart.
+
+If you're using **Python 3.13 or earlier**, you must configure a custom startup command for App Service to run your app. The following command starts Gunicorn with two Uvicorn worker processes: `gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app`.
 
 First, configure the startup command using the [az webapp config set](/cli/azure/webapp/config#az-webapp-config-set) command.
 
@@ -294,7 +307,7 @@ App Service automatically detects the presence of a Django app. No additional co
 
 ### [VS Code](#tab/vscode-aztools/fastapi)
 
-Use Azure CLI or the Azure portal to configure the startup command.
+If you're using **Python 3.13 or earlier**, use Azure CLI or the Azure portal to configure the startup command.
 
 ### [Azure portal](#tab/azure-portal/flask)
 
@@ -306,7 +319,9 @@ App Service automatically detects the presence of a Django app. No additional co
 
 ### [Azure portal](#tab/azure-portal/fastapi)
 
-For FastAPI, you must configure a custom startup command for App Service to run your app. The following command starts Gunicorn with 2 Uvicorn worker processes: `gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app`.
+If you're using **Python 3.14 or later**, App Service automatically detects and runs your FastAPI app. You don't need any extra configuration for this quickstart.
+
+If you're using **Python 3.13 or earlier**, you must configure a custom startup command for App Service to run your app. The following command starts Gunicorn with two Uvicorn worker processes: `gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app`.
 
 | Instructions    | Screenshot |
 |:----------------|-----------:|

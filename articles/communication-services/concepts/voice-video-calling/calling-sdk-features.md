@@ -8,7 +8,7 @@ services: azure-communication-services
 
 ms.author: micahvivion
 ms.date: 05/01/2025
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
 ms.subservice: calling
 ms.custom:
@@ -17,6 +17,8 @@ ms.custom:
 ---
 
 # Calling SDK overview
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services enables end-user browsers, apps, and services to drive voice and video communication. This article focuses on Calling client SDK, which can be embedded in websites and native applications. This article provides detailed descriptions of Calling client features such as platform and browser support information. Services programmatically manages and access calls using the [Call Automation APIs](../call-automation/call-automation.md). The [Rooms API](../rooms/room-concept.md) is an optional Azure Communication Services API that adds more features to a voice or video call, such as roles and permissions.
 
@@ -178,7 +180,7 @@ The Azure Communication Services Calling SDK supports the following streaming co
 | Limit | Web | Windows/Android/iOS |
 | --- | --- | --- |
 | **Maximum # of outgoing local streams that can be sent simultaneously**     | 1 video and 1 screen sharing | 1 video + 1 screen sharing |
-| **Maximum # of incoming remote streams that can be rendered simultaneously** | GA Webjs SDK - [16 videos + 1 screen sharing on desktop browsers](../../quickstarts/voice-video-calling/optimizing-video-placement.md#how-many-videos-to-place-in-a-grid-at-a-time) <br />4 videos + 1 screen sharing on web mobile browsers <br /> <br />  Public preview - [25 videos + 1 screen sharing on desktop browser](../../quickstarts/voice-video-calling/optimizing-video-placement.md#how-many-videos-to-place-in-a-grid-at-a-time) <br />4 videos + 1 screen sharing on web mobile browsers | 9 videos + 1 screen sharing |
+| **Maximum # of incoming remote streams that can be rendered simultaneously** | GA Webjs SDK - [16 videos + 1 screen sharing on desktop browsers](../../quickstarts/voice-video-calling/optimizing-video-placement.md#how-many-videos-to-place-in-a-grid-at-a-time) <br />4 videos + 1 screen sharing on web mobile browsers <br /> <br />  GA (Version 1.40.0 and later) - [25 videos + 1 screen sharing on desktop browser](../../quickstarts/voice-video-calling/optimizing-video-placement.md#how-many-videos-to-place-in-a-grid-at-a-time) <br />4 videos + 1 screen sharing on web mobile browsers | 9 videos + 1 screen sharing |
 
 \* Starting from Azure Communication Services Web Calling SDK version [1.16.3](https://github.com/Azure/Communication/blob/master/releasenotes/acs-javascript-calling-library-release-notes.md#1163-stable-2023-08-24). While the Calling SDK doesn't enforce these limits, your users might experience performance degradation if they're exceeded. Use the API of [Optimal Video Count](../../how-tos/calling-sdk/manage-video.md?pivots=platform-web#remote-video-quality) to determine the number of incoming video streams your web environment can support. To properly support 16 incoming videos, the computer needs a minimum of 16-GB RAM and a 4-core or greater CPU that is less than three years old.
 

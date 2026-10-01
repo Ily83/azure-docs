@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: mkhribech
 ms.date: 03/08/2021
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: data
 ---
 
 # Chat insights
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes the insights dashboard you can view to monitor Chat logs and metrics.
 

@@ -7,11 +7,13 @@ manager: mharbut
 services: azure-communication-services
 ms.date: 02/01/2025
 ms.author: harazi
-ms.topic: conceptual 
+ms.topic: how-to
 ms.service: azure-communication-services
 ---
 
 # Integrate Azure Communication Services with ExpressRoute
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services enables developers to integrate voice, video, chat, and SMS capabilities into their applications by using cloud-based services. Organizations can use Azure ExpressRoute to establish private, dedicated network connections between their on-premises environments and Azure. This approach enhances the performance, reliability, and security of communication services.
 
@@ -19,7 +21,7 @@ This article describes how to integrate Azure Communication Services with Expres
 
 ## Prerequisites
 
-- Azure subscription: An active Azure account. If you don't have one, [create a free account](https://azure.microsoft.com/free/).
+- Azure subscription: An active Azure account. If you don't have one, [create a free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - ExpressRoute circuit: A configured and operational ExpressRoute circuit. For setup instructions, see [Create and modify an ExpressRoute circuit](/azure/expressroute/expressroute-howto-circuit-portal-resource-manager).
 - Azure Communication Services resource: An instance of Azure Communication Services deployed in your Azure subscription.
 - Network connectivity: Proper network configurations to connect your on-premises environment to Azure via ExpressRoute.

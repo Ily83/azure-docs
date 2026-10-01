@@ -4,13 +4,15 @@ description:  This article discusses how to use Azure Active Directory B2C to si
 
 author: kengaderdus
 manager: CelesteDG
-ms.service: azure-active-directory
+ms.service: entra-id
 
 ms.topic: how-to
 ms.date: 01/11/2024
 ms.author: kengaderdus
 ms.subservice: b2c
-ms.custom: "b2c-support"
+ms.custom:
+  - "b2c-support"
+  - sfi-image-nochange
 
 
 #Customer intent: As an iOS app developer, I want to configure authentication in my app using Azure AD B2C, so that I can securely sign users in and out, acquire tokens, and validate them for accessing protected resources.

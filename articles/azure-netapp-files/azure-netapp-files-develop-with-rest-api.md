@@ -1,11 +1,11 @@
 ---
-title: Develop for Azure NetApp Files with REST API | Microsoft Docs
+title: Develop for Azure NetApp Files with REST API 
 description: The REST API for the Azure NetApp Files service defines HTTP operations for resources such as the NetApp account, the capacity pool, the volumes, and snapshots.
 services: azure-netapp-files
 author: b-hchen
 ms.service: azure-netapp-files
 ms.topic: how-to
-ms.date: 09/30/2024
+ms.date: 07/30/2025
 ms.author: anfdocs
 # Customer intent: As a developer, I want to use the REST API for Azure NetApp Files so that I can manage resources such as accounts, capacity pools, volumes, and snapshots efficiently through automated HTTP operations.
 ---
@@ -110,7 +110,7 @@ curl -X GET -H "Authorization: Bearer TOKENGOESHERE" -H "Content-Type: applicati
 
 ### PUT request examples
 
-You use a PUT request to create new objects in Azure NetApp Files, as the following examples show. The body of the PUT request can include the JSON formatted data for the changes. It must be included in the curl command as text or references as a file. To reference the body as a file, save the json example to a file and add `-d @<filename>` to the curl command.
+You use a PUT request to create new objects in Azure NetApp Files, as the following examples show. The body of the PUT request can include the JSON formatted data for the changes. It must be included in the curl command as text or references as a file. To reference the body as a file, save the JSON example to a file and add `-d @<filename>` to the curl command.
 
 ```azurecli
 #create a NetApp account  
@@ -199,3 +199,4 @@ The following example shows how to create a snapshot of a volume:
 ## Next steps
 
 * [Azure NetApp Files REST API reference](/rest/api/netapp/)
+* [Azure NetApp Files API 2026-07-01 update](api-2026-07-01-update.md)

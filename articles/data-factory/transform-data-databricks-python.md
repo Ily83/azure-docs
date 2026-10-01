@@ -2,7 +2,7 @@
 title: Transform data with Databricks Python 
 titleSuffix: Azure Data Factory & Azure Synapse
 description: Learn how to process or transform data by running a Databricks Python activity in an Azure Data Factory or Synapse Analytics pipeline.
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 01/15/2025
 ms.subservice: orchestration
 author: nabhishek
@@ -13,6 +13,9 @@ ms.custom: devx-track-python, synapse
 # Transform data by running a Python activity in Azure Databricks
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+> [!TIP]
+> For the equivalent activity in Data Factory in Microsoft Fabric, see [Azure Databricks activity](/fabric/data-factory/azure-databricks-activity).
 
 The Azure Databricks Python Activity in a [pipeline](concepts-pipelines-activities.md) runs a Python file in your Azure Databricks cluster. This article builds on the [data transformation activities](transform-data.md) article, which presents a general overview of data transformation and the supported transformation activities. Azure Databricks is a managed platform for running Apache Spark.
 

@@ -1,12 +1,14 @@
 ---
 title: 'Partner VPN device configurations for connecting to Azure VPN gateways'
 description: Learn about partner VPN device configurations for connecting to Azure VPN gateways.
-author: cherylmc
+author: duongau
 ms.service: azure-vpn-gateway
 ms.topic: how-to
-ms.date: 03/31/2025
-ms.author: cherylmc 
-ms.custom: devx-track-azurepowershell
+ms.date: 06/09/2026
+ms.author: duau
+ms.custom:
+  - devx-track-azurepowershell
+  - sfi-image-nochange
 
 # Customer intent: As a network administrator, I want to configure on-premises VPN devices to connect to Azure VPN gateways so that I can establish secure site-to-site VPN tunnels for reliable communication between my local network and cloud resources.
 ---
@@ -93,7 +95,7 @@ $vnet1     = Get-AzVirtualNetwork -Name $VNetName1 -ResourceGroupName $RG1
 $subnet1   = Get-AzVirtualNetworkSubnetConfig -Name "GatewaySubnet" -VirtualNetwork $vnet1
 $gwipconf1 = New-AzVirtualNetworkGatewayIpConfig -Name $GWIPconfName1 -Subnet $subnet1 -PublicIpAddress $gwpip1
 
-New-AzVirtualNetworkGateway -Name $GWName1 -ResourceGroupName $RG1 -Location $Location1 -IpConfigurations $gwipconf1 -GatewayType Vpn -VpnType RouteBased -GatewaySku VpnGw1 -Asn $VNet1ASN
+New-AzVirtualNetworkGateway -Name $GWName1 -ResourceGroupName $RG1 -Location $Location1 -IpConfigurations $gwipconf1 -GatewayType Vpn -VpnType RouteBased -GatewaySku VpnGw1AZ -Asn $VNet1ASN
 
 # Create local network gateway
 
@@ -130,7 +132,7 @@ New-AzVirtualNetworkGatewayConnection -Name $Connection15 -ResourceGroupName $RG
 ```
 
 ### <a name ="bgp"></a>(Optional) Use BGP on S2S VPN connection
-When you create the S2S VPN connection, you can optionally use [BGP for the VPN gateway](vpn-gateway-bgp-resource-manager-ps.md). This approach has two differences:
+When you create the S2S VPN connection, you can optionally use [BGP for the VPN gateway](configure-bgp.md). This approach has two differences:
 
 * The on-premises address prefixes can be a single host address. The on-premises BGP peer IP address is specified as follows:
 

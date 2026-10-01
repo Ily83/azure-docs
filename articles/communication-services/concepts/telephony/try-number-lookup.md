@@ -7,18 +7,20 @@ services: azure-communication-services
 
 ms.author: henikaraa
 ms.date: 2/7/2025
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-communication-services
 ms.subservice: pstn
 ---
 
 # Try Number Lookup
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 Try Number Lookup is a tool in Azure portal to help customers confirm that the phone number they want to communicate with is valid. The tool also retrieves number details to identify the country/region, carrier, and type. This enables developers to quickly test Azure Communication Services number lookup capabilities, without an existing app or code on their end.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - A deployed Communication Services resource. Create an [Azure Communication Resource](../../quickstarts/create-communication-resource.md).
 
 ## Overview

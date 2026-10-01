@@ -7,12 +7,14 @@ manager: camilo.ramirez
 services: azure-communication-services
 ms.author: shamkh
 ms.date: 02/29/2024
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-communication-services
 ms.subservice: advanced-messaging
 ---
 
 # Send WhatsApp template messages
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 This document provides guidance to send WhatsApp Template messages using Advanced Communication Messages SDK.   
 
@@ -25,7 +27,7 @@ A business or a user can initiate a conversation window, but the business is lim
 For further WhatsApp requirements on templates, refer to the WhatsApp Business Platform API references:
 - [Create and Manage Templates](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates/)
 - [Template Components](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates/components)
-- [Sending Template Messages](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/send-message-templates)
+- [Sending Template Messages](https://developers.facebook.com/documentation/business-messaging/whatsapp/templates/overview)
 - Businesses must also adhere to [opt-in requirements](https://developers.facebook.com/docs/whatsapp/overview/getting-opt-in) before sending messages to WhatsApp users
 
 ## Choosing a template

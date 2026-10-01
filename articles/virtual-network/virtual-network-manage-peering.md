@@ -12,6 +12,7 @@ ms.custom:
   - devx-track-azurepowershell
   - devx-track-azurecli
   - build-2025
+  - sfi-image-nochange
 # Customer intent: As a network administrator, I want to create, modify, or delete virtual network peerings, so that I can improve connectivity and manage traffic flow between virtual networks across regions using the Azure backbone network.
 ---
 
@@ -21,7 +22,7 @@ This article explains how to create, change, or delete Azure virtual network pee
 
 ## Prerequisites
 
-If you don't have an Azure account with an active subscription, [create one for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). Complete one of these tasks before starting the remainder of this article:
+If you don't have an Azure account with an active subscription, [create one for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). Complete one of these tasks before starting the remainder of this article:
 
 # [**Portal**](#tab/peering-portal)
 
@@ -308,13 +309,15 @@ az network vnet peering delete \
 
 - <a name="cross-region"></a>You can peer virtual networks in the same region, or different regions. Peering virtual networks in different regions is also referred to as **Global Virtual Network Peering**.
 
+- If the 2 Virtual Networks are in different subscriptions or different resource groups within same subscription, please note that you have to introduce the full resource URI of the remote Virtual Network when using Powershell or CLI.
+
 - When you create a global peering, the peered virtual networks can exist in any Azure public cloud region, China cloud region, or Government cloud region. However, you can't peer virtual networks across different clouds. For example, a virtual network in Azure public cloud can't connect to a virtual network in Microsoft Azure operated by 21Vianet cloud.
   
 - You can't move a virtual network while it's part of a peering. To move a virtual network to a different resource group or subscription, first delete the peering, then move the virtual network, and finally recreate the peering.
 
 - Resources in one virtual network can't communicate with the front-end IP address of a basic load balancer (internal or public) in a globally peered virtual network. Support for basic load balancer only exists within the same region. Support for standard load balancer exists for both, Virtual Network Peering and Global Virtual Network Peering. Some services that use a basic load balancer don't work over global virtual network peering. For more information, see [Constraints related to Global Virtual Network Peering and Load Balancers](virtual-networks-faq.md#what-are-the-constraints-related-to-global-virtual-network-peering-and-load-balancers).
 
-- You can use remote gateways or allow gateway transit in globally peered virtual networks and locally peered virtual networks.
+- You can use remote gateways or allow gateway transit in globally peered virtual networks and locally peered virtual networks. To use a gateway that's in a different Azure region from your workload virtual networks, see [Use a VPN or ExpressRoute gateway in a different region](../vpn-gateway/vpn-gateway-different-region.md).
 
 - The virtual networks can be in the same, or different [subscriptions](#next-steps). When you peer virtual networks in different subscriptions, both subscriptions can be associated to the same or different Microsoft Entra tenant. If you don't already have an AD tenant, you can [create one](../active-directory/develop/quickstart-create-new-tenant.md).
 

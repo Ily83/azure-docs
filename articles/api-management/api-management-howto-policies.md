@@ -2,12 +2,10 @@
 title: Policies in Azure API Management 
 description: Learn about API Management policies, which change API behavior through configuration. Policy statements run sequentially on an API request or response.
 services: api-management
-author: dlepow
 
 ms.service: azure-api-management
 ms.topic: concept-article
-ms.date: 05/13/2025
-ms.author: danlep
+ms.date: 05/14/2026
 
 #customer intent: As an API publisher, I want to learn about API Management policies so that I can use them to change API behavior. 
 
@@ -20,6 +18,9 @@ ms.author: danlep
 In Azure API Management, API publishers can change API behavior through configuration by using *policies*. This article describes how to use policies. 
 
 Policies are a collection of statements that are run sequentially on the request or response of an API. API Management provides more than 75 policies out of the box that you can configure to address common API scenarios like authentication, rate limiting, caching, and transformation of requests or responses. For a complete list, see [API Management policy reference](api-management-policies.md).
+
+> [!NOTE]
+> API Management policies are different from [Azure Policy definitions](security-controls-policy.md). API Management policies are runtime rules executed inside the gateway to transform, validate, secure, and route API requests and responses. In contrast, Azure Policy is a governance service that evaluates and enforces compliance of Azure resources such as API Management instances with organizational or regulatory requirements. 
 
 Popular policies include:
 
@@ -104,6 +105,9 @@ When configuring a policy, you must first select the scope at which the policy a
 * For fine-grained control for different API consumers, you can configure policy definitions at more than one scope.
 * Not all policies are supported at each scope and policy section.
 * When configuring policy definitions at more than one scope, you control policy inheritance and the policy evaluation order in each policy section by placement of the `base` element.
+    > [!IMPORTANT]
+    > As a best practice, include a `base` element at the beginning of each policy section to inherit policies from the parent scope. This ensures that any policies defined at a higher level are not inadvertently overridden or ignored. A built-in [Azure Policy definition](policy-reference.md) (`API Management policies should inherit parent scope policies using <base/>`) is available to audit or enforce this best practice.
+
 * Policies applied to API requests are also affected by the request context, including the presence or absence of a subscription key used in the request, the API or product scope of the subscription key, and whether the API or product requires a subscription. 
 
     [!INCLUDE [api-management-product-policy-alert](../../includes/api-management-product-policy-alert.md)]
@@ -112,6 +116,7 @@ For more information, see:
 
 * [Set or edit policies](set-edit-policies.md#use-base-element-to-set-policy-evaluation-order)
 * [Subscriptions in API Management](api-management-subscriptions.md)
+* [Azure Policy definitions for API Management](policy-reference.md)
 
 ### GraphQL resolver policies
 

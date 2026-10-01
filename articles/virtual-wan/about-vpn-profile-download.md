@@ -2,12 +2,12 @@
 title: 'Azure Virtual WAN: User VPN client profiles'
 description: This helps you work with the client profile file
 services: virtual-wan
-author: cherylmc
+author: duongau
 
 ms.service: azure-virtual-wan
 ms.topic: how-to
 ms.date: 02/04/2025
-ms.author: cherylmc
+ms.author: duau
 
 ---
 # Working with User VPN client profile files
@@ -24,7 +24,7 @@ You can use the steps in the [Download profiles](global-hub-profile.md) article 
 
 For information about how to configure a VPN client, select the article from the following table that corresponds to you P2S gateway configuration and client.
 
-[!INCLUDE [P2S client configuration articles](../../includes/virtual-wan-vpn-client-install-articles.md)]
+[!INCLUDE [P2S client configuration articles](../networking/includes/virtual-wan/vpn-client-install-articles.md)]
 
 ## Next steps
 

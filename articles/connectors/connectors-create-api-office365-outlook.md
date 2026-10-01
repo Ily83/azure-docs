@@ -1,11 +1,12 @@
 ---
 title: Connect to Office 365 Outlook from Workflows
-description: Learn how to automate tasks in Office 365 Outlook by using workflows in Azure Logic Apps.
+description: Connect to Office 365 Outlook from workflows in Azure Logic Apps.
 services: logic-apps
 ms.suite: integration
 ms.reviewer: estfan, azla
 ms.topic: how-to
-ms.date: 06/19/2025
+ms.update-cycle: 1095-days
+ms.date: 07/10/2026
 ---
 
 # Connect to Office 365 Outlook from workflows in Azure Logic Apps
@@ -32,7 +33,7 @@ For information about this connector's operations and any limits, see the [conne
 
 ## Prerequisites
 
-* An Azure account and subscription. If you don't have an Azure subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+* An Azure account and subscription. If you don't have an Azure subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 * Your Microsoft Office 365 account for Outlook where you sign in with a [work or school account](https://support.microsoft.com/office/what-account-to-use-with-office-and-you-need-one-914e6610-2763-47ac-ab36-602a81068235#bkmk_msavsworkschool).
 
@@ -214,7 +215,7 @@ If you try connecting to Outlook by using a different account than the one curre
 
   1. Assign the **Contributor** role to the other account.
   
-     For more information, see [Assign Azure roles using the Azure portal](../role-based-access-control/role-assignments-portal.yml).
+     For more information, see [Assign Azure roles using the Azure portal](/azure/role-based-access-control/role-assignments-portal).
 
   1. After you set up this role, sign in to the Azure portal with the account that now has Contributor permissions. You can now use this account to create the connection to Outlook.
 

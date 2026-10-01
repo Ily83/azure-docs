@@ -3,11 +3,17 @@ title: Azure Database for MySQL Input Binding for Functions
 description: Learn how to use the Azure Database for MySQL input binding in Azure Functions.
 author: JetterMcTedder
 ms.topic: reference
-ms.custom: build-2023, devx-track-extended-java, devx-track-js, devx-track-python, devx-track-ts
 ms.date: 9/26/2024
 ms.author: bspendolini
 ms.reviewer: glenga
 zone_pivot_groups: programming-languages-set-functions
+ms.custom:
+  - build-2023
+  - devx-track-extended-java
+  - devx-track-js
+  - devx-track-python
+  - devx-track-ts
+  - sfi-ropc-nochange
 ---
 
 # Azure Database for MySQL input binding for Azure Functions
@@ -22,6 +28,10 @@ For information on setup and configuration, see the [overview](./functions-bindi
 
 ## Examples
 <a id="example"></a>
+
+::: zone pivot="programming-language-go"
+Go support isn't currently available for this binding.
+::: zone-end
 
 ::: zone pivot="programming-language-csharp"
 

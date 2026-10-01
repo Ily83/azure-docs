@@ -7,11 +7,14 @@ ms.topic: troubleshooting
 ms.date: 02/13/2025
 ms.author: susabat
 ms.reviewer: susabat
+ms.custom: sfi-image-nochange
 ---
 
 # Troubleshoot Azure Data Factory Studio Issues
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article explores common troubleshooting methods for [Azure Data Factory Studio](https://adf.azure.com), the user interface for the service.
 

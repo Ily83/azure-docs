@@ -6,7 +6,7 @@ description: Follow this guide to learn how to register a single-page applicatio
 author: kengaderdus
 manager: mwongerapk
 
-ms.service: azure-active-directory
+ms.service: entra-id
 
 ms.topic: how-to
 ms.date: 10/11/2024
@@ -50,7 +50,7 @@ This authentication flow doesn't include application scenarios that use cross-pl
 
 ## Prerequisites
 
-- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 - If you don't have an [Azure AD B2C Tenant](tutorial-create-tenant.md), create one now. You can use an existing Azure AD B2C tenant.
 

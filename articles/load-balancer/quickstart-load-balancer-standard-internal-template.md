@@ -6,7 +6,7 @@ author: mbender-ms
 ms.service: azure-load-balancer
 ms.topic: quickstart
 ms.author: mbender
-ms.date: 05/08/2024
+ms.date: 01/28/2026
 ms.custom:
   - subject-armqs
   - mode-arm
@@ -21,7 +21,7 @@ ms.custom:
 
 In this quickstart, you learn to use an Azure Resource Manager template (ARM template) to create an internal Azure load balancer. The internal load balancer distributes traffic to virtual machines in a virtual network located in the load balancer's backend pool. Along with the internal load balancer, this template creates a virtual network, network interfaces, a NAT Gateway, and an Azure Bastion instance.
 
-:::image type="content" source="media/quickstart-load-balancer-standard-public-portal/public-load-balancer-resources.png" alt-text="Diagram of resources deployed for a standard public load balancer." lightbox="media/quickstart-load-balancer-standard-public-portal/public-load-balancer-resources.png":::
+:::image type="content" source="media/quickstart-load-balancer-standard-internal-portal/internal-load-balancer-resources.png" alt-text="Diagram of resources deployed for a standard internal load balancer." lightbox="media/quickstart-load-balancer-standard-internal-portal/internal-load-balancer-resources.png":::
 
 Using an ARM template takes fewer steps comparing to other deployment methods.
 
@@ -33,7 +33,7 @@ If your environment meets the prerequisites and you're familiar with using ARM t
 
 ## Prerequisites
 
-If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 ## Review the template
 
@@ -57,7 +57,7 @@ To find more templates that are related to Azure Load Balancer, see [Azure Quick
 
 ## Deploy the template
 
-In this step, you deploy the template using Azure PowerShell with the `[New-AzResourceGroupDeployment](/powershell/module/az.resources/new-azresourcegroupdeployment)` command. 
+In this step, you deploy the template using Azure PowerShell with the [New-AzResourceGroupDeployment](/powershell/module/az.resources/new-azresourcegroupdeployment) command. 
 
 1. Select **Try it** from the following code block to open Azure Cloud Shell, and then follow the instructions to sign in to Azure.
 
@@ -78,8 +78,8 @@ In this step, you deploy the template using Azure PowerShell with the `[New-AzRe
     az deployment group create --resource-group $resourceGroupName --template-uri $templateUri --name $projectName --parameters location=$location
     
     read -p "Press [ENTER] to continue."
-   ```
-
+    ```
+   
    # [PowerShell](#tab/PowerShell)
 
    ```azurepowershell

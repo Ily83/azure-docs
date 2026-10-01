@@ -16,7 +16,7 @@ In this guide, you'll use the targeting filter to roll out a feature to targeted
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create one for free](https://azure.microsoft.com/free/).
+- An Azure account with an active subscription. [Create one for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An App Configuration store, as shown in the [tutorial for creating a store](./quickstart-azure-app-configuration-create.md#create-an-app-configuration-store).
 - A _Beta_ feature flag with targeting filter. [Create the feature flag](./howto-targetingfilter.md).
 - [LTS versions of Node.js](https://github.com/nodejs/release#release-schedule).
@@ -293,19 +293,19 @@ initializeConfig()
     If you use the Windows command prompt, run the following command and restart the command prompt to allow the change to take effect:
 
     ```cmd
-    setx AZURE_APPCONFIG_ENDPOINT "<endpoint-of-your-app-configuration-store>"
+    setx AZURE_APPCONFIG_ENDPOINT "<AppConfigurationEndpoint>"
     ```
 
     If you use PowerShell, run the following command:
 
     ```powershell
-    $Env:AZURE_APPCONFIG_ENDPOINT = "<endpoint-of-your-app-configuration-store>"
+    $Env:AZURE_APPCONFIG_ENDPOINT = "<AppConfigurationEndpoint>"
     ```
 
     If you use macOS or Linux, run the following command:
 
     ```bash
-    export AZURE_APPCONFIG_ENDPOINT='<endpoint-of-your-app-configuration-store>'
+    export AZURE_APPCONFIG_ENDPOINT='<AppConfigurationEndpoint>'
     ```
 
 1. Run the application.

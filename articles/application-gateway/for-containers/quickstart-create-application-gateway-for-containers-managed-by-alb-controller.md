@@ -3,7 +3,7 @@ title: 'Quickstart: Create Application Gateway for Containers managed by ALB Con
 description: In this quickstart, you learn how to provision the Application Gateway for Containers resources via Kubernetes definition.
 services: application-gateway
 author: mbender-ms
-ms.service: azure-appgw-for-containers
+ms.service: azure-application-gateway-containers
 ms.custom: devx-track-azurecli
 ms.topic: quickstart
 ms.date: 02/27/2024
@@ -13,11 +13,11 @@ ms.author: mbender
 
 # Quickstart: Create Application Gateway for Containers managed by ALB Controller
 
-This guide assumes you're following the **managed by ALB controller** [deployment strategy](overview.md#deployment-strategies), where all the Application Gateway for Containers resources are managed by ALB controller. Lifecycle is determined the resources defined in Kubernetes.  ALB Controller creates the Application Gateway for Containers resource when an _ApplicationLoadBalancer_ custom resource is defined on the cluster. The Application Gateway for Containers lifecycle is based on the lifecycle of the custom resource.
+This guide assumes you're following the **managed by ALB controller** [deployment strategy](overview.md#deployment-strategies), where all the Application Gateway for Containers resources are managed by ALB controller. Lifecycle is determined by the resources defined in Kubernetes.  ALB Controller creates the Application Gateway for Containers resource when an _ApplicationLoadBalancer_ custom resource is defined on the cluster. The Application Gateway for Containers lifecycle is based on the lifecycle of the custom resource.
 
 ## Prerequisites
 
-Ensure you have first deployed ALB Controller into your Kubernetes cluster.  See [Quickstart: Deploy Application Gateway for Containers ALB Controller](quickstart-deploy-application-gateway-for-containers-alb-controller.md) if you haven't already deployed the ALB Controller.
+Ensure you have first deployed ALB Controller into your Kubernetes cluster.  See the ALB Controller quickstart guide for [Add-on](quickstart-deploy-application-gateway-for-containers-alb-controller-addon.md) or [Helm](quickstart-deploy-application-gateway-for-containers-alb-controller-helm.md) if you haven't already deployed the ALB Controller.
 
 ### Prepare your virtual network / subnet for Application Gateway for Containers
 
@@ -82,6 +82,9 @@ az role assignment create --assignee-object-id $principalId --assignee-principal
 # Delegate Network Contributor permission for join to association subnet
 az role assignment create --assignee-object-id $principalId --assignee-principal-type ServicePrincipal --scope $ALB_SUBNET_ID --role "4d97b98b-1d4f-4787-a291-c67834d212e7" 
 ```
+> [!Note]
+> When the identity is created via the [Add-on](quickstart-deploy-application-gateway-for-containers-alb-controller-addon.md) the name of the identity is actually `applicationloadbalancer-<cluster-name>`.
+> Also the _AppGW for Containers Configuration Manager_ role is already assigned.
 
 ## Create ApplicationLoadBalancer Kubernetes resource
 

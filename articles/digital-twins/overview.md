@@ -32,7 +32,7 @@ In Azure Digital Twins, you define the digital entities that represent the peopl
 You can think of these model definitions as a specialized vocabulary to describe your business. For a building management solution, for example, you might define a model that defines a *Building* type, a *Floor* type, and an *Elevator* type. Models are defined in a JSON-like language called [Digital Twins Definition Language (DTDL)](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v3/DTDL.v3.md). In Azure Digital Twins, DTDL models describe types of entities according to their state properties, components, and relationships. You can design your own model sets from scratch, or get started with a pre-existing set of [DTDL industry ontologies](concepts-ontologies.md) based on common vocabulary for your industry.
 
 >[!TIP]
->Version 2 of DTDL is also used for data models throughout other Azure IoT services, including [IoT Plug and Play](../iot/overview-iot-plug-and-play.md). This compatibility helps you connect your Azure Digital Twins solution with other parts of the Azure ecosystem.
+>Version 2 of DTDL is also used for data models throughout other Azure IoT services, including [IoT Plug and Play](/previous-versions/azure/iot/overview-iot-plug-and-play). This compatibility helps you connect your Azure Digital Twins solution with other parts of the Azure ecosystem.
 
 Once you've defined your data models, use them to create [digital twins](concepts-twins-graph.md) that represent each specific entity in your environment. For example, you might use the *Building* model definition to create several *Building*-type twins (*Building 1*, *Building 2*, and so on). You can also use the relationships in the model definitions to connect twins to each other, forming a conceptual graph.
 
@@ -60,7 +60,7 @@ Azure Digital Twins [3D Scenes Studio (preview)](concepts-3d-scenes-studio.md) i
 
 Here's an example of a scene in 3D Scenes Studio, showing how digital twin properties can be visualized with 3D elements: 
 
-:::image type="content" source="media/quickstart-3d-scenes-studio/studio-full.png" alt-text="Screenshot of a sample scene in 3D Scenes Studio." lightbox="media/quickstart-3d-scenes-studio/studio-full.png":::
+:::image type="content" source="media/overview/studio-full.png" alt-text="Screenshot of a sample scene in 3D Scenes Studio." lightbox="media/overview/studio-full.png":::
 
 ## Share twin data to other Azure services
 

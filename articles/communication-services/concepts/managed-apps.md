@@ -8,11 +8,13 @@ services: azure-communication-services
 
 ms.author: pgrandhi
 ms.date: 04/09/2025
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
 ---
 
 # Managed applications
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes how you can use Azure managed applications to offer cloud solutions that are easy for customers to deploy and operate.
 

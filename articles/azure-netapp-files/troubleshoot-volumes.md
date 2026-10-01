@@ -6,13 +6,22 @@ author: b-hchen
 ms.service: azure-netapp-files
 ms.custom:
 ms.topic: troubleshooting
-ms.date: 01/28/2025
+ms.date: 08/07/2026
 ms.author: anfdocs
 # Customer intent: "As a system administrator, I want to troubleshoot volume errors for Azure NetApp Files, so that I can ensure reliable performance and resolve issues effectively."
 ---
 # Troubleshoot volume errors for Azure NetApp Files
 
 If a volume create-read-update-delete (CRUD) operation is performed on a volume not in a terminal state, the operation will fail. Automation workflows and portal users should check for the terminal state of the volume before executing subsequent asynchronous operations on the volume.
+
+## Understand authentication and authorization errors
+
+When troubleshooting access problems with Azure NetApp Files SMB volumes, distinguish between authentication failures and authorization failures:
+
+* **Authentication failures** occur when Active Directory can't validate a user account. Common causes include invalid credentials, disabled accounts, failed name mapping, or user accounts that don't exist. Clients typically return authentication-specific error messages.
+* **Authorization failures** occur when a user successfully authenticates but doesn't have the required share-level or NTFS permissions to access the requested resource. Clients typically return a permissions-related error, such as "You do not have permission to access...".
+
+Identifying whether the failure occurs during authentication or authorization can help determine whether to investigate Active Directory configuration, user credentials, name mapping, share permissions, or NTFS permissions.
 
 ## Errors for SMB and dual-protocol volumes
 
@@ -25,7 +34,8 @@ If a volume create-read-update-delete (CRUD) operation is performed on a volume 
 | The SMB or dual-protocol volume creation fails with the following error: <br> `Failed to create the Active Directory machine account \"SMB-ANF-VOL. Reason: LDAP Error: Local error occurred Details: Error: Machine account creation procedure failed. [nnn] Loaded the preliminary configuration. [nnn] Successfully connected to ip 10.x.x.x, port 88 using TCP [nnn] Successfully connected to ip 10.x.x.x, port 389 using [nnn] Entry for host-address: 10.x.x.x not found in the current source: FILES. Ignoring and trying next available source [nnn] Source: DNS unavailable. Entry for host-address:10.x.x.x found in any of the available sources\n*[nnn] FAILURE: Unable to SASL bind to LDAP server using GSSAPI: local error [nnn] Additional info: SASL(-1): generic failure: GSSAPI Error: Unspecified GSS failure. Minor code may provide more information (Cannot determine realm for numeric host address) [nnn] Unable to connect to LDAP (Active Directory) service on contoso.com (Error: Local error) [nnn] Unable to make a connection (LDAP (Active Directory):contosa.com, result: 7643. `  | The pointer (PTR) record of the AD host machine might be missing on the DNS server. You need to create a reverse lookup zone on the DNS server, and then add a PTR record of the AD host machine in that reverse lookup zone. |
 | The SMB or dual-protocol volume creation fails with the following error: <br> `Failed to create the Active Directory machine account \"SMB-ANF-VOL\". Reason: Kerberos Error: KDC has no support for encryption type Details: Error: Machine account creation procedure failed [nnn]Loaded the preliminary configuration. [nnn]Successfully connected to ip 10.x.x.x, port 88 using TCP [nnn]FAILURE: Could not authenticate as 'contosa.com': KDC has no support for encryption type  (KRB5KDC_ERR_ETYPE_NOSUPP) ` | Make sure that [AES Encryption](./create-active-directory-connections.md#create-an-active-directory-connection) is enabled for both the Active Directory connection and the service account. |
 | The SMB or dual-protocol volume creation fails with the following error: <br> `Failed to create the Active Directory machine account \"SMB-NTAP-VOL\". Reason: LDAP Error: Strong authentication is required Details: Error: Machine account creation procedure failed\n [ 338] Loaded the preliminary configuration.\n [ nnn] Successfully connected to ip 10.x.x.x, port 88 using TCP\n [ nnn ] Successfully connected to ip 10.x.x.x, port 389 using TCP\n [ 765] Unable to connect to LDAP (Active Directory) service on\n dc51.area51.com (Error: Strong(er) authentication\n required)\n*[ nnn] FAILURE: Unable to make a connection (LDAP (Active\n* Directory):contoso.com), result: 7609\n. "` | The LDAP Signing option isn't selected, but the AD client has LDAP signing.  [Enable LDAP Signing](create-active-directory-connections.md#create-an-active-directory-connection) and retry. |
-| SMB volume creation fails with the following error: <br> `Failed to create the Active Directory machine account. Reason: LDAP Error: Intialization of LDAP library failed Details: Error: Machine account creation procedure failed` | This error occurs because the service or user account used in the Azure NetApp Files Active Directory connections doesn't have sufficient privilege to create computer objects or make modifications to the newly created computer object. <br> To resolve the issue, grant the account being used greater privilege. You can apply a default role with sufficient privileges or delegate more privileges to the user, service account, or group of which that account is a member. |
+| SMB volume creation fails with the following error: <br> `Failed to create the Active Directory machine account. Reason: LDAP Error: Initialization of LDAP library failed Details: Error: Machine account creation procedure failed` | This error occurs because the service or user account used in the Azure NetApp Files Active Directory connections doesn't have sufficient privilege to create computer objects or make modifications to the newly created computer object. <br> To resolve the issue, grant the account being used greater privilege. You can apply a default role with sufficient privileges or delegate more privileges to the user, service account, or group of which that account is a member. |
+| Users lose access after <SMB_Server>\Users or BUILTIN\Users is removed from NTFS permissions with the error: <br> `You do not have permission to access \\<SMB_server>\<SMB_volume>\. Contact your network administrator to request access.` |Restore the local Users group to the NTFS ACL: <ol><li> Open the affected SMB share. </li> <li> Select **Properties > Security**. </li>  <li> Select **Edit > Add**. </li> <li> Add: <ul><li> <SMB_Server>\Users </li> <li> or BUILTIN\Users </li> </ul> <li> Assign the required permissions. </li> <li> Apply permissions to **This folder, subfolders and files**. </li> <li> Repeat for each affected volume.</li></ol> <br> If the original permissions are unknown, compare with an unaffected Azure NetApp Files SMB volume and replicate the ACL configuration. |
 
 ## Errors for dual-protocol volumes
 
@@ -49,6 +59,7 @@ If a volume create-read-update-delete (CRUD) operation is performed on a volume 
 |`Hostname lookup failed`  	| You need to create a reverse lookup zone on the DNS server, and then add a PTR record of the AD host machine in that reverse lookup zone. <br> For example, assume that the IP address of the AD machine is `10.1.1.4`, the hostname of the AD machine (as found by using the hostname command) is `AD1`, and the domain name is `contoso.com`. The PTR record added to the reverse lookup zone should be `10.1.1.4 -> AD1.contoso.com`. |
 |`Volume creation fails due to unreachable DNS server`  | Two possible solutions are available: <br> <ul><li> This error indicates that DNS isn't reachable. The cause can be an incorrect DNS IP or a networking issue. Check the DNS IP entered in the AD connection and make sure that the IP is correct. </li> <li> If you're using Basic network features, ensure that the AD and the volume are in same region and in same VNet. If they are in different VNets, ensure that VNet peering is established between the two VNets. <br> See [Guidelines for Azure NetApp Files network planning](azure-netapp-files-network-topologies.md#azure-native-environments) for details. </li></ul> |
 |NFSv4.1 Kerberos volume creation fails with an error similar to the following example: <br> `Failed to enable NFS Kerberos on LIF "svm_e719cde8d6d0413fbd6adac0636cdecb_7ad0b82e_73349613". Failed to bind service principal name on LIF "svm_e719cde8d6d0413fbd6adac0636cdecb_7ad0b82e_73349613". SecD Error: server create fail join user auth.`	|The KDC IP is wrong and the Kerberos volume has been  created. Update the KDC IP with a correct address. <br> You need to re-create the volume. |
+|`The KDC IP or AD Name operation fails because the Service Principal Name (SPN) already exists` | <ol><li> Navigate to **Active Directory Users and Computers** from the Server Manager. </li> <li> Delete the NFS machine account and change the KDC IP. <br> You can locate the required NFS machine account for this volume by referring to the mount instructions where the mount path is specified. <br> Example mount instruction: `sudo mount -vvv -t nfs -o sec=krb5,rw,hard,rsize=262144,wsize=262144,vers=4.1,tcp DHR-4EC7.contoso.com:/kerb-vol kerb-vol` <br> In this example, the machine account name is NFS-DHR-4EC7.</li>|
 
 ## Errors for LDAP volumes
 
@@ -60,6 +71,12 @@ If a volume create-read-update-delete (CRUD) operation is performed on a volume 
 | Error when creating volume from a snapshot: <br> `Aggregate does not exist` | Azure NetApp Files doesn’t support provisioning a new, LDAP-enabled volume from a snapshot that belongs to an LDAP-disabled volume. <br> Try creating new an LDAP-disabled volume from the given snapshot. |
 | When only primary group IDs are seen and user belongs to auxiliary groups too. | This is caused by a query timeout: <br> -Use [LDAP search scope option](configure-ldap-extended-groups.md). <br> -Use [preferred Active Directory servers for LDAP client](create-active-directory-connections.md#preferred-server-ldap). |
 | `Error describing volume - Entry doesn't exist for username: <username>, please try with a valid username` | -Check if the user is present on LDAP server. <br> -Check if the LDAP server is healthy. |
+
+## Errors for missing or inconsistent DNS records
+
+|     Error conditions    |     Resolutions    |
+|--|----|
+| An SMB, dual-protocol, LDAP-enabled, or NFSv4.1 Kerberos operation fails even though the domain controller or LDAP server is reachable on the required ports. | One or more discovered domain controllers or LDAP servers don't have a valid PTR record, or the PTR record resolves to an unexpected hostname. <br> Verify the DNS configuration for every applicable AD DS domain controller and LDAP server: <ol><li>Verify that an appropriate reverse DNS lookup zone exists for each applicable subnet.</li><li>Verify that each hostname resolves to the expected IPv4 address.</li><li>Verify that each IP address resolves through a PTR record to the expected fully qualified domain name.</li><li>Validate all domain controllers in the Active Directory site specified in the Azure NetApp Files Active Directory connection and all configured preferred LDAP servers.</li><li>Verify that forward and reverse DNS records are resolvable by using the DNS servers configured in the Azure NetApp Files Active Directory connection.</li></ol> For more information, see [About DNS in Azure NetApp Files](domain-name-system-concept.md). |
 
 ## Errors for volume allocation
 
@@ -73,11 +90,19 @@ This section explains the causes of some of the common allocation failures and s
 |Out of storage or networking capacity in a region for regular volumes. <br> Error message: `There are currently insufficient resources available to create [or extend] a volume in this region. Please retry the operation. If the problem persists, contact Support.` | The error indicates that there are insufficient resources available in the region to create or resize volumes. <br> Try one of the following workarounds: <ul><li>Create the volume under a new VNet to avoid hitting networking-related resource limits.</li> <li>Retry after some time. Resources may have been freed in the cluster, region, or zone in the interim.</li></ul> |
 |Out of storage capacity when creating a volume with network features set to `Standard`. <br> Error message: `No storage available with Standard network features, for the provided VNet.` | The error indicates that there are insufficient resources available in the region to create volumes with `Standard` networking features. <br> Try one of the following workarounds: <ul><li>If `Standard` network features aren't required, create the volume with `Basic` network features.</li> <li>Try creating the volume under a new VNet to avoid hitting networking-related resource limits</li><li>Retry after some time.  Resources may have been freed in the cluster, region, or zone in the interim.</li></ul> |
 
+## Errors for Access Control List
+
+|     Error conditions    |     Resolutions    |
+|-|-|
+| Error when attempting to set NTFS ACLs through the Windows Security tab. <br> Error message: `The program cannot open the required dialogue box because it cannot determine whether the computer is joined to a domain.`  | This error indicates that the ANF server is unable to retrieve domain information from the Domain Controllers due to missing SYSVOL synchronization among the Domain Controllers. To resolve this issue, [perform a non-authoritative synchronization of DFSR-replicated SYSVOL](/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization) |
+
 ## Activity log warnings for volumes
 
 |     Warnings    |     Resolutions    |
 |-|-|
 | The `Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ScaleUp` operation displays a warning: <br> `Percentage Volume Consumed Size reached 90%`  | The used size of an Azure NetApp Files volume has reached 90% of the volume quota. You should [resize the volume](azure-netapp-files-resize-capacity-pools-or-volumes.md) soon. |
+
+If you copy large datasets into a volume that has cross-region replication enabled and you have spare capacity in the capacity pool, set the replication interval to 10 minutes, increase the volume size to allow for the changes to be stored, and temporarily disable replication.
 
 ## Next steps
 

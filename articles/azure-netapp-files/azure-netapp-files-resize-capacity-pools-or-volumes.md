@@ -8,7 +8,7 @@ ms.custom:
   - devx-track-azurecli
   - build-2025
 ms.topic: how-to
-ms.date: 05/20/2024
+ms.date: 05/20/2025
 ms.author: anfdocs
 # Customer intent: "As a cloud administrator, I want to resize capacity pools and volumes in Azure storage, so that I can optimize resource allocation and prevent performance issues as storage demands change."
 ---
@@ -69,7 +69,7 @@ You can build automation to handle the capacity pool and volume size change.
 
 See [REST API for Azure NetApp Files](azure-netapp-files-develop-with-rest-api.md) and [REST API using PowerShell for Azure NetApp Files](develop-rest-api-powershell.md). 
 
-The REST API specification and example code for Azure NetApp Files are available through the [resource-manager GitHub directory](https://github.com/Azure/azure-rest-api-specs/tree/main/specification/netapp/resource-manager/Microsoft.NetApp/stable). See [this command](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/Volumes_Update.json) for a sample volume update.
+The REST API specification and example code for Azure NetApp Files are available through the [resource-manager GitHub directory](https://github.com/Azure/azure-rest-api-specs/tree/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable). See [this command](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2023-11-01/examples/Volumes_Update.json) for a sample volume update.
 
 ## Resize a replication destination volume 
 

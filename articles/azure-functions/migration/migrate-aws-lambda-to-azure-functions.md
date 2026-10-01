@@ -1,14 +1,16 @@
 ---
-title: Migrate AWS Lambda Workloads to Azure Functions
+title: "Migrate AWS Lambda workloads to Azure Functions"
 description: Learn how to migrate workloads from AWS Lambda to Azure Functions. Compare functionality and optimize workloads on Azure.
 author: MadhuraBharadwaj-MSFT
 ms.author: mabhar
 ms.service: azure-functions
+ms.custom:	
+ - copilot-scenario-highlight
 ms.collection: 
  - migration
  - aws-to-azure
-ms.date: 03/18/2025
-ms.topic: conceptual
+ms.date: 08/28/2026
+ms.topic: upgrade-and-migration-article
 #customer intent: As a developer, I want to learn how to migrate serverless applications from AWS Lambda to Azure Functions so that I can make the transition efficiently.
 ---
 
@@ -30,7 +32,59 @@ This article doesn't address:
 - Hosting AWS Lambda containers in Azure.
 - Fundamental Azure adoption approaches by your organization, such as [Azure landing zones](/azure/cloud-adoption-framework/ready/landing-zone/) or other topics addressed in the Cloud Adoption Framework [migrate methodology](/azure/cloud-adoption-framework/migrate/).
 
-### Compare functionality
+## Migrate with GitHub Copilot and Azure Skills
+
+GitHub Copilot with Azure Skills has built-in support to guide migration from AWS Lambda to Azure Functions.
+
+You can use Copilot to automate most migration steps interactively, while using this article as your reference for architecture decisions, validation, and production readiness.
+
+To use Azure Skills in GitHub Copilot (in VS Code or Copilot CLI), follow these steps:
+
+### Prerequisites
+
+- **Node.js 18+** - required for MCP servers ([Download Node.js](https://nodejs.org/en/download/))
+- Access to an **Azure subscription** for creating and testing your migrated function app.
+- **Azure CLI (`az`)** installed and authenticated ([Install Azure CLI](/cli/azure/install-azure-cli)) (`az login`)
+- **Azure Developer CLI (`azd`)** installed and authenticated ([Install Azure Developer CLI](/azure/developer/azure-developer-cli/install-azd)) (`azd auth login`)
+
+### For GitHub Copilot CLI
+
+1. [Install Copilot CLI](https://github.com/github/copilot-cli)
+2. Add the marketplace source (first time only):
+   ```
+   /plugin marketplace add microsoft/azure-skills
+   ```
+3. Install the plugin:
+   ```
+   /plugin install azure@azure-skills
+   ```
+4. After install, reload MCP servers:
+   ```
+   /mcp reload
+   ```
+5. Verify installation:
+   ```
+   /mcp status
+   ```
+   You should see the azure MCP server listed and running.
+
+### For Visual Studio Code
+
+1. [Install the Azure MCP extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azure-mcp-server) from the VS Code Marketplace (Extension ID: `ms-azuretools.vscode-azure-mcp-server`).
+2. The extension auto-installs a companion extension, GitHub Copilot for Azure, which contains the Azure skills.
+3. Open Copilot Chat (Ctrl+Shift+I / Cmd+Shift+I).
+4. Make sure you're in Agent mode (not Ask or Edit mode).
+5. Open the Command Palette (Ctrl+Shift+P) -> search "MCP" -> verify servers are listed and running.
+
+Use this prompt to start and continue the migration workflow in Copilot:
+
+```copilot-prompt
+Help me migrate my Lambda app to Azure Functions
+```
+
+This prompt guides the migration in phases: first generating a detailed assessment report, then migrating code and configuration, and finally building the required infrastructure-as-code (IaC) assets for deployment to Azure.
+
+## Compare functionality
 
 This article maps AWS Lambda features to Azure Functions equivalents to help ensure compatibility.
 
@@ -90,13 +144,13 @@ The following tables compare AWS Lambda concepts, resources, and properties with
 
 | Programming language  | [AWS Lambda supported versions](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported)  | [Azure Functions supported versions](/azure/azure-functions/supported-languages) |
 |---|---|---|
-| Node.js | 20, 22 | 20, 22 |
-| Python | 3.9, 3.10, 3.11, 3.12, 3.13 | 3.9, 3.10, 3.11 |
+| Node.js | 20, 22 | 22, 24 |
+| Python | 3.9, 3.10, 3.11, 3.12, 3.13 | 3.10, 3.11, 3.12, 3.13 |
 | Java | 8, 11, 17, 21 | 8, 11, 17, 21 |
-| PowerShell | Not supported | 7.4 |
+| PowerShell | Not supported | 7.6, 7.4 |
 | .NET | .NET 8 | .NET 8, .NET 9, .NET Framework 4.8.1 |
 | Ruby | 3.2, 3.3 | [Custom handlers](/azure/azure-functions/functions-custom-handlers) |
-| Go | [OS-only runtime](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-provided.html) | [Custom handlers](/azure/azure-functions/functions-custom-handlers) |
+| Go | [OS-only runtime](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-provided.html) | [Go (Preview)](/azure/azure-functions/functions-reference-go) |
 | Rust | [OS-only runtime](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-provided.html) | [Custom handlers](/azure/azure-functions/functions-custom-handlers) |
 
 ### Programming model
@@ -161,7 +215,7 @@ The following tables compare AWS Lambda concepts, resources, and properties with
  | AWS Lambda  | Azure Functions   |
 |---|---|
 | Provisioned concurrency reduces latency and ensures predictable function performance by pre-initializing a requested number of function instances. Provisioned concurrency suits latency-sensitive applications and is priced separately from standard concurrency.    | Function apps allow you to configure concurrency for each instance, which drives its scale. Multiple jobs can run in parallel in the same instance of the app, and subsequent jobs in the instance don't incur the initial cold start. Function apps also have *always ready* instances. Customers can specify a number of prewarmed instances to eliminate cold-start latency and ensure consistent performance. Function apps also scale out to more instances based on demand, while maintaining the always ready instances.     |
-| Reserved concurrency specifies the maximum number of concurrent instances that a function can have. This limit ensures that a portion of your account's concurrency quota is set aside exclusively for that function. AWS Lambda dynamically scales out to handle incoming requests even when reserved concurrency is set, as long as the requests don't exceed the specified reserved concurrency limit. The lower limit for reserved concurrency in AWS Lambda is 1. The upper limit for reserved concurrency in AWS Lambda is determined by the account's regional concurrency quota. By default, this limit is 1,000 concurrent operations for each region. | Azure Functions doesn't have an equivalent feature to reserved concurrency. To achieve similar functionality, isolate specific functions into separate function apps and set the maximum scale-out limit for each app. Azure Functions dynamically scales out, or adds more instances, and scales in, or removes instances, within the scale-out limit set. By default, apps that run in a Flex Consumption plan start with a configurable limit of 100 overall instances. The lowest maximum instance count value is 40, and the highest supported maximum instance count value is 1,000.  [Regional subscription memory quotas](/azure/azure-functions/flex-consumption-plan#regional-subscription-memory-quotas) can also limit how much function apps can scale out, but you can increase this quota by calling support. |
+| Reserved concurrency specifies the maximum number of concurrent instances that a function can have. This limit ensures that a portion of your account's concurrency quota is set aside exclusively for that function. AWS Lambda dynamically scales out to handle incoming requests even when reserved concurrency is set, as long as the requests don't exceed the specified reserved concurrency limit. The lower limit for reserved concurrency in AWS Lambda is 1. The upper limit for reserved concurrency in AWS Lambda is determined by the account's regional concurrency quota. By default, this limit is 1,000 concurrent operations for each region. | Azure Functions doesn't have an equivalent feature to reserved concurrency. To achieve similar functionality, isolate specific functions into separate function apps and set the maximum scale-out limit for each app. Azure Functions dynamically scales out, or adds more instances, and scales in, or removes instances, within the scale-out limit set. By default, apps that run in a Flex Consumption plan start with a configurable limit of 100 overall instances. The lowest maximum instance count value is 1, and the highest supported maximum instance count value is 1,000.  [Regional subscription memory quotas](/azure/azure-functions/flex-consumption-plan#regional-subscription-memory-quotas) can also limit how much function apps can scale out, but you can increase this quota by calling support. |
 
 ### Pricing
 
@@ -250,13 +304,13 @@ This step is a transitional development phase. During this phase, you build sour
 
 To update code for Azure Functions runtime requirements:
 
-   - Modify your code to adhere to the Azure Functions programming model. For instance, adapt your function signatures to match the format that Azure Functions requires. For more information about function definition and execution context, see [Azure Functions developer guides](/azure/azure-functions/functions-reference-node).
+- Modify your code to adhere to the Azure Functions programming model. For instance, adapt your function signatures to match the format that Azure Functions requires. For more information about function definition and execution context, see [Azure Functions developer guides](/azure/azure-functions/functions-reference-node).
 
-   - Use the [Azure Functions extensions bundle](/azure/azure-functions/functions-bindings-register) to handle various bindings and triggers that are similar to AWS services. For .NET applications, you should use the appropriate NuGet packages instead of the extensions bundle.
+- Use the [Azure Functions extensions bundle](/azure/azure-functions/functions-bindings-register) to handle various bindings and triggers that are similar to AWS services. For .NET applications, you should use the appropriate NuGet packages instead of the extensions bundle.
 
-   - Use the extensions bundle to integrate with other Azure services such as Azure Storage, Azure Service Bus, and Azure Cosmos DB without needing to manually configure each binding through SDKs. For more information, see [Connect functions to Azure services by using bindings](/azure/azure-functions/add-bindings-existing-function) and [Azure Functions binding expression patterns](/azure/azure-functions/functions-bindings-expressions-patterns).
+- Use the extensions bundle to integrate with other Azure services such as Azure Storage, Azure Service Bus, and Azure Cosmos DB without needing to manually configure each binding through SDKs. For more information, see [Connect functions to Azure services by using bindings](/azure/azure-functions/add-bindings-existing-function) and [Azure Functions binding expression patterns](/azure/azure-functions/functions-bindings-expressions-patterns).
 
-The following snippets are examples of common SDK code. The AWS Lambda code maps to the corresponding triggers, bindings, or SDK code snippets in Azure Functions.
+These snippets are examples of common SDK code. The AWS Lambda code maps to the corresponding triggers, bindings, or SDK code snippets in Azure Functions.
 
 **Reading from Amazon S3 versus Azure Blob Storage**
 
@@ -568,7 +622,7 @@ For more information, see [VNet.bicep](https://github.com/Azure-Samples/function
 
 #### Configure deployment settings
 
-Deployments follow a single path. After you build your project code and zip it into an application package, deploy it to a Blob Storage container. When it starts, your app gets the package and runs your function code from it. By default, the same storage account that stores internal host metadata, such as `AzureWebJobsStorage`, also serves as the deployment container. However, you can use an alternative storage account or choose your preferred authentication method by configuring your app's deployment settings. For more information, see [Deployment technology details](/azure/azure-functions/functions-deployment-technologies#deployment-technology-details) and [Configure deployment settings](/azure/azure-functions/flex-consumption-how-to#configure-deployment-settings).
+Deployments follow a single path. After you build your project code and zip it into an application package, deploy it to a Blob Storage container. When it starts, your app gets the package and runs your function code from it. By default, the same storage account that stores internal host metadata, such as `AzureWebJobsStorage`, also serves as the deployment container. However, you can use an alternative storage account or choose your preferred authentication method by configuring your app's deployment settings. For more information, see [Deployment behavior by hosting plan](/azure/azure-functions/functions-deployment-technologies#deployment-behavior-by-hosting-plan) and [Configure deployment settings](/azure/azure-functions/flex-consumption-how-to#configure-deployment-settings).
  
 ### Generate IaC files
 
@@ -581,9 +635,6 @@ Deployments follow a single path. After you build your project code and zip it i
 ### Use tools for refactoring
 
 Use tools like GitHub Copilot in VS Code for help with code refactoring, manual refactoring for specific changes, or other migration aids.
-
-> [!NOTE]
-> Use *Agent mode* in GitHub Copilot in VS Code.
 
 The following articles provide specific examples and detailed steps to facilitate the migration process:
 
@@ -624,13 +675,13 @@ Deploy and test functions to validate their performance and correctness.
 
 ### Deploy to Azure
 
-Deploy workloads by using the [VS Code](/azure/azure-functions/functions-develop-vs-code#publish-to-azure) publish feature. You can also deploy workloads from the command line by using [Azure Functions Core Tools](/azure/azure-functions/functions-run-local#project-file-deployment) or the [Azure CLI](/cli/azure/functionapp/deployment/source#az-functionapp-deployment-source-config-zip). [Azure DevOps](/azure/azure-functions/functions-how-to-azure-devops#deploy-your-app) and [GitHub Actions](/azure/azure-functions/functions-how-to-github-actions) also use One Deploy.
+Deploy workloads by using the [VS Code](/azure/azure-functions/functions-develop-vs-code#publish-to-azure) publish feature. You can also deploy workloads from the command line by using [Azure Functions Core Tools](/azure/azure-functions/functions-run-local#project-file-deployment) or the [Azure CLI](/cli/azure/functionapp/deployment/source#az-functionapp-deployment-source-config-zip). For automated package deployment, use [Azure DevOps](/azure/azure-functions/functions-how-to-azure-devops#deploy-your-app) or [GitHub Actions](/azure/azure-functions/functions-how-to-github-actions).
 
 - Azure Functions Core Tools: [Deploy your function app](/azure/azure-functions/flex-consumption-how-to#deploy-your-code-project) by using [Azure Functions Core Tools](/azure/azure-functions/functions-run-local) with the `func azure functionapp publish <FunctionAppName>` command.
 
 - Continuous integration and continuous deployment (CI/CD) pipelines: Set up a CI/CD pipeline by using services like GitHub Actions, Azure DevOps, or another CI/CD tool.
 
-   For more information, see [Continuous delivery by using GitHub Actions](/azure/azure-functions/functions-how-to-github-actions) or [Continuous delivery with Azure Pipelines](/azure/azure-functions/functions-how-to-azure-devops).
+For more information, see [Continuous delivery by using GitHub Actions](/azure/azure-functions/functions-how-to-github-actions) or [Continuous delivery with Azure Pipelines](/azure/azure-functions/functions-how-to-azure-devops).
 
 ## Explore sample migration scenarios
 
@@ -668,11 +719,3 @@ Enable [Application Insights](/azure/azure-functions/functions-monitoring) f
 
    - Set up budgeting and cost alerts to manage and predict expenses effectively.
 
-<!--
-## Next step
-
-Start the pre-migration evaluation with:
-
-> [!div class="nextstepaction"]
-> [Article name](file-name.md)
--->

@@ -2,7 +2,7 @@
 title: Troubleshoot Blob backup and restore issues
 description: In this article, learn about symptoms, causes, and resolutions of Azure Backup failures related to the Azure Blob backups and restore.
 ms.topic: troubleshooting
-ms.date: 08/05/2025
+ms.date: 12/12/2025
 ms.service: azure-backup
 ms.reviewer: geg
 author: AbhishekMallick-MS
@@ -34,6 +34,7 @@ This article provides troubleshooting information to address issues you encounte
 **Recommendation**: Ensure that the storage account you've selected for backup is supported. [Learn more](blob-backup-support-matrix.md?tabs=vaulted-backup#supported-and-unsupported-scenarios-for-azure-blob-backup).
 
 ### UserErrorMaxOrsPolicyExistOnStorageAccount
+
 **Error code**: `UserErrorMaxOrsPolicyExistOnStorageAccount`
 
 **Error message**: Maximum object replication policy exists on the source storage account. 
@@ -41,6 +42,30 @@ This article provides troubleshooting information to address issues you encounte
 **Recommendation**: Ensure that you haven't reached the limit of replication rules supported on a storage account. 
 
 ## Common backup or restore errors
+
+### UserErrorPreviousObjectReplicationPolicyNotDeleted
+
+**Error code**: `UserErrorPreviousObjectReplicationPolicyNotDeleted `
+
+**Error message**: Backup or restore operation failed because an object replication policy from a previous operation is still on the storage account.
+
+**Recommendation**:  Remove the old object replication policy from the storage account and retry. 
+
+### UserErrorBlobWasEncryptedWithCustomerProvidedKey
+
+**Error code**: `UserErrorBlobWasEncryptedWithCustomerProvidedKey `
+
+**Error message**: Blob backup does not support backup of blobs encrypted with customer proivded key. Subsequent backups will also not be able to backup such blobs.
+
+**Recommendation**: Blob backup does not support backup of blobs encrypted with customer proivded key. Subsequent backups will also not be able to backup such blobs. 
+
+### UserErrorMigratedHnsAccountsNotSupported
+
+**Error code**: `UserErrorMigratedHnsAccountsNotSupported `
+
+**Error message**: Backup of storage accounts converted from full name space to herirarchial namespace is not supported.
+
+**Recommendation**: Backup of storage accounts converted from full name space to herirarchial namespace is not supported. 
 
 ### UserErrorAzureResourceNotFoundByPlugin 
 

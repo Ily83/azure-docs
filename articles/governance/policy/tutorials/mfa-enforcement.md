@@ -45,8 +45,8 @@ Select Policy under Azure services. If you don't see it, type 'Policy' in the se
 ### 5. Select a Policy Definition
 1. Click on Policy definition under 'Basics'.
 2. Browse or search for the multifactor policy definition – there are 2 of them. Pick one for now:
-    - [[Preview]: Users must authenticate with multifactor authentication to delete resources - Microsoft Azure](https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyDetail.ReactView/id/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2Fdb4a9d17-db75-4f46-9fcb-9f9526604417/version/1.0.0-preview/scopes/%5B%22%2Fsubscriptions%2F12015272-f077-4945-81de-a5f607d067e1%22%2C%22%2Fsubscriptions%2F0ba674a6-9fde-43b4-8370-a7e16fdf0641%22%5D/contextRender/).
-    - [[Preview]: Users must authenticate with multifactor authentication to create or update resources - Microsoft Azure](https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyDetail.ReactView/id/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2F4e6c27d5-a6ee-49cf-b2b4-d8fe90fa2b8b/version/1.0.0-preview/scopes/%5B%22%2Fsubscriptions%2F12015272-f077-4945-81de-a5f607d067e1%22%2C%22%2Fsubscriptions%2F0ba674a6-9fde-43b4-8370-a7e16fdf0641%22%5D/contextRender/).
+    - [Users must authenticate with multi-factor authentication to delete resources](https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyDetail.ReactView/id/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2Fdb4a9d17-db75-4f46-9fcb-9f9526604417/version/1.0.0-preview/scopes/%5B%22%2Fsubscriptions%2F12015272-f077-4945-81de-a5f607d067e1%22%2C%22%2Fsubscriptions%2F0ba674a6-9fde-43b4-8370-a7e16fdf0641%22%5D/contextRender/).
+    - [Users must authenticate with multi-factor authentication to create or update resources](https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyDetail.ReactView/id/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2F4e6c27d5-a6ee-49cf-b2b4-d8fe90fa2b8b/version/1.0.0-preview/scopes/%5B%22%2Fsubscriptions%2F12015272-f077-4945-81de-a5f607d067e1%22%2C%22%2Fsubscriptions%2F0ba674a6-9fde-43b4-8370-a7e16fdf0641%22%5D/contextRender/).
 3. Select the policy definition from the list.
   
 :::image type="content" source="../media/multifactor-enforcement/policy-definition-selection.png" alt-text="Screenshot of Azure Policy Definition Search View." border="false" lightbox="../media/multifactor-enforcement/policy-definition-selection.png":::
@@ -75,7 +75,9 @@ _Sample Text: To resolve this error, set up MFA at aka.ms/setupMFA. If you set u
 2. You can use the search bar and scope bar to easily filter.
   
 :::image type="content" source="../media/multifactor-enforcement/assignment-list.png" alt-text="Screenshot of Azure Policy Assignment List View." border="false" lightbox="../media/multifactor-enforcement/assignment-list.png":::
-
+  
+> [!NOTE]
+> Azure Policy assignments that evaluate multifactor enforcement don't provide compliance. To get audit events for your policy assignment without enforcement, see **Audit mode** in the following section.
 
 ## Update the policy assignment to enforcement
 You can enable enforcement by updating the 'Effect' of the policy assignment.
@@ -99,6 +101,18 @@ You can view activity Log events in Azure portal and other supported clients. He
 jq -r '"ResourceName\tResourceId\tPolicyDefinitionDisplayName", (.[] as $event | ($event.Policies | fromjson[] | "\($event.ResourceId | split("/") | last)\t\($event.ResourceId)\t\(.policyDefinitionDisplayName)"))' | \
 column -t -s $'\t'`
 
+You can also use the Azure portal to pull log events. Here's a sample query:
+`AzureActivity
+| where CategoryValue == "Policy"
+| extend p = parse_json(Properties)
+| extend policies = parse_json(tostring(p.policies))
+| mv-expand policies
+| where tostring(policies.policyDefinitionId) == "/providers/Microsoft.Authorization/policyDefinitions/4e6c27d5-a6ee-49cf-b2b4-d8fe90fa2b8b"
+| project TimeGenerated, ResourceId, OperationNameValue, PolicyDefinitionId = tostring(policies.policyDefinitionId), PolicyAssignmentId = tostring(policies.policyAssignmentId)`
+
+  > [!NOTE]
+  > Audit events are seen only in Activity Logs with the Policy compliance list showing always 0 resources. This policy identifies non-compliant requests, not resources, which is why the resource compliance list is empty. 
+
 ## Enforcement Mode
 Discover deny events in your activity log when this policy assignment is applied in enforcement mode. Each deny event represents a resource create, update or delete that was attempted by a user who did not authenticate with MFA.
 
@@ -119,7 +133,3 @@ When you attempt to perform a create, update, or delete operation without an MFA
 When you attempt to perform a create, update, or delete operation without an MFA-authenticated token, Azure PowerShell may return:
 
 :::image type="content" source="../media/multifactor-enforcement/powershell-sample.png" alt-text="Screenshot of Azure PowerShell View When User Gets Blocked By Policy." border="false" lightbox="../media/multifactor-enforcement/powershell-sample.png":::
-
-## Limitations in the Preview Timeframe
-- In some cases, you may not be prompted to complete MFA after receiving an error. In such cases, reauthenticate with MFA before retrying the operation (for example, through Azure portal).
-- In some cases, the error message may not indicate that the operation is blocked due to the policy assignment in-place. Take note of the error message samples to familiarize your organization on what error messages they may receive.

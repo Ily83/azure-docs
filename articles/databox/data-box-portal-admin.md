@@ -4,10 +4,11 @@ description: Describes how to use the Azure portal to administer your Azure Data
 services: databox
 author: stevenmatthew
 
-ms.service: azure-databox
+ms.service: azure-data-box
 ms.topic: how-to
 ms.date: 03/06/2025
 ms.author: shaas
+ms.custom: sfi-image-nochange
 # Customer intent: As a data administrator, I want to manage Data Box orders through the Azure portal, so that I can efficiently handle tasks such as canceling, cloning, and tracking orders during data transfer processes.
 ---
 

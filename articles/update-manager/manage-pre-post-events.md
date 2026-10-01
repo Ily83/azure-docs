@@ -4,10 +4,12 @@ description: The article provides the steps to manage the pre and post maintenan
 ms.service: azure-update-manager
 ms.date: 02/18/2025
 ms.topic: how-to
-author: habibaum
-ms.author: v-uhabiba
+author: Jeronika-MS
+ms.author: v-gajeronika
+ms.update-cycle: 1095-days
 ms.custom:
   - build-2025
+  - sfi-image-nochange
 # Customer intent: As an IT administrator, I want to manage pre and post maintenance configuration events in a cloud update management system, so that I can ensure seamless updates and maintain system reliability during scheduled maintenance.
 ---
 

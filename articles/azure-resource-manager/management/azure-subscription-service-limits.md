@@ -1,9 +1,10 @@
 ---
 title: Azure subscription and service limits, quotas, and constraints
 description: Understand common Azure subscription and service limits, quotas, and constraints. This article includes information about how to increase limits along with maximum values.
-ms.topic: conceptual
-ms.date: 01/23/2025
+ms.topic: article
+ms.date: 08/04/2026
 ms.custom: ignite-2024
+#customer intent: As a subscription owner or cloud operator, I want an authoritative list of subscription and service limits and guidance for requesting increases so that I can plan capacity and avoid service interruptions.
 ---
 
 # Azure subscription and service limits, quotas, and constraints
@@ -29,7 +30,7 @@ This document lists some of the most common Microsoft Azure limits, which are al
 > The terms *soft limit* and *hard limit* are often used informally to describe the current, adjustable limit (soft limit) and the maximum limit (hard limit). If a limit isn't adjustable, there won't be a soft limit but only a hard limit.
 >
 
-[Free Azure trial subscriptions](https://azure.microsoft.com/offers/ms-azr-0044p) aren't eligible for limit or quota increases. If you have this type of subscription, you can upgrade to a [Pay-as-you-go](https://azure.microsoft.com/offers/ms-azr-0003p/) one. For more information, see [Upgrade your Azure account](../../cost-management-billing/manage/upgrade-azure-subscription.md) and the overviews for [Try Azure for free or pay as you go](https://azure.microsoft.com/free/free-account-faq).
+[Free Azure trial subscriptions](https://azure.microsoft.com/pricing/offers/ms-azr-0044p?cid=msft_learn) aren't eligible for limit or quota increases. If you have this type of subscription, you can upgrade to a [Pay-as-you-go](https://azure.microsoft.com/pricing/offers/ms-azr-0003p?cid=msft_learn) one. For more information, see [Upgrade your Azure account](../../cost-management-billing/manage/upgrade-azure-subscription.md) and the overviews for [Try Azure for free or pay as you go](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 Some limits are managed at a regional level. You decide what your quotas must be for your workload in any one region, and then request that amount for each region into which you want to deploy.
 
@@ -57,7 +58,24 @@ The following limits apply to [Azure management groups](../../governance/managem
 
 The following limits apply when you use Azure Resource Manager and Azure resource groups.
 
-[!INCLUDE [azure-subscription-limits-azure-resource-manager](~/reusable-content/ce-skilling/azure/includes/azure-subscription-limits-azure-resource-manager.md)]
+|                                                                           Resource                                                                           |      Limit      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- |
+| Azure subscriptions [associated with a Microsoft Entra tenant](/azure/active-directory/fundamentals/active-directory-how-subscriptions-associated-directory) | Unlimited       |
+| [Coadministrators](/azure/cost-management-billing/manage/add-change-subscription-administrator) per subscription                                             | Unlimited       |
+| [Resource groups](/azure/azure-resource-manager/management/overview) per subscription                                                                        | 980             |
+| Azure Resource Manager API request size                                                                                                                      | 4,194,304 bytes |
+| Tags per subscription<sup>1</sup>                                                                                                                            | 50              |
+| Unique tag calculations per subscription<sup>2</sup>                                                                                                         | 80,000          |
+| [Subscription-level deployments](/azure/azure-resource-manager/templates/deploy-to-subscription)                                                             | 800<sup>3</sup> |
+| Locations of [Subscription-level deployments](/azure/azure-resource-manager/templates/deploy-to-subscription)                                                | 10              |
+
+<sup>1</sup>You can apply up to 50 tags directly to a subscription. Within the subscription, each resource or resource group is also limited to 50 tags. However, the subscription can contain an unlimited number of tags that are dispersed across resources and resource groups.
+
+<sup>2</sup>Resource Manager returns a list of tag name and values in the subscription only when the number of unique tags is 80,000 or less. A unique tag is defined by the combination of resource ID, tag name, and tag value. For example, two resources with the same tag name and value would be calculated as two unique tags. You still can find a resource by tag when the number exceeds 80,000.
+
+<sup>3</sup>Deployments are automatically deleted from the history as you near the limit. For more information, see Automatic deletions from deployment history.
+
+Note that subscription IDs must be non-empty GUIDs.
 
 ### Azure resource group limits
 
@@ -71,18 +89,16 @@ The following limits apply when you use Azure Resource Manager and Azure resourc
 
 This section provides information about limits that apply to Azure API Management instances in different [service tiers](../../api-management/api-management-features.md), including the following:
 
-- [API Management classic tiers](#limits---api-management-classic-tiers)
-- [API Management v2 tiers](#limits---api-management-v2-tiers)
-- [API Management workspaces](#limits---api-management-workspaces)
-- [Developer portal in API Management v2 tiers](#limits---developer-portal-in-api-management-v2-tiers)
+- [Resource limits in API Management classic and v2 tiers](#limits---api-management-classic-and-v2-tiers)
+- [Resource limits in API Management workspaces](#limits---api-management-workspaces)
+- [Resource limits in developer portal in API Management v2 tiers](#limits---developer-portal-in-api-management-v2-tiers)
+- [Gateway runtime limits](#api-management-gateway-runtime-limits)
 
-### Limits - API Management classic tiers
+### Limits - API Management classic and v2 tiers
+
+The following limits are introduced starting March 2026. Services in the classic tiers that surpass the revised limits are allowed to keep their existing capacity. For more information, see [Understanding API Management service limits](../../api-management/service-limits.md).
 
 [!INCLUDE [api-management-service-limits](../../../includes/api-management-service-limits.md)]
-
-### Limits - API Management v2 tiers
-
-[!INCLUDE [api-management-service-limits-v2](../../../includes/api-management-service-limits-v2.md)]
 
 ### Limits - API Management workspaces
 
@@ -91,6 +107,10 @@ This section provides information about limits that apply to Azure API Managemen
 ### Limits - Developer portal in API Management v2 tiers
 
 [!INCLUDE [api-management-developer-portal-limits-v2](../../../includes/api-management-developer-portal-limits-v2.md)]
+
+### API Management gateway runtime limits
+
+[!INCLUDE [api-management-gateway-constraints](../../../includes/api-management-gateway-constraints.md)]
 
 ## Azure App Service limits
 
@@ -106,7 +126,7 @@ This section provides information about limits that apply to Azure API Managemen
 
 ## Azure Cache for Redis limits
 
-[!INCLUDE [redis-cache-service-limits](../../azure-cache-for-redis/includes/redis-cache-service-limits.md)]
+[!INCLUDE [redis-cache-service-limits](~/reusable-content/ce-skilling/azure/includes/azure-cache-for-redis/includes/redis-cache-service-limits.md)]
 
 ## Azure Cloud Services limits
 
@@ -132,27 +152,13 @@ See [Service limits in Azure AI Search](/azure/search/search-limits-quotas-capac
 
 <a name='azure-cognitive-services-limits'></a>
 
-## Azure AI Services limits
+## Foundry Tools limits
 
 [!INCLUDE [azure-cognitive-services-limits](../../../includes/azure-cognitive-services-limits.md)]
 
 ## Azure Chaos Studio limits
 
-See [Azure Chaos Studio service limits](/azure/chaos-studio/chaos-studio-service-limits) for Azure Chaos Studio limits.
-
-## Azure Communications Gateway limits
-
-Some of the following default limits and quotas can be increased. To request a change, create an [Azure portal support request](../../communications-gateway/request-changes.md), and describe the limit that you need to change.
-
-[!INCLUDE [communications-gateway-general-restrictions](../../communications-gateway/includes/communications-gateway-general-restrictions.md)]
-
-Azure Communications Gateway also has limits on SIP signaling.
-
-[!INCLUDE [communications-gateway-sip-size-restrictions](../../communications-gateway/includes/communications-gateway-sip-size-restrictions.md)]
-
-[!INCLUDE [communications-gateway-sip-behavior-restrictions](../../communications-gateway/includes/communications-gateway-sip-behavior-restrictions.md)]
-
-[!INCLUDE [limits on the Provisioning API](../../communications-gateway/includes/communications-gateway-provisioning-api-restrictions.md)]
+For Chaos Studio Workspaces, see [Chaos Studio Workspaces limitations](/azure/chaos-studio/chaos-studio-workspaces-limitations). For Experiments (classic), see [Service limits for Experiments (classic)](/azure/chaos-studio/chaos-studio-service-limits).
 
 ## Azure Container Apps limits
 
@@ -212,7 +218,7 @@ See [Azure Functions hosting options](../../azure-functions/functions-scale.md) 
 
 ## Azure Load Testing limits
 
-See [Service limits in Azure Load Testing](../../app-testing/load-testing/resource-limits-quotas-capacity.md) for Azure Load Testing limits. 
+For Azure Load Testing limits, see [Service limits in Azure Load Testing](../../app-testing/load-testing/resource-limits-quotas-capacity.md).
 
 ## Azure Machine Learning limits
 
@@ -350,6 +356,10 @@ The following table details the features and limits of the Basic, Standard, and 
 ## Azure Database Migration Service Limits
 
 [!INCLUDE [database-migration-service-limits](../../../includes/database-migration-service-limits.md)]
+
+## Azure Device Registry limits
+
+[!INCLUDE [device-registry-limits](../../iot-operations/includes/device-registry-limits.md)]
 
 ## Azure Device Update for IoT Hub limits
 
@@ -490,7 +500,7 @@ See [Classic Microsoft Purview data governance limits](../../purview/how-to-mana
 
 ## Microsoft Sentinel limits
 
-See [Service limits for Microsoft Sentinel](../../sentinel/sentinel-service-limits.md) for Microsoft Sentinel limits.
+See [Service limits for Microsoft Sentinel](/azure/sentinel/sentinel-service-limits) for Microsoft Sentinel limits.
 
 ## Azure Service Bus limits
 
@@ -527,14 +537,14 @@ See [VM Applications overview](/azure/virtual-machines/vm-applications) for more
 
 #### Azure disk encryption sets
 
-A limit of 5,000 disk encryption sets are allowed per region and per subscription. [Contact Azure support](../../communications-gateway/request-changes.md) to increase the quota. 
+Each region and subscription supports up to 5,000 disk encryption sets. [Contact Azure support](../../communications-gateway/request-changes.md) to increase the quota. 
 
-See the following documentation to learn more about about encryption restrictions:
+See the following documentation to learn more about encryption restrictions:
 
 - [Linux](/azure/virtual-machines/disk-encryption#restrictions)
 - [Windows](/azure/virtual-machines/disk-encryption#restrictions) virtual machines
 
-### Azure-managed virtual machine disks
+### Azure managed disks
 
 [!INCLUDE [azure-storage-limits-vm-disks-managed](~/reusable-content/ce-skilling/azure/includes/azure-storage-limits-vm-disks-managed.md)]
 

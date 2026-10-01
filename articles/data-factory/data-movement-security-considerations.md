@@ -4,7 +4,7 @@ description: Describes basic security infrastructure that data movement services
 ms.author: susabat
 author: ssabat
 ms.subservice: security
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 02/13/2025
 ---
 
@@ -13,6 +13,8 @@ ms.date: 02/13/2025
 > * [Current version](data-movement-security-considerations.md)
 
  [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article describes basic security infrastructure that data movement services in Azure Data Factory use to help secure your data. Data Factory management resources are built on Azure security infrastructure and use all possible security measures offered by Azure.
 

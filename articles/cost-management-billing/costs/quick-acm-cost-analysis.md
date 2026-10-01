@@ -1,13 +1,13 @@
 ---
 title: Quickstart - Start using Cost Analysis
 description: Learn how to use Azure Cost Analysis to explore and analyze your organizational costs, identify trends, and understand spending patterns.
-author: shasulin
-ms.author: shasulin
+author: vikramdesai01
+ms.author: vikdesai
 ms.date: 06/27/2025
 ms.topic: quickstart
 ms.service: cost-management-billing
 ms.subservice: cost-management
-ms.reviewer: shasulin
+ms.reviewer: vikdesai
 ms.custom: mode-other
 #customer intent: As a billing administrator, I want to use Cost Analysis so that I can explore and analyze my Azure organizational costs.
 ---
@@ -30,8 +30,10 @@ Cost Analysis is your tool for interactive analytics and insights. It should be 
 
 - Cost of your resources at various levels.
 - Overarching services spanning all your resources.
-- Amortized reservation usage.
+- Amortized reservation and savings plan usage.
 - Cost trends over time.
+
+Note that one time purchase amount for Azure Prepayment (previously called monetary commitment) is not shown in Cost Analysis, these can be tracked through [credits & commitments view in EA](reporting-get-started.md#invoices-and-credits) and [credit balances view in Microsoft Customer Agreement](../benefits/credits/mca-check-azure-credits-balance.md).
 
 The first time you open Cost Analysis, you start with either a list of available cost views or a customizable area chart. This section walks through the list of views. If Cost Analysis shows an area chart by default, see [Analyze costs with customizable views](#analyze-costs-with-customizable-views).
 

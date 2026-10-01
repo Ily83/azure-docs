@@ -2,16 +2,20 @@
 title: Copy data from Oracle Eloqua (Preview)
 description: Learn how to copy data from Oracle Eloqua to supported sink data stores using a copy activity in an Azure Data Factory or Synapse Analytics pipeline.
 titleSuffix: Azure Data Factory & Azure Synapse
-ms.author: jianleishen
-author: jianleishen
+ms.author: tinglee
+author: simplywilson
 ms.subservice: data-movement
-ms.topic: conceptual
-ms.custom: synapse
+ms.topic: how-to
 ms.date: 01/26/2025
+ms.custom:
+  - synapse
+  - sfi-image-nochange
 ---
 
 # Copy data from Oracle Eloqua using Azure Data Factory or Synapse Analytics (Preview)
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 > [!IMPORTANT]
 > This connector is at [End of Support stage](connector-deprecation-plan.md). You are recommended to migrate to [ODBC connector](connector-odbc.md) by installing a driver.

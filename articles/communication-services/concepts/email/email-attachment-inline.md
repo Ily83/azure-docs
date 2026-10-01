@@ -7,11 +7,13 @@ manager: koagbakp
 services: azure-communication-services
 ms.author: maniss
 ms.date: 09/30/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ---
 
 # Inline attachments
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Email communication is more than just text. It's about creating engaging and visually appealing messages that capture the recipient's attention.
 

@@ -8,11 +8,13 @@ services: azure-communication-services
 
 ms.author: micahvivion
 ms.date: 05/01/2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 # Voice and video concepts
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 You can use Azure Communication Services to make and receive one to one or group voice and video calls. You can make calls to other Internet-connected devices and to plain-old telephones. You can use the Communication Services JavaScript, Android, or iOS SDKs to build applications that enable your users to speak to one another in private conversations or in group discussions. Azure Communication Services supports calls to and from services or bots.
 

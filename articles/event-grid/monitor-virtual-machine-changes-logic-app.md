@@ -1,11 +1,9 @@
 ---
 title: Monitor Virtual Machine Changes with Event Grid
 description: Learn how to monitor changes in virtual machines by using Azure Event Grid and Azure Logic Apps.
-ms.service: azure-logic-apps
-services: logic-apps
 ms.suite: integration
-author: ecfan
-ms.author: estfan
+author: spelluru
+ms.author: spelluru
 ms.reviewer: estfan, azla
 ms.topic: tutorial
 ms.date: 08/08/2025
@@ -38,7 +36,7 @@ In this tutorial, you learn how to:
 
 ## Prerequisites
 
-- An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - An email account from an email service that works with Azure Logic Apps for sending notifications, such as Office 365 Outlook, Outlook.com, or Gmail. For other providers, see [the connectors list](/connectors/).
 

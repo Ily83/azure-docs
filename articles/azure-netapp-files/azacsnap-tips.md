@@ -1,18 +1,18 @@
 ---
-title: Tips and tricks for using Azure Application Consistent Snapshot tool for Azure NetApp Files | Microsoft Docs
-description: Provides tips and tricks for using the Azure Application Consistent Snapshot tool that you can use with Azure NetApp Files.
+title: Tips for using Azure Application Consistent Snapshot tool for Azure NetApp Files | Microsoft Docs
+description: Provides tips for using the Azure Application Consistent Snapshot tool that you can use with Azure NetApp Files.
 services: azure-netapp-files
 author: Phil-Jensen
 ms.service: azure-netapp-files
 ms.topic: how-to
-ms.date: 08/04/2025
+ms.date: 12/18/2025
 ms.author: phjensen
 # Customer intent: As a DevOps engineer managing database backups, I want to configure and monitor the Azure Application Consistent Snapshot tool for Azure NetApp Files, so that I can automate and ensure the reliability of regular snapshot backups for my SAP HANA databases.
 ---
 
-# Tips and tricks for using Azure Application Consistent Snapshot tool
+# Tips for using Azure Application Consistent Snapshot tool
 
-This article provides tips and tricks that might be helpful when you use AzAcSnap.
+This article provides tips that might be helpful when you use AzAcSnap.
 
 ## Global override settings to control azacsnap behavior
 
@@ -20,13 +20,23 @@ AzAcSnap 8 introduced a new global settings file (`.azacsnaprc`) which must be l
 
 Settings, which can be controlled by adding/editing the global override settings file or by setting them as environment variables are:
 
-- **AZURE_MANAGEMENT_ENDPOINT** to customize the location of the Azure Management Endpoint which AzAcSnap make Azure REST API calls to was introduced in AzAcSnap 9a. Values should be URL paths and the default value = 'https://management.azure.com'. For example, to configure AzAcSnap to ensure all management calls go to the Azure Management Endpoint for US Government Cloud (ref: [Azure Government Guidance for developers](/azure/azure-government/compare-azure-government-global-azure#guidance-for-developers)) add the following to the `.azacsnaprc` file:
+- **AZURE_ENVIRONMENT** (from AzAcSnap 11b) to customize connectivity to the correct management endpoint.  The values could be one of: AzurePublicCloud, AzureGovernment, AzureChina, AzureGermany - the default is 'AzurePublicCloud'.  For example, to configure AzAcSnap to ensure all management calls go to the Azure Management Endpoint for US Government Cloud add the following to the `.azacsnaprc` file:
+  - `AZURE_ENVIRONMENT=AzureGovernment`
+
+  > [!NOTE]
+  > The `AZURE_ENVIRONMENT` only applies to AzAcSnap 11b (or later).
+
+- **AZURE_MANAGEMENT_ENDPOINT** (for AzAcSnap 9a, 10, 10a only) to customize the location of the Azure Management Endpoint which AzAcSnap make Azure REST API calls to was introduced in AzAcSnap 9a. Values should be URL paths and the default value = 'https://management.azure.com'. For example, to configure AzAcSnap to ensure all management calls go to the Azure Management Endpoint for US Government Cloud (ref: [Azure Government Guidance for developers](/azure/azure-government/compare-azure-government-global-azure#guidance-for-developers)) add the following to the `.azacsnaprc` file:
   - `AZURE_MANAGEMENT_ENDPOINT=https://management.usgovcloudapi.net`
+
+  > [!NOTE]
+  > `AZURE_MANAGEMENT_ENDPOINT` only applies to AzAcSnap 9a, 10, 10a, do not set this for AzAcSnap 11 or later.
+
 - **EXTERNAL_CMD_TIMEOUT_SECS** customizes the timeout for external shell commands. Values should be integers and the default value = 300. For example, to set the external command timeout to 10 minutes (600 seconds) add the following to the `.azacsnaprc` file:
   - `EXTERNAL_CMD_TIMEOUT_SECS=600`
 
-> [!NOTE]
-> As of AzAcSnap 11, the `EXTERNAL_CMD_TIMEOUT_SECS` only applies to Db2 database commands.
+  > [!NOTE]
+  > As of AzAcSnap 11, the `EXTERNAL_CMD_TIMEOUT_SECS` only applies to Db2 database commands.
 
 - **MAINLOG_LOCATION** which customizes the location of the "main-log" output file, which is called `azacsnap.log` and was introduced in AzAcSnap 8. Values should be absolute paths and the default value = '.' (which is the current working directory). For example, to ensure the "main-log" output file goes to the `/home/azacsnap/bin/logs` add the following to the `.azacsnaprc` file:
   - `MAINLOG_LOCATION=/home/azacsnap/bin/logs`
@@ -135,6 +145,52 @@ DATE_TIME                  OPERATION_NAME  STATUS   DATABASE_TYPE  SID       DUR
 2023-09-21T09:02:12+12:00  backup          SUCCESS  Oracle         ORATEST1  0:02:09.4572157  all-volumes__F6B0BED814B
 ```
 
+## Understanding the snapshot name suffix
+
+The AzAcSnap snapshot name has a suffix specifically generated to prevent naming collisions and ensure unique snapshot names.  The suffix is based on the time AzAcSnap is run to create the snapshot to the nearest ten-thousandths of a second, which is converted to a hexadecimal to minimize the length of the snapshot name.  The following example shell script can be used to convert the hexadecimal suffix to the time the snapshot name was generated.
+
+```bash
+#!/bin/sh
+
+# hex-to-datetime.sh
+# Prompt for hex number if not provided
+if [ -z "$1" ]; then
+  echo "Type a hex number:"
+  read hex_num
+else
+  hex_num="$1"
+fi
+
+# Convert hex to decimal
+dec_num=$(echo "ibase=16; $hex_num" | bc)
+printf "The decimal value of %s = %d\n" "$hex_num" "$dec_num"
+
+# Determine how many digits to shift (if needed)
+len_decnum=$(echo "$dec_num" | wc -c)
+len_decnum=$((len_decnum - 1))  # Remove newline
+
+# If the decimal number is longer than 10 digits, scale it down
+if [ "$len_decnum" -gt 10 ]; then
+  num_of_zeros=$((len_decnum - 10))
+  divide_by="1$(printf "%0${num_of_zeros}d" 0)"
+  echo "Divide $dec_num / $divide_by"
+  dec_num_seconds=$(echo "$dec_num / $divide_by" | bc)
+else
+  dec_num_seconds="$dec_num"
+fi
+
+# Convert to human-readable date
+date --date="@$dec_num_seconds"
+```
+
+It can be run to convert the suffix in the following example.
+
+```output
+$ hex-to-datetime.sh FFF1C5E5CE8
+The decimal value of FFF1C5E5CE8 = 17588367023336
+Divide 17588367023336 / 10000
+Thu Sep 25 21:45:02 UTC 2025
+```
 
 ## Limit service principal permissions
 

@@ -6,7 +6,7 @@ author: kromerm
 ms.author: makromer
 ms.reviewer: daperlov
 ms.subservice: data-flows
-ms.topic: conceptual
+ms.topic: reference
 ms.custom: synapse
 ms.date: 01/05/2024
 ---
@@ -14,6 +14,8 @@ ms.date: 01/05/2024
 # Exists transformation in mapping data flow
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 [!INCLUDE[data-flow-preamble](includes/data-flow-preamble.md)]
 

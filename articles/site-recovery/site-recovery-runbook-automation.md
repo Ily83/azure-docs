@@ -1,11 +1,12 @@
 ---
 title: Add Azure Automation runbooks to Site Recovery recovery plans
 description: Learn how to extend recovery plans with Azure Automation for disaster recovery using Azure Site Recovery.
-author: jyothisuri
+author: Jeronika-MS
 ms.service: azure-site-recovery
 ms.topic: concept-article
-ms.author: jsuri
-ms.date: 03/17/2025
+ms.author: v-gajeronika
+ms.date: 08/14/2026
+ms.custom: sfi-image-nochange
 # Customer intent: As a disaster recovery manager, I want to integrate Azure Automation runbooks into my recovery plans, so that I can automate complex recovery processes and reduce manual intervention during failover and failback operations.
 ---
 
@@ -54,6 +55,9 @@ When a script runs, it injects a recovery plan context to the runbook. The conte
 
 >[!Note]
 >The value for variable 'FailoverDirection' will be 'PrimaryToSecondary' in case of failover and 'SecondaryToPrimary' in case of failback.
+
+>[!NOTE]
+>Recovery plans automatically invoke Azure Automation runbooks and pass only the `RecoveryPlanContext` parameter as input. You can't provide additional runtime inputs through the Recovery Plan workflow. If additional values are required, the runbook must be authored to retrieve them from predefined sources or handle them within the script logic itself.
 
 The following example shows a context variable:
 

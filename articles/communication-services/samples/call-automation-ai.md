@@ -16,7 +16,9 @@ zone_pivot_groups: acs-js-csharp-java-python
 
 # Get started with the Azure Communication Services Call Automation OpenAI sample
 
-The Azure Communication Services Call Automation OpenAI sample demonstrates how you can use the Call Automation SDK and the recently announced public preview integration with Azure AI services to build intelligent virtual assistants.
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
+
+The Azure Communication Services Call Automation OpenAI sample demonstrates how you can use the Call Automation SDK and the recently announced public preview integration with Foundry Tools to build intelligent virtual assistants.
 
 In this article, we cover what this sample does and what you need as prerequisites before we run this sample locally on your machine.
 

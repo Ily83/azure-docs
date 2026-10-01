@@ -4,7 +4,7 @@ titleSuffix: Azure Data Factory & Azure Synapse
 description: This article describes how to monitor Azure virtual machines hosting the self-hosted integration runtime.
 author: whhender
 ms.custom: synapse
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 07/25/2025
 ms.subservice: integration-runtime
 ms.author: whhender
@@ -12,6 +12,8 @@ ms.author: whhender
 
 # Monitor self-hosted integration runtime (SHIR) virtual machines in Azure
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 By default, the Self Hosted Integration Runtime’s diagnostic and performance telemetry is saved locally on the virtual or physical machine that is hosting it. Two broad categories of telemetry are of interest for monitoring the Self Hosted Integration Runtime.
 

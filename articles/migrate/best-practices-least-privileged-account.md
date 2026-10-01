@@ -3,9 +3,11 @@ title: Set Up Least Privileged Accounts
 description: Learn how to configure the Azure Migrate appliance with least privileged access by setting up read-only VMware roles with guest operations and scoped permissions.
 author: molishv
 ms.author: molir
+ms.reviewer: v-gajeronika
 ms.service: azure-migrate
-ms.topic: conceptual
-ms.date: 07/04/2025
+ms.topic: concept-article
+ms.date: 09/04/2025
+ms.update-cycle: 365-days
 ms.custom:
   - build-2025
 # Customer intent: As an IT administrator, I want to securely configure the Azure Migrate appliance with least privileged access by setting up read-only VMware roles with guest operations and scoped permissions to enable efficient workload discovery, software inventory, and agentless migration.
@@ -17,6 +19,9 @@ ms.custom:
 The Azure Migrate appliance is a lightweight tool that discovers on-premises servers and sends their configuration and performance data to Azure. It also performs software inventory, performs agentless dependency analysis, and detects workloads like web apps and instances of SQL Server or MySQL Server.
 
 To use these features, you add server and guest credentials in the appliance configuration manager. Following the principle of least privilege helps keep the setup secure and efficient.
+
+>[!IMPORTANT]
+> In addition to configuring least‑privileged credentials for the Azure Migrate appliance, ensure that users are assigned the appropriate Azure Migrate built‑in roles in Azure. These roles provide the minimum required permissions for discovery, assessment, and migration activities. [Learn more](prepare-azure-accounts.md).
 
 ## Discovery of the VMware estate
 
@@ -116,7 +121,7 @@ For quick discovery of Windows servers, create a Windows user account that belon
 
 The guest user account needs permission to access the **CIMV2** namespace and its sub-namespaces in the **WMI Control** item in Control Panel. To set the access, use the following steps:
 
-1. On the target Windows server, open the **Start** menu, search for **Run**, and then select it.
+1. On the target Windows server, go to the **Start** menu, search for **Run**, and then select it.
 
 1. In the **Run** dialog, type `wmimgmt.msc` and then press the Enter key.
   
@@ -366,11 +371,11 @@ For MySQL discovery, ensure the appliance's IP or domain is allowed by configuri
 Use the following commands to grant the necessary privileges to the MySQL user:
 
 ```Mysql
-GRANT USAGE ON *.* TO 'username@ip'; 
-GRANT PROCESS ON *.* TO 'username@ip'; 
-GRANT SELECT (User, Host, Super_priv, File_priv, Create_tablespace_priv, Shutdown_priv) ON mysql.user TO 'username@ip';
-GRANT SELECT ON information_schema.* TO 'username@ip';
-GRANT SELECT ON performance_schema.* TO 'username@ip';
+GRANT USAGE ON *.* TO 'username'@'ip';
+GRANT PROCESS ON *.* TO 'username'@'ip';
+GRANT SELECT (User, Host, Super_priv, File_priv, Create_tablespace_priv, Shutdown_priv) ON mysql.user TO 'username'@'ip';
+GRANT SELECT ON information_schema.* TO 'username'@'ip';
+GRANT SELECT ON performance_schema.* TO 'username'@'ip';  
 
 ```
 

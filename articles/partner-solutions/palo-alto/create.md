@@ -1,7 +1,8 @@
 ---
 title: Create a Cloud Next-Generation Firewall (NGFW) by Palo Alto Networks
 description: Learn how to use the Azure portal to create a Cloud NGFW (Next-Generation Firewall) by Palo Alto Networks.
-
+author: BNandiniMSFT
+ms.author: bnandini
 ms.custom: references_regions
 ms.topic: quickstart
 ms.date: 06/27/2025
@@ -31,7 +32,7 @@ In this section, you'll create a Cloud NGFW by Palo Alto Networks resource.
    | Setting  | Description |
    |---------|---------|
    | **Subscription**  | Select an Azure subscription for which you have owner access. |
-   | **Resource group**     | Specify whether you want to create a new resource group or use an existing one. A resource group is a container that holds related resources for an Azure solution. For more information, see [What is a resource group?](../../azure-resource-manager/management/manage-resource-groups-portal.md#what-is-a-resource-group). |
+   | **Resource group**     | Specify whether you want to create a new resource group or use an existing one. A resource group is a container that holds related resources for an Azure solution. For more information, see [What is a resource group?](../../azure-resource-manager/management/manage-resource-groups-portal.md#what-is-a-resource-group) |
    | **Firewall name**  | Enter a name for the firewall. |
    | **Region** | Select an appropriate region. |
    | **Marketplace Plan**     | Select **Cloud NGFW by Palo Alto Networks - an Azure Native ISV Service (PAYG)**. |
@@ -86,6 +87,14 @@ Next, you must accept the terms of use for the new Cloud NGFW resource.
 ### Review + create tab
 
 [!INCLUDE [review-create](../includes/review-create.md)]
+
+ 
+> [!note] 
+> For information about connection errors, see [known issues for Azure Virtual WAN](../../virtual-wan/whats-new.md#knownissues).
+> 
+> See also these references: 
+> - [Azure Virtual Network FAQ](../../virtual-network/virtual-networks-faq.md)
+> - [Virtual WAN FAQ](../../virtual-wan/virtual-wan-faq.md)
 
 ## Next steps
 

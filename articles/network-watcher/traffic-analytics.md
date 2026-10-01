@@ -1,15 +1,14 @@
 ---
-title: Traffic analytics overview
+title: Traffic Analytics Overview
 titleSuffix: Azure Network Watcher
 description: Learn what Azure Network Watcher traffic analytics is, and how to use it for viewing network activity, securing networks, and optimizing performance.
 author: halkazwini
 ms.author: halkazwini
 ms.service: azure-network-watcher
 ms.topic: concept-article
-ms.date: 04/14/2025
+ms.date: 02/10/2026
 ms.custom: references_regions
 
-#CustomerIntent: As an Azure administrator, I want to use Traffic analytics to analyze Network Watcher flow logs so that I can view network activity, secure my networks, and optimize performance.
 # Customer intent: As an Azure administrator, I want to analyze flow logs with traffic analytics so that I can gain insights into network activity, enhance security, and optimize network performance in my cloud infrastructure.
 ---
 
@@ -75,7 +74,7 @@ To use traffic analytics, you need the following components:
       - Information about the flow, such as the source and destination IP addresses, the source and destination ports, and the protocol.
       - The status of the traffic, such as allowed or denied.
     
-      For more information, see [Network security group flow logs overview](nsg-flow-logs-overview.md) and [Create a network security group flow log](nsg-flow-logs-manage.md#create-a-flow-log).
+      For more information, see [Network security group flow logs overview](nsg-flow-logs-overview.md).
     
     - **Virtual network (VNet)**: A resource that enables many types of Azure resources to securely communicate with each other, the internet, and on-premises networks. For more information, see [Virtual network overview](../virtual-network/virtual-networks-overview.md?toc=/azure/network-watcher/toc.json).
     
@@ -88,7 +87,7 @@ To use traffic analytics, you need the following components:
       For more information, see [Virtual network flow logs overview](vnet-flow-logs-overview.md) and [Create a virtual network flow log](vnet-flow-logs-portal.md#create-a-flow-log). To learn about the differences between network security group flow logs and virtual network flow logs, see [Virtual network flow logs compared to network security group flow logs](vnet-flow-logs-overview.md#virtual-network-flow-logs-compared-to-network-security-group-flow-logs). 
 
 > [!NOTE]
-> To use Traffic analytics, you must have the required permissions. For more information, see [Traffic analytics permissions](required-rbac-permissions.md#traffic-analytics).
+> To use Traffic analytics, you must have the required permissions. For more information, see [Traffic analytics permissions](rbac-permissions.md#traffic-analytics).
 
 ## How traffic analytics works
 
@@ -115,9 +114,10 @@ For pricing details, see [Network Watcher pricing](https://azure.microsoft.com/p
 
 ## Traffic analytics FAQ
 
-To get answers to the most frequently asked questions about traffic analytics, see [Traffic analytics FAQ](traffic-analytics-faq.yml).
+To get answers to the most frequently asked questions about traffic analytics, see [Traffic analytics FAQ](/azure/network-watcher/frequently-asked-questions#traffic-analytics).
 
 ## Related content
 
-- To learn how to use traffic analytics, see [Usage scenarios](traffic-analytics-usage-scenarios.md).
-- To understand the schema and processing details of traffic analytics, see [Schema and data aggregation in Traffic Analytics](traffic-analytics-schema.md).
+- [Traffic analytics usage scenarios](traffic-analytics-usage-scenarios.md)
+- [Schema and data aggregation in Traffic Analytics](traffic-analytics-schema.md)
+- [Use queries in traffic analytics](traffic-analytics-queries.md)

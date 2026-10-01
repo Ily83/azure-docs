@@ -2,7 +2,7 @@
 title: "Quickstart: Add Service Group members using the REST API - Azure Governance"
 description: In this quickstart, you use REST API to add a resource to a service group with a service group member relationship.
 author: rthorn17
-ms.author: rithorn
+ms.author: kenieva
 ms.service: azure-policy
 ms.topic: quickstart
 ms.date: 5/19/2025
@@ -21,7 +21,7 @@ To add resources, resource groups, or subscriptions to a Service Group (preview)
 
 ## Prerequisites
 
-- If you don't have an Azure subscription, create a [free](https://azure.microsoft.com/free/)
+- If you don't have an Azure subscription, create a [free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
   account before you begin.
 
 - If you haven't already, install [ARMClient](https://github.com/projectkudu/ARMClient). It's a tool
@@ -31,8 +31,13 @@ To add resources, resource groups, or subscriptions to a Service Group (preview)
 
 ## Create in REST API
 
-For REST API, use the
-[Service Groups Member- Create or Update]() endpoint to create a new service group member.
+The `[scope]` in the URLs below refers to the full Azure Resource Manager path of the resource you want to add as a member. The scope varies depending on the type of resource:
+
+| Resource type | Scope format |
+|---|---|
+| Subscription | `subscriptions/{subscriptionId}` |
+| Resource group | `subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}` |
+| Resource | `subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProvider}/{resourceType}/{resourceName}` |
 
 In this example, we're adding a Virtual Machine [VM1] to a service group [Contoso].
 
@@ -70,9 +75,6 @@ specify the service group as the parent, use the **TargetID** property.
 
 ## Clean up resources
 
-To remove the service group created in this document, use the
-[Service Group Member Delete]() endpoint:
-
 - REST API URI
 
   ```http
@@ -81,6 +83,22 @@ To remove the service group created in this document, use the
 
 - No Request Body
 
+## Verify your service group member
+
+The Create Service Group Member API is an asynchronous call. A successful response means the request was accepted, but the operation may still be processing. To check the operation status:
+
+1. Look for the **Azure-AsyncOperation** header in the response from the PUT request.
+2. Make a GET request to the URL in that header to check the operation status.
+
+```json
+{
+    "status": "Succeeded"
+}
+```
+
+Possible status values include `Succeeded`, `Failed`, and `InProgress`. Wait for the operation to complete before relying on the membership relationship.
+
+For more information on checking operation status, see [Checking for Service Group Operation Status](manage-service-groups.md#checking-for-service-group-operation-status).
 
 ## Next step
 

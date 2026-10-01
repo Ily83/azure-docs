@@ -5,6 +5,8 @@ items:
   items:
   - name: What is Cloud NGFW by Palo Alto Networks?
     href: overview.md
+  - name: FAQ
+    href: faq.yml
 - name: Quickstarts
   expanded: true
   items:
@@ -21,5 +23,6 @@ items:
     - name: Get support
       href: https://support.paloaltonetworks.com/Support/Index
     - name: Troubleshoot
-      href: /troubleshoot/azure/partner-solutions/welcome-native-integrations
+      href: /troubleshoot/azure/partner-solutions/marketplace-purchases-errors
+    
 

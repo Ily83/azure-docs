@@ -20,14 +20,14 @@ Azure offers various options for storing file data. Azure native storage service
 - [Azure Native Qumulo](https://qumulo.com/product/azure/) - Fully managed, cloud-native file service offering elastic performance, and capacity scaling. Pay-as-you-go consumption model ensures you only pay what you use. Hot, and Cold storage class options are available.
   
 There are several articles that describe the differences and recommendation on selecting the native file service. You can learn more:
-- Our migration guide describes the [basic flow chart](../../../common/storage-migration-overview.md#choose-a-target-storage-service)
+- Our migration guide describes the [basic flow chart](../../../common/storage-migration-overview.md#target-selection)
 - [Detailed comparison between Azure Files and Azure NetApp Files](../../../files/storage-files-netapp-comparison.md)
 
 Many independent software vendor (ISV) solutions can provide file services in Azure. This article addresses two topics:
 - provides general considerations on selecting file services
 - outlines the differences between ISV solutions.
-  
-Full list of verified ISV solutions is available on [Azure Storage partners for primary and secondary storage](./partner-overview.md).
+
+A full list of verified ISV solutions is available within the [Azure Storage partners for primary and secondary storage](partner-overview.md) article.
 
 ## Considerations
 
@@ -59,7 +59,7 @@ Some general rules are always recommended:
   - Networking: if VM type supports it, use accelerated networking. It will reduce the latency and always have a positive effect on the performance. 
   - VM type: select the VM type that is most suitable for the workload. If the workload has small number of clients, running file services in smaller number of larger VMs is better suited. In contrast, large number of clients can benefit from running file services in larger number of smaller VMs.
   - For low concurrency and small block size workloads explore solutions that:
-    - use managed disks (Premium or Ultra SSD disks) or
+    - use managed disks (Premium SSDs or Ultra Disks) or
     - have a suitable caching algorithm.
   - For high concurrency and large block size workloads, explore solutions that use Azure Blob Storage as a backend
 
@@ -69,7 +69,7 @@ This article compares several ISV solutions that provide files services in Azure
 
 | Solution | Overview | Example use cases |
 | -------- | ----------- | ----------------- |
-| **Hammerspace** | **Hammerspace** is a data platform for AI, HPC, and unstructured data that combines high-performance storage, orchestration, and mobility under a single global namespace. Hammerspace provides Azure customers with the ability to Unify, Automate, and Accelerate their data. | - AI & GPU intensive workloads <br>- Traditional HPC <br> - Global Namespace to unify on-prem data to Azure <br> - Data Orchestration |
+| **Hammerspace** | **Hammerspace** is a data platform for AI, HPC, and unstructured data that combines high-performance storage, orchestration, and mobility under a single global namespace. Hammerspace provides Azure customers with the ability to Unify, Automate, and Accelerate their data. | - AI & GPU intensive workloads <br>- Traditional HPC <br> - Global Namespace to unify on-premises data to Azure <br> - Data Orchestration |
 | **Nasuni** | **UniFS** is an enterprise file service with a simpler, low-cost, cloud alternative built on Microsoft Azure | - Primary file storage <br> - Departmental file shares <br> - Centralized file management <br> - multi-site collaboration with global file locking <br> - Azure Virtual Desktop <br> - Remote work/VDI file shares |
 | **NetApp** | **Cloud Volumes ONTAP** optimizes your cloud storage costs, and performance while enhancing data protection, security, and compliance. Includes enterprise-grade data management, availability, and durability | - Business applications <br> - Relational and NoSQL databases <br> - Big Data & Analytics <br> - Persistent data for containers <br> - CI/CD pipelines <br> - Disaster recovery for on-premises NetApp solutions |
 | **Panzura**| **CloudFS** is an enterprise global file system with added resiliency and high-performance. Offers ransomware protection. | - Simplified legacy storage replacement <br> - Backup and disaster recovery, with granular recovery ability <br> - Cloud native access to unstructured data for Analytics, AI/ML. <br> - Multi-site file collaboration, with automatic file locking and real time global file consistency <br> - Global remote work with cloud VDI <br> - Accelerated cloud migration for legacy workloads |
@@ -162,7 +162,7 @@ This article compares several ISV solutions that provide files services in Azure
 ### Other features
 
 **Hammerspace**
-- [Marketplace](https://azuremarketplace.microsoft.com/marketplace/apps/hammerspace.hammerspace_4_6_5?tab=overview)
+- [Marketplace](https://marketplace.microsoft.com/en-us/product/azure-applications/hammerspace.hammerspace_paygo?tab=Overview)
 - Global Parallel File System 
 - Live Data Mobility
 - Data Orchestration 

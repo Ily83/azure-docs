@@ -2,10 +2,10 @@
 title: Manage domain suppression lists with Management SDKs
 titleSuffix: An Azure Communication Services article
 description: This article describes how to manage domain suppression lists in Azure Communication Services using the management client libraries.
-author: yogeshmo
+author: anmolbohra97
 manager: koagbakp
 services: azure-communication-services
-ms.author: ymohanraj
+ms.author: anmolbohra
 ms.date: 11/21/2023
 ms.topic: quickstart
 ms.service: azure-communication-services
@@ -14,6 +14,8 @@ zone_pivot_groups: acs-js-csharp-java-python
 ---
 
 # Manage domain suppression lists with Management SDKs
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 [!INCLUDE [Public Preview Notice](../../includes/public-preview-include-document.md)]
 

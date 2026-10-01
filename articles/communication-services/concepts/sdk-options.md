@@ -8,10 +8,12 @@ services: azure-communication-services
 
 ms.author: micahvivion
 ms.date: 06/04/2024
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 ---
 # SDKs and REST APIs
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services capabilities are conceptually organized into discrete areas based on their functional area. Most areas have fully open-source SDKs programmed against published REST APIs that you can use directly over the Internet. The Calling SDK uses proprietary network interfaces and is closed-source.
 

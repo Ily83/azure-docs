@@ -2,12 +2,12 @@
 title: 'Configure User VPN clients - certificate authentication IKEv2 - Linux'
 titleSuffix: Azure Virtual WAN
 description: Learn how to configure an Ubuntu Linux strongSwan VPN client solution for User VPN Configurations that use certificate authentication.
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.custom: linux-related-content
 ms.topic: how-to
 ms.date: 02/06/2025
-ms.author: cherylmc
+ms.author: duau
 ---
 
 # Configure strongSwan VPN for User VPN P2S certificate authentication IKEv2 connections - Linux
@@ -18,7 +18,7 @@ This article helps you connect to your Azure virtual network (VNet) using Virtua
 
 Verify that you are on the correct article. The following table shows the configuration articles available for Azure Virtual WAN P2S VPN clients. Steps differ, depending on the authentication type, tunnel type, and the client OS.
 
-[!INCLUDE [P2S client configuration articles](../../includes/virtual-wan-vpn-client-install-articles.md)]
+[!INCLUDE [P2S client configuration articles](../networking/includes/virtual-wan/vpn-client-install-articles.md)]
 
 ### Prerequisites
 

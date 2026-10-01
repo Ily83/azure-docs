@@ -5,11 +5,13 @@ description: This article describes the Azure Communication Services short messa
 author: prakulka
 ms.author: prakulka
 ms.date: 04/10/2025
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 zone_pivot_groups: acs-tollfree-shortcode-alphanumeric-tendlc-mobile
 ---
 # SMS pricing 
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 ::: zone pivot="tollfree"
 [!INCLUDE [Toll free](./includes/sms-tollfree-pricing.md)]

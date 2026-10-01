@@ -3,7 +3,7 @@ title: App Service Environment Overview
 description: Learn about App Service Environments, which are fully isolated and single-tenant App Service deployments that provide high-scale, network-secured hosting.
 author: seligj95
 ms.topic: overview
-ms.date: 07/25/2025
+ms.date: 08/24/2026
 ms.update-cycle: 1095-days
 ms.author: jordanselig
 ms.custom:
@@ -51,7 +51,7 @@ Multitenant App Service apps can use several networking features to reach networ
 
 An App Service Environment is a single-tenant deployment of App Service that runs on your virtual network.
 
-Applications are hosted in App Service plans, which you create in an App Service Environment. An App Service plan serves as a provisioning profile for an application host. As you scale out your App Service plan, you add more application hosts. All apps in that plan run on each host. A single App Service Environment v3 supports up to 200 total instances across all App Service plans. A single App Service Isolated v2 (Iv2) plan supports up to 100 instances.
+You host applications in App Service plans, which you create in an App Service Environment. An App Service plan serves as a provisioning profile for an application host. As you scale out your App Service plan, you add more application hosts. By default, when per-app scaling is disabled, all apps in that plan run on each host. By using [per-app scaling](../manage-scale-per-app.md), an app or deployment slot can run on only a subset of the plan's hosts. A single App Service Environment v3 supports up to 200 total instances across all App Service plans. A single App Service Isolated v2 (Iv2) plan supports up to 100 instances.
 
 If you require physical isolation down to the hardware level, you can deploy your App Service Environment v3 on dedicated hosts.
 
@@ -64,6 +64,9 @@ If you require physical isolation down to the hardware level, you can deploy you
   - I3v2 uses eight vCores.
   
 Only I1v2, I2v2, and I3v2 SKU sizes are available in an App Service Environment deployed on dedicated hosts. Extra charges apply for dedicated host deployments.
+
+> [!NOTE]
+> Dedicated host deployments are available only in limited regions, and expansion to additional regions isn't planned.
 
 Most customers don't require isolation down to the hardware level, so consider the limitations of dedicated host deployments before you use this feature. To determine whether a dedicated host deployment is right for you, review your security and compliance requirements before deployment.
 
@@ -90,15 +93,16 @@ App Service Environment v3 differs from earlier versions in the following ways:
   Consider the following factors for an environment that has zone redundancy:
  
   - Each App Service plan must have at least two instances to distribute them across zones.
+  - Plan zone redundancy and the minimum plan instance count don't by themselves ensure that an app or deployment slot has two active replicas. A [per-app scaling](../manage-scale-per-app.md) limit of one allows only one active replica for that app or slot.
   - Each App Service plan's zone redundancy status is independent, so you can use a mix of zone-redundant and non-zone-redundant plans.
   - To make plans zone redundant, the App Service Environment must have zone redundancy enabled.
   - You can scale non-zone-redundant plans down to a single instance.
   
-  For more information, see [Reliability in App Service Environment](../../reliability/reliability-app-service-environment.md).
+  For more information, see [Reliability in App Service Environment](/azure/reliability/reliability-app-service-environment).
 
 - You can deploy an App Service Environment v3 on a dedicated host group. Host group deployments aren't zone redundant.
 
-- It scales faster than an App Service Environment v2. Scaling is much faster than in the multitenant service, but it isn't immediate.
+- It scales faster than an App Service Environment v2.
 
 - It no longer requires front-end scaling adjustments. App Service Environment v3 front ends automatically scale to meet your needs and are deployed on improved hosts.
 
@@ -120,7 +124,7 @@ The App Service Environment v3 pricing model varies depending on the deployment 
 
 - **Zone redundant App Service Environment v3:** There's no added charge for availability zone support. The pricing model is the same as an environment that isn't zone redundant.
 
-- **Dedicated host App Service Environment v3:** You pay for two dedicated hosts at the time of environment creation, based on current pricing. As you scale, you're charged a specialized Iv2 rate for each vCore. For each instance, I1v2 uses two vCores, I2v2 uses four vCores, and I3v2 uses eight vCores.
+- **Dedicated host App Service Environment v3:** You pay for two dedicated hosts at the time of environment creation, based on current pricing. As you scale, you're charged for a specialized Iv2 rate for each vCore. For each instance, I1v2 uses two vCores, I2v2 uses four vCores, and I3v2 uses eight vCores.
 
 You can also use [reserved instance pricing for Iv2](../../cost-management-billing/reservations/reservation-discount-app-service.md). For more information, see [App Service pricing](https://azure.microsoft.com/pricing/details/app-service/windows/).
 
@@ -143,7 +147,7 @@ App Service Environment v3 is available in the following regions.
 | Central India        | ✅                           | ✅                          |
 | Central US           | ✅                           | ✅                          |
 | East Asia            | ✅                           | ✅                          |
-| East US              | ✅                           | ✅                          |
+| East US              | ✅                           | ✅**                        |
 | East US 2            | ✅                           | ✅                          |
 | France Central       | ✅                           | ✅                          |
 | France South         | ✅                           |                             |
@@ -152,7 +156,7 @@ App Service Environment v3 is available in the following regions.
 | Israel Central       | ✅                           | ✅                          |
 | Italy North          | ✅                           | ✅**                        |
 | Japan East           | ✅                           | ✅                          |
-| Japan West           | ✅                           |                             |
+| Japan West           | ✅                           | ✅                          |
 | Jio India Central    | ✅**                         |                             |
 | Jio India West       | ✅**                         |                             |
 | Korea Central        | ✅                           | ✅                          |
@@ -215,9 +219,6 @@ An App Service Environment stores customer data, including app content, settings
 ## Pricing tiers
 
 The following sections list the regional pricing tiers, or SKUs, availability for App Service Environment v3.
-
-> [!NOTE]
-> Windows container plans don't support memory-intensive SKUs.
  
 ### Azure public regions
 
@@ -233,7 +234,7 @@ The following sections list the regional pricing tiers, or SKUs, availability fo
 | Canada Central       | ✅          | ✅          | ✅               |
 | Canada East          | ✅          | ✅          | ✅               | 
 | Central India        | ✅          | ✅          | ✅               | 
-| Central US           | ✅          | ✅ *        |                   | 
+| Central US           | ✅          | ✅*         | ✅**             | 
 | East Asia            | ✅          | ✅          | ✅               |
 | East US              | ✅          | ✅          |                   | 
 | East US 2            | ✅          | ✅          | ✅               |
@@ -273,14 +274,15 @@ The following sections list the regional pricing tiers, or SKUs, availability fo
 | UAE North            | ✅          | ✅          | ✅               | 
 | UK South             | ✅          | ✅          | ✅               | 
 | UK West              | ✅          | ✅          | ✅               | 
-| West Central US      | ✅          | ✅ *        |                   | 
-| West Europe          | ✅          | ✅ *        |                   | 
+| West Central US      | ✅          | ✅*         |                   | 
+| West Europe          | ✅          | ✅*         |                   | 
 | West India           | ✅          | ✅          |                   | 
 | West US              | ✅          | ✅          | ✅               | 
 | West US 2            | ✅          | ✅          | ✅               | 
 | West US 3            | ✅          | ✅          | ✅               | 
 
-\* Windows containers don't support large SKUs in this region.
+\* Windows containers don't support large SKUs in this region.  
+\** Limited availability. Create a support ticket if you run into issues deploying this SKU.
 
 ### Azure Government regions
 
@@ -295,7 +297,7 @@ The following sections list the regional pricing tiers, or SKUs, availability fo
 
 \* Windows containers don't support large SKUs in this region.
 
-### Azure in China
+### Azure operated by 21Vianet
 
 | Region               | Standard     | Large       | Memory intensive  |
 | -------------------- | :----------: | :---------: | :---------------: |

@@ -2,17 +2,20 @@
 title: Get Metadata activity
 titleSuffix: Azure Data Factory & Azure Synapse
 description: Learn how to use the Get Metadata activity in an Azure Data Factory or Azure Synapse Analytics pipeline.
-author: jianleishen
+author: simplywilson
 ms.subservice: orchestration
 ms.custom: synapse
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 02/13/2025
-ms.author: jianleishen
+ms.author: tinglee
 ---
 
 # Get Metadata activity in Azure Data Factory or Azure Synapse Analytics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+> [!TIP]
+> For the equivalent activity in Data Factory in Microsoft Fabric, see [Get Metadata activity](/fabric/data-factory/get-metadata-activity).
 
 You can use the Get Metadata activity to retrieve the metadata of any data in Azure Data Factory or a Synapse pipeline. You can use the output from the Get Metadata activity in conditional expressions to perform validation, or consume the metadata in subsequent activities.
 
@@ -20,7 +23,7 @@ You can use the Get Metadata activity to retrieve the metadata of any data in Az
 
 To use a Get Metadata activity in a pipeline, complete the following steps:
 
-1. Search for _Get Metadata_ in the pipeline Activities pane, and drag a Fail activity to the pipeline canvas.
+1. Search for _Get Metadata_ in the pipeline Activities pane, and drag a Get Metadata activity to the pipeline canvas.
 1. Select the new Get Metadata activity on the canvas if it isn't already selected, and its  **Settings** tab, to edit its details.
 1. Choose a dataset, or create a new one with the New button.  Then you can specify filter options and add columns from the available metadata for the dataset.
 

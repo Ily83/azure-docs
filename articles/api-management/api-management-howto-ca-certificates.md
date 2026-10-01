@@ -2,13 +2,12 @@
 title: Add a Custom CA Certificate - API Management | Microsoft Docs
 description: Learn how to add a custom CA certificate in Azure API Management. Also learn how to delete a certificate.
 services: api-management
-author: dlepow
 
 ms.service: azure-api-management
 ms.topic: how-to
-ms.date: 05/16/2025
-ms.author: danlep 
+ms.date: 02/17/2026
 ms.custom:
+  - sfi-image-nochange
 
 #customer intent: As an API developer, I want to add a custom CA certificate in API Management. 
 ---
@@ -17,13 +16,17 @@ ms.custom:
 
 **APPLIES TO: Developer | Basic | Standard | Premium**
 
-Azure API Management allows you to install CA certificates on the machine inside the trusted root and intermediate certificate stores. You should use this functionality if your services require a custom CA certificate.
+Azure API Management allows you to upload and install CA certificates on the machine inside the trusted root and intermediate certificate stores. Use this functionality if your services require a custom CA certificate.
 
 This article shows how to manage CA certificates of an API Management instance in the Azure portal. For example, if you use self-signed client certificates, you can upload custom trusted root certificates to API Management. 
+
+[!INCLUDE [api-management-ca-certificate-v2-tiers](../../includes/api-management-ca-certificate-v2-tiers.md)]
 
 CA certificates uploaded to API Management can be used for certificate validation only by the managed API Management gateway. If you use the [self-hosted gateway](self-hosted-gateway-overview.md), you can learn how to [create a custom CA for self-hosted gateway](#create-custom-ca-for-a-self-hosted-gateway) later in this article.
 
 [!INCLUDE [api-management-workspace-availability](../../includes/api-management-workspace-availability.md)]
+
+[!INCLUDE [api-management-service-update-behavior](../../includes/api-management-service-update-behavior.md)]
 
 [!INCLUDE [updated-for-az](~/reusable-content/ce-skilling/azure/includes/updated-for-az.md)]
 
@@ -57,6 +60,15 @@ Use the [Gateway Certificate Authority](/rest/api/apimanagement/current-ga/gatew
 
 1. [Add a certificate](api-management-howto-mutual-certificates.md) .pfx file to your API Management instance.
 1. Use the [Gateway Certificate Authority - Create Or Update](/rest/api/apimanagement/current-ga/gateway-certificate-authority/create-or-update) REST API to associate the certificate with the self-managed gateway.
+
+## Limits
+
+API Management currently enforces a limit of 10 CA certificates per instance.
+
+## Related content
+
+-   [How to secure backend services using client certificate authentication](./api-management-howto-mutual-certificates.md)
+-   [How to secure APIs using client certificate authentication](./api-management-howto-mutual-certificates-for-clients.md)
 
 [Upload a CA certificate]: #step1
 [Delete a CA certificate]: #step1a

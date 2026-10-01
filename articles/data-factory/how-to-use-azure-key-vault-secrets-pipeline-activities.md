@@ -4,13 +4,16 @@ description: Learn how to fetch stored credentials from Azure Key Vault and use 
 author: nabhishek
 ms.author: abnarain
 ms.subservice: security
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 02/13/2025
+ms.custom: sfi-image-nochange
 ---
 
 # Use Azure Key Vault secrets in pipeline activities
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 You can store credentials or secret values in an Azure Key Vault and use them during pipeline execution to pass to your activities.
 

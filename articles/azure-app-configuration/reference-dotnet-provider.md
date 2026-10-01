@@ -1,7 +1,7 @@
 ---
 title: .NET Configuration Provider
 titleSuffix: Azure App Configuration
-description: Learn to load configurations and feature flags from the Azure App Configuration service in .NET application.
+description: Learn to load configurations and feature flags from the Azure App Configuration service in a .NET application.
 services: azure-app-configuration
 author: zhiyuanliang-ms
 ms.author: zhiyuanliang
@@ -9,7 +9,7 @@ ms.service: azure-app-configuration
 ms.devlang: csharp
 ms.custom: devx-track-csharp
 ms.topic: tutorial
-ms.date: 04/29/2025
+ms.date: 08/28/2026
 #Customer intent: I want to learn how to use the Azure App Configuration .NET configuration provider library.
 ---
 
@@ -23,13 +23,13 @@ Azure App Configuration is a managed service that helps developers centralize th
 
 The Azure App Configuration .NET configuration provider integrates with the .NET configuration system, making it easy to load configuration values from your Azure App Configuration store. You can add the provider during application startup and use it alongside other configuration sources. 
 
-To use .NET configuration provider, install the package:
+To use the .NET configuration provider, install the package:
 
 ```console
 dotnet add package Microsoft.Extensions.Configuration.AzureAppConfiguration
 ```
 
-You call `AddAzureAppConfiguration` extension method on `IConfigurationBuilder` to add Azure App Configuration as a configuration provider of your application.
+Call the `AddAzureAppConfiguration` extension method on `IConfigurationBuilder` to add Azure App Configuration as a configuration provider for your application.
 
 The configuration provider library implements a combined **Options Pattern** and **Builder Pattern** to provide a clean, declarative way to configure the `AzureAppConfigurationOptions`. The `AddAzureAppConfiguration` method accepts an `Action<AzureAppConfigurationOptions>` delegate parameter that lets you configure the provider through a fluent API.
 
@@ -138,10 +138,10 @@ public class WeatherService
 }
 ```
 
-#### 3. Options pattern for strongly-typed configuration
+#### 3. Options pattern for strongly typed configuration
 
 ```csharp
-// Define a strongly-typed settings class
+// Define a strongly typed settings class
 public class Settings
 {
     public string BackgroundColor { get; set; }
@@ -158,6 +158,9 @@ For more information about options pattern in .NET, go to the [documentation](/d
 ### JSON content type handling
 
 You can create JSON key-values in App Configuration. When a key-value with the content type `"application/json"` is read, the configuration provider will flatten it into individual settings inside of `IConfiguration`. For more information, go to [Use content type to store JSON key-values in App Configuration](./howto-leverage-json-content-type.md).
+
+> [!NOTE]
+> Starting with version *8.4.0* of `Microsoft.Extensions.Configuration.AzureAppConfiguration`, the configuration provider allows comments, as defined in ([JSONC](https://jsonc.org/)), in key-values with an `application/json` content type.
 
 ### Load specific key-values using selectors
 
@@ -304,7 +307,7 @@ For ASP.NET Core applications, you can use the `Microsoft.Azure.AppConfiguration
 dotnet add package Microsoft.Azure.AppConfiguration.AspNetCore
 ```
 
-After registering the service, call the `UseAzureAppConfiguration` to add the `AzureAppConfigurationRefreshMiddleware` to your application pipeline to automatically refresh configuration on incoming requests:
+After registering the service, call `UseAzureAppConfiguration` to add `AzureAppConfigurationRefreshMiddleware` to your application pipeline and automatically refresh configuration on incoming requests:
 
 ```csharp
 ...
@@ -485,6 +488,16 @@ public class WeatherForecastController : ControllerBase
 
 For more information about how to use the feature management library, go to the [feature flag quickstart](./quickstart-feature-flag-aspnet-core.md).
 
+### Feature flag telemetry
+
+When feature flag telemetry is enabled, the Azure App Configuration provider injects additional properties to feature flag telemetry data. These properties provide more context about the feature flag and its evaluation:
+
+- **AllocationID**: A unique identifier representing the state of the feature flag's allocation.
+- **ETag**: The current ETag for the feature flag.
+- **FeatureFlagReference**: A reference to the feature flag in the format of `<AppConfigurationEndpoint>kv/<FeatureFlagKey>`. When a label is present, the reference includes it as a query parameter: `<AppConfigurationEndpoint>kv/<FeatureFlagKey>?label=<FeatureFlagLabel>`.
+
+The full schema can be found in the [App Configuration Feature Evaluation Event schema definition](https://github.com/microsoft/FeatureManagement/blob/main/Schema/FeatureEvaluationEvent/AppConfigurationFeatureEvaluationEvent.v1.0.0.schema.json). For more information about how to use the feature flag telemetry, go to the [enable telemetry for feature flags](./howto-telemetry.md) walkthrough.
+
 ## Key Vault reference
 
 Azure App Configuration supports referencing secrets stored in Azure Key Vault. In App Configuration, you can create keys that map to secrets stored in Key Vault. The secrets are securely stored in Key Vault, but can be accessed like any other configuration once loaded.
@@ -590,6 +603,9 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 
 Azure App Configuration enables you to configure secret refresh intervals independently of your configuration refresh cycle. This is crucial for security because while the Key Vault reference URI in App Configuration remains unchanged, the underlying secret in Key Vault might be rotated as part of your security practices.
 
+> [!NOTE] 
+> Secret refresh uses a minimum interval of **one minute**. This prevents excessive secret reloads which may induce Key Vault throttling.
+
 To ensure your application always uses the most current secret values, configure the `SetSecretRefreshInterval` method. This forces the provider to retrieve fresh secret values from Key Vault when:
 
 - Your application calls `IConfigurationRefresher.TryRefreshAsync`
@@ -634,6 +650,15 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 
 For information about using snapshots, go to [Create and use snapshots](./howto-create-snapshots.md).
 
+### Snapshot reference
+
+A snapshot reference is a configuration setting that references a snapshot in the same App Configuration store. When loaded, the provider resolves it and adds all key-values from that snapshot. Using snapshot references enables switching between snapshots at runtime, unlike `SelectSnapshot("...")`, which requires code changes and/or restarts to switch to a new snapshot.
+
+For more information about creating a snapshot reference, go to [snapshot reference concept](./concept-snapshot-references.md).
+
+> [!NOTE] 
+> To use snapshot references, use the version *8.4.0* or later of `Microsoft.Extensions.Configuration.AzureAppConfiguration`.
+
 ## Startup retry
 
 Configuration loading is a critical path operation during application startup. To ensure reliability, the Azure App Configuration provider implements a robust retry mechanism during the initial configuration load. This helps protect your application from transient network issues that might otherwise prevent successful startup.
@@ -672,6 +697,43 @@ builder.Services.AddOpenTelemetry()
 ```
 
 For more information about OpenTelemetry in .NET, see the [OpenTelemetry .NET documentation](https://github.com/open-telemetry/opentelemetry-dotnet).
+
+## Health check
+
+The Azure App Configuration .NET provider supports [.NET app health checks](/dotnet/core/diagnostics/diagnostic-health-checks). To enable health checks, you can call `AddAzureAppConfiguration()` method on `IHealthChecksBuilder`, which will add an `IHealthCheck` with a default registration name of `"Microsoft.Extensions.Configuration.AzureAppConfiguration"`.
+
+```C#
+builder.Configuration.AddAzureAppConfiguration(options => 
+    options.Connect(new Uri(appConfigEndpoint), new DefaultAzureCredential()));
+
+builder.Services.AddHealthChecks()
+    .AddAzureAppConfiguration();
+```
+
+The .NET provider will be considered as unhealthy when the last load or refresh attempt failed.
+
+For more information about health checks in .NET, see the [.NET health monitoring documentation](/dotnet/architecture/microservices/implement-resilient-applications/monitor-app-health).
+
+## Connect to Azure Front Door
+
+The Azure Front Door integration allows client applications to fetch configuration from edge-cached endpoints rather than directly from App Configuration. This architecture delivers secure, scalable configuration access with the performance benefits of global CDN distribution.
+
+The following example demonstrates how to load configuration settings from Azure Front Door:
+
+```csharp
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    options.ConnectAzureFrontDoor(new Uri("{YOUR-AFD-ENDPOINT}"))
+            .Select("TestApp:*")
+            .ConfigureRefresh(refreshOptions =>
+            {
+                refreshOptions.RegisterAll()
+                    .SetRefreshInterval(TimeSpan.FromMinutes(1));
+            });
+});
+```
+
+For more information about Azure Front Door, see [Load Configuration from Azure Front Door in Client Applications](./how-to-load-azure-front-door-configuration-provider.md).
 
 ## Next steps
 

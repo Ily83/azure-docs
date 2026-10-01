@@ -5,8 +5,14 @@ ms.topic: reference
 ms.date: 10/05/2023
 ms.devlang: csharp
 # ms.devlang: csharp, java, javascript, powershell, python
-ms.custom: devx-track-csharp, devx-track-python, devx-track-extended-java, devx-track-js, devx-track-ts
 zone_pivot_groups: programming-languages-set-functions
+ms.custom:
+  - devx-track-csharp
+  - devx-track-python
+  - devx-track-extended-java
+  - devx-track-js
+  - devx-track-ts
+  - sfi-ropc-nochange
 ---
 
 # Azure Cosmos DB output binding for Azure Functions 2.x and higher
@@ -31,18 +37,22 @@ For information on setup and configuration details, see the [overview](./functio
 
 Unless otherwise noted, examples in this article target version 3.x of the [Azure Cosmos DB extension](functions-bindings-cosmosdb-v2.md). For use with extension version 4.x, you need to replace the string `collection` in property and attribute names with `container` and `connection_string_setting` with `connection`.
 
+::: zone pivot="programming-language-go"
+Go support isn't currently available for this binding.
+::: zone-end
+
 ::: zone pivot="programming-language-csharp"
 
 # [Isolated worker model](#tab/isolated-process)
 
 The following code defines a `MyDocument` type:
-
+<!--
 :::code language="csharp" source="~/azure-functions-dotnet-worker/samples/Extensions/CosmosDB/CosmosDBFunction.cs" range="49-58":::
-
+-->
 In the following example, the return type is an [`IReadOnlyList<T>`](/dotnet/api/system.collections.generic.ireadonlylist-1), which is a modified list of documents from trigger binding parameter:
-
+<!--
 :::code language="csharp" source="~/azure-functions-dotnet-worker/samples/Extensions/CosmosDB/CosmosDBFunction.cs" range="4-47":::
-
+-->
 # [In-process model](#tab/in-process)
 
 This section contains the following examples:
@@ -367,13 +377,13 @@ The function creates Azure Cosmos DB documents in the following format for each 
 ```
 
 Here's the TypeScript code:
-
+<!--
 :::code language="typescript" source="~/azure-functions-nodejs-v4/ts/src/functions/cosmosOutput1.ts" :::
-
+-->
 To output multiple documents, return an array instead of a single object. For example:
-
+<!--
 :::code language="typescript" source="~/azure-functions-nodejs-v4/ts/src/functions/cosmosOutput2.ts" id="displayInDocs" :::
-
+-->
 # [Model v3](#tab/nodejs-v3)
 
 TypeScript samples are not documented for model v3.
@@ -407,13 +417,13 @@ The function creates Azure Cosmos DB documents in the following format for each 
 ```
 
 Here's the JavaScript code:
-
+<!--
 :::code language="javascript" source="~/azure-functions-nodejs-v4/js/src/functions/cosmosOutput1.js" :::
-
+-->
 To output multiple documents, return an array instead of a single object. For example:
-
+<!--
 :::code language="javascript" source="~/azure-functions-nodejs-v4/js/src/functions/cosmosOutput2.js" id="displayInDocs" :::
-
+-->
 # [Model v3](#tab/nodejs-v3)
 
 The following example shows an Azure Cosmos DB output binding in a *function.json* file and a [JavaScript function](functions-reference-node.md) that uses the binding. The function uses a queue input binding for a queue that receives JSON in the following format:
@@ -632,8 +642,8 @@ For Python v2 functions defined using a decorator, the following properties on t
 | Property    | Description |
 |-------------|-----------------------------|
 |`arg_name` | The variable name used in function code that represents the list of documents with changes. |
-|`database_name`  | The name of the Azure Cosmos DB database with the collection being monitored. |
-|`collection_name`  | The name of the Azure Cosmos DB collection being monitored. |
+|`database_name`  | The name of the Azure Cosmos DB database with the container being monitored. |
+|`container_name`  | The name of the Azure Cosmos DB container being monitored. |
 |`create_if_not_exists`  | A Boolean value that indicates whether the database and collection should be created if they do not exist. |
 |`connection_string_setting` | The connection string of the Azure Cosmos DB being monitored. |
 

@@ -1,8 +1,8 @@
 ---
 ms.topic: include
-ms.date: 04/29/2025
-author: PatAltimore
-ms.author: patricka
+ms.date: 02/19/2026
+author: sethmanheim
+ms.author: sethm
 ms.service: azure-iot-edge
 ms.custom: linux-related-content
 services: iot-edge
@@ -10,7 +10,7 @@ services: iot-edge
 
 ### Device requirements
 
-An X64, ARM32, or ARM64 Linux device.
+An x64, ARM32, or ARM64 Linux device.
 
 Microsoft publishes installation packages for various operating systems.
 

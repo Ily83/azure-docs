@@ -14,17 +14,19 @@ ms.custom: mode-other
 
 # Integrate an OpenAI bot with chat
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article demonstrates how to integrate a conversational OpenAI bot with an Azure Communication Services chat. The OpenAI chat bot uses [Microsoft Bot Framework](https://dev.botframework.com) integrated with [Semantic Kernel](https://github.com/microsoft/semantic-kernel). The OpenAI bot retrieves and summarizes responses from an internal knowledge base to answer user questions in natural language.
 
 :::image type="content" source="./media/chat-azure-open-ai-architecture.png" alt-text="Azure OpenAI Architecture Diagram.":::
 
-## Step 1: Deploy a Base Model with Azure AI Foundry
+## Step 1: Deploy a Base Model with Microsoft Foundry
 
-1. In the Azure AI Foundry portal, follow the [Create a project](/azure/ai-foundry/how-to/create-projects?tabs=ai-studio#create-a-project) article to create a new project. When prompted, create a new hub and accept all default settings.
+1. In the Foundry portal, follow the [Create a project](/azure/ai-foundry/how-to/create-projects?tabs=ai-studio#create-a-project) article to create a new project. When prompted, create a new hub and accept all default settings.
 
 1. Open your project, go to **Included capabilities**, select **Azure OpenAI Service**, and save both the API key and the service endpoint URL.
 
-   :::image type="content" source="./media/azure-ai-foundry-overview.png" alt-text="Screenshot that shows the overview page of Azure AI Foundry portal.":::
+   :::image type="content" source="./media/azure-ai-foundry-overview.png" alt-text="Screenshot that shows the overview page of Foundry portal.":::
 
 1. In the left-hand menu, navigate to **My assets → Models + endpoints**. Then click **+ Deploy Model** and choose **Deploy base model**.
 
@@ -119,7 +121,7 @@ When you have a Communication Services resource, you can set up a Communication 
 
 ## Step 7: Deploy the web app
 
-1. Open the `ChatBot` folder in the [Sample Repo](https://github.com/Azure/ai-solution-with-azurecommunicationchat) in Visual Studio Code (VS Code). Make sure to use VS Code because it supports Microsoft Entra ID in code deployment.
+1. Open the `ChatBot` folder in the Sample Repo in Visual Studio Code (VS Code). Use VS Code because it supports Microsoft Entra ID in code deployment.
 
 1. Replace the placeholders in the sample repo with actual values:
 

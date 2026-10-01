@@ -7,11 +7,13 @@ manager: sphenry
 services: azure-communication-services
 ms.author: bashan
 ms.date: 06/19/2025
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
 ---
 
 # Overview of Azure Communication Services email
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Email continues to be a key customer engagement channel globally for businesses. Businesses rely heavily on email communication for seamless business operations.
 

@@ -7,13 +7,15 @@ ms.author: makromer
 ms.reviewer: daperlov
 ms.subservice: data-flows
 ms.custom: synapse
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 09/26/2024
 ---
 
 # Using column patterns in mapping data flows
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 Several mapping data flows transformations allow you to reference template columns based on patterns instead of hard-coded column names. This matching is known as *column patterns*. You can define patterns to match columns based on name, data type, stream, origin, or position instead of requiring exact field names. There are two scenarios where column patterns are useful:
 

@@ -2,13 +2,15 @@
 title: Deploy VMs on your Azure Stack Edge Pro GPU via the Azure portal
 description: Learn how to create and manage VMs on your Azure Stack Edge Pro GPU via the Azure portal.
 services: databox
-author: alkohli
+author: sipastak
 
 ms.service: azure-stack-edge
-ms.custom: linux-related-content
 ms.topic: how-to
 ms.date: 06/12/2025
-ms.author: alkohli
+ms.author: sipastak
+ms.custom:
+  - linux-related-content
+  - sfi-image-nochange
 # Customer intent: As an IT admin, I need to understand how to configure compute on an Azure Stack Edge Pro GPU device so that I can use it to transform data before I send it to Azure.
 ---
 

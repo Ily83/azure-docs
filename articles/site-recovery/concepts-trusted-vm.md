@@ -2,11 +2,11 @@
 title: Trusted launch VMs with Azure Site Recovery 
 description: Describes how to use trusted launch virtual machines with Azure Site Recovery for disaster recovery and migration.
 services: site-recovery
-author: jyothisuri
+author: Jeronika-MS
 ms.service: azure-site-recovery
 ms.topic: concept-article
-ms.date: 06/05/2025
-ms.author: jsuri
+ms.date: 09/11/2026
+ms.author: v-gajeronika
 
 # Customer intent: As a cloud architect, I want to implement Azure Site Recovery for trusted launch virtual machines, so that I can ensure robust disaster recovery and migrate existing VMs securely against persistent threats.
 ---
@@ -19,7 +19,7 @@ ms.author: jsuri
 
 Find the support matrix for Azure trusted launch virtual machines with Azure Site Recovery:
 
-- **Operating system**: Support for Windows and Linux OS is generally available. [Learn more](#supported-linux-distributions-and-kernels) on supported Linux distributions and kernels.
+- **Operating system**: Windows and a maintained subset of the standard Azure-to-Azure Linux support matrix are supported. Review the [supported Linux distributions and kernels](#supported-linux-distributions-and-kernels), creation-date requirement, and exclusions on this page.
 - **Region**: Available in all [Azure Site Recovery supported regions](./azure-to-azure-support-matrix.md#region-support).
     
     > [!NOTE]
@@ -28,7 +28,8 @@ Find the support matrix for Azure trusted launch virtual machines with Azure Sit
 - **Migration**: Migration of Azure Site Recovery protected existing Generation 1 Azure VMs to trusted VMs and [Generation 2 Azure virtual machines to trusted VMs](/azure/virtual-machines/trusted-launch-existing-vm) isn't supported. [Learn more](#migrate-azure-site-recovery-protected-azure-generation-2-vm-to-trusted-vm) about migration of Generation 2 Azure VMs.
 - **Disk Network Access**: Azure Site Recovery creates disks (replica and target disks) with public access enabled by default. To disable public access for these disks follow [these steps](./azure-to-azure-common-questions.md#disk-network-access).
 - **Boot integrity monitoring**: Replication of [Boot integrity monitoring](/azure/virtual-machines/boot-integrity-monitoring-overview) state isn't supported. If you want to use it, enable it explicitly on the failed over virtual machine.
-- **Shared disks**: Trusted virtual machines with attached shared disks are currently supported only for Windows OS.
+- **Secure Boot, virtual Trusted Platform Module, and VM guest state**: The system preserves Secure Boot and virtual Trusted Platform Module settings. It replicates the VM guest state for supported managed OS disks.
+- **Shared disks**: The system supports trusted virtual machines with attached shared disks only for Windows.
 - **Scenario**: Available only for Azure-to-Azure scenario. 
 - **Create a new VM flow**: Enabling **Management** > **Site Recovery** option in *Create a new Virtual machine* flow is currently  supported for Windows OS only. Linux OS is not yet supported.
 - **VM creation time**: Only Linux Trusted VMs created after `1-Apr-2024` are supported. Linux Trusted VMs created prior to this date are not supported.
@@ -39,16 +40,18 @@ The following Linux distributions and kernels are supported for trusted launch v
 
 Following are the supported distros:
 - **Ubuntu**: 18.04, 20.04, 22.04, 24.04
-- **RHEL**: 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 8.10, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5
-- **SUSE 15**: SP3, SP4, SP5, SP6
-- **Alma Linux**: 8.10, 9.4, 9.5
+- **RHEL**: 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 8.10, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 10, 10.1
+- **SUSE 15**: SP3, SP4, SP5, SP6, SP7
+- **Alma Linux**: 8.10, 9.4, 9.5, 9.6, 9.7, 10, 10.1
 - **Debian**: 12
+- **Oracle Linux**: 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 8.10, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5 
 
 Azure Site Recovery supports the same kernels for Azure Trusted VMs as for Azure Standard VMs across the listed Linux distributions. For SUSE, however, Azure Site Recovery support only the following kernels for Azure Trusted launch VMs, provided these kernels are also supported for Azure Standard VMs by Azure Site Recovery:
 - **SUSE 15 SP3**: 5.3.18-150300.59.179.1 and later 
 - **SUSE 15 SP4**: 5.14.21-150400.24.141.1 and later 
 - **SUSE 15 SP5**: 5.14.21-150500.55.83.1 and later 
-- **SUSE 15 SP6**: 6.4.0-150600.23.25.1 and later 
+- **SUSE 15 SP6**: 6.4.0-150600.23.25.1 and later
+- **SUSE 15 SP7**: 6.4.0-150700.18.9 and later
 
 ## Azure Site Recovery for trusted VMs 
 
@@ -62,7 +65,7 @@ You can follow the same steps for Azure Site Recovery with trusted virtual machi
 
 Azure Generation 2 VMs protected by Azure Site Recovery cannot be migrated to trusted launch. While the portal blocks this migration, other channels like PowerShell and CLI do not. Before proceeding, review the migration [prerequisites](/azure/virtual-machines/trusted-launch-existing-vm) and plan accordingly. If you still wish to migrate your Generation 2 Azure VM protected by Azure Site Recovery to Trusted Launch, follow these steps:
 
-1. [Disable](./site-recovery-manage-registration-and-protection.md#disable-protection-for-a-azure-vm-azure-to-azure) Azure Site Recovery replication. 
+1. [Disable](./site-recovery-manage-registration-and-protection.md) Azure Site Recovery replication. 
 1. Uninstall Azure Site Recovery agent from the VM. To do this, follow these steps:
     1. On the Azure portal, go to the virtual machine.
     1. Select **Settings** > **Extensions**.

@@ -3,7 +3,7 @@ title: Use Bicep to deploy resources to management group
 description: Describes how to create a Bicep file that deploys resources at the management group scope.
 ms.topic: how-to
 ms.custom: devx-track-bicep
-ms.date: 02/10/2025
+ms.date: 08/06/2026
 ---
 
 # Management group deployments with Bicep files
@@ -11,10 +11,6 @@ ms.date: 02/10/2025
 This article describes how to set scope with Bicep when deploying to a management group.
 
 As your organization matures, you can deploy a Bicep file to create resources at the management group level. For example, you may need to define and assign [policies](../../governance/policy/overview.md) or [Azure role-based access control (Azure RBAC)](../../role-based-access-control/overview.md) for a management group. With management group level templates, you can declaratively apply policies and assign roles at the management group level. For more information, see [Understand scope](../management/overview.md#understand-scope).
-
-### Training resources
-
-If you would rather learn about deployment scopes through step-by-step guidance, see [Deploy resources to subscriptions, management groups, and tenants by using Bicep](/training/modules/deploy-resources-scopes-bicep/).
 
 ## Supported resources
 
@@ -130,7 +126,7 @@ To deploy resources to the target management group, add those resources with the
 targetScope = 'managementGroup'
 
 // policy definition created in the management group
-resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2025-01-01' = {
+resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2025-03-01' = {
   ...
 }
 ```
@@ -213,7 +209,7 @@ targetScope = 'managementGroup'
 
 param mgName string = 'mg-${uniqueString(newGuid())}'
 
-resource newMG 'Microsoft.Management/managementGroups@2023-04-01' = {
+resource newMG 'Microsoft.Management/managementGroups@2024-02-01-preview' = {
   scope: tenant()
   name: mgName
   properties: {}
@@ -229,7 +225,7 @@ targetScope = 'managementGroup'
 
 param mgName string = 'mg-${uniqueString(newGuid())}'
 
-resource newMG 'Microsoft.Management/managementGroups@2023-04-01' = {
+resource newMG 'Microsoft.Management/managementGroups@2024-02-01-preview' = {
   scope: tenant()
   name: mgName
   properties: {
@@ -256,7 +252,9 @@ To deploy a template that moves an existing Azure subscription to a new manageme
 
 ## Azure Policy
 
-Custom policy definitions that are deployed to the management group are extensions of the management group. To get the ID of a custom policy definition, use the [extensionResourceId()](./bicep-functions-resource.md#extensionresourceid) function. Built-in policy definitions are tenant level resources. To get the ID of a built-in policy definition, use the [tenantResourceId()](./bicep-functions-resource.md#tenantresourceid) function.
+Custom policy definitions that you deploy to the management group are extensions of the management group. To get the ID of a custom policy definition, use the [extensionResourceId()](./bicep-functions-resource.md#extensionresourceid) function. When you call this function directly, the first argument must be the fully qualified resource ID of the management group. This requirement prevents failures when the deployment starts from a lower scope, such as a subscription or resource group.
+
+In Bicep, prefer the symbolic name of the policy definition and its `id` property, as shown in the following example. Built-in policy definitions are tenant level resources. To get the ID of a built-in policy definition, use the [tenantResourceId()](./bicep-functions-resource.md#tenantresourceid) function.
 
 The following example shows how to [define](../../governance/policy/concepts/definition-structure.md) a policy at the management group level, and how to assign it.
 
@@ -270,7 +268,7 @@ param allowedLocations array = [
   'australiacentral'
 ]
 
-resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2023-04-01' = {
+resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2025-03-01' = {
   name: 'locationRestriction'
   properties: {
     policyType: 'Custom'
@@ -290,7 +288,7 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2023-04-01'
   }
 }
 
-resource policyAssignment 'Microsoft.Authorization/policyAssignments@2024-04-01' = {
+resource policyAssignment 'Microsoft.Authorization/policyAssignments@2025-03-01' = {
   name: 'locationAssignment'
   properties: {
     policyDefinitionId: policyDefinition.id

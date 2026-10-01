@@ -7,7 +7,7 @@ manager: camilo.ramirez
 services: azure-communication-services
 ms.author: shamkh
 ms.date: 01/15/2025
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-communication-services
 ms.subservice: advanced-messaging
 ms.custom: devx-track-extended-java, devx-track-js, devx-track-python
@@ -15,6 +15,8 @@ zone_pivot_groups: acs-js-csharp-java-python
 ---
 
 # Send WhatsApp template messages using Advanced Messages
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes how to send WhatsApp template messages using Advanced Communication Messages SDK.
 

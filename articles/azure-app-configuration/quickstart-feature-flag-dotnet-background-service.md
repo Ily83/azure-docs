@@ -6,11 +6,15 @@ services: azure-app-configuration
 author: zhiyuanliang-ms
 ms.service: azure-app-configuration
 ms.devlang: csharp
-ms.custom: devx-track-csharp, mode-other, devx-track-dotnet
 ms.topic: quickstart
 ms.tgt_pltfrm: .NET
 ms.date: 12/17/2024
 ms.author: zhiyuanliang
+ms.custom:
+  - devx-track-csharp
+  - mode-other
+  - devx-track-dotnet
+  - sfi-image-nochange
 #Customer intent: As a .NET background service developer, I want to use feature flags to control feature availability quickly and confidently.
 ---
 # Quickstart: Add feature flags to a .NET background service
@@ -28,7 +32,7 @@ Feature management support extends the dynamic configuration feature in App Conf
 Add a feature flag called *Beta* to the App Configuration store and leave **Label** and **Description** with their default values. For more information about how to add feature flags to a store using the Azure portal or the CLI, go to [Create a feature flag](./manage-feature-flags.md#create-a-feature-flag).
 
 > [!div class="mx-imgBorder"]
-> ![Screenshot showing fields to enable a feature flag named Beta.](media/add-beta-feature-flag.png)
+> ![Screenshot showing fields to enable a feature flag named Beta.](media/quickstart-feature-flag-dotnet-background-service/add-beta-feature-flag.png)
 
 ## Use the feature flag
 

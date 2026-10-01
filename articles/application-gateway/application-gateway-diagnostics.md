@@ -7,12 +7,13 @@ services: application-gateway
 author: mbender-ms
 ms.service: azure-application-gateway
 ms.topic: concept-article
-ms.date: 06/16/2025
+ms.date: 01/05/2026
 ms.author: mbender
 ms.custom:
   - ai-gen-docs-bap
   - ai-gen-description
-  - ai-seo-date:06/16/2025 
+  - ai-seo-date:06/16/2025
+  - sfi-image-nochange
 # Customer intent: "As an IT administrator, I want to enable and configure diagnostic logging for Azure Application Gateway, so that I can monitor resource performance and troubleshoot issues effectively."
 ---
 
@@ -33,6 +34,53 @@ You can use different types of logs in Azure to manage and troubleshoot applicat
 
 > [!NOTE]
 > Logs are available only for resources deployed in the Azure Resource Manager deployment model. You can't use logs for resources in the classic deployment model. For a better understanding of the two models, see the [Understanding Resource Manager deployment and classic deployment](../azure-resource-manager/management/deployment-models.md) article.
+
+## Storage locations for diagnostic logs 
+Azure Monitor provides multiple options for storing resource logs depending on your analysis, retention, and integration requirements. When configuring diagnostic settings, you can choose one or more destinations for log collection. 
+
+### Log Analytics workspace (recommended)
+
+A Log Analytics workspace is the recommended destination for collecting and analyzing Application Gateway resource logs. It enables you to:
+
+- Use predefined queries and visualizations
+- Create alerts based on specific log conditions
+- Integrate with Azure Monitor features and insights
+
+In Log Analytics, the table used for storing diagnostic logs depends on the collection type configured in the diagnostic setting.
+
+### Collection types in Log Analytics
+
+#### Azure Diagnostics (legacy)
+
+When you select Azure Diagnostics, all logs are written to the shared **AzureDiagnostics** table. Because this table is shared across many resource types, each service writes its own custom fields. When the number of custom fields exceeds 500, the system stores extra fields under the **AdditionalFields** dynamic property as key/value pairs. This structure can lead to reduced discoverability and more complex queries.
+
+### Resource-specific (recommended)
+
+When you select Resource-specific, the system writes logs into dedicated tables for each category.
+Resource-specific mode provides:
+
+- Simplified querying with predictable schemas
+- Improved discoverability of fields and table structures
+- Better performance due to lower ingestion latency and faster query execution
+- Granular RBAC by assigning access at the table level
+
+For Application Gateway, resource-specific mode creates the following tables:
+
+- [AGWAccessLogs](/azure/azure-monitor/reference/tables/agwaccesslogs)
+- [AGWPerformanceLogs](/azure/azure-monitor/reference/tables/agwperformancelogs)
+- [AGWFirewallLogs](/azure/azure-monitor/reference/tables/agwfirewalllogs)
+
+### Selecting the collection type in Log Analytics
+
+Azure services are transitioning to resource-specific mode. As part of this migration, a toggle is available in the diagnostic settings to choose either: 
+
+- Resource-specific (default) 
+- Azure Diagnostics 
+
+The toggle determines whether logs for the selected categories are routed to dedicated tables or to the AzureDiagnostics table. When switching to resource-specific mode, only newly selected categories use the dedicated tables; existing streams continue unchanged until reconfigured.  
+
+Selecting resource-specific mode provides enhanced flexibility through workspace transformations, allowing you to preprocess data before ingestion.For guidance on configuring workspace transformations, see: [Tutorial: Add a workspace transformation to Azure Monitor Logs by using the Azure portal](/azure/azure-monitor/logs/tutorial-workspace-transformations-portal#overview)
+ 
 
 ## Examples of optimizing access logs using Workspace Transformations
 
@@ -57,7 +105,7 @@ Other storage locations:
 - **Azure Event Hubs**: Event hubs are a great option for integrating with other security information and event management (SIEM) tools to get alerts on your resources.
 - **Azure Monitor partner integrations**.
 
-Learn more about the Azure Monitor's [diagnostic settings destinations](/azure/azure-monitor/essentials/diagnostic-settings?WT.mc_id=Portal-Microsoft_Azure_Monitoring&tabs=portal#destinations) .
+Learn more about the Azure Monitor's [diagnostic settings destinations](/azure/azure-monitor/essentials/diagnostic-settings#create-a-diagnostic-setting) .
 
 ## Enable logging through PowerShell
 
@@ -115,4 +163,4 @@ You can also connect to your storage account and retrieve the JSON log entries f
 
 - Visualize counter and event logs by using [Azure Monitor logs](/previous-versions/azure/azure-monitor/insights/azure-networking-analytics).
 - [Visualize your Azure activity log with Power BI](https://powerbi.microsoft.com/blog/monitor-azure-audit-logs-with-power-bi/) blog post.
-- [View and analyze Azure activity logs in Power BI and more](https://azure.microsoft.com/blog/analyze-azure-audit-logs-in-powerbi-more/) blog post.
+- [View and analyze Azure activity logs in Power BI and more](/azure/azure-monitor/logs/log-powerbi) blog post.

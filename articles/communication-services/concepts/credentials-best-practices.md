@@ -8,12 +8,15 @@ services: azure-communication-services
 
 ms.author: soricos
 ms.date: 01/30/2022
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
+ms.custom: sfi-ropc-nochange
 #Customer intent: As a developer, I want learn how to correctly handle Credential objects so that I can build applications that run efficiently.
 ---
 
 # Credentials best practices
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 This article provides best practices for managing [User Access Tokens](./authentication.md#user-access-tokens) in Azure Communication Services SDKs. Follow this guidance to optimize the resources used by your application and reduce the number of roundtrips to the Azure Communication Identity API.
 

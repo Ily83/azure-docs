@@ -1,14 +1,15 @@
 ---
 title: Retrieve Azure IoT Edge logs
 description: Retrieve Azure IoT Edge logs and upload them to Azure Blob Storage for remote monitoring.
-author: PatAltimore
-
-ms.author: patricka
+author: sethmanheim
+ms.author: sethm
 ms.date: 06/03/2025
 ms.topic: how-to
 ms.service: azure-iot-edge
-ms.custom: devx-track-azurecli
 services: iot-edge
+ms.custom:
+  - devx-track-azurecli
+  - sfi-image-nochange
 ---
 # Retrieve logs from IoT Edge deployments
 
@@ -273,7 +274,7 @@ In the Azure portal, invoke the method with the method name `UploadModuleLogs` a
 
 ## Upload support bundle diagnostics
 
-Use the **UploadSupportBundle** direct method to bundle and upload a zip file of IoT Edge module logs to an available Azure Blob Storage container. This direct method runs the [`iotedge support-bundle`](./troubleshoot.md#gather-debug-information-with-support-bundle-command) command on your IoT Edge device to obtain the logs.
+Use the **UploadSupportBundle** direct method to bundle and upload a zip file of IoT Edge module logs to an available Azure Blob Storage container. This direct method runs the [`iotedge support-bundle`](./troubleshoot.md#gather-debug-information-by-using-the-support-bundle-command) command on your IoT Edge device to obtain the logs.
 
 > [!NOTE]
 > To upload logs from a device behind a gateway device, make sure the [API proxy and blob storage modules](how-to-configure-api-proxy-module.md) are set up on the top layer device. These modules route logs from your lower layer device through your gateway device to your storage in the cloud.
@@ -332,7 +333,7 @@ az iot hub invoke-module-method --method-name 'UploadSupportBundle' -n <hub name
 '
 ```
 
-In the Azure portal, invoke the method with the method name `UploadSupportBundle` and the following JSON payload after you relace your own SAS URL:
+In the Azure portal, invoke the method with the method name `UploadSupportBundle` and the following JSON payload after you replace your own SAS URL:
 
 ```json
     {

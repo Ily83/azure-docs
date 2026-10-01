@@ -6,14 +6,18 @@ author: ssabat
 ms.author: susabat
 ms.reviewer: susabat
 ms.subservice: ci-cd
-ms.custom: synapse
 ms.topic: troubleshooting
 ms.date: 05/15/2024
+ms.custom:
+  - synapse
+  - sfi-ropc-nochange
 ---
 
 # Troubleshoot CI-CD, Azure DevOps, and GitHub issues in Azure Data Factory and Synapse Analytics 
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 In this article, let us explore common troubleshooting methods for Continuous Integration-Continuous Deployment (CI-CD), Azure DevOps and GitHub issues in Azure Data Factory and Synapse Analytics.
 

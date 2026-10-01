@@ -4,10 +4,11 @@ description: How to use your own certificates for accessing the local web UI and
 services: databox
 author: v-dalc
 
-ms.service: azure-databox
+ms.service: azure-data-box
 ms.topic: how-to
 ms.date: 08/31/2021
 ms.author: shaas
+ms.custom: sfi-image-nochange
 # Customer intent: "As a data administrator, I want to use my own certificates for accessing the Data Box device, so that I can ensure secure and trusted communication with the device."
 ---
 

@@ -3,7 +3,7 @@ title: Dynamically set column names in data flows
 description:  This tutorial provides steps for dynamically setting column names in data flows
 author: kromerm
 ms.author: makromer
-ms.topic: conceptual
+ms.topic: tutorial
 ms.date: 10/03/2024
 ms.subservice: data-flows
 ---
@@ -12,12 +12,14 @@ ms.subservice: data-flows
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
+
 Many times, when processing data for ETL jobs, you'll need to change the column names before writing the results. Sometimes this is needed to align column names to a well-known target schema. Other times, you may need to set column names at runtime based on evolving schemas. In this tutorial, you'll learn how to use data flows to set column names for your destination files and database tables dynamically using external configuration files and parameters.
 
 If you're new to Azure Data Factory, see [Introduction to Azure Data Factory](introduction.md).
 
 ## Prerequisites
-* **Azure subscription**. If you don't have an Azure subscription, create a [free Azure account](https://azure.microsoft.com/free/) before you begin.
+* **Azure subscription**. If you don't have an Azure subscription, create a [free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 * **Azure storage account**. You use ADLS storage as a *source* and *sink* data stores. If you don't have a storage account, see [Create an Azure storage account](../storage/common/storage-account-create.md) for steps to create one.
 
 ## Create a data factory

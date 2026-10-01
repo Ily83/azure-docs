@@ -4,9 +4,10 @@ titleSuffix: Azure Digital Twins
 description: Learn how to use all the features of 3D Scenes Studio (preview) for Azure Digital Twins.
 author: baanders
 ms.author: baanders
-ms.date: 03/06/2025
+ms.date: 08/26/2025
 ms.topic: how-to
 ms.service: azure-digital-twins
+ms.custom: sfi-image-nochange
 ---
 
 # Build 3D scenes with 3D Scenes Studio (preview) for Azure Digital Twins
@@ -75,7 +76,7 @@ In this section, you set the environment in *3D Scenes Studio* and customize you
 
 The 3D representation of an environment in 3D Scenes Studio is called a *scene*. A scene consists of a 3D file and a configuration file, created for you automatically.
 
-To create a scene, start with a segmented 3D file in *.GLTF* or *.GLB* format. You can view and download a sample 3D file from this link: [RobotArms.glb](https://github.com/Azure-Samples/azure-digital-twins-getting-started/blob/main/3dscenes/RobotArms.glb). 
+To create a scene, start with a segmented 3D file in *.GLTF* or *.GLB* format. 
 
 >[!TIP]
 >3D Scenes Studio supports animation. If you use a 3D model file that contains animations, they play in the scene.
@@ -363,9 +364,11 @@ When looking at your scene in the viewer, you can use the **Select layers** butt
 
 ## Configure minimum refresh rate
 
-You can manually configure the **minimum refresh rate** for the 3D scene viewer, to exercise some control over how often data is pulled and the resulting effect on performance. You can configure the minimum refresh rate to be anywhere between 10 seconds and one hour.
+The default refresh rate of the 3D scene viewer has a baseline of 10 seconds, then increases at a rate of half a second per twin (for more information, see [Refresh rate and performance](concepts-3d-scenes-studio.md#refresh-rate-and-performance)). This is the minimum possible refresh rate.
 
-In the builder for a scene, select the **Scene configuration** button.
+If you want to slow the refresh rate, you can manually configure the **minimum refresh rate** for the 3D scene viewer to be anything between 10 seconds and one hour.
+
+To configure the minimum refresh rate, start in the builder for a scene and select the **Scene configuration** button.
 
 :::image type="content" source="media/how-to-use-3d-scenes-studio/scene-configuration.png" alt-text="Screenshot of 3D Scenes Studio in Build mode. The scene configuration option is highlighted." lightbox="media/how-to-use-3d-scenes-studio/scene-configuration.png":::
 
@@ -417,8 +420,6 @@ When the recipient pastes this URL into their browser, the specified scene opens
 >[!NOTE]
 >When a scene is shared with someone in this way, the recipient is able to leave this scene and view other scenes in your environment if they choose.
 
-## Next steps 
+## Next steps
 
-Try out 3D Scenes Studio with a sample scenario in [Get started with 3D Scenes Studio](quickstart-3d-scenes-studio.md).
-
-Or, visualize your Azure Digital Twins graph differently using [Azure Digital Twins Explorer](how-to-use-azure-digital-twins-explorer.md).
+Visualize your Azure Digital Twins graph by using [Azure Digital Twins Explorer](how-to-use-azure-digital-twins-explorer.md).

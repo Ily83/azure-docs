@@ -6,13 +6,19 @@ author: kromerm
 ms.author: makromer
 ms.reviewer: whhender
 ms.subservice: orchestration
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 03/20/2025
-ms.custom: devx-track-azurepowershell, synapse
+ms.custom:
+  - devx-track-azurepowershell
+  - synapse
+  - sfi-ropc-nochange
 ---
 
 # Until activity in Azure Data Factory and Synapse Analytics
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+> [!TIP]
+> For the equivalent activity in Data Factory in Microsoft Fabric, see [Until activity](/fabric/data-factory/until-activity).
 
 The Until activity provides the same functionality that a do-until looping structure provides in programming languages. It executes a set of activities in a loop until the condition associated with the activity evaluates to true. If an inner activity fails, the Until activity doesn't stop. You can specify a timeout value for the until activity. 
 
@@ -25,7 +31,7 @@ To use an Until activity in a pipeline, complete the following steps:
 
    :::image type="content" source="media/control-flow-until-activity/until-activity.png" alt-text="Shows the Settings tab of the Until activity in the pipeline canvas.":::
 
-1. Enter an expression that will be evaluated after all child activities defined in the Until activity is executed. If the expression evaluates to false, the Until activity executes all its child activities again. When it evaluates to true, the Until activity completes. The expression can be a literal string expression, or any combination of dynamic [expressions, functions](control-flow-expression-language-functions.md), [system variables](control-flow-system-variables.md), or [outputs from other activities](how-to-expression-language-functions.md#examples-of-using-parameters-in-expressions). The example below checks the value of a previously defined pipeline array variable called TestVariable to see if it evaluates to ['done'].
+1. Enter an expression that will be evaluated after all child activities defined in the Until activity is executed. If the expression evaluates to false, the Until activity executes all its child activities again. When it evaluates to true, the Until activity completes. The expression can be a literal string expression, or any combination of dynamic [expressions, functions](control-flow-expression-language-functions.md), [system variables](control-flow-system-variables.md), or [outputs from other activities](how-to-expression-language-functions.md#expressions-with-parameters). The example below checks the value of a previously defined pipeline array variable called TestVariable to see if it evaluates to ['done'].
 
    :::image type="content" source="media/control-flow-until-activity/dynamic-content-to-check-variable-value.png" alt-text="Shows the &nbsp;Add dynamic content&nbsp; pane with an expression to check a variable for a defined value.":::
 

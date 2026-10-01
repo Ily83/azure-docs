@@ -2,19 +2,28 @@
 title: Copy and transform data in Azure Blob Storage
 titleSuffix: Azure Data Factory & Azure Synapse
 description: Learn how to copy data to and from Blob storage, and transform data in Blob storage using Azure Data Factory or Azure Synapse Analytics.
-ms.author: jianleishen
-author: jianleishen
+ms.author: tinglee
+author: simplywilson
 ms.subservice: data-movement
-ms.topic: conceptual
-ms.custom: synapse
+ms.topic: how-to
 ms.date: 07/25/2025
+ms.custom:
+  - synapse
+  - sfi-image-nochange
+  - sfi-ropc-nochange
 ---
 
 # Copy and transform data in Azure Blob Storage by using Azure Data Factory or Azure Synapse Analytics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
+
 This article outlines how to use the Copy activity in Azure Data Factory and Azure Synapse pipelines to copy data from and to Azure Blob Storage. It also describes how to use the Data Flow activity to transform data in Azure Blob Storage. To learn more, read the [Azure Data Factory](introduction.md) and the [Azure Synapse Analytics](..\synapse-analytics\overview-what-is.md) introduction articles.
+
+> [!NOTE]
+> This connector is also available in [Data Factory in Microsoft Fabric](/fabric/data-factory/data-factory-overview). For Fabric-specific configuration and features, see the [Fabric Azure Blob Storage connector documentation](/fabric/data-factory/connector-azure-blob-storage-overview).
+
 
 >[!TIP]
 >To learn about a migration scenario for a data lake or a data warehouse, see the article [Migrate data from your data lake or data warehouse to Azure](data-migration-guidance-overview.md).
@@ -122,7 +131,7 @@ The following properties are supported for storage account key authentication in
 
 **Examples UI**:
 
-The UI experience is as described in the following image. This sample uses the Azure open dataset as the source. If you want to get the open [dataset bing_covid-19_data.csv](https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/bing_covid-19_data/latest/bing_covid-19_data.csv), you just need to choose **Authentication type** as **Anonymous** and fill in Container URI with `https://pandemicdatalake.blob.core.windows.net/public`.
+The UI experience is as described in the following image. This sample used an Azure open dataset as the source.
 
 :::image type="content" source="media/connector-azure-blob-storage/anonymous-ui.png" alt-text="Screenshot of configuration for Anonymous examples UI.":::
 

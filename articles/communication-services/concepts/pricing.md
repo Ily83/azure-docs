@@ -5,10 +5,12 @@ description: Learn about Communication Services' Pricing Model.
 author: nmurav
 ms.author: nmurav
 ms.date: 09/11/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ---
 # Pricing Scenarios
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Prices for Azure Communication Services are based on a pay-as-you-go model. The prices in the following examples are for illustrative purposes and may not reflect the latest Azure pricing.
 

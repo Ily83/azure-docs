@@ -2,7 +2,7 @@
 title: "Tutorial: Configure item-level backup for an Azure Kubernetes Service cluster"
 description: Learn how to configure backup for an Azure Kubernetes Service (AKS) cluster, and use Azure Backup to back up specific items from the cluster.
 ms.topic: tutorial
-ms.date: 01/21/2025
+ms.date: 09/02/2026
 ms.service: azure-backup
 ms.custom:
   - ignite-2023
@@ -23,10 +23,14 @@ The Backup vault communicates with the cluster via the Backup extension to compl
 
 ## Prerequisites
 
+Before you configure item-level backup for an AKS cluster, complete the following prerequisites:
+
 - Identify or [create a Backup vault](create-manage-backup-vault.md) in the same region where you want to back up an AKS cluster.
 - [Install the Backup extension](quick-install-backup-extension.md) in the AKS cluster that you want to back up.
 
-## Configure backup for an AKS cluster
+## Configure item-level backup for an AKS cluster
+
+To configure item-level backup for an AKS cluster, follow these steps:
 
 1. In the Azure portal, go to the AKS cluster that you want to back up.
 
@@ -39,10 +43,7 @@ The Backup vault communicates with the cluster via the Backup extension to compl
     The Backup vault must have Trusted Access enabled for the AKS cluster that you want to back up. To enable Trusted Access, select **Grant permission**. If it's already enabled, select **Next**.
 
     :::image type="content" source="./media/tutorial-configure-backup-aks/backup-vault-review.png" alt-text="Screenshot that shows the review page for Configure Backup." lightbox="./media/tutorial-configure-backup-aks/backup-vault-review.png":::
-
-    > [!NOTE]
-    > Before you enable Trusted Access, enable the `TrustedAccessPreview` feature flag for the `Microsoft.ContainerServices` resource provider on the subscription.
-
+   
 1. Select a backup policy, which defines the schedule for backups and their retention period. Then select **Next**.
 
     :::image type="content" source="./media/azure-kubernetes-service-cluster-backup/select-backup-policy.png" alt-text="Screenshot that shows the Backup policy page." lightbox="./media/azure-kubernetes-service-cluster-backup/select-backup-policy.png":::

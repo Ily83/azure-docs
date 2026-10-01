@@ -6,7 +6,7 @@ author: vishalme
 ms.service: azure-expressroute
 ms.custom: devx-track-azurecli, devx-track-azurepowershell
 ms.topic: how-to
-ms.date: 07/25/2025 
+ms.date: 09/05/2026
 ms.author: duau
 ---
 
@@ -20,7 +20,7 @@ This article describes how to add IPv6 support to connect via ExpressRoute to yo
 ## Prerequisites
 
 * Review the [prerequisites](expressroute-prerequisites.md) and [workflows](expressroute-workflows.md) before you begin configuration.
-* An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+* An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 # [Portal](#tab/portal)
 
@@ -239,8 +239,7 @@ Follow these steps if you have an existing environment of Azure resources that y
 ---
 
 > [!NOTE]
-> If you have an existing gateway that is not zone-redundant (meaning it is Standard, High Performance, or Ultra Performance SKU) and uses a public IP address of Basic SKU, you will need to delete and recreate the gateway using any SKU.
->  The gateway of type zone-redundant SKU (meaning it is Standard, High Performance, or Ultra Performance) can be deployed only in availability-zone supported regions.
+> If an existing Standard, HighPerformance, or UltraPerformance gateway uses a Basic SKU public IP address, migrate the gateway to an availability zone-enabled SKU before you enable IPv6 connectivity. For instructions, see [ExpressRoute gateway migration](gateway-migration.md#supported-migration-scenarios). Azure assigns a Standard SKU public IP address to the new gateway.
 
 ## Create a connection to a new virtual network
 

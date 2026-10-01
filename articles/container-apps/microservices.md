@@ -4,7 +4,7 @@ description: Build a microservice in Azure Container Apps.
 services: container-apps
 author: craigshoemaker
 ms.service: azure-container-apps
-ms.topic: conceptual
+ms.topic: overview
 ms.date: 04/01/2025
 ms.author: cshoe
 ms.custom: build-2023
@@ -26,7 +26,7 @@ You can add [**Azure Functions**](../container-apps/functions-overview.md) and [
 
 ## Dapr integration
 
-When you implement a system with microservices, function calls are distributed across the network. To support the distributed nature of microservices, you need to account for failures, retries, and time-outs. While Azure Container Apps features the building blocks for running microservices, integrating [Dapr](https://docs.dapr.io/concepts/overview/) enhances the microservices programming model. Dapr offers more features such as observability, pub/sub, and service-to-service invocation with mutual TLS, retries, and more.
+When you implement a system with microservices, function calls are distributed across the network. To support the distributed nature of microservices, you need to account for failures, retries, and time-outs. While Azure Container Apps features the building blocks for running microservices, integrating [Dapr](https://docs.dapr.io/concepts/) enhances the microservices programming model. Dapr offers more features such as observability, pub/sub, and service-to-service invocation with mutual TLS, retries, and more.
 
 For more information on using Dapr, see [Build microservices with Dapr](microservices-dapr.md).
 

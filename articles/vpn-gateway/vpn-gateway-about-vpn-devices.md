@@ -2,11 +2,11 @@
 title: 'About VPN devices for connections'
 titleSuffix: Azure VPN Gateway
 description: Learn about VPN devices and IPsec parameters for Site-to-Site cross-premises connections. Links are provided to configuration instructions and samples.
-author: cherylmc
+author: duongau
 ms.service: azure-vpn-gateway
 ms.topic: concept-article
 ms.date: 03/31/2025
-ms.author: cherylmc
+ms.author: duau
 
 # Customer intent: "As a network administrator, I want to configure validated VPN devices for Site-to-Site connections, so that I can establish secure connections between on-premises networks and Azure virtual networks."
 ---
@@ -26,7 +26,7 @@ A VPN device is required to configure a Site-to-Site (S2S) cross-premises VPN co
 
 In partnership with device vendors, we have validated a set of standard VPN devices. All of the devices in the device families in the following list should work with VPN gateways. These are the recommended algorithms for your device configuration.
 
-[!INCLUDE [Recommended Algorithms table](../../includes/vpn-gateway-recommended-algorithms.md)]
+[!INCLUDE [Recommended Algorithms table](../networking/includes/vpn-gateway/recommended-algorithms.md)]
 
 To help configure your VPN device, refer to the links that correspond to the appropriate device family. The links to configuration instructions are provided on a best-effort basis and defaults listed in configuration guide need not contain the best cryptographic algorithms. For VPN device support, contact your device manufacturer.
 
@@ -66,7 +66,7 @@ To help configure your VPN device, refer to the links that correspond to the app
 | Synology | MR2200ac <br>RT2600ac <br>RT1900ac | SRM1.1.5/VpnPlusServer-1.2.0 | Not tested | [Configuration guide](https://www.synology.com/en-global/knowledgebase/SRM/tutorial/VPN/How_to_set_up_Site_to_Site_VPN_between_Synology_Router_and_MS_Azure) |
 | Ubiquiti | EdgeRouter | EdgeOS v1.10 | Not tested | [BGP over IKEv2/IPsec](https://help.uisp.com/hc/en-us/articles/22591174261271-EdgeRouter-Route-Based-Site-to-Site-VPN-to-Azure-BGP-over-IKEv2-IPsec)<br><br>[VTI over IKEv2/IPsec](https://help.uisp.com/hc/en-us/articles/22591212773143-EdgeRouter-Route-Based-Site-to-Site-VPN-to-Azure-VTI-over-IKEv2-IPsec) |
 | Ultra | 3E-636L3 | 5.2.0.T3 Build-13  | Not tested | Configuration guide |
-| WatchGuard |All |Fireware XTM<br> PolicyBased: v11.11.x<br>RouteBased: v11.12.x |[Configuration guide](http://watchguardsupport.force.com/publicKB?type=KBArticle&SFDCID=kA2F00000000LI7KAM&lang=en_US) |[Configuration guide](http://watchguardsupport.force.com/publicKB?type=KBArticle&SFDCID=kA22A000000XZogSAG&lang=en_US)|
+| WatchGuard |All |Fireware XTM<br> PolicyBased: v11.11.x<br>RouteBased: v11.12.x |[Configuration guide](https://techsearch.watchguard.com/KB/?type=KBArticle&SFDCID=kA2F00000000LI7KAM&lang=en_US) |[Configuration guide](https://techsearch.watchguard.com/KB/?type=KBArticle&SFDCID=kA22A000000XZogSAG&lang=en_US)|
 | Zyxel |ZyWALL USG series<br>ZyWALL ATP series<br>ZyWALL VPN series | ZLD v4.32+ | Not tested | [VTI over IKEv2/IPsec](https://businessforum.zyxel.com/discussion/2648/)<br><br>[BGP over IKEv2/IPsec](https://businessforum.zyxel.com/discussion/2650/)|
 
 > [!NOTE]

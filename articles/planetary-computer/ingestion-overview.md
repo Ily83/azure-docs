@@ -1,12 +1,12 @@
 ---
 title: Data Ingestion Fundamentals in Microsoft Planetary Computer Pro
 description: Learn about the features that enable you to bring your own data into Planetary Computer Pro for standardized and scalable storage and management of your geospatial assets.
-author: prasadko
-ms.author: prasadkomma
+author: SilviaMSFT
+ms.author: silviadiana
 ms.service: planetary-computer-pro
 ms.topic: concept-article
 ms.date: 05/08/2025
-#customer intent: As a geospatial data producer, I want to understand the the concept of a GeoCatalog ingestion source so that I can ingest petabytes of geospatial assets into my GeoCatalog resource.
+#customer intent: As a geospatial data producer, I want to understand the concept of a GeoCatalog ingestion source so that I can ingest petabytes of geospatial assets into my GeoCatalog resource.
 ms.custom:
   - build-2025
 ---
@@ -22,7 +22,7 @@ This diagram provides an overview of how the various elements in the ingestion s
 
 ## Prerequisites
 
-- [Azure account with an active subscription](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)
+- [Azure account with an active subscription](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 - [Deployed GeoCatalog resource](./deploy-geocatalog-resource.md)
 
 ## Ingestion Sources
@@ -43,7 +43,7 @@ Planetary Computer Pro supports ingestion of geospatial assets from the followin
 >All data ingested into Planetary Computer Pro requires [STAC Items](./stac-overview.md#introduction-to-stac-items). 
 
 >[!TIP]
-> To accelerate the creation of STAC Items, we have a [detailed tutorial](./create-stac-item.md) and also have an open source tool called [STAC Forge](https://github.com/Azure/microsoft-planetary-computer-pro/tree/main/tools/stacforge-functions).
+> To accelerate the creation of STAC Items, use the [detailed tutorial](./create-stac-item.md) and the open source tool *STAC Forge*.
 
 ## Ingestion Methods
 

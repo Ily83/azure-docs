@@ -13,6 +13,8 @@ ms.custom: devx-track-azurepowershell, devx-track-azurecli
 
 # Create rate limiting custom rules for Application Gateway WAF v2
 
+**Applies to:** :heavy_check_mark: Application Gateway v2
+
 Rate limiting enables you to detect and block abnormally high levels of traffic destined for your application. Rate Limiting works by counting all traffic that matches the configured Rate Limit rule and performing the configured action for traffic matching that rule which exceeds the configured threshold. For more information, see [Rate limiting overview](rate-limiting-overview.md).
 
 ## Configure Rate Limit Custom Rules
@@ -106,7 +108,7 @@ az network application-gateway waf-policy custom-rule match-condition add --matc
 1. Select **None** for **Group rate limit traffic by**.
 1. Under **Conditions**, choose **String** for **Match type**.
 1. In the **Match variables** section, select **RequestUri** for **Match variable**. 
-1. Select **Is not** for **Operation**.
+1. Select **Is** for **Operation**.
 1. For **Operator** select **Contains**.
 1. Selecting a transformation is optional. 
 1. Enter Login page path for match Value.  In this example we use **/login**.

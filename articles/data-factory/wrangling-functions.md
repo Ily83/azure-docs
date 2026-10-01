@@ -4,13 +4,15 @@ description: An overview of available Data Wrangling functions in Azure Data Fac
 author: kromerm
 ms.author: makromer
 ms.subservice: data-flows
-ms.topic: conceptual
+ms.topic: reference
 ms.date: 05/15/2024
 ---
 
 # Transformation functions in Power Query for data wrangling
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 Data Wrangling in Azure Data Factory allows you to do code-free agile data preparation and wrangling at cloud scale by translating Power Query ```M``` scripts into Data Flow script. ADF integrates with [Power Query Online](/powerquery-m/power-query-m-reference) and makes Power Query ```M``` functions available for data wrangling via Spark execution using the data flow Spark infrastructure. 
 

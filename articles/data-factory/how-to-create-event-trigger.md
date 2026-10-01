@@ -7,13 +7,15 @@ ms.custom: synapse
 author: kromerm
 ms.author: makromer
 ms.reviewer: whhender
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 02/13/2025
 ---
 
 # Create a trigger that runs a pipeline in response to a storage event
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article describes the storage event triggers that you can create in your Azure Data Factory or Azure Synapse Analytics pipelines.
 

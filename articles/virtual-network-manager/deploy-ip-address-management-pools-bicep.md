@@ -5,7 +5,7 @@ author: mbender-ms
 ms.author: mbender
 ms.service: azure-virtual-network-manager
 ms.topic: quickstart
-ms.date: 06/25/2025
+ms.date: 07/29/2026
 ms.custom:
   - template-quickstart
   - mode-arm
@@ -34,7 +34,7 @@ When you finish, you'll have a working IPAM configuration that you can use to ma
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - Azure CLI or Azure PowerShell installed locally, or use [Azure Cloud Shell](https://shell.azure.com).
 
 ## Review the Bicep file
@@ -44,6 +44,17 @@ The following Bicep template creates an Azure Virtual Network Manager instance w
 - [**Microsoft.Network/networkManagers**](/azure/templates/microsoft.network/networkmanagers): Creates an Azure Virtual Network Manager instance
 - [**Microsoft.Network/networkManagers/ipamPools**](/azure/templates/microsoft.network/networkmanagers/ipampools): Creates an IPAM pool under the network manager
 - [**Microsoft.Network/networkManagers/ipamPools/staticCidrs**](/azure/templates/microsoft.network/networkmanagers/ipampools/staticcidrs): Creates a static CIDR allocation in the IPAM pool
+
+The template takes the following parameters:
+
+| Parameter | Purpose | Default value |
+| --- | --- | --- |
+| `locationName` | Azure region for the network manager and its child resources. | The location of the target resource group |
+| `networkManagerName` | Name of the Azure Virtual Network Manager instance. | `vnm-learn-prod-${locationName}-001` |
+| `ipamPoolName` | Name of the IPAM pool created under the network manager. | `ipam-pool-learn-prod-001` |
+| `ipamPoolAddressPrefix` | Address space the IPAM pool allocates from. | `10.0.0.0/16` |
+| `staticCidrName` | Name of the static CIDR reservation in the pool. | `static-cidr-reserved-001` |
+| `staticCidrAddressPrefix` | Address range reserved by the static CIDR. It must fall within `ipamPoolAddressPrefix`. | `10.0.1.0/24` |
 
 ```bicep
 @description('Location for resources.')

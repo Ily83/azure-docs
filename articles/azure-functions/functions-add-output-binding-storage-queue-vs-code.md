@@ -6,7 +6,7 @@ ms.topic: quickstart
 ms.devlang: csharp
 # ms.devlang: csharp, java, javascript, powershell, python, typescript
 ms.custom: devx-track-python, devx-track-js, mode-ui, devdivchpfy22, devx-track-extended-java, devx-track-ts
-zone_pivot_groups: programming-languages-set-functions
+zone_pivot_groups: programming-languages-set-functions-no-go
 #Customer intent: As an Azure Functions developer, I want to connect my function to Azure Storage so that I can easily write data to a storage queue.
 ---
 
@@ -56,11 +56,7 @@ Because you're using a Queue storage output binding, you must have the Storage b
 
 ::: zone pivot="programming-language-python,programming-language-powershell,programming-language-java"
 
-Your project has been configured to use [extension bundles](extension-bundles.md), which automatically installs a predefined set of extension packages.
-
-Extension bundles is already enabled in the *host.json* file at the root of the project, which should look like the following example:
-
-:::code language="json" source="~/functions-docs-python/functions-add-output-binding-storage-queue-cli/host.json":::
+[!INCLUDE [functions-extension-bundles-json-v4-element](../../includes/functions-extension-bundles-json-v4-element.md)]
 
 Now, you can add the storage output binding to your project.
 
@@ -68,11 +64,7 @@ Now, you can add the storage output binding to your project.
 
 ::: zone pivot="programming-language-javascript,programming-language-typescript"
 
-Your project has been configured to use [extension bundles](extension-bundles.md), which automatically installs a predefined set of extension packages.
-
-Extension bundles is already enabled in the *host.json* file at the root of the project, which should look like the following example:
-
-:::code language="json" source="~/functions-docs-javascript/functions-add-output-binding-storage-queue-cli-v4-programming-model/host.json":::
+[!INCLUDE [functions-extension-bundles-json-v4-element](../../includes/functions-extension-bundles-json-v4-element.md)]
 
 Now, you can add the storage output binding to your project.
 
@@ -96,7 +88,7 @@ To write to an Azure Storage queue:
     {
         methods: ['GET', 'POST'],
         extraOutputs: [sendToQueue], // add output binding to HTTP trigger
-        authLevel: 'anonymous',
+        authLevel: 'function',
         handler: () => {}
     }
     ```
@@ -117,7 +109,7 @@ To write to an Azure Storage queue:
     {
         methods: ['GET', 'POST'],
         extraOutputs: [sendToQueue], // add output binding to HTTP trigger
-        authLevel: 'anonymous',
+        authLevel: 'function',
         handler: () => {}
     }
     ```
@@ -233,7 +225,7 @@ Now, it's time to republish the updated function app to Azure.
 
 1. Choose the function app that you created in the first article. Because you're redeploying your project to the same app, select **Deploy** to dismiss the warning about overwriting files.
 
-1. After the deployment completes, you can again use the **Execute Function Now...** feature to trigger the function in Azure.
+1. After the deployment completes, you can again use the **Execute Function Now...** feature to trigger the function in Azure. This command automatically retrieves the function access key and uses it when calling the HTTP trigger endpoint.
 
 1. Again [view the message in the storage queue](#examine-the-output-queue) to verify that the output binding generates a new message in the queue.
 

@@ -5,7 +5,7 @@ description: Learn how to process or transform data by running a Databricks note
 ms.custom: synapse
 author: nabhishek
 ms.author: abnarain
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 01/16/2025
 ms.subservice: orchestration
 ---
@@ -13,6 +13,9 @@ ms.subservice: orchestration
 # Transform data by running a Databricks notebook
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+> [!TIP]
+> For the equivalent activity in Data Factory in Microsoft Fabric, see [Azure Databricks activity](/fabric/data-factory/azure-databricks-activity).
 
 The Azure Databricks Notebook Activity in a [pipeline](concepts-pipelines-activities.md) runs a Databricks notebook in your Azure Databricks workspace. This article builds on the [data transformation activities](transform-data.md) article, which presents a general overview of data transformation and the supported transformation activities. Azure Databricks is a managed platform for running Apache Spark.
 
@@ -74,7 +77,7 @@ definition:
 |type|For Databricks Notebook Activity, the activity type is DatabricksNotebook.|Yes|
 |linkedServiceName|Name of the Databricks Linked Service on which the Databricks notebook runs. To learn about this linked service, see [Compute linked services](compute-linked-services.md) article.|Yes|
 |notebookPath|The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash.|Yes|
-|baseParameters|An array of Key-Value pairs. Base parameters can be used for each activity run. If the notebook takes a parameter that isn't specified, the default value from the notebook will be used. Find more on parameters in [Databricks Notebooks](https://docs.databricks.com/api/latest/jobs.html#jobsparampair).|No|
+|baseParameters|An array of key-value pairs. Use base parameters for each activity run. If the notebook takes a parameter that you don't specify, the default value from the notebook is used. For more information about parameters, see [Databricks Notebooks](/azure/databricks/jobs/task-parameters).|No|
 |libraries|A list of libraries to be installed on the cluster that will execute the job. It can be an array of \<string, object>.|No|
 
 ## Supported libraries for Databricks activities

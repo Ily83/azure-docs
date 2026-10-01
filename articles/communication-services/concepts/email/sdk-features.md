@@ -7,11 +7,13 @@ manager: sphenry
 services: azure-communication-services
 ms.author: bashan
 ms.date: 03/31/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ---
 
 # Email SDK features
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 You can use email client libraries in Azure Communication Services to add transactional email support to your applications.
 

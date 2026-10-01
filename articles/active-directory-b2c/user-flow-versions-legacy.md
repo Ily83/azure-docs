@@ -5,12 +5,13 @@ description: Learn about legacy versions of user flows available in Azure Active
 author: kengaderdus
 manager: CelesteDG
 
-ms.service: azure-active-directory
+ms.service: entra-id
 
 ms.topic: reference
 ms.date: 01/11/2024
 ms.author: kengaderdus
 ms.subservice: b2c
+ms.custom: sfi-ropc-blocked
 
 
 #Customer intent: As a developer using Azure Active Directory B2C, I want to understand the differences between legacy and recommended user flow versions, so that I can choose the appropriate user flow for my production applications.

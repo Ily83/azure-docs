@@ -5,13 +5,15 @@ ms.subservice: ci-cd
 author: kromerm
 ms.author: makromer
 ms.reviewer: whhender
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 01/29/2025
 ---
 
 # Using a hotfix production environment
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 If you deploy a factory to production and realize there's a bug that needs to be fixed right away, but you can't deploy the current collaboration branch, you might need to deploy a hotfix. This approach is as known as quick-fix engineering or QFE.
 

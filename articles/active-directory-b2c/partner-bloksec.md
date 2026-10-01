@@ -5,7 +5,7 @@ description: Learn how to integrate Azure AD B2C authentication with BlokSec for
 author: gargi-sinha
 manager: martinco
 ms.reviewer: kengaderdus
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.topic: how-to
 ms.date: 06/21/2024
 ms.author: gasinh
@@ -67,7 +67,7 @@ The following architecture diagram illustrates the sign-up, sign-in flow in the 
 To get started, you need:
 
 * An Azure subscription
-  * If you don't have one, get an [Azfree account](https://azure.microsoft.com/free/)
+  * If you don't have one, get an [Azfree account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 * An [Azure AD B2C tenant](./tutorial-create-tenant.md) linked to the Azure subscription
 * A BlokSec [demo](https://bloksec.com/)
 * Register a web application

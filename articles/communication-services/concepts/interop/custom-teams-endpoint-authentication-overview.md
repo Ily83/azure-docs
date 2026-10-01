@@ -6,13 +6,15 @@ manager: nmurav
 services: azure-communication-services
 ms.author: tchladek
 ms.date: 06/08/2022
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: teams-interop
 ms.custom: kr2b-contr-experiment
 ---
 
 # Single-tenant and multitenant authentication for Microsoft 365 users
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
  This article gives you insight into the authentication process for single-tenant and multitenant, *Microsoft Entra ID* (Microsoft Entra ID) applications. You can use authentication when you build calling experiences for Microsoft 365 users with the *Calling software development kit* (SDK) that *Azure Communication Services* makes available. Use cases in this article also break down individual authentication artifacts.
 
@@ -28,7 +30,7 @@ The following sequence diagram details single-tenant authentication.
 
 Before we begin:
 - Alice or her Microsoft Entra administrator needs to give the custom Teams application consent, prior to the first attempt to sign in. Learn more about [consent](../../../active-directory/develop/consent-framework.md).
-- The Azure Communication Services resource admin needs to grant Alice permission to perform her role. Learn more about [Azure RBAC role assignment](../../../role-based-access-control/role-assignments-portal.yml).
+- The Azure Communication Services resource admin needs to grant Alice permission to perform her role. Learn more about [Azure RBAC role assignment](/azure/role-based-access-control/role-assignments-portal).
 
 Steps:
 1. Authenticate Alice using Microsoft Entra ID: Alice is authenticated using a standard OAuth flow with *Microsoft Authentication Library (MSAL)*. If authentication is successful, the client application receives a Microsoft Entra access token, with a value of `A1` and an Object ID of a Microsoft Entra user with a value of `A2`. Tokens are outlined later in this article. Authentication from the developer perspective is explored in this [quickstart](../../quickstarts/manage-teams-identity.md).

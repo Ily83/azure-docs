@@ -6,7 +6,7 @@ author: sofiar
 manager: miguelher
 services: azure-communication-services
 ms.author: sofiar
-ms.date: 05/19/2025
+ms.date: 09/01/2025
 ms.topic: tutorial
 ms.service: azure-communication-services
 ms.subservice: identity
@@ -14,23 +14,23 @@ ms.subservice: identity
 
 # Access Teams Phone without going through the Teams client
 
-[!INCLUDE [public-preview-notice.md](../../includes/public-preview-include-document.md)]
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes how to grant consent to a server to receive calls directed to a Teams Resource Account. Following sections also describe how to use a client to answer and place calls on behalf of Teams Resource Accounts.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create a free account](https://azure.microsoft.com/free/).
+- An Azure account with an active subscription. [Create a free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - A Communication Services resource, see [Create a Communication Services resource](../create-communication-resource.md).
 
 - A Microsoft Entra ID tenant with users that have a Teams license. For more information, see [Teams license requirements](../eligible-teams-licenses.md).
 
-- Users must be enabled for Teams. To enable a user for Teams, open the Microsoft 365 admin center > **Users** > **Active Users**. Then search for the affected user account. Click on **Edit** to change their details. Go to **License and Apps**, then select the drop-down arrow from **Apps** and select **Enable Microsoft Teams**.
+- Users must be enabled for Teams. To enable a user for Teams, open the Microsoft 365 admin center > **Users** > **Active Users**. Then search for the affected user account. Select **Edit** to change their details. Go to **License and Apps**, select the drop-down arrow from **Apps**, and select **Enable Microsoft Teams**.
 
 ## Provide server consent
 
-The Azure Communication Services Resource Owner needs to run the following API operations. The resource owner need to provide consent for authorizing calls to the Azure Communication Services Resource from the Teams Resource Account. You can call the API using any REST tool or programmatically. The API supports GET, PUT, PATCH, and DELETE operations.  
+The Azure Communication Services resource owner needs to run the following API operations. The resource owner needs to provide consent for authorizing calls to the Azure Communication Services resource from the Teams Resource Account. You can call the API by using any REST tool or programmatically. The API supports GET, PUT, PATCH, and DELETE operations.  
 
 
 1. The `{YOUR-ACS-RESOURCE-ENDPOINT}` in the request URI (RURI) path is the Azure Communication Services Resource fully qualified domain name (FQDN) from Azure.
@@ -43,13 +43,13 @@ This API supports Azure Communication Services hash-based message authentication
 Query definition: 
 
 ```http
-https://{YOUR-ACS-RESOURCE-ENDPOINT}/access/teamsExtension/tenants/{TENANT-GUID}/assignments/{YOUR-RESOURCE-ACCOUNT-GUID}?api-version=2025-03-02-preview 
+https://{YOUR-ACS-RESOURCE-ENDPOINT}/access/teamsExtension/tenants/{TENANT-GUID}/assignments/{YOUR-RESOURCE-ACCOUNT-GUID}?api-version=2025-06-30 
 ```
 
 Example to set consent: 
 
 ```rest
-PUT https://myacsresource.unitedstates.communication.azure.com/access/teamsExtension/tenants/zz123456-1234-1234-1234-zzz123456789/assignments/cc123456-5678-5678-1234-ccc123456789?api-version=2025-03-02-preview
+PUT https://myacsresource.unitedstates.communication.azure.com/access/teamsExtension/tenants/zz123456-1234-1234-1234-zzz123456789/assignments/cc123456-5678-5678-1234-ccc123456789?api-version=2025-06-30
 
 {
    "principalType": "teamsResourceAccount"
@@ -63,19 +63,6 @@ HTTP/1.1 201 Created
 Content-type: application/json
 ```
 
-Not allowed response:
-
-If you receive a 403 Error with the following response, send the Azure Subscription GUID to your Azure Communication Services Product Manager (PM) to add you to the preview list.
-
-```rest
-{
-   "error": {
-   "code": "SubscriptionNotAllowed",
-   "message": "API is not allowed to be accessed with your subscription."
-}
-}
-```
-
 ## Provide Client Consent 
 
 Use the Azure Communication Services calling SDK to extend your Teams Phone system, enabling calls to be made and received independently of the Teams application.
@@ -86,7 +73,7 @@ Use the Azure Communication Services calling SDK to extend your Teams Phone syst
 
 Users must be authenticated through a Microsoft Entra ID application with the Azure Communication Service `TeamsExtension.ManageCalls` permission. If you don't have an existing application for this quickstart, you can create a new application registration.
 
-Configure the following application setting:
+Configure the following application settings:
 
 - The _Supported account types_ property defines whether the application is single-tenant (Accounts in this organizational directory only) or multitenant (Accounts in any organizational directory). Choose the option that fits your scenario.
 
@@ -116,7 +103,7 @@ Send a request to the Microsoft Teams Phone access assignments API to give a Tea
 The following example shows a request for a user with identifier `e5b7f628-ea94-4fdc-b3d9-1af1fe231111`.
 
 ```http
-PUT {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-03-02-preview
+PUT {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-06-30
 
 {
     "principalType" : "user",
@@ -146,7 +133,7 @@ Complete this section to set up a sign-in flow for your application.
 
 ### Create a credential capable of obtaining a Microsoft Entra user token
 
-To create a credential, use the [@azure/communication-common](https://www.npmjs.com/package/@azure/communication-common) SDK with version 2.3.2-beta.1. First, you need to initialize any implementation of [TokenCredential interface](/javascript/api/@azure/core-auth/tokencredential) and provide it to the `EntraCommunicationTokenCredentialOptions`.
+To create a credential, use the [@azure/communication-common](https://www.npmjs.com/package/@azure/communication-common) SDK with version 2.4.0 and above. First, you need to initialize any implementation of [TokenCredential interface](/javascript/api/@azure/core-auth/tokencredential) and provide it to the `EntraCommunicationTokenCredentialOptions`.
 
 Along with the token, you must provide the URI of the Azure Communication Services resource and the scopes required for the Microsoft Entra user token. These scopes determine the permissions granted to the token:
 
@@ -184,7 +171,7 @@ const callAgent = await client.createCallAgent(credential);
 Send a request to the Microsoft Teams Phone access assignments API to delete the access for your Teams user to your Azure Communication Services resource.
 
 ```http
-DELETE {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-03-02-preview
+DELETE {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-06-30
 ```
 
 ### Response
@@ -199,15 +186,16 @@ Content-type: application/json
 To verify that the Teams user is no longer linked with the Communication Services resource, send a GET request to the Microsoft Teams Phone access assignments API. Verify that its response status code is 404.
 
 ```http
-GET {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-03-02-preview
+GET {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-06-30
 ```
 
 ## Next steps
   
 > [!div class="nextstepaction"]
-> [REST API for Teams Phone extensibility](./teams-phone-extensiblity-rest-api.md)
+> [REST API for Teams Phone extensibility](./teams-phone-extensibility-rest-api.md)
 
 ## Related articles
 
 - [Teams Phone extensibility overview](../../concepts/interop/tpe/teams-phone-extensibility-overview.md)
 - [Teams Phone System extensibility quick start](./teams-phone-extensibility-quickstart.md)
+- [Answer Teams Phone calls from Call Automation](./teams-phone-extensibility-answer-teams-calls.md)

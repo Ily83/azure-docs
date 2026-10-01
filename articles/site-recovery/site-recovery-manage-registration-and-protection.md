@@ -1,11 +1,11 @@
 ---
 title: Remove servers and disable protection
 description: This article describes how to unregister servers from a Site Recovery vault, and to disable protection for virtual machines and physical servers.
-author: jyothisuri
+author: Jeronika-MS
 ms.service: azure-site-recovery
 ms.topic: how-to
-ms.date: 03/25/2025
-ms.author: jsuri
+ms.date: 09/21/2026
+ms.author: v-gajeronika
 
 # Customer intent: "As an IT administrator managing disaster recovery, I want to unregister servers and disable protection for virtual machines and physical servers, so that I can effectively manage and streamline our backup processes and reduce unnecessary costs."
 ---
@@ -32,9 +32,9 @@ This article describes how to unregister servers from a Recovery Services vault,
 Hyper-V hosts that aren't managed by VMM are gathered into a Hyper-V site. Remove a host in a Hyper-V site as follows:
 
 1. Disable replication for Hyper-V VMs located on the host.
-2. Disassociate policies for the Hyper-V site. In **Site Recovery Infrastructure** > **For Hyper-V Sites** >  **Replication Policies**, double-click the associated policy. Right-click the site > **Disassociate**.
-3. Delete Hyper-V hosts. In **Site Recovery Infrastructure** > **For Hyper-V Sites** > **Hyper-V Hosts**, right-click the server > **Delete**.
-4. Delete the Hyper-V site after all hosts have been removed from it. In **Site Recovery Infrastructure** > **For Hyper-V Sites** > **Hyper-V Sites**, right-click the site > **Delete**.
+2. Delete Hyper-V hosts: In **Site Recovery Infrastructure** > **For Hyper-V Sites** > **Hyper-V Hosts**, right-click the server > **Delete**.
+3. Delete the Hyper-V site after all hosts have been removed from it: In **Site Recovery Infrastructure** > **For Hyper-V Sites** > **Hyper-V Sites**, right-click the site > **Delete**.
+4. Disassociate policies for the Hyper-V site: In **Site Recovery Infrastructure** > **For Hyper-V Sites** > **Replication Policies**, double-click the associated policy. Right-click the site > **Disassociate**.
 5. If your Hyper-V host was in a **Disconnected** state, then run the following script on each Hyper-V host that you removed. The script cleans up settings on the server, and unregisters it from the vault.
 
 
@@ -127,7 +127,6 @@ Hyper-V hosts that aren't managed by VMM are gathered into a Hyper-V site. Remov
         popd
 ```
 
-
 ## Disable protection for a VMware VM or physical server (VMware to Azure)
 
 1. In **Protected Items** > **Replicated Items**, right-click the machine > **Disable replication**.
@@ -140,7 +139,7 @@ Hyper-V hosts that aren't managed by VMM are gathered into a Hyper-V site. Remov
 
 > [!NOTE]
 > If you have already failed over a VM and it is running in Azure, note that disable protection doesn't remove / affect the failed over VM.
-## Disable protection for a Azure VM (Azure to Azure)
+## Disable protection for an Azure VM (Azure to Azure)
 
 -  In **Protected Items** > **Replicated Items**, right-click the machine > **Disable replication**.
 > [!NOTE]

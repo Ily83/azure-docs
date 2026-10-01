@@ -1,10 +1,11 @@
 ---
 title: Migrate VMware virtual machines to Azure with server-side encryption(SSE) and customer-managed keys(CMK) using the Migration and modernization tool
 description: Learn how to migrate VMware VMs to Azure with server-side encryption(SSE) and customer-managed keys(CMK) using the Migration and modernization tool 
-author: habibaum
-ms.author: v-uhabiba 
+author: Jeronika-MS
+ms.author: v-gajeronika
 ms.topic: how-to
 ms.date: 05/09/2025
+ms.update-cycle: 365-days
 ms.custom: vmware-scenario-422, devx-track-azurepowershell, engagement-fy25
 
 # Customer intent: "As a cloud administrator, I want to migrate VMware virtual machines to Azure with server-side encryption and customer-managed keys, so that I can ensure data security and compliance during the migration process."
@@ -140,7 +141,7 @@ uuid                                 label       name    maxSizeInBytes
 
 ## Create Resource Manager template for replication
 
-- Open the Resource Manager template file that you downloaded in the **Identifying replication infrastructure components** step in an editor of your choice.
+- Go to the Resource Manager template file that you downloaded in the **Identifying replication infrastructure components** step in an editor of your choice.
 - Remove all resource definitions from the template except for resources that are of type *"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems"*
 - If there are multiple resource definitions of the above type, remove all but one. Remove any **dependsOn** property definitions from the resource definition.
 - At the end of this step, you should have a file that looks like the example below and has the same set of properties.
@@ -271,4 +272,4 @@ DeploymentDebugLogLevel :
 
 ## Next steps
 
-[Monitor replication](tutorial-migrate-vmware.md#track-and-monitor) status through the portal experience and perform Test migrations and migration.
+[Monitor replication](tutorial-migrate-vmware.md#track-migrations) status through the portal experience and perform test migrations and migration.

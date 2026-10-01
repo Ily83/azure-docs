@@ -8,12 +8,14 @@ services: azure-communication-services
 
 ms.author: prakulka
 ms.date: 03/15/2023
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-communication-services
 ms.subservice: sms
 ms.custom: references_regions
 ---
 # Toll-free verification guidelines
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article provides guidelines about filling out an application to verify your toll-free number. For detailed process and timelines toll-free verification process, check the [toll-free verification FAQ](./sms-faq.md#toll-free-verification). The toll-free verification application consists of five sections:  
 

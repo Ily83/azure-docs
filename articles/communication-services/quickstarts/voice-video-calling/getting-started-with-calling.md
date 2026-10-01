@@ -2,8 +2,8 @@
 title: Add voice calling to your app
 titleSuffix: An Azure Communication Services article
 description: In this quickstart, you learn how to add calling capabilities to your app using Azure Communication Services.
-author: tophpalmer
-ms.author: chpalm
+author: sundiraman
+ms.author: sundraman
 ms.date: 05/01/2025
 ms.topic: quickstart
 ms.service: azure-communication-services
@@ -13,6 +13,8 @@ ms.custom: mode-other, devx-track-js, devx-track-azurecli
 ---
 
 # Add voice calling to your app
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Get started with Azure Communication Services by using the Calling SDK to add voice and video calling to your app.
 

@@ -5,9 +5,11 @@ author: jkinma39
 ms.reviewer: jkinma
 ms.service: cost-management-billing
 ms.subservice: billing
-ms.topic: conceptual
-ms.date: 07/29/2025
+ms.topic: how-to
+ms.date: 09/01/2026
 ms.author: jkinma
+ms.custom: sfi-image-nochange
+service.tree.id: 95459a4b-434c-4f83-879b-aa5f509fc7fa
 ---
 
 # Organize costs by customizing your billing account
@@ -153,7 +155,7 @@ Once you customized your billing account based on your needs, you can link subsc
 
 ### Link existing subscriptions and products
 
-If you have existing Azure subscriptions or other products such as Azure Marketplace and App source resources, you can move them from their existing invoice section to another invoice section to reorganize your costs. However, you can't change the invoice section for a reservation, savings plan, or seat-based subscriptions.
+If you have existing Azure subscriptions or other products such as Azure Marketplace and App source resources, you can move them from their existing invoice section to another invoice section to reorganize your costs. However, you can't change the invoice section for a reservation, savings plan, or seat-based subscriptions. Alternatively, you can initiate a Transfer Request to manage other Azure products including Reservations and Savings Plans. See [Transfer Azure product billing ownership to a Microsoft Customer Agreement - Microsoft Cost Management](/azure/cost-management-billing/manage/mca-request-billing-ownership?source=recommendations)
 
 1. Sign in to the [Azure portal](https://portal.azure.com).
 
@@ -172,6 +174,24 @@ If you have existing Azure subscriptions or other products such as Azure Marketp
     :::image type="content" border="true" source="./media/mca-section-invoice/mca-select-new-invoice-section.png" lightbox="./media/mca-section-invoice/mca-select-new-invoice-section-zoomed-in.png" alt-text="Screenshot that shows selecting a new invoice section.":::
 
 6. Select **Save**.
+
+### View supplemental documents
+
+Purchase orders help align purchases with your organization's internal procurement processes. For information about creating and managing purchase orders, see [Purchase orders](https://learn.microsoft.com/marketplace/purchase-orders).
+
+After you configure purchase orders, you can enable **supplemental documents**. Supplemental documents provide purchase order-specific or invoice section-specific views of billed charges, helping you reconcile costs and distribute charges within your organization.
+
+To view supplemental documents for an invoice:
+
+1. Sign in to the [Azure portal](https://portal.azure.com).
+
+1. Search for **Cost Management + Billing**.
+
+1. Select **Invoices** from the left side of the page.
+
+1. Select an invoice.
+
+1. Select the **Supplemental docs** tab at the bottom of the invoice details page.
 
 ## Things to consider when adding new billing profiles
 
@@ -244,6 +264,6 @@ If you need help, [contact support](https://portal.azure.com/?#blade/Microsoft_A
 
 ## Related content
 
-- [Create a more Azure subscriptions for Microsoft Customer Agreement](create-subscription.md)
+- [Create more Azure subscriptions for Microsoft Customer Agreement](create-subscription.md)
 - [Manage billing roles in the Azure portal](understand-mca-roles.md#manage-billing-roles-in-the-azure-portal)
 - [Get billing ownership of Azure subscriptions from users in other billing accounts](mca-request-billing-ownership.md)

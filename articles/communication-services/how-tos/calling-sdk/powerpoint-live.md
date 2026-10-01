@@ -14,13 +14,15 @@ ms.custom: template-how-to
 
 # View PowerPoint Live presentations
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article describes how to enable meeting participants to view [PowerPoint Live presentations in Microsoft Teams](https://support.microsoft.com/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad) using the Azure Communication Services Calling SDKs.
 
 Attendees who use Azure Communication Services Calling SDKs to [join a Microsoft Teams meeting](./teams-interoperability.md) can view PowerPoint Live presentations and interact with [reactions](./reactions.md) and [raise hand](./raise-hand.md). The attendee view automatically synchronizes with the current slide of the Microsoft Teams presenter.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). 
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). 
 - A deployed Communication Services resource. [Create a Communication Services resource](../../quickstarts/create-communication-resource.md).
 - A user access token to enable the calling client. For more information, see [Create and manage access tokens](../../quickstarts/identity/access-tokens.md).
 - Optional: Complete the quickstart to [add voice calling to your application](../../quickstarts/voice-video-calling/getting-started-with-calling.md).

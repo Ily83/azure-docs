@@ -1,11 +1,11 @@
 ---
 title: Discover APIs - VS Code extension
 description: API developers can use the Azure API Center extension for Visual Studio Code to discover APIs in their organization's API center.
-author: dlepow
+
 ms.service: azure-api-center
 ms.topic: how-to
 ms.date: 05/27/2025
-ms.author: danlep 
+ 
 ms.custom: 
 # Customer intent: As an API developer, I want to use my Visual Studio Code environment to discover and consume APIs in my organizations API center.
 ---
@@ -107,7 +107,7 @@ You can also export a specification using the Command Palette:
     
 ## Create M365 declarative agent
 
-You can create a [declarative agent for Microsoft 365 Copilot](/microsoft-365-copilot/extensibility/overview-declarative-agent) from an OpenAPI definition in your API center. With a declarative agent, you customize Microsoft 365 Copilot to help you meet the unique business needs of your users. When you build a declarative agent, you provide the instructions, actions, and knowledge to tailor Copilot for your business scenarios. 
+You can create a [declarative agent for Microsoft Copilot](/microsoft-365-copilot/extensibility/overview-declarative-agent) from an OpenAPI definition in your API center. With a declarative agent, you customize Microsoft Copilot to help you meet the unique business needs of your users. When you build a declarative agent, you provide the instructions, actions, and knowledge to tailor Copilot for your business scenarios. 
 
 To export a declarative agent in the extension's tree view:
 

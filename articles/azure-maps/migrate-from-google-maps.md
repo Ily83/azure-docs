@@ -1,8 +1,8 @@
 ---
 title: 'Tutorial - Migrate from Google Maps to Azure Maps | Microsoft Azure Maps'
 description:  Tutorial on how to migrate from Google Maps to Microsoft Azure Maps. Guidance walks you through how to switch to Azure Maps APIs and SDKs.
-author: jkebeck
-ms.author: jokebeck
+author: farazgis
+ms.author: farazgis
 ms.date: 03/31/2025
 ms.topic: tutorial
 ms.service: azure-maps
@@ -122,7 +122,7 @@ Learn the details of how to migrate your Google Maps application with these arti
 > [Migrate a web app](migrate-from-google-maps-web-app.md)
 
 [Azure Maps account]: quick-demo-map-app.md#create-an-azure-maps-account
-[Azure Maps Blog]: https://aka.ms/AzureMapsBlog
+[Azure Maps Blog]: https://azure.microsoft.com/blog/product/azure-maps/
 [Azure Maps developer forums]: https://aka.ms/AzureMapsForums
 [Azure Maps pricing page]: https://azure.microsoft.com/pricing/details/azure-maps/
 [Azure Maps product documentation]: https://aka.ms/AzureMapsDocs
@@ -134,7 +134,7 @@ Learn the details of how to migrate your Google Maps application with these arti
 [Azure pricing calculator]: https://azure.microsoft.com/pricing/calculator/?service=azure-maps
 [Azure subscription]: https://azure.com
 [Azure support options]: https://azure.microsoft.com/support/options
-[free account]: https://azure.microsoft.com/free/
+[free account]: https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn
 [Manage authentication in Azure Maps]: how-to-manage-authentication.md
 [Microsoft Entra authentication]: azure-maps-authentication.md#microsoft-entra-authentication
 [Microsoft learning center shows]: https://aka.ms/AzureMapsVideos

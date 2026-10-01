@@ -2,7 +2,7 @@
 title: Choose VM sizes and images for pools
 description: How to choose from the available VM sizes and OS versions for compute nodes in Azure Batch pools
 ms.topic: concept-article
-ms.date: 04/23/2025
+ms.date: 08/05/2026
 # Customer intent: "As a cloud engineer, I want to select the appropriate VM sizes and images for Azure Batch pools, so that I can optimize performance and cost for my workloads."
 ---
 
@@ -39,9 +39,9 @@ az batch location list-skus --location <azure-region>
 
 Some VM series, such as [FX](/azure/virtual-machines/fx-series) and [Mv2](/azure/virtual-machines/mv2-series), can only be used
 with [generation 2 VM images](/azure/virtual-machines/generation-2). Generation 2 VM images are specified like any VM image,
-using the `sku` property of the [`imageReference`](/rest/api/batchservice/pool/add#imagereference) configuration; the `sku`
+using the `sku` property of the [`imageReference`](/rest/api/batchservice/pools/create-pool#batchvmimagereference) configuration; the `sku`
 strings have a suffix such as `-g2` or `-gen2`. To get a list of VM images supported by Batch, including generation 2 images,
-use the ['list supported images'](/rest/api/batchservice/account/listsupportedimages) API,
+use the ['list supported images'](/rest/api/batchservice/pools/list-supported-images) API,
 [PowerShell](/powershell/module/az.batch/get-azbatchsupportedimage), or [Azure CLI](/cli/azure/batch/pool/supported-images).
 
 ## Size considerations
@@ -62,7 +62,7 @@ Use one of the following APIs to return a list of Windows and Linux VM images cu
 
 - PowerShell: [Get-AzBatchSupportedImage](/powershell/module/az.batch/get-azbatchsupportedimage)
 - Azure CLI: [az batch pool supported-images](/cli/azure/batch/pool/supported-images)
-- [Batch Service APIs](batch-apis-tools.md#batch-service-apis): [List Supported Images](/rest/api/batchservice/account/listsupportedimages)
+- [Batch Service APIs](batch-apis-tools.md#batch-service-apis): [List Supported Images](/rest/api/batchservice/pools/list-supported-images)
 
 For example, using the Azure CLI, you can obtain the list of supported VM images with the following command:
 
@@ -73,13 +73,24 @@ az batch pool supported-images list
 Images that have a `verificationType` of `verified` undergo regular interoperability validation testing with the Batch service
 by the Azure Batch team. The `verified` designation doesn't mean that every possible application or usage scenario is validated,
 but that functionality exposed by the Batch API such as executing tasks, mounting a supported virtual filesystem, etc. are
-regularly tested as part of release processes. Images that have a `verificationType` of `unverified` don't undergo regular
-validation testing but were initially verified to boot on Azure Batch compute nodes and transition to an `idle` compute
-node state. Support for `unverified` images isn't guaranteed.
+regularly tested as part of release processes.
+
+Images that have a `verificationType` of `unverified` don't undergo regular validation testing but were initially verified to
+boot on Azure Batch compute nodes and transition to an `idle` compute node state. Support for `unverified` images isn't
+guaranteed.
+
+Verification status reflects current test coverage and can change over time. An image reported as `verified` might later be
+reported as `unverified`, for example when the image is removed from the Batch validation test suite or as it approaches its
+Batch support end of life (EOL) date. Images at or past their EOL date aren't verified.
+
+A change from `verified` to `unverified` doesn't mean that the image stopped working, only that it's no longer part of regular
+validation testing. A `verified` designation doesn't indicate that an image remains verified indefinitely, and isn't a guarantee
+for the lifetime of the image. It's your responsibility to periodically refresh your view of the `verificationType` and
+`batchSupportEndOfLife` values for the images used by your pools.
 
 > [!TIP]
 > Avoid images with impending Batch support end of life (EOL) dates. These dates can be discovered via
-> the [`ListSupportedImages` API](/rest/api/batchservice/account/listsupportedimages),
+> the [`ListSupportedImages` API](/rest/api/batchservice/pools/list-supported-images),
 > [PowerShell](/powershell/module/az.batch/get-azbatchsupportedimage), or [Azure CLI](/cli/azure/batch/pool/supported-images).
 > For more information, see the [Batch best practices guide](best-practices.md) regarding Batch pool VM image selection.
 

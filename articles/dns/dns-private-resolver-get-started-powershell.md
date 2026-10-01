@@ -14,7 +14,7 @@ ms.custom: devx-track-azurepowershell, mode-api, ignite-2022
 
 # Quickstart: Create an Azure DNS Private Resolver using Azure PowerShell
 
-This article walks you through the steps to create your first private DNS zone and record using Azure PowerShell. If you prefer, you can complete this quickstart using [Azure portal](private-dns-getstarted-portal.md).
+This article shows you how to create an Azure DNS Private Resolver by using Azure PowerShell. If you prefer, you can complete this quickstart by using the [Azure portal](dns-private-resolver-get-started-portal.md).
 
 [!INCLUDE [updated-for-az](~/reusable-content/ce-skilling/azure/includes/updated-for-az.md)]
 
@@ -26,7 +26,7 @@ The following figure summarizes the setup used in this article:
 
 ## Prerequisites
 
-If you don’t have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+If you don’t have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 This article assumes you've [installed the Az Azure PowerShell module](/powershell/azure/install-azure-powershell).
 

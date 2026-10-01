@@ -5,13 +5,17 @@ author: kromerm
 ms.author: makromer
 ms.subservice: pricing
 ms.topic: how-to
-ms.custom: subject-cost-optimization
 ms.date: 09/26/2024
+ms.custom:
+  - subject-cost-optimization
+  - sfi-image-nochange
 ---
 
 # Plan to manage costs for Azure Data Factory
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article describes how you plan for and manage costs for Azure Data Factory. 
 

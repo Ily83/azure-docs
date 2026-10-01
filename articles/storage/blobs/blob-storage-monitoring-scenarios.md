@@ -7,7 +7,9 @@ ms.service: azure-blob-storage
 ms.topic: concept-article
 ms.author: normesta
 ms.date: 05/10/2023
-ms.custom: "monitoring"
+ms.custom:
+  - "monitoring"
+  - sfi-image-nochange
 # Customer intent: "As a storage administrator, I want to implement best practices for monitoring Azure Blob Storage, so that I can effectively analyze usage metrics and logs for improved performance, security, and cost management."
 ---
 
@@ -206,7 +208,7 @@ With Azure Synapse, you can create server-less SQL pool to query log data when y
         JSON_VALUE(doc, '$.identity.requester.objectId') AS requesterObjectId,
         JSON_VALUE(doc, '$.operationName') AS operationName,
         JSON_VALUE(doc, '$.callerIpAddress') AS callerIpAddress,
-        JSON_VALUE(doc, '$.uri') AS uri
+        JSON_VALUE(doc, '$.uri') AS uri,
         doc
     from openrowset(
             bulk 'https://demo2uswest4log.blob.core.windows.net/insights-logs-storageread/resourceId=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/mytestrp/providers/Microsoft.Storage/storageAccounts/demo2uswest/blobServices/default/y=2021/m=03/d=19/h=*/m=*/PT1H.json',

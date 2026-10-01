@@ -7,8 +7,9 @@ author: avanigupta
 ms.service: azure-app-configuration
 ms.devlang: csharp
 ms.topic: how-to
-ms.date: 07/17/2025
+ms.date: 08/28/2026
 ms.author: avgupta
+ms.custom: sfi-ropc-nochange
 
 # customer intent: As a developer, I want to use Azure App Configuration in my ASP.NET Core app to automatically reload Azure Key Vault secrets and certificates so that I don't have to restart my app to get the latest values from Key Vault.
 ---

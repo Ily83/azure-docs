@@ -2,17 +2,19 @@
 title: Authenticate to Azure Communication Services
 titleSuffix: An Azure Communication Services article
 description: This article describes how you can use an app or service to authenticate to Azure Communication Services.
-author: tophpalmer
+author: sundiraman
 manager: chpalm
 services: azure-communication-services
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 09/05/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: identity
 ---
 
 # Authenticate to Azure Communication Services
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Every client interaction with Azure Communication Services needs to be authenticated. In a typical architecture, see [client and server architecture](./client-and-server-architecture.md), *access keys* or *Microsoft Entra ID authentication* are used for server-side authentication.
 

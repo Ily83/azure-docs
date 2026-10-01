@@ -5,13 +5,15 @@ description: Experience for Microsoft Teams users joining an Azure Communication
 author: jamescadd
 ms.author: jacadd
 ms.date: 4/15/2024
-ms.topic: conceptual
+ms.topic: feature-guide
 ms.service: azure-communication-services
 ms.subservice: teams-interop
 ms.custom: mode-other
 ---
 
 # Capabilities for Microsoft Teams users in Azure Communication Services calls
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services is interoperable with Microsoft Teams. This is especially helpful for business-to-consumer use cases, where an external customer in a custom, branded Azure-powered app or website communicates with an employee using Microsoft Teams. This ability enables the external customer to enjoy a custom experience, and the employee to have all their communication needs satisfied in a single hub: Teams.
 

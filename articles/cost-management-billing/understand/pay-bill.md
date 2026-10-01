@@ -2,13 +2,14 @@
 title: Pay your Microsoft Customer Agreement or Microsoft Online Subscription Program bill
 description: Learn how to pay your bill in the Azure portal. You must be a billing profile owner, contributor, or invoice manager to pay in the portal.
 keywords: billing, past due, balance, pay now,
-author: lindseyshep
-ms.author: lishepar
-ms.reviewer: lishepar, jobailey
+author: kennyday
+ms.author: souchak
+ms.reviewer: souchak
 ms.service: cost-management-billing
 ms.subservice: billing
 ms.topic: how-to
-ms.date: 05/01/2025
+ms.date: 09/16/2026
+service.tree.id: 3b35c9b8-bf14-4e4a-bc0d-21055e56b28c
 ---
 
 # Pay your Microsoft Customer Agreement or Microsoft Online Subscription Program bill
@@ -43,22 +44,24 @@ Here's a table that summarizes payment methods for agreement types:
 
 ## Reserve Bank of India
 
-In October 2021, automatic payments in India might block some credit card transactions, especially transactions that exceed 5,000 INR. Because of this situation, you might need to make payments for your Microsoft Online Subscription Program (MOSP) account manually in the Azure portal. This directive doesn't affect the total amount you're charged for your Azure usage.
+In October 2021, automatic payments in India were restricted under RBI’s e-mandate guidelines, which initially capped recurring transactions at ₹5,000. Customers often had to make manual payments for Microsoft Online Subscription Program (MOSP) accounts in the Azure portal. This directive did not affect the total amount charged for Azure usage.
 
-In June 2022, the Reserve Bank of India increased the limit of e-mandates on cards for recurring payments from 5,000 to 15,000 INR. Learn more about this directive on the [Reserve Bank of India website](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11668&Mode=0).
+In June 2022, the Reserve Bank of India (RBI) raised the e-mandate limit for recurring card transactions from ₹5,000 to ₹15,000. Learn more on the [Reserve Bank of India website](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11668&Mode=0).
 
 In September 2022, Microsoft and other online merchants no longer store credit card information. To comply with this regulation, Microsoft removed all stored card details from Azure. Learn more about this directive on the [Reserve Bank of India website](https://rbidocs.rbi.org.in/rdocs/notification/PDFs/DPSSC09B09841EF3746A0A7DC4783AC90C8F3.PDF).
+
+**Recent Updates:** As of December 2023, RBI further increased the e-mandate limit for certain categories—mutual fund subscriptions, insurance premium payments, and credit card bill payments—from ₹15,000 to ₹1,00,000 per transaction. This change allows higher-value recurring transactions without additional authentication steps for these categories. Additionally, RBI issued the *Authentication Mechanisms for Digital Payment Transactions Directions, 2025*, introducing broader principles for secure digital payments and enabling alternative authentication methods beyond SMS-based OTP. These directions take effect by April 1, 2026. Learn more on the [Reserve Bank of India notifications page](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12898).
 
 ### UPI and NetBanking payment options
 
 Azure supports two alternate payment methods for India customers for MOSP accounts.
 
-- Unified Payments Interface (UPI) is a real-time payment method.
+- Unified Payments Interface (UPI) is a real-time payment method. UPI is also supported for MCA accounts.
 - NetBanking gives customers access to banking services through an online platform.
 
 #### How do I make a payment with UPI or NetBanking?
 
-UPI and NetBanking are supported only for one-time transactions.
+UPI and NetBanking are supported only for one-time payment transactions.
 
 To make a payment with UPI or NetBanking:
 
@@ -74,11 +77,39 @@ After you submit the payment, allow time for the payment to appear in the Azure 
 
 Refunds are treated as a regular charge. They go to your bank account.
 
+### Paying with Pix in Brazil
+
+Customers who have a billing address in Brazil and an MCA billing account type can use Pix for one-time payment transactions. To make a payment with Pix:
+
+1. Select **Add a new payment method** when you're making a payment.
+2. Select **PIX**.
+3. You see a QR code in the payments blade within Azure portal. Alternatively, use the payment link provided to complete the payment. The link and the QR code are valid for 24 hours.
+4. When you complete payment, the payment blade automatically closes and returns you to Azure portal.
+
+After you submit the payment, wait for the payment to appear in the Azure portal.
+
+> [!NOTE]
+> Paying with Pix is available only for MCA billing accounts. You can check your account type [here](#check-the-type-of-your-account).
+
+### Paying with Alipay in China
+
+Customers who have a billing address in China and an MCA billing account type can use Alipay for one-time payment transactions. To make a payment with Alipay:
+
+1. Select **Add a new payment method** when you're making a payment.
+2. Select **Alipay**.
+3. You're redirected to a payment partner, like Worldpay, where you can view the QR code and complete the payment with your mobile device.
+4. When you complete payment, the payment page automatically closes and returns you to Azure portal.
+
+After you submit the payment, allow time for the payment to appear in the Azure portal.
+
+> [!NOTE]
+> Paying with Alipay is available only for MCA billing accounts. You can check your account type [here](#check-the-type-of-your-account).
+
 ## Partial payments
 
 Partial payment is available for Azure global pay-as-you-go customers who experience a payment failure during the [Pay Now](/azure/cost-management-billing/understand/pay-bill#pay-now-in-the-azure-portal) flow. If you accrue usage higher than your credit card limit, you can use the following self-serve process to split the invoice amount across multiple credit cards.
 
-A minimum payment has a minimum value that you can pay, which varies by country/region.
+There is a minimum value required for each payment that you can submit, which varies by country/region.
 
 > [!NOTE]
 > To avoid service interruption, pay the full invoice amount by the due date on the invoice.
@@ -132,7 +163,7 @@ Alternatively, if your invoice is under the threshold amount for your currency, 
 ### Bank details used to send wire transfer payments
 <a name="wire-bank-details"></a>
 
-If your default payment method is wire transfer, check your invoice for payment instructions. Find payment instructions for your country/region in the following list:
+If your default payment method is wire transfer, check your invoice for payment instructions. These bank details apply to all MCA wire transfer payments. Find payment instructions for your country/region in the following list:
 
 > [!div class="op_single_selector"]
 > - **Choose your country or region**

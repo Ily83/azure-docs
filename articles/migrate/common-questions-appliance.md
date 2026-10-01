@@ -1,13 +1,18 @@
 ---
-title: Azure Migrate appliance FAQ
+title: Azure Migrate Appliance FAQ
 description: Get answers to common questions about the Azure Migrate appliance.
 author: Vikram1988
 ms.author: vibansa
 ms.manager: abhemraj
 ms.service: azure-migrate
 ms.topic: concept-article
-ms.custom: engagement-fy25
-ms.date: 09/03/2024
+ms.date: 08/03/2025
+ms.reviewer: v-gajeronika
+ms.update-cycle: 365-days
+ms.custom:
+  - engagement-fy25
+  - sfi-image-nochange
+  - sfi-ropc-nochange
 # Customer intent: "As a systems administrator, I want to deploy and configure the Azure Migrate appliance, so that I can effectively discover and assess on-premises servers for migration to the cloud."
 ---
 
@@ -167,7 +172,7 @@ To fix this issue, follow these steps to ensure that your appliance can validate
     
         :::image type="content" source="./media/common-questions-appliance/settings-inline.png" alt-text="Screenshot of Windows settings." lightbox="./media/common-questions-appliance/settings-expanded.png":::
 
-    1. In the certificate manager, you must see the entry for **Microsoft Root Certificate Authority 2011** and **Microsoft Code Signing PCA 2011**.
+    1. In the certificate manager, look for the entries for **Microsoft Root Certificate Authority 2011** and **Microsoft Code Signing PCA 2024**.
     
         :::image type="content" source="./media/common-questions-appliance/certificate-1.png" alt-text="Screenshot of certificate 1." lightbox="./media/common-questions-appliance/certificate-1.png":::
 
@@ -175,7 +180,7 @@ To fix this issue, follow these steps to ensure that your appliance can validate
 
     1. If these two certificates are not present, proceed to download them from the following sources:
         - https://download.microsoft.com/download/2/4/8/248D8A62-FCCD-475C-85E7-6ED59520FC0F/MicrosoftRootCertificateAuthority2011.cer 
-        - https://www.microsoft.com/pkiops/certs/MicCodSigPCA2011_2011-07-08.crt
+        - https://www.microsoft.com/pkiops/certs/Microsoft%20Code%20Signing%20PCA%202024.crt
     1. install these certificates on the appliance machine.
 1. Check if there are any group policies on your machine that could be interfering with certificate validation: 
     1. Go to Windows Start Menu > Run > gpedit.msc. <br>The **Local Group Policy Editor** window. Make sure that the **Network Retrieval** policies are defined as shown in the following screenshot:
@@ -221,7 +226,7 @@ For a newly created Migrate appliance, the default expiry period for the associa
 1. On the appliance VM, open an elevated privileged PowerShell Command Prompt.
 1. Navigate to the Config Manager installation folder: 
 
-    ```cd C:\’Program Files’\’Microsoft Azure Appliance Configuration Manager’\Scripts\PowerShell\AzureMigrateCertificateRotation```
+    ```cd "C:\Program Files\Microsoft Azure Appliance Configuration Manager\Scripts\PowerShell\AzureMigrateCertificateRotation"```
 
 1. Execute the following script to rotate the Microsoft Entra ID app certificate and extend its validity for an additional 6 months:
 
@@ -231,7 +236,6 @@ For a newly created Migrate appliance, the default expiry period for the associa
 
     ```PS C:\Program Files\Microsoft Azure Appliance Configuration Manager\Scripts\PowerShell\AzureMigrateCertificateRotation>.\AzureMigrateRotateCertificate.ps1 12``` 
 
-    ```C:\’Program Files’\’Microsoft Azure Appliance Configuration Manager’\Scripts\PowerShell\AzureMigrateCertificateRotation```
 
 ## Next steps
 

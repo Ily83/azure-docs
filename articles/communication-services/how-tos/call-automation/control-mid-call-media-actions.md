@@ -8,11 +8,15 @@ ms.service: azure-communication-services
 ms.subservice: call-automation
 ms.date: 07/16/2024
 ms.author: kpunjabi
-ms.custom: public_preview
 services: azure-communication-services
+ms.custom:
+  - public_preview
+  - sfi-ropc-nochange
 ---
 
 # Control mid-call media actions with Call Automation
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Call Automation uses a REST API interface to receive requests for actions and provide responses to notify whether the request was successfully submitted or not. Because of the asynchronous nature of calling, most actions have corresponding events that are triggered when the action finishes successfully or fails. This article covers the actions that are available to developers during calls, like `SendDTMF` and `ContinuousDtmfRecognition`. Actions are accompanied with sample code on how to invoke the particular action.
 
@@ -582,11 +586,11 @@ call_connection_client.unhold(target_participant=PhoneNumberIdentifier(TARGET_PH
 ```
 -----
 
-### Audio streaming (public preview)
+### Audio streaming 
 
 With audio streaming, you can subscribe to real-time audio streams from an ongoing call. For more information on how to get started with audio streaming and information about audio-streaming callback events, see [Quickstart: Server-side audio streaming](audio-streaming-quickstart.md).
 
-### Real-time transcription (public preview)
+### Real-time transcription
 
 By using real-time transcription, you can access live transcriptions for the audio of an ongoing call. For more information on how to get started with real-time transcription and information about real-time transcription callback events, see [Add real-time transcription into your application](real-time-transcription-tutorial.md).
 

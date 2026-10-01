@@ -3,7 +3,7 @@ title: Template functions - scope
 description: Describes the functions to use in an Azure Resource Manager template (ARM template) to retrieve values about deployment scope.
 ms.topic: reference
 ms.custom: devx-track-arm-template
-ms.date: 08/08/2025
+ms.date: 06/26/2026
 ---
 
 # Scope functions for ARM templates
@@ -99,7 +99,7 @@ The next example creates a new management group and uses this function to set th
   "resources": [
     {
       "type": "Microsoft.Management/managementGroups",
-      "apiVersion": "2020-05-01",
+      "apiVersion": "2024-02-01-preview",
       "scope": "/",
       "name": "[parameters('mgName')]",
       "properties": {

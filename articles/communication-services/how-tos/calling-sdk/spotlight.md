@@ -14,6 +14,8 @@ zone_pivot_groups: acs-plat-web-ios-android-windows
 
 # Enable spotlight
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article describes how to implement spotlight capability with Azure Communication Services Calling SDKs. Spotlight enables users in the call or meeting to signal to other participants that selected user should be **in the spotlight**. Spotlight also enables users to tag other users in the call and notify all the participants that someone is spotlighted and other clients need to change the User Interface layout for that user.
 
 ## Overview
@@ -27,7 +29,7 @@ To enable higher resolution for a spotlighted user's video, the application must
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). 
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). 
 - A deployed Communication Services resource. [Create a Communication Services resource](../../quickstarts/create-communication-resource.md).
 - A user access token to enable the calling client. For more information, see [Create and manage access tokens](../../quickstarts/identity/access-tokens.md).
 - Optional: Complete the quickstart to [add voice calling to your application](../../quickstarts/voice-video-calling/getting-started-with-calling.md)

@@ -6,13 +6,17 @@ ms.author: makromer
 author: kromerm
 ms.subservice: data-flows
 ms.topic: concept-article
-ms.custom: synapse
 ms.date: 03/31/2025
+ms.custom:
+  - synapse
+  - sfi-image-nochange
 ---
 
 # Mapping data flow Debug Mode
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 ## Overview
 

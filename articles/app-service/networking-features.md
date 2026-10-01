@@ -1,16 +1,17 @@
 ---
-title: Networking features
+title: Networking Features
 description: Learn about the networking features in Azure App Service, and learn which features you need for security or other functionality.
 author: seligj95
 ms.assetid: 5c61eed1-1ad1-4191-9f71-906d610ee5b7
-ms.topic: article
-ms.date: 06/13/2025
+ms.topic: concept-article
+ms.date: 08/24/2026
 ms.update-cycle: 1095-days
 ms.author: jordanselig
 ms.custom: UpdateFrequency3
 #customer intent: As a deployment engineer, I want to understand the options for deploying apps in Azure App Services to control network traffic.
 ms.service: azure-app-service
 ---
+
 # App Service networking features
 
 You can deploy applications in Azure App Service in multiple ways. By default, apps hosted in App Service are accessible directly through the internet and can reach only internet-hosted endpoints. For many applications, you need to control the inbound and outbound network traffic. There are several features in App Service to help you meet those needs. The challenge is knowing which feature to use to solve a given problem. Use this article to help you determine which feature to use, based on example use cases.
@@ -69,7 +70,10 @@ The following outbound use cases suggest how to use App Service networking featu
 
 ### Default networking behavior
 
-Azure App Service scale units support many customers in each deployment. The Free and Shared SKU plans host customer workloads on multitenant workers. The Basic and higher plans host customer workloads that are dedicated to only one App Service plan. If you have a Standard App Service plan, all the apps in that plan run on the same worker. If you scale out the worker, all the apps in that App Service plan are replicated on a new worker for each instance in your App Service plan.
+Azure App Service scale units support many customers in each deployment. The Free and Shared SKU plans host customer workloads on multitenant workers. The Basic and higher plans host customer workloads that are dedicated to only one App Service plan. By default, if you have a Standard App Service plan, all the apps in that plan run on the same workers. If you scale out the plan, all its apps are replicated to each new worker. An app or deployment slot that uses [per-app scaling](manage-scale-per-app.md) can instead run on only a subset of the plan's workers.
+
+> [!NOTE]
+> Port 445 (SMB) is blocked by default in the Azure App Service sandbox and cannot be used to access on-premises or public resources.
 
 #### Outbound addresses
 

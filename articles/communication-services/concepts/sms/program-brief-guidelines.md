@@ -8,11 +8,13 @@ services: azure-communication-services
 
 ms.author: prakulka
 ms.date: 2/15/2022
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: sms
 ---
 # Short Code Program Brief Filling Guidelines
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 [!INCLUDE [Short code eligibility notice](../../includes/public-preview-include-short-code-eligibility.md)]
 
 Azure Communication Services enables you to apply for a short code for SMS programs. In this article, we review the guidelines on how to fill out a program brief for short code registration. A program brief application consists of four sections:

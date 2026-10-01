@@ -5,8 +5,9 @@ services: azure-netapp-files
 author: b-hchen
 ms.service: azure-netapp-files
 ms.topic: how-to
-ms.date: 03/18/2025
+ms.date: 09/15/2026
 ms.author: anfdocs
+ms.custom: sfi-image-nochange
 # Customer intent: As a storage administrator, I want to dynamically change the service level of an Azure NetApp Files volume, so that I can optimize performance and cost according to workload demands without data migration interruptions.
 ---
 # Dynamically change the service level of an Azure NetApp Files volume
@@ -25,6 +26,8 @@ The capacity pool that you want to move the volume to must already exist. The ca
 
 * After the volume is moved to another capacity pool, you no longer have access to the previous volume activity logs and volume metrics. The volume starts with new activity logs and metrics under the new capacity pool.
 
+* If you have Azure Monitor diagnostic settings configured on the volume, the pool change operation doesn't automatically migrate or remove them. Because the volume's ARM resource ID changes when it moves to a new capacity pool, any diagnostic settings on the original resource path become orphaned and continue to emit data to the configured destination (Log Analytics workspace, Event Hub, or storage account). To avoid this situation, remove diagnostic settings from the volume before performing volume move. After the volume is moved to a new pool and if you want to enable diagnostic settings again, go to the volume and create new diagnostic settings.
+
 * If you move a volume to a capacity pool of a higher service level (for example, moving from *Standard* to *Premium* or *Ultra* service level), you must wait at least 24 hours before you can move that volume *again* to a capacity pool of a lower service level (for example, moving from *Ultra* to *Premium* or *Standard*). You can always change to higher service level without wait time.
 
 * If the target capacity pool is of the *manual* QoS type, the volume's throughput isn't changed with the volume move. You can [modify the allotted throughput](manage-manual-qos-capacity-pool.md#modify-the-allotted-throughput-of-a-manual-qos-volume) in the target manual capacity pool.
@@ -32,6 +35,8 @@ The capacity pool that you want to move the volume to must already exist. The ca
 * Regardless of the source pool’s QoS type, when the target pool is of the *auto* QoS type, the volume's throughput is changed with the move to match the service level of the target capacity pool.
 
 * If you use cool access, see [Manage Azure NetApp Files storage with cool access](manage-cool-access.md#considerations) for more considerations. 
+
+* If you're using a custom IAM role with an Azure NetApp Files datastore for Azure VMware Service, ensure you have the correct permissions to update the service level. For specific permissions, see [prerequisites](../azure-vmware/attach-azure-netapp-files-to-azure-vmware-solution-hosts.md#prerequisites).
  
 ## Move a volume to another capacity pool
 

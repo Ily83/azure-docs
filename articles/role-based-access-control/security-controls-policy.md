@@ -3,9 +3,9 @@ title: Azure Policy Regulatory Compliance controls for Azure RBAC
 description: Lists Azure Policy Regulatory Compliance controls available for Azure role-based access control (Azure RBAC). These built-in policy definitions provide common approaches to managing the compliance of your Azure resources.
 ms.date: 02/06/2024
 ms.topic: sample
-author: jenniferf-skc
+author: rolyon
 manager: pmwongera
-ms.author: jfields
+ms.author: rolyon
 ms.service: role-based-access-control
 ms.custom: subject-policy-compliancecontrols
 ---
@@ -20,7 +20,7 @@ page lists the **compliance domains** and **security controls** for Azure role-b
 (Azure RBAC). You can assign the built-ins for a **security control** individually to help make your
 Azure resources compliant with the specific standard.
 
-[!INCLUDE [azure-policy-compliancecontrols-introwarning](../../includes/policy/standards/intro-warning.md)]
+[!INCLUDE [azure-policy-compliancecontrols-introwarning](~/reusable-content/ce-skilling/azure/includes/policy/standards/intro-warning.md)]
 
 [!INCLUDE [azure-policy-compliancecontrols-rbac](~/azure-policy-autogen-docs/includes/policy/standards/byrp/microsoft.authorization.md)]
 

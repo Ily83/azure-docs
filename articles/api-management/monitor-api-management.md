@@ -1,13 +1,11 @@
 ---
 title: Monitor Azure API Management
 description: Learn how to monitor Azure API Management using Azure Monitor, including data collection, analysis, and alerting.
-ms.date: 07/09/2025
+ms.date: 09/09/2025
 ms.custom:
   - horz-monitor
   - build-2025
 ms.topic: how-to
-author: dlepow
-ms.author: danlep
 ms.service: azure-api-management
 ---
 
@@ -45,7 +43,8 @@ Azure API Management provides analytics for your APIs so that you can analyze th
 - In the classic API Management service tiers, your API Management instance also includes *legacy built-in analytics* in the Azure portal, and analytics data can be accessed using the API Management REST API. Closely similar data is shown in the Azure Monitor-based dashboard and built-in analytics.
 
 > [!IMPORTANT]
-> The Azure Monitor-based dashboard is the recommended way to access analytics data. Built-in (classic) analytics isn't available in the v2 tiers.
+> * The Azure Monitor-based dashboard is the recommended way to access analytics data.
+> * Effective March 2027, the dashboard and reports associated with API Management built-in analytics in the classic tiers will be [retired](./breaking-changes/analytics-dashboard-retirement-march-2027.md). We recommend transitioning to the Azure Monitor-based dashboard that replaces it.
 
 With API analytics, analyze the usage and performance of the APIs in your API Management instance across several dimensions, including:
 
@@ -115,7 +114,7 @@ This section shows you how to enable Azure Monitor logs for auditing and trouble
 |API Management gateway     |  Requests processed by the API Management gateway, including HTTP methods, protocols, request and response bodies, headers, timings, error details, and cache involvement.       | Adjust settings for all APIs, or override them for individual APIs.<br/><br/>In API Management instances configured with [workspaces](workspaces-overview.md), gateway logs can be collected individually for each workspace and aggregated for centralized access by the platform team.  |
 |WebSocket connections     | Events for [WebSocket API](websocket-api.md) connections, starting from the handshake until the connection is terminated.       |
 |Developer portal usage     |  Requests that are received and processed by the API Management [developer portal](developer-portal-overview.md), including user authentication actions, views of API details, and API testing in the interactive test console.|
-| Generative AI gateway | Requests processed by the API Management gateway for large language model (LLM) REST APIs such as Azure AI Foundry APIs, including token usage, models, and optionally details of request prompts and response completions. | Enable logging of request messages and/or response messages for specific LLM APIs.
+| Generative AI gateway | Requests processed by the API Management gateway for large language model (LLM) REST APIs such as Microsoft Foundry APIs, including token usage, models, and optionally details of request prompts and response completions. | Enable logging of request messages and/or response messages for specific LLM APIs.
 
 For more information, see [API Management monitoring data reference](monitor-api-management-reference.md).
 

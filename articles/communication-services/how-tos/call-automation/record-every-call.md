@@ -2,16 +2,19 @@
 title: Record a call when it starts
 titleSuffix: An Azure Communication Services how-to document
 description: In this how-to document, you can learn how to record a call through Azure Communication Services once it starts.
-author: tophpalmer
+author: sundiraman
 manager: shahen
 services: azure-communication-services
-ms.author: chpalm
+ms.author: sundraman
 ms.topic: how-to
 ms.service: azure-communication-services
 ms.date: 03/01/2023
+ms.custom: sfi-ropc-nochange
 ---
 
 # Record a call when it starts
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Call recording is often used directly through the UI of a calling application, where the user triggers the recording. For applications within industries like banking or healthcare, call recording is required from the get-go. The service needs to automatically record for compliance purposes. This sample shows how to record a call when it starts. It uses Azure Communication Services and Azure Event Grid to trigger an Azure Function when a call starts. It automatically records every call within your Azure Communication Services resource.
 
@@ -61,7 +64,7 @@ The Call Started event when a call start is formatted in the following way:
 
 ## Pre-requisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An active Communication Services resource and connection string. [Create a Communication Services resource](../../quickstarts/create-communication-resource.md).
 - Install [Azure CLI](/cli/azure/install-azure-cli-windows?tabs=azure-cli).
 

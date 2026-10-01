@@ -11,9 +11,12 @@ ms.date: 10/30/2024
 ms.topic: tutorial
 ms.service: azure-communication-services
 ms.subservice: email
+ms.custom: sfi-ropc-nochange
 ---
 
 # Detect sensitive data using Azure AI
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes presend email analysis, which detects sensitive data and inappropriate content using Azure AI.
 
@@ -27,7 +30,7 @@ You need to complete these quickstarts to set up the Azure AI resources:
 
 - [Detect Personally Identifying Information (PII) in text](/azure/ai-services/language-service/personally-identifiable-information/quickstart)
 
-- [Moderate text and images with content safety in Azure AI Foundry portal](/azure/ai-studio/quickstarts/content-safety)
+- [Moderate text and images with content safety in Microsoft Foundry portal](/azure/ai-studio/quickstarts/content-safety)
 
 ## Prerequisite check
 
@@ -262,7 +265,7 @@ Put both the subject and the message body into a `List<string>` which can be use
 
 ```csharp
 //Set sample content
-var sender = "donotreply@xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.azurecomm.net"; // get the send email from your email resource in the Azure Portal
+var sender = "donotreply@xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.azurecomm.net"; // get the send email from your email resource in the Azure portal
 var recipient = "emailalias@contoso.com"; // modify the recipient
 var subject = "Precheck Azure Communication Service Email with Azure AI";
 var htmlContent = "<html><body><h1>Precheck email test</h1><br/><h4>This email message is sent from Azure Communication Service Email. </h4>";
@@ -330,4 +333,4 @@ else
 ## Next steps
 
 - Learn more about [Azure Communication Services](../overview.md).
-- Learn more about [Azure AI Foundry](/azure/ai-studio/).
+- Learn more about [Foundry](/azure/ai-studio/).

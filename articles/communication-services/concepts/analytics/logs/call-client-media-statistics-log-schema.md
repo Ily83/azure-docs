@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: amagginetti
 ms.date: 02/04/2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 # Call client media statistics time series log schema
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 The **call client media statistics time series** log provides
 client-side information about the media streams between individual

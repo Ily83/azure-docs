@@ -7,11 +7,13 @@ manager: darmour
 services: azure-communication-services
 ms.author: bashan
 ms.date: 04/01/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ---
 
 # Manage email opt-out
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 [!INCLUDE [Public Preview Notice](../../includes/public-preview-include-document.md)]
 

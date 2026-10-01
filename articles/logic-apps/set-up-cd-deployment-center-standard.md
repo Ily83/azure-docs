@@ -19,9 +19,19 @@ Deployment Center supports multiple source control providers, seamlessly fits in
 
 Due to Azure Logic Apps (Standard) similarities with Azure Functions, for more information about Deployment Center, see [Continuous deployment for Azure Functions](../azure-functions/functions-continuous-deployment.md).
 
+## Known issues and limitations
+
+For Deployment Center integration, the Visual Studio Code generated scripts don't include the following activities:
+
+- Deployment for managed connectors that run in global, multitenant Azure.
+ 
+- Build and deployment for custom code.
+
+If you need a process that manages deployment for both custom code and Azure resources, see [Automate build and deployment for Standard logic app workflows with Azure DevOps](/azure/logic-apps/automate-build-deployment-standard).
+
 ## Prerequisites
 
-- An Azure account and subscription. If you don't have an Azure subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account and subscription. If you don't have an Azure subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - [Visual Studio Code with the Azure Logic Apps (Standard) extension installed and their prerequisites](/azure/logic-apps/create-single-tenant-workflows-visual-studio-code#prerequisites).
 
@@ -55,11 +65,11 @@ The following example shows where to find the **SCM Basic Auth Publishing Creden
 
 1. In the [Azure portal](https://portal.azure.com), open your Standard logic app resource.
 
-1. Follow the [general steps to create the user-assigned managed identity](authenticate-with-managed-identity.md?tabs=standard#create-user-assigned-identity-in-the-azure-portal).
+1. Follow the [general steps to create the user-assigned managed identity](authenticate-with-managed-identity.md?tabs=standard#user-assigned-azure-portal).
 
-1. Follow the [general steps to add the user-assigned managed identity to your logic app](authenticate-with-managed-identity.md?tabs=standard#add-user-assigned-identity-to-logic-app-in-the-azure-portal).
+1. Follow the [general steps to add the user-assigned managed identity to your logic app](authenticate-with-managed-identity.md?tabs=standard#add-user-identity-portal).
 
-1. Follow the [general steps to give the identity access to the resources](authenticate-with-managed-identity.md?tabs=standard#give-identity-access-to-resources) in the [Prerequisites section](#prerequisites).
+1. Follow the [general steps to give the identity access to the resources](authenticate-with-managed-identity.md?tabs=standard#access-other-resources) in the [Prerequisites section](#prerequisites).
 
 1. When you're done, continue on to create scripts for Deployment Center.
 
@@ -152,3 +162,4 @@ To make sure that your deployment works correctly, follow these steps:
 ## Related content
 
 - [Automate build and deployment for Standard logic app workflows with Azure DevOps](automate-build-deployment-standard.md)
+

@@ -1,15 +1,16 @@
 ---
 title: Connect Workflows to IBM Informix
-description: Learn how to access resources in IBM Informix databases from workflows in Azure Logic Apps.
+description: Connect to resources in IBM Informix databases from workflows in Azure Logic Apps.
 services: logic-apps
 ms.suite: integration
 ms.reviewers: estfan, hcampos, azla
 ms.topic: how-to
-ms.date: 07/17/2025
-#Customer intent: As an integration developer, I want to access resources in an IBM Informix database from workflows in Azure Logic Apps.
+ms.update-cycle: 1095-days
+ms.date: 07/10/2026
+#Customer intent: As an automation and integration developer who works in Azure Logic Apps, I want to connect my workflows to resources in IBM Informix databases.
 ---
 
-# Access resources in IBM Informix databases from workflows in Azure Logic Apps
+# Connect IBM Informix databases to workflows in Azure Logic Apps
 
 [!INCLUDE [logic-apps-sku-consumption-standard](../../../includes/logic-apps-sku-consumption-standard.md)]
 
@@ -39,7 +40,7 @@ The following table provides more information about the available connector oper
 
 ## Prerequisites
 
-* An Azure account and subscription. If you don't have an Azure subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/).
+* An Azure account and subscription. If you don't have an Azure subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 * To connect with on-premises Informix databases, you need to [download and install the on-premises data gateway](../logic-apps-gateway-install.md) on a local computer and then [create an Azure data gateway resource in the Azure portal](../logic-apps-gateway-connection.md).
 

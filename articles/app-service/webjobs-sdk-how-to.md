@@ -4,12 +4,14 @@ description: Learn how to write code for the Azure WebJobs SDK. Create event-dri
 author: ggailey777
 
 ms.devlang: csharp
-ms.custom: devx-track-csharp
 ms.topic: how-to
 ms.date: 05/09/2025
 ms.author: glenga
 #Customer intent: As an Azure App Service developer, I want use the WebJobs SDK to run event-driven code in Azure.
 ms.service: azure-app-service
+ms.custom:
+  - devx-track-csharp
+  - sfi-ropc-nochange
 ---
 
 # Use the Azure WebJobs SDK for event-driven background processing
@@ -156,7 +158,7 @@ The following table shows built-in roles that we recommend when you use triggers
 [Azure Service Bus Data Receiver]: ../role-based-access-control/built-in-roles.md#azure-service-bus-data-receiver
 [Azure Service Bus Data Sender]: ../role-based-access-control/built-in-roles.md#azure-service-bus-data-sender
 [Azure Service Bus Data Owner]: ../role-based-access-control/built-in-roles.md#azure-service-bus-data-owner
-[role-assignment-scope]: ../service-bus-messaging/service-bus-managed-service-identity.md#resource-scope
+[role-assignment-scope]: ../service-bus-messaging/service-bus-managed-service-identity.md#understand-service-bus-rbac-scope-levels
 
 #### Connection strings in version 2.*x*
 
@@ -1090,7 +1092,7 @@ In version 3.*x*, you don't have to flush [`TelemetryClient`] when the host stop
 
 #### Version 2.*x*
 
-In version 2.*x*, the [`TelemetryClient`] instance created internally by the Application Insights provider for the WebJobs SDK uses [`ServerTelemetryChannel`](https://github.com/microsoft/ApplicationInsights-dotnet/tree/develop/.publicApi/Microsoft.AI.ServerTelemetryChannel.dll). When the Application Insights endpoint is unavailable or is throttling incoming requests, this channel [saves requests in the web app's file system and resubmits them later](https://apmtips.com/posts/2015-09-03-more-telemetry-channels/).
+In version 2.*x*, the [`TelemetryClient`] instance created internally by the Application Insights provider for the WebJobs SDK uses `ServerTelemetryChannel`. When the Application Insights endpoint is unavailable or is throttling incoming requests, this channel [saves requests in the web app's file system and resubmits them later](/azure/azure-monitor/app/classic-api?tabs=dotnet#telemetry-channels).
 
 [`TelemetryClient`] is created by a class that implements `ITelemetryClientFactory`. By default, this class is [`DefaultTelemetryClientFactory`](https://github.com/Azure/azure-webjobs-sdk/blob/dev/src/Microsoft.Azure.WebJobs.Logging.ApplicationInsights/).
 
@@ -1131,9 +1133,10 @@ config.LoggerFactory = new LoggerFactory()
 
 This article provides code snippets that show how to handle common scenarios for working with the WebJobs SDK. For complete samples, see [azure-webjobs-sdk-samples](https://github.com/Azure/azure-webjobs-sdk/tree/dev/sample/SampleHost).
 
-[`ExecutionContext`]: https://github.com/Azure/azure-webjobs-sdk-extensions/blob/v2.x/src/WebJobs.Extensions/Extensions/Core/ExecutionContext.cs
+[`ExecutionContext`]: https://github.com/Azure/azure-webjobs-sdk/blob/dev/src/Microsoft.Azure.WebJobs.Host/Bindings/ExecutionContext/ExecutionContext.cs
 [`TelemetryClient`]: /dotnet/api/microsoft.applicationinsights.telemetryclient
 [`ConfigureServices`]: /dotnet/api/microsoft.extensions.hosting.hostinghostbuilderextensions.configureservices
 [`ITelemetryInitializer`]: /dotnet/api/microsoft.applicationinsights.extensibility.itelemetryinitializer
 [`TelemetryConfiguration`]: /dotnet/api/microsoft.applicationinsights.extensibility.telemetryconfiguration
 [`JobHostConfiguration`]: https://github.com/Azure/azure-webjobs-sdk/blob/v2.x/src/Microsoft.Azure.WebJobs.Host/JobHostConfiguration.cs
+

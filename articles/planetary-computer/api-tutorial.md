@@ -5,11 +5,9 @@ author: TaylorCorbett
 ms.author: gecorbet
 ms.service: planetary-computer-pro
 ms.topic: tutorial
-ms.date: 4/25/2025
+ms.date: 05/27/2026
 
 #customer intent: As a user, I want to create a GeoCatalog collection and populate it with satellite imagery so that I can learn how to repeat the process with my own data.
-ms.custom:
-  - build-2025
 ---
 
 # Tutorial: Using the Microsoft Planetary Computer Pro APIs to ingest and visualize data
@@ -23,6 +21,12 @@ In this tutorial, you:
 * Query data from within the STAC collection using the Planetary Computer Pro's STAC API
 
 This tutorial shows and explains capabilities through code snippets, for an interactive notebook style experience, [download this tutorial as a Jupyter notebook](https://github.com/Azure/microsoft-planetary-computer-pro/blob/main/notebooks/GeoCatalog_Tutorial.ipynb). 
+
+> [!TIP]
+> This tutorial demonstrates the REST API approach. You can also use the [Planetary Computer Pro Python SDK](/python/api/overview/azure/planetarycomputer-readme) (`pip install azure-planetarycomputer`) for a simplified client experience. See the individual quickstart guides for SDK examples:
+> - [Create a STAC collection](./create-stac-collection.md)
+> - [Add STAC items to a collection](./add-stac-item-to-collection.md)
+> - [Get a collection SAS token](./get-collection-sas-token.md)
 
 ## Prerequisites
 
@@ -53,7 +57,7 @@ geocatalog_url = (
 )
 geocatalog_url = geocatalog_url.rstrip("/")  # Remove trailing slash if present
 
-api_version = "2025-04-30-preview"
+api_version = "2026-04-15"
 
 # User selections for demo
 
@@ -138,7 +142,7 @@ stac_collection = response.json()
 
 collection_id = pc_collection + "-tutorial-" + str(random.randint(0, 1000))
 
-# Genereate a unique name for the test collection
+# Generate a unique name for the test collection
 stac_collection["id"] = collection_id
 stac_collection["title"] = collection_id
 
@@ -481,7 +485,7 @@ while pending:
     
     num_running
     stop=time.time()
-    # Print the sumary of num finished, num running and num failed
+    # Print the summary of num finished, num running and num failed
     
     print("Ingesting Imagery:")
     print(f"\tFinished: {num_finished}\n\tRunning: {num_running}\n\tFailed: {num_failed}")
@@ -500,7 +504,7 @@ You should be able to refresh your web browser and click on the Items tab to see
 
 ## Collection management
 
-Now that you ingested these STAC items and their associated assets (images) into the STAC collection, you need to provide you GeoCatalog with some other configuration files before you can visualize these items in the GeoCatalog web interface.
+Now that you ingested these STAC items and their associated assets (images) into the STAC collection, you need to provide your GeoCatalog with some other configuration files before you can visualize these items in the GeoCatalog web interface.
 
 ### Collection render config
 First download a render configuration file for this collection from the Planetary Computer. This config file can be read by GeoCatalog to render images in different ways within the Explorer. This is because STAC items may contain many different assets (images) that can be combined to create entirely new images of a given area that highlight visible or nonvisible features. For instance, Sentinel-2 STAC items have over 12 different images from different portions of the electromagnetic spectrum. This render config instructs GeoCatalog on how to combine these images so it can display images in Natural Color or False Color (Color Infrared).

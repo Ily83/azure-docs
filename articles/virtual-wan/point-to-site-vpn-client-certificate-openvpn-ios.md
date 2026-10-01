@@ -2,18 +2,18 @@
 title: 'Configure P2S VPN clients - certificate authentication - iOS OpenVPN client'
 titleSuffix: Azure Virtual WAN
 description: Learn how to configure the VPN client for Virtual WAN P2S configurations that use certificate authentication. This article applies to iOS OpenVPN client.
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.topic: how-to
 ms.date: 01/30/2025
-ms.author: cherylmc
+ms.author: duau
 ---
 
 # Configure P2S User VPN clients: certificate authentication - OpenVPN client - iOS
 
 This article helps you connect to your Azure virtual network (VNet) using Virtual WAN User VPN point-to-site (P2S) and **Certificate authentication** on iOS using an OpenVPN client.
 
-[!INCLUDE [Prerequisites- iOS](../../includes/virtual-wan-user-vpn-openvpn-prerequisites.md)]
+[!INCLUDE [Prerequisites- iOS](../networking/includes/virtual-wan/user-vpn-openvpn-prerequisites.md)]
 
 ## Generate client certificates
 

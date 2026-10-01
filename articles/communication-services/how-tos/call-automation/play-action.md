@@ -14,6 +14,8 @@ zone_pivot_groups: acs-js-csharp-java-python
 
 # Customize voice prompts to users with Play action
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 This guide helps you get started with playing audio files to participants by using the play action provided through Azure Communication Services Call Automation SDK.
 
 ::: zone pivot="programming-language-csharp"
@@ -49,7 +51,7 @@ This guide helps you get started with playing audio files to participants by usi
 
 ## Known limitations
 - Text-to-Speech prompts support a maximum of 4,000 characters. If your prompt is longer than this limit, we suggest using SSML for Text-to-Speech-based play actions.
-- HD Voices from Azure AI Foundry aren't officially supported. These will result in timeouts if used. 
+- HD Voices from Microsoft Foundry aren't officially supported. These will result in timeouts if used. 
 - Speech service quota increases can be requested if you exceed your quota limit. Follow the steps outlined [here](/azure/ai-services/speech-service/speech-services-quotas-and-limits) to request an increase.
 
 ## Clean up resources

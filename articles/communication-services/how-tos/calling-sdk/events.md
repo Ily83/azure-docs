@@ -2,8 +2,8 @@
 title: Subscribe to SDK events
 titleSuffix: An Azure Communication Services article
 description: Use Azure Communication Services SDKs to subscribe to SDK events.
-author: tophpalmer
-ms.author: chpalm
+author: sundiraman
+ms.author: sundraman
 ms.service: azure-communication-services
 ms.subservice: calling
 ms.topic: how-to 
@@ -15,6 +15,8 @@ zone_pivot_groups: acs-plat-web-ios-android
 ---
 
 # Subscribe to SDK events
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 We recommend subscribing to Calling SDK Events. Azure Communication Services SDKs are dynamic and contain properties that might change over time. You can subscribe to these events to be notified in advance of any changes. Follow the instructions in this article to subscribe to Azure Communication Services SDK events.
 

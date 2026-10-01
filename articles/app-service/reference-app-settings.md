@@ -1,13 +1,14 @@
 ---
 title: Environment Variables and App Settings Reference
 description: This article describes the commonly used environment variables in Azure App Service, and which ones can be modified with app settings.
-ms.topic: conceptual
-ms.date: 03/28/2025
+ms.topic: reference
+ms.date: 02/26/2026
 author: cephalin
 ms.author: cephalin
+ms.service: azure-app-service
 ms.custom:
   - build-2025
-ms.service: azure-app-service
+  - sfi-ropc-nochange
 ---
 
 # Environment variables and app settings in Azure App Service
@@ -33,6 +34,7 @@ The following environment variables are related to the app environment in genera
 | `WEBSITE_SKU` | Read-only. Pricing tier of the app. Possible values are `Free`, `Shared`, `Basic`, and `Standard`. |
 | `SITE_BITNESS` | Read-only. Shows whether the app is 32 bit (`x86`) or 64 bit (`AMD64`). |
 | `WEBSITE_HOSTNAME` | Read-only. Primary host name for the app. This setting doesn't account for custom host names. |
+| `WEBSITE_DEFAULT_HOSTNAME` | Read-only. The default host name for the app. This could be either in the original format `<sitename>.azurewebsites.net` or the unique hostname `<sitename>-<randomhash>.<region>.azurewebsites.net`. This setting is sticky and not swappable. |
 | `WEBSITE_VOLUME_TYPE` | Read-only. Shows the storage volume type currently in use. |
 | `WEBSITE_NPM_DEFAULT_VERSION` | Default npm version that the app is using. |
 | `WEBSOCKET_CONCURRENT_REQUEST_LIMIT` | Read-only. Limit for concurrent WebSocket requests. For the `Standard` tier and higher, the value is `-1`, but there's still a per-VM limit based on your VM size. See [Cross VM Numerical Limits](https://github.com/projectkudu/kudu/wiki/Azure-Web-App-sandbox#cross-vm-numerical-limits). |
@@ -47,11 +49,12 @@ The following environment variables are related to the app environment in genera
 | `REMOTEDEBUGGINGVERSION` | Remote debugging version. |
 | `WEBSITE_CONTENTAZUREFILECONNECTIONSTRING` | By default, App Service creates a shared storage for you at app creation. To use a custom storage account instead, set to the connection string of your storage account. For functions, see [App settings reference for Azure Functions](../azure-functions/functions-app-settings.md#website_contentazurefileconnectionstring).<br/><br/>Example: `DefaultEndpointsProtocol=https;AccountName=<name>;AccountKey=<key>` |
 | `WEBSITE_CONTENTSHARE` | When you use specify a custom storage account with `WEBSITE_CONTENTAZUREFILECONNECTIONSTRING`, App Service creates a file share in that storage account for your app. To use a custom name, set this variable to the name that you want. If a file share with the specified name doesn't exist, App Service creates it for you.<br/><br/>Example: `myapp123` |
+| `WEBSITE_BYOS_BLOB_DIRECT_IO` | Set to `false` by default. If enabled, all transactions will query the remote storage directly and caching will be bypassed. This setting is applied at the application level and therefore affects all blob shares mounted by the application.<br/><br/> Only relevant when using custom-mounted Azure Blob Storage. Applicable to Linux containers only (not applicable to Windows). |
 | `WEBSITE_SCM_ALWAYS_ON_ENABLED` | Read-only. Shows whether Always On is enabled (`1`) or not (`0`). |
 | `WEBSITE_SCM_SEPARATE_STATUS` | Read-only. Shows whether the Kudu app is running in a separate process (`1`) or not (`0`). |
 | `WEBSITE_DNS_ATTEMPTS` | Number of times to try name resolution. |
 | `WEBSITE_DNS_TIMEOUT` | Number of seconds to wait for name resolution. |
-| `WEBSITES_CONTAINER_START_TIME_LIMIT` | Amount of time (in seconds) that the platform waits for a container to become ready on startup. This setting applies to both code-based and container-based apps on App Service for Linux. The default value is `230`.<br/><br/>When a container starts up, repeated pings are made against the container to gauge its readiness to serve organic traffic. (See `WEBSITE_WARMUP_PATH` and `WEBSITE_WARMUP_STATUSES`.) These pings are continuously made until either a successful response is received or the start time limit is reached. If the container isn't deemed ready within the configured timeout, the platform fails the startup attempt and retries, which results in 503 errors.<br/><br/>For App Service for Windows containers, the default start time limit is `10 mins`. You can change the start time limit by specifying a time span. For example, `00:05:00` indicates 5 minutes. |
+| `WEBSITES_CONTAINER_START_TIME_LIMIT` | Amount of time (in seconds) that the platform waits for a container to become ready on startup. This setting applies to both code-based and container-based apps on App Service for Linux. The default value is `230`. For Linux, the startup time limit must be between a minimum of `10` seconds, and a maximum of `1800` seconds. <br/><br/>When a container starts up, repeated pings are made against the container to gauge its readiness to serve organic traffic. (See `WEBSITE_WARMUP_PATH` and `WEBSITE_WARMUP_STATUSES`.) These pings are continuously made until either a successful response is received or the start time limit is reached. If the container isn't deemed ready within the configured timeout, the platform fails the startup attempt and retries, which results in 503 errors.<br/><br/>For App Service for Windows containers, the default start time limit is `10 mins`. You can change the start time limit by specifying a time span. For example, `00:05:00` indicates 5 minutes. The time span for Windows Containers must be between a minimum of `00:01:00` - 1 minute, and maximum of `00:15:00` - 15 minutes. |
 
 <!-- 
 WEBSITE_PROACTIVE_STACKTRACING_ENABLED
@@ -84,7 +87,7 @@ The following table shows environment variable prefixes that App Service uses fo
 | `SERVICEBUSCONNSTR_` | Connection string to an instance of Azure Service Bus. |
 | `EVENTHUBCONNSTR_` | Connection string to an event hub in Azure Event Hubs. |
 | `DOCDBCONNSTR_` | Connection string to a database in Azure Cosmos DB. |
-| `REDISCACHECONNSTR_` | Connection string to a cache in Azure Cache for Redis. |
+| `REDISCACHECONNSTR_` | Connection string to a Redis cache. |
 | `FILESHARESTORAGE_` | Connection string to a custom file share. |
 
 ## Deployment
@@ -175,6 +178,7 @@ This section shows the configurable runtime settings for each supported language
 | `JAVA_WEBSERVER_PORT_ENVIRONMENT_VARIABLES` | Environment variables used by popular Java web frameworks for server ports. Frameworks include Spring, Micronaut, Grails, Helidon, Ratpack, and Quarkus. |
 | `JAVA_TMP_DIR` | Added to Java arguments as `-Dsite.tempdir`. Defaults to `TEMP`. |
 | `WEBSITE_SKIP_LOCAL_COPY` | By default, the deployed `app.jar` file is copied from `/home/site/wwwroot` to a local location. To disable this behavior and load `app.jar` directly from `/home/site/wwwroot`, set this variable to `1` or `true`. This setting has no effect if local cache is enabled. |
+| `JAVA_COPY_ALL` | For native Windows apps, if your Java application depends on read-only access to additional files on `/home/site/wwwroot`, set JAVA_COPY_ALL to true so that those files are also copied. `JAVA_COPY_ALL` is not compatible with the legacy convention of deploying to `/home/site/wwwroot/webapps`. |
 | `TOMCAT_USE_STARTUP_BAT` | Native Windows apps only. By default, the Tomcat server is started with its `startup.bat` file. To set the Tomcat server to start by using its `catalina.bat` file instead, set the value to `0` or `False`.<br/><br/>Example: `%LOCAL_EXPANDED%\tomcat` |
 | `CATALINA_OPTS` | For Tomcat apps, environment variables to pass into the `java` command. Can contain system variables. |
 | `CATALINA_BASE` | To use a custom Tomcat installation, set to the installation's location. |
@@ -188,6 +192,7 @@ This section shows the configurable runtime settings for each supported language
 | `WILDFLY_VERSION` | Read-only. For JBoss Enterprise Application Platform (EAP) Linux apps, the WildFly version. |
 | `TOMCAT_VERSION` | Read-only. For Linux Tomcat apps, the Tomcat version. |
 | `JBOSS_HOME` | Read-only. For JBoss EAP (Linux) apps, the path of the WildFly installation. |
+| `WEBSITE_AUTOCONFIGURE_DATABASE` | For Linux Java apps (Tomcat and JBoss), set to `true` to have App Service automatically create a JNDI data source for each app setting that contains a valid JDBC connection string for an Oracle, SQL Server, PostgreSQL, or MySQL database. For Tomcat, the data source is added to the server's *context.xml* file; for JBoss, it's added to the JBoss server. In both cases, the data source is named after the app setting, with the suffix `_DS`. For more information, see [Configure data sources for a Tomcat, JBoss, or Java SE app in Azure App Service](configure-language-java-data-sources.md). |
 | `AZURE_JETTY9_CMDLINE` | Read-only. For native Windows apps, the command-line arguments for starting Jetty 9. |
 | `AZURE_JETTY9_HOME` | Read-only. For native Windows apps, the path to the Jetty 9 installation. |
 | `AZURE_JETTY93_CMDLINE` | Read-only. For native Windows apps, specifies the command-line arguments for starting Jetty 9.3. |
@@ -228,7 +233,7 @@ AZURE_SITE_APP_BASE
 | `PORT` | Read-only. For Linux apps, the port that the Node.js app listens to in the container. |
 | `WEBSITE_ROLE_INSTANCE_ID` | Read-only. ID of the current instance. |
 | `PM2HOME` | |
-| `WEBSITE_NODE_DEFAULT_VERSION` | For native Windows apps, the default node version that the app is using. You can use any of the [supported Node.js versions](configure-language-nodejs.md#show-nodejs-version) here. |
+| `WEBSITE_NODE_DEFAULT_VERSION` | For native Windows apps, the default node version that the app is using. You can use any of the [supported Node.js versions](configure-language-nodejs.md#show-the-nodejs-version) here. |
 
 <!-- APPSVC_REMOTE_DEBUGGING
 APPSVC_REMOTE_DEBUGGING_BREAK
@@ -303,7 +308,7 @@ APACHE_RUN_GROUP | RUN sed -i 's!User ${APACHE_RUN_GROUP}!Group www-data!g' /etc
 > | `WORDPRESS_ADMIN_EMAIL` | Deployment only | Not applicable | Not applicable | WordPress admin email. |
 > | `WORDPRESS_ADMIN_PASSWORD` | Deployment only | Not applicable | Not applicable | WordPress admin password. This setting is only for deployment purposes. Modifying this value has no effect on the WordPress installation. To change the WordPress admin password, see [Reset your password](https://wordpress.org/support/article/resetting-your-password/#to-change-your-password). |
 > | `WORDPRESS_ADMIN_USER` | Deployment only | Not applicable | Not applicable|WordPress admin username. |
-> | `WORDPRESS_ADMIN_LOCALE_CODE` | Deployment only | Not applicable | Not applicable | Database username used to connect to WordPress. |
+> | `WORDPRESS_LOCALE_CODE` | Deployment only | `en_US` | Not applicable | WordPress localization code for site language. |
 
 ## Domain and DNS
 
@@ -383,7 +388,7 @@ WEBSITE_DISABLE_PRELOAD_HANG_MITIGATION
 |-|-|
 | `WEBSITE_INSTANCE_ID` | Read-only. Unique ID of the current VM instance, when the app is scaled out to multiple instances. |
 | `WEBSITE_IIS_SITE_NAME` | Deprecated. Use `WEBSITE_INSTANCE_ID`. |
-| `WEBSITE_DISABLE_OVERLAPPED_RECYCLING` | Overlapped recycling ensures that before the current VM instance of an app is shut down, a new VM instance starts. In some cases, it can cause file locking issues. You can try turning it off by setting to `1`. |
+| `WEBSITE_DISABLE_OVERLAPPED_RECYCLING` | Overlapped recycling ensures that before the current VM instance of an app is shut down, a new VM instance of an app starts. In some cases, it can cause file locking issues. You can try turning it off by setting to `1`. <br/><br/> Note: Its effect is limited to overlapped worker process recycling within a VM instance, not to VM-level instance replacement. This configuration does <i>not</i> guarantee that only one VM instance exists or runs at a time during scale up/down or platform-initiated maintenance -- multiple VM instances may still exist concurrently, even when this setting is enabled.|
 | `WEBSITE_DISABLE_CROSS_STAMP_SCALE` | By default, apps are allowed to scale across stamps if they use Azure Files or a Docker container. Set to `1` or `true` to disable cross-stamp scaling within the app's region. The default is `0`. Custom Docker containers that set `WEBSITES_ENABLE_APP_SERVICE_STORAGE` to `true` or `1` can't scale cross-stamps because their content isn't completely encapsulated in the Docker container. |
 
 ## Logging
@@ -531,8 +536,9 @@ The following environment variables are related to [App Service authentication](
 | `WEBSITE_AUTH_VALIDATE_NONCE`| `true` or `false`. The default value is `true`. This value should never be set to `false` except when you're temporarily debugging [cryptographic nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce) validation failures that occur during interactive logins.<br/><br/>This application setting is intended for use with the V1 (classic) configuration experience. If you're using the V2 authentication configuration schema, you should instead use the `login.nonce.validateNonce` configuration value. |
 | `WEBSITE_AUTH_V2_CONFIG_JSON` | Azure App Service automatically populates this environment variable. This variable is used to configure the integrated authentication module. Its value corresponds to the V2 (non-classic) authentication configuration for the current app in Azure Resource Manager. It's not intended to be configured explicitly. |
 | `WEBSITE_AUTH_ENABLED` | Read-only. Injected into a Windows or Linux app to indicate whether App Service authentication is enabled. |
-| `WEBSITE_AUTH_ENCRYPTION_KEY` | By default, the automatically generated key is used as the encryption key. To override, set to a desired key. We recommend this environment variable if you want to share tokens or sessions across multiple apps. If you specify it, it supersedes the `MACHINEKEY_DecryptionKey` setting. |
-| `WEBSITE_AUTH_SIGNING_KEY` | By default, the automatically generated key is used as the signing key. To override, set to a desired key. We recommend this environment variable if you want to share tokens or sessions across multiple apps. If you specify it, it supersedes the `MACHINEKEY_ValidationKey` setting. |
+| `WEBSITE_AUTH_ENCRYPTION_KEY` | By default, the automatically generated key is used as the encryption key. To override, set to a desired key. We recommend this environment variable if you want to share tokens or sessions across multiple apps. If you specify it, it supersedes the `MACHINEKEY_DecryptionKey` setting. Treat this value as a secret, and only share it across apps that belong to the same trust boundary, because any app with the key can decrypt the tokens and sessions it protects. In Azure Functions, this key also protects function access keys; see [App settings reference for Azure Functions](../azure-functions/functions-app-settings.md#website_auth_encryption_key). |
+| `WEBSITE_AUTH_SIGNING_KEY` | By default, the automatically generated key is used as the signing key. To override, set to a desired key. We recommend this environment variable if you want to share tokens or sessions across multiple apps. If you specify it, it supersedes the `MACHINEKEY_ValidationKey` setting. Treat this value as a secret, and only share it across apps that belong to the same trust boundary. |
+| `WEBSITE_AUTH_PRM_DEFAULT_WITH_SCOPES` | A comma-separated list of scopes needed by the application. When set, this variable configures a default protected resource metadata document, which declares that the specified scopes are supported. The scopes are also included in authentication challenges returned by the application. |
 
 <!-- System settings
 WEBSITE_AUTH_RUNTIME_VERSION

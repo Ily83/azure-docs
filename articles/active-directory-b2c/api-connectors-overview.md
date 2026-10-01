@@ -2,7 +2,7 @@
 title: About API connectors in Azure AD B2C
 description: Use Microsoft Entra API connectors to customize and extend your user flows and custom policies by using REST APIs or outbound webhooks to external identity data sources. 
 
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.subservice: b2c
 ms.topic: how-to
 ms.date: 01/11/2024
@@ -10,8 +10,10 @@ ms.date: 01/11/2024
 ms.author: kengaderdus
 author: kengaderdus
 manager: CelesteDG
-ms.custom: "it-pro"
 zone_pivot_groups: b2c-policy-type
+ms.custom:
+  - "it-pro"
+  - sfi-image-nochange
 
 #Customer intent: As a developer or IT administrator, I want to use API connectors to integrate sign-up user flows with REST APIs.
 

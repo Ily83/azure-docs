@@ -6,21 +6,18 @@ ms.topic: how-to
 ms.date: 08/07/2025
 ms.service: azure-app-testing
 ms.subservice: playwright-workspaces
-author: ninallam
-ms.author: ninallam
-ms.custom: playwright-workspaces-preview
+author: johnsta
+ms.author: johnsta
+ms.custom: playwright-workspaces
 ---
 
 # Try Playwright Workspaces for free
 
-Playwright Workspaces is a fully managed service for end-to-end testing built on top of Playwright. With the free trial, you can try Playwright Workspaces for free for 30 days and 100 test minutes. In this article, you learn about the limits of the free trial, how to get started, and how to track your free trial usage.
-
-> [!IMPORTANT]
-> Playwright Workspaces is currently in preview. For legal terms that apply to Azure features that are in beta, in preview, or otherwise not yet released into general availability, see the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
+Playwright Workspaces is a fully managed cloud browser service that provides scalable, secure, and enterprise-ready browser infrastructure for running browser-based workloads in the cloud. With the free trial, you can try Playwright Workspaces for free for 30 days and 100 browser minutes. In this article, you learn about the limits of the free trial, how to get started, and how to track your free trial usage.
 
 ## Prerequisites
 
-* An Azure account with an active subscription. If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+* An Azure account with an active subscription. If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 * Your Azure account needs the [Owner](/azure/role-based-access-control/built-in-roles#owner), [Contributor](/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
 
 ## Limits to free trial
@@ -30,21 +27,21 @@ The following table lists the limits for the Playwright Workspaces free trial.
 | Resource | Limit |
 |-|-|
 | Duration of trial | 30 days |
-| Total test minutes¹ | 100 minutes |
+| Total browser minutes<sup>1</sup> | 100 minutes |
 | Number of workspaces<sup>2,3</sup> | 1 |
 
-¹ If your usage exceeds the free test minute limit, only the overage counts toward the pay-as-you-go billing model. See [Playwright Workspaces preview pricing](https://aka.ms/pww/pricing)
+<sup>1</sup> If your usage exceeds the free browser minute limit, only the overage counts toward the pay-as-you-go billing model. See [Playwright Workspaces pricing](https://aka.ms/pww/pricing).
 
-² These limits only apply to the *first* workspace you create in your Azure subscription. Any subsequent workspaces you create in the subscription automatically uses the pay-as-you-go billing model.
+<sup>2</sup> These limits only apply to the *first* workspace you create in your Azure subscription. Any subsequent workspaces you create in the subscription automatically uses the pay-as-you-go billing model.
 
-³ If you delete the free trial workspace, you can't create a new free trial workspace anymore.
+<sup>3</sup> If you delete the free trial workspace, you can't create a new free trial workspace anymore.
 
 > [!CAUTION]
 > If you exceed any of these limits, the workspace is automatically converted to the pay-as-you-go billing model. Learn more about the [Playwright Workspaces pricing](https://aka.ms/pww/pricing).
 
 ## Create a workspace
 
-To get started with running your Playwright tests on cloud browsers, you first need to create a Playwright workspace.
+To run your browser automation on cloud browsers, first create a Playwright workspace.
 
 1. Sign in to the [Azure portal](https://portal.azure.com/).
 1. Select the menu button in the upper-left corner of the portal, and then select **Create a resource** a resource.
@@ -63,7 +60,7 @@ To get started with running your Playwright tests on cloud browsers, you first n
     |---------|---------|
     |**Subscription**     | Select the Azure subscription that you want to use for this Playwright workspace. |
     |**Resource group**     | Select an existing resource group. Or select **Create new**, and then enter a unique name for the new resource group.        |
-    |**Name**     | Enter a unique name to identify your workspace.<BR>The name can only consist of alphanumerical characters, and have a length between 3 and 64 characters. |
+    |**Name**     | Enter a unique name to identify your workspace.<BR>The name can only consist of alphanumeric characters, and have a length between 3 and 64 characters. |
     |**Location**     | Select a geographic location to host your workspace. |
 
     > [!NOTE]
@@ -84,7 +81,7 @@ To get started with running your Playwright tests on cloud browsers, you first n
 
 When you exceed any of the limits of the free trial, your workspace is automatically converted to the pay-as-you-go billing model. 
 
-All test runs linked to your workspace remain available.
+You keep access to all browser automation runs linked to your workspace.
 
 ## Next step
 

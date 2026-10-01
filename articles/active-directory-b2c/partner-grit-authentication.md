@@ -4,7 +4,7 @@ titleSuffix: Azure AD B2C
 description: Learn how Grit's biometric authentication with Azure AD B2C secures your account
 author: gargi-sinha
 manager: martinco
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.topic: how-to
 ms.date: 01/26/2024
 ms.author: gasinh
@@ -36,7 +36,7 @@ To get started, you'll need:
 
 - License to [Grit's Visual IEF builder](/azure/active-directory-b2c/partner-grit-editor). Contact [Grit support](mailto:info@gritsoftwaresystems.com) for licensing details. For this tutorial you don't need a license.
 
-- An Azure subscription. If you don't have one, get a [free account](https://azure.microsoft.com/free/).
+- An Azure subscription. If you don't have one, get a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - An [Azure AD B2C tenant](tutorial-create-tenant.md) that is linked to your Azure subscription.
 

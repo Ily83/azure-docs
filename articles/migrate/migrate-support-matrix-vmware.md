@@ -6,6 +6,8 @@ ms.author: molir
 ms.manager: ronai
 ms.topic: concept-article
 ms.service: azure-migrate
+ms.reviewer: v-gajeronika
+ms.update-cycle: 1095-days
 ms.date: 05/09/2025
 ms.custom:
   - vmware-scenario-422
@@ -20,7 +22,7 @@ ms.collection:
 This article summarizes prerequisites and support requirements for using the [Azure Migrate: Discovery and assessment](migrate-services-overview.md) tool to discover and assess servers in a VMware environment for migration to Azure.
 
 
-To assess servers, first, create an Azure Migrate project. The Azure Migrate: Discovery and assessment tool is automatically added to the project. Then, deploy the Azure Migrate appliance. The appliance continuously discovers on-premises servers and sends configuration and performance metadata to Azure. When discovery is finished, gather the discovered servers into groups and run assessments per group.
+To assess servers, first, create an Azure Migrate project. The Azure Migrate: Discovery and assessment tool is automatically added to the project. Then, deploy the Azure Migrate appliance. The appliance continuously discovers on-premises or Azure VMware Solution servers and sends configuration and performance metadata to Azure. When discovery is finished, gather the discovered servers into groups and run assessments per group.
 
 As you plan your migration of VMware servers to Azure, see the [migration support matrix](migrate-support-matrix-vmware-migration.md).
 
@@ -29,7 +31,7 @@ As you plan your migration of VMware servers to Azure, see the [migration suppor
 
 VMware | Details
 --- | ---
-vCenter Server | Servers that you want to discover and assess must be managed by vCenter Server version 8.0, 7.0, 6.7, 6.5, 6.0, or 5.5.<br /><br /> Discovering servers by providing ESXi host details in the appliance currently isn't supported. <br /><br /> IPv6 addresses aren't supported for vCenter Server (for discovery and assessment of servers) and ESXi hosts (for replication of servers).
+vCenter Server | Servers that you want to discover and assess must be managed by vCenter Server version [!INCLUDE [vmware-discovery-supported-versions](includes/vmware-discovery-supported-versions.md)].<br /><br /> Discovering servers by providing ESXi host details in the appliance currently isn't supported. <br /><br /> IPv6 addresses aren't supported for vCenter Server (for discovery and assessment of servers) and ESXi hosts (for replication of servers).
 Permissions | The Azure Migrate: Discovery and assessment tool requires a vCenter Server read-only account.<br /><br /> If you want to use the tool for software inventory, agentless dependency analysis, web apps, and SQL discovery, the account must have privileges for guest operations on VMware virtual machines (VMs).
 
 
@@ -61,7 +63,7 @@ ESXi hosts | For [discovery of software inventory](how-to-discover-applications.
 
 ## Software inventory requirements
 
-In addition to discovering servers, Azure Migrate: Discovery and assessment can perform software inventory on servers. Software inventory provides the list of applications, roles, and features running on Windows and Linux servers that are discovered by using Azure Migrate and Modernize. It allows you to identify and plan a migration path tailored for your on-premises workloads.
+In addition to discovering servers, Azure Migrate: Discovery and assessment can perform software inventory on servers. Software inventory provides the list of applications, roles, and features running on Windows and Linux servers that are discovered by using Azure Migrate and Modernize. It allows you to identify and plan a migration path tailored for your on-premises or Azure VMware Solution workloads.
 
 Support | Details
 --- | ---
@@ -69,7 +71,7 @@ Supported servers | You can perform software inventory on up to 10,000 servers r
 Operating systems | Servers running all Windows and Linux versions are supported.
 Server requirements | For software inventory, VMware Tools must be installed and running on your servers. The VMware Tools version must be version 10.2.1 or later.<br /><br /> Windows servers must have PowerShell version 2.0 or later installed.<br/><br/>Windows Management Instrumentation (WMI) must be enabled and available on Windows servers to gather the details of the roles and features installed on the servers.
 vCenter Server account | To interact with the servers for software inventory, the vCenter Server read-only account used for assessment must have privileges for guest operations on VMware VMs.
-Server access | You can add multiple domain and nondomain (Windows/Linux) credentials in the appliance configuration manager for software inventory.<br /><br /> You must have a guest user account for Windows servers and a standard user account (non-sudo access) for all Linux servers.
+Server access | You can add multiple domains and nondomain (Windows/Linux) credentials in the appliance configuration manager for software inventory.<br /><br /> You must have a guest user account for Windows servers and a standard user account (non-sudo access) for all Linux servers.
 Port access | The Azure Migrate appliance must be able to connect to TCP port 443 on ESXi hosts running servers on which you want to perform software inventory. The server running vCenter Server returns an ESXi host connection to download the file that contains the details of the software inventory. <br /><br /> If you use domain credentials, the Azure Migrate appliance must be able to connect to the following TCP and UDP ports: <br /> <br />TCP 135 – RPC Endpoint<br />TCP 389 – LDAP<br />TCP 636 – LDAP SSL<br />TCP 445 – SMB<br />TCP/UDP 88 – Kerberos authentication<br />TCP/UDP 464 – Kerberos change operations
 Discovery | Software inventory is performed from vCenter Server by using VMware Tools installed on the servers.<br/><br/> The appliance gathers the information about the software inventory from the server running vCenter Server through vSphere APIs.<br/><br/> Software inventory is agentless. No agent is installed on the server, and the appliance doesn't connect directly to the servers.
 
@@ -85,7 +87,7 @@ Supported servers | Supported only for servers running SQL Server in your VMware
 Windows servers | Windows Server 2008 and later are supported.
 Linux servers | Currently not supported.
 Authentication mechanism | Both Windows and SQL Server authentication are supported. You can provide credentials of both authentication types in the appliance configuration manager.
-SQL Server access | To discover SQL Server instances and databases, the Windows or SQL Server account must be a member of the sysadmin server role or have [these permissions](#configure-the-custom-login-for-sql-server-discovery) for each SQL Server instance.
+SQL Server access | To discover SQL Server instances and databases, the Windows/ Domain account, or SQL Server account [requires these low privilege read permissions](#configure-the-custom-login-for-sql-server-discovery) for each SQL Server instance. You can use the [low-privilege account provisioning utility](least-privilege-credentials.md) to create custom accounts or use any existing account that is a member of the sysadmin server role for simplicity.
 SQL Server versions | SQL Server 2008 and later are supported.
 SQL Server editions | Enterprise, Standard, Developer, and Express editions are supported.
 Supported SQL configuration | Discovery of standalone, highly available, and disaster-protected SQL deployments is supported. Discovery of high-availability disaster recovery SQL deployments powered by Always On failover cluster Instances and Always On availability groups is also supported.
@@ -291,10 +293,10 @@ Support | ASP.NET web apps | Java web apps
 --- | --- | ---
 Stack |VMware, Hyper-V, and physical servers. | VMware, Hyper-V, and physical servers.
 Windows servers | Windows Server 2008 R2 and later are supported. | Not supported.
-Linux servers | Not supported. | Ubuntu Linux 16.04/18.04/20.04, Debian 7/8, and Red Hat Enterprise Linux 5/6/7.
+Linux servers | Not supported | Servers that meet the [requirements](#vmware-requirements).
 Web server versions | IIS 7.5 and later. | Tomcat 8 or later.
-Protocol | WinRM port 5985 (HTTP) | SSH port 22 (TCP)
-Required privileges | Local admin. | **Read (r)** and **Execute (x)** permissions recursively on all CATALINA_HOME directories.
+Connection | Uses VMware tools. </br></br> If VMware tools is not installed, WinRM port 5986 (HTTPS) is used by default. If HTTPS prerequisites aren't configured on the target servers, communication falls back to WinRM port 5985 (HTTP) | Uses VMware tools. </br></br> If VMware tools is not installed, SSH port 22 (TCP) is used.
+Required privileges | The user should be a part of the two user groups 1. Remote Management Users 2. IIS_IUSRS. The users must have read permissions to the following locations: C:\Windows\system32\inetsrv\config, C:\Windows\system32\inetsrv\config\applicationHost.config and C:\Windows\system32\inetsrv\config\redirection.config. </br></br> Add the user to 'log on as batch job' using secpol.msc and ensure user is not part of 'deny log on as batch job'  | **Read (r)** and **Execute (x)** permissions recursively on all CATALINA_HOME directories.
 
 > [!NOTE]
 > Data is always encrypted at rest and during transit.
@@ -306,7 +308,7 @@ Required privileges | Local admin. | **Read (r)** and **Execute (x)** permission
 
 Support | Details
 --- | ---
-Supported servers | You can enable agentless dependency analysis on up to 1,000 servers (across multiple vCenter Servers) discovered per appliance.
+Supported servers | You can enable agentless dependency analysis on up to 3,000 servers (across multiple vCenter Servers) discovered per appliance.
 Windows servers | Windows Server 2022 <br/> Windows Server 2019<br /> Windows Server 2016<br /> Windows Server 2012 R2<br /> Windows Server 2012<br /> Windows Server 2008 R2 (64-bit)<br /> Windows Server 2008 (32-bit)
 Linux servers | Red Hat Enterprise Linux 6.x, 7.x, 8.x, 9.x, 9.5 <br /> Ubuntu 24.04, 22.04, 12.04, 14.04, 16.04, 18.04, 20.04, 22.04 <br /> OracleLinux 6.1, 6.7, 6.8, 6.9, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8, 8.1, 8.3, 8.5 <br /> SUSE Linux 10, 11 SP4, 12 SP1, 12 SP2, 12 SP3, 12 SP4, 15 SP2, 15 SP3 <br /> Debian 7, 8, 9, 10, 11 <br /> Alma Linux 8.x, 9.x <br /> Rocky Linux 8.x, 9.x
 Server requirements | VMware Tools (10.2.1 and later) must be installed and running on servers you want to analyze.<br /><br /> Windows Servers have PowerShell version 2.0 or later.<br /><br /> Linux Servers have Bash version 4.0 or later installed. <br /><br/> WMI should be enabled and available on Windows servers.
@@ -320,33 +322,14 @@ Discovery method |  Dependency information between servers is gathered by using 
 > In some recent Linux OS versions, the netstat command was replaced by the `ss` command; have that in mind when preparing the servers.
 
 
-## Dependency analysis requirements (agent-based)
+## Agent-based dependency visualization (retired)
 
-[Dependency analysis](concepts-dependency-visualization.md) helps you identify dependencies between on-premises servers that you want to assess and migrate to Azure. The following table summarizes the requirements for setting up agent-based dependency analysis.
+**Agent-based dependency analysis** is supported only in the classic view and isn't available in the new experience. The classic view is scheduled for deprecation by the end of 2026. Until then, you can continue to access Log Analytics workspaces for servers where agent-based dependency analysis is already enabled. However, you can't onboard new servers for agent-based dependency analysis. For information, see [Set up dependency visualization](how-to-create-group-machine-dependencies.md).
 
-Requirement | Details
---- | ---
-Before deployment | You should have a project in place with the Azure Migrate: Discovery and assessment tool added to the project.<br /><br />You deploy dependency visualization after setting up an Azure Migrate appliance to discover your on-premises servers.<br /><br />Learn how to [create a project for the first time](create-manage-projects.md).<br /> Learn how to [add a discovery and assessment tool to an existing project](how-to-assess.md).<br /> Learn how to set up the Azure Migrate appliance for assessment of [Hyper-V](how-to-set-up-appliance-hyper-v.md), [VMware](how-to-set-up-appliance-vmware.md), or physical servers.
-Supported servers | Supported for all servers in your on-premises environment.
-Log Analytics | Azure Migrate and Modernize uses the [Service Map](/previous-versions/azure/azure-monitor/vm/service-map) solution in [Azure Monitor logs](/azure/azure-monitor/logs/log-query-overview) for dependency visualization.<br /><br /> You associate a new or existing Log Analytics workspace with a project. You can't modify the workspace for a project after you add the workspace. <br /><br /> The workspace must be in the same subscription as the project.<br /><br /> The workspace must be located in the East US, Southeast Asia, or West Europe regions. Workspaces in other regions can't be associated with a project.<br /><br /> The workspace must be in a [region in which Service Map is supported](https://azure.microsoft.com/global-infrastructure/services/?products=monitor&regions=all). You can monitor Azure VMs in any region. The VMs themselves aren't limited to the regions supported by the Log Analytics workspace.<br /><br /> In Log Analytics, the workspace associated with Azure Migrate is tagged with the project key and project name.
-Required agents | On each server that you want to analyze, install the following agents:<br />- Azure Monitor agent (AMA)<br />- [Dependency agent](/azure/azure-monitor/vm/vminsights-dependency-agent-maintenance)<br /><br /> If on-premises servers aren't connected to the internet, download and install the Log Analytics gateway on them.<br /><br /> Learn more about installing the [Dependency agent](how-to-create-group-machine-dependencies.md#install-the-dependency-agent) and the Azure Monitor agent.
-Log Analytics workspace | The workspace must be in the same subscription as the project.<br /><br /> Azure Migrate supports workspaces that are located in the East US, Southeast Asia, and West Europe regions.<br /><br />  The workspace must be in a region in which [Service Map is supported](https://azure.microsoft.com/global-infrastructure/services/?products=monitor&regions=all). You can monitor Azure VMs in any region. The VMs themselves aren't limited to the regions supported by the Log Analytics workspace.<br /><br /> You can't modify the workspace for a project after you add the workspace.
-Cost | The Service Map solution doesn't incur any charges for the first 180 days. The count starts from the day you associate the Log Analytics workspace with the project.<br /><br /> After 180 days, standard Log Analytics charges apply.<br /><br /> Using any solution other than Service Map in the associated Log Analytics workspace incurs [standard charges](https://azure.microsoft.com/pricing/details/log-analytics/) for Log Analytics.<br /><br /> When the project is deleted, the workspace isn't automatically deleted. After you delete the project, Service Map usage isn't free. Each node is charged according to the paid tier of the Log Analytics workspace.<br /><br />If you have projects that you created before Azure Migrate general availability (GA on February 28, 2018), you might incur other Service Map charges. To ensure that you're charged only after 180 days, we recommend that you create a new project. Workspaces that were created before GA are still chargeable.
-Management | When you register agents to the workspace, use the ID and key provided by the project.<br /><br /> You can use the Log Analytics workspace outside Azure Migrate and Modernize.<br /><br /> If you delete the associated project, the workspace isn't deleted automatically. [Delete it manually](/azure/azure-monitor/logs/manage-access).<br /><br /> Don't delete the workspace created by Azure Migrate and Modernize unless you delete the project. If you do, the dependency visualization functionality doesn't work as expected.
-Internet connectivity | If servers aren't connected to the internet, install the Log Analytics gateway on the servers.
-Azure Government | Agent-based dependency analysis isn't supported.
+If you are using Service Map for agent-based dependency analysis, migrate to VM Insights. [ServiceMap](/azure/azure-monitor/vm/vminsights-migrate-from-service-map) is retired.
 
-
-## Limitations
-
-Requirement | Details
---- | ---
-Project limits | You can create multiple Azure Migrate projects in an Azure subscription.<br /><br /> You can discover and assess up to 35,000 servers in a VMware environment in a single [project](migrate-support-matrix.md#project). A project can include physical servers and servers from a Hyper-V environment, up to the assessment limits.
-Discovery | The Azure Migrate appliance can discover up to 10,000 servers running across multiple vCenter Servers.<br /><br /> The appliance supports adding multiple vCenter Servers. You can add up to 10 vCenter Servers per appliance.<br /><br />The scale is also valid to access discovered servers for Azure Migrate VMware Solution (AVS).<br /><br />The same vCenter can be discovered by multiple appliances within the same project, but it is not recommended to have same VM discovered by multiple appliances. More details on how to set [discovery scope](set-discovery-scope.md).
-Assessment | You can add up to 35,000 servers in a single group.<br /><br /> You can assess up to 35,000 servers in a single assessment.
-
-Learn more about [assessments](concepts-assessment-calculation.md).
-
+>[!NOTE]
+> Agent-based dependency analysis incurs additional charges. Usage charges for the associated Log Analytics workspace may apply. For pricing information, see [Azure Monitor pricing](https://azure.microsoft.com/pricing/details/monitor/).
 
 ## Import servers using RVTools XLSX (preview)
 
@@ -358,7 +341,7 @@ Using an RVTools XLSX file:
 
 - Helps to create a business case or assess the servers before you deploy the appliance.
 - Aids as an alternative when there's an organizational restriction to deploy the Azure Migrate appliance.
-- Is helpful when you can't share credentials that allow access to on-premises servers.
+- Is helpful when you can't share credentials that allow access to on-premises or Azure VMware Solution servers.
 - Is useful when security constraints prevent you from gathering and sending data collected by the appliance to Azure.
 
 ### Limitations
@@ -369,7 +352,7 @@ This section discusses limitations to consider.
 
 If you're importing servers by using an RVTools XLSX file and building a business case, here are a few limitations:
 
-- Performance history duration in Azure settings aren't applicable.
+- Performance history duration in Azure settings isn't applicable.
 - Servers are classified as unknown in the business case utilization insights chart and are sized as is without right-sizing for Azure or Azure VMware Solution cost.
 
 #### [Assessment considerations](#tab/assessmentcase)

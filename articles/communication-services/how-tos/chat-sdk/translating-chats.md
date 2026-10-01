@@ -15,6 +15,8 @@ ms.subservice: chat
 
 #  Translating chats
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 Translating chats enables users to communicate in their preferred language.
 
 This article describes how you can use [Azure AI APIs](/azure/ai-services/) with the Chat SDK to build use cases like:
@@ -29,7 +31,7 @@ One way to achieve these use cases is to have your trusted service act as a part
 3. translate content to desired language, and 
 4. sending the translated result as a message in the chat thread.
 
-[![Screenshot showing Azure AI services interacting with Communication Services.](./media/ai-services.png)](./media/ai-services.png#lightbox)
+[![Screenshot showing Foundry Tools interacting with Communication Services.](./media/ai-services.png)](./media/ai-services.png#lightbox)
 
 This way, the message history contains both original and translated messages. In the client application, you can add logic to show the original or translated message. See [this quickstart](/azure/ai-services/translator/quickstart-text-rest-api) to understand how to use AI APIs to translate text to different languages. 
 

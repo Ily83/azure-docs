@@ -13,6 +13,8 @@ ms.date: 03/31/2025
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
 
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
+
 This article describes how to copy or clone a data factory in Azure Data Factory.
 
 ## Use cases for cloning a data factory
@@ -36,7 +38,7 @@ Here are some of the circumstances in which you might find it useful to copy or 
 1. If you are in Live mode:
     1. Data Factory UI lets you export the entire payload of your data factory into a Resource Manager template file and a parameter file. They can be accessed from the **ARM template \ Export Resource Manager template** button in the portal.
     1. You might make appropriate changes to the parameter file and swap in new values for the new factory
-    1. Next, you can deploy it via standard Resource Manager template deployment methods.
+    1. Next, you can deploy it via standard Resource Manager template deployment methods. For detailed steps, see [Deploy resources with ARM templates](/azure/azure-resource-manager/templates/deploy-portal)
 
 1. If you have a SelfHosted IntegrationRuntime in your source factory, you need to precreate it with the same name in the target factory. If you want to share the SelfHosted Integration Runtime between different factories, you can use the pattern published [here](create-shared-self-hosted-integration-runtime-powershell.md) on sharing SelfHosted IR.
 

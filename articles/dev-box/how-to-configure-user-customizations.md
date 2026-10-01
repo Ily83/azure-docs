@@ -11,27 +11,19 @@ ms.custom:
   - ai-gen-title
   - ai-seo-date:04/19/2025
   - ai-gen-description
+  - ai-usage: ai-assisted
 ms.topic: how-to
-ms.date: 07/16/2025
+ms.date: 02/06/2026
 ---
 
 
 # Configure user customizations for dev boxes
 
-You can personalize your Microsoft Dev Box by uploading a user customization file. User customization files let you configure your dev box with your preferred personal settings and apps, so you can start coding faster. This article explains how to create, test, and upload a user customization file from your local drive or repository using Visual Studio Code. You also learn how to validate your file and manage customization settings for projects.
+You can personalize your Microsoft Dev Box by uploading a user customization file. User customization files let you configure your dev box with your preferred personal settings and apps, so you can start coding faster. This article explains how to create, test, and upload a user customization file from your local drive or repository using Visual Studio (VS) Code. You also learn how to validate your file and manage customization settings for projects.
 
-Use customizations in Microsoft Dev Box in two ways: team customizations create a shared configuration for a team, and user customizations create a personal configuration for an individual developer. The following table shows the differences between the two types of customizations.
+Dev Box customizations work in two ways: team customizations create shared configurations for teams, and user customizations create personal configurations for individual developers. For a detailed comparison, see [Microsoft Dev Box customizations](concept-what-are-dev-box-customizations.md).
 
-| Feature                     | Team customizations       | User customizations                  |
-|-----------------------------|---------------------------|--------------------------------------|
-| Set up on                   | Dev box pool              | Dev box                              |
-| Customizations apply to     | All dev boxes in pool     | Individual dev box                   |
-| Easily shareable            | Yes                       | No                                   |
-| Customizations file name    | Imagedefinition.yaml      | *myfilename.yaml* or *workload.yaml* |
-| Source                      | Catalog                   | Upload or personal repository        |
-| Supports key vault secrets  | Yes                       | Yes                                  |
-
-User customizations help ensure that developers comply with company guardrails; only tasks custom tasks preapproved through a catalog are available to developers to use in their customization files. Standard dev box users can't run built-in PowerShell and WinGet tasks in a system context, which prevents privilege escalation. 
+User customizations help ensure that developers comply with company guardrails; only tasks preapproved through a catalog are available to developers. Standard dev box users can't run built-in PowerShell and WinGet tasks in a system context, which prevents privilege escalation. 
 
 User customizations can be enabled or disabled at the project level. When you create a project, user customizations are on by default.
 
@@ -42,18 +34,9 @@ To complete the steps in this article:
 
 - Set up a [dev center with a dev box definition, dev box pool, and dev box project](./quickstart-configure-dev-box-service.md) so you can create a dev box.
 - Join the Dev Box Users security group for at least one project.
-- Attach a catalog to the dev center with tasks you use in your customization file. If you don't have a catalog, see [Add and configure a catalog from GitHub or Azure Repos](../deployment-environments/how-to-configure-catalog.md).
+- Attach a catalog to the dev center with tasks you use in your customization file. If you don't have a catalog, see [Add and manage catalogs in Microsoft Dev Box](how-to-configure-catalog.md).
 
-
-## Permissions required to set up customizations
-
-To create and apply customizations to a dev box, you need the following permissions:
-
-| Action                                             | Permission or role       |
-|----------------------------------------------------|-------------------------|
-| Enable or disable user customizations on a project | Write permission on the project. |
-| Create a customization file                        | None specified. Anyone can create a customization file. |
-| Use the developer portal to upload and apply a YAML file during dev box creation | Dev Box User           |
+For permissions required to configure customizations, see [Permissions for customizations](concept-what-are-dev-box-customizations.md#permissions-for-customizations).
 
 ## Create a user customization file
 
@@ -86,10 +69,12 @@ This example shows a dev box customization file that uses an existing WinGet Des
 
 
 ```yml
-tasks:
-    - name: winget
-      parameters:
-          configure: "projectConfiguration.dsc.yaml"
+$schema: "1.0"
+name: "devbox-customization"
+userTasks:
+  - name: ~/winget
+    parameters:
+      configure: "projectConfiguration.dsc.yaml"
 ```
 
 
@@ -148,26 +133,40 @@ Customization files stored in a repository must be named *workload.yaml*. Custom
 
 ## Disable user customizations
 
-User customizations are controlled at the project level and are enabled by default. You can disable them during or after project creation. When disabled, developers can't apply their own customization files to new dev boxes. Enabling user customizations doesn't bypass existing project guardrails; developers can only use tasks provided in the attached catalog and cannot run tasks with elevated privileges unless an administrator has explicitly included an administrative task in the catalog.
+User customizations are controlled at the project level and are enabled by default. You can disable them during or after project creation. When disabled, developers can't apply their own customization files to new dev boxes. Enabling user customizations doesn't bypass existing project guardrails; developers can only use tasks provided in the attached catalog and can't run tasks with elevated privileges unless an administrator has explicitly included an administrative task in the catalog.
 
-:::image type="content" source="media/how-to-configure-user-customizations/user-customizations-enabled.png" alt-text="Screenshot of a dev box project showing the user customizations feature enabled in the dev box settings." lightbox="media/how-to-configure-user-customizations/user-customizations-enabled.png":::
+### Disable user customizations through the Azure portal
 
-Currently, when you disable user customizations for a project, developers can still upload a user customization file during dev box creation. But the validation process fails, and the customizations aren't applied to the dev box. 
+1. Sign in to the [Azure portal](https://portal.azure.com).
+
+1. In the search box, enter *projects*. In the list of results, select **Projects**.
+
+1. On the **Projects** page, select the project where you want to disable user customizations.
+
+1. Go to **Settings** > **Dev box settings**.
+
+   :::image type="content" source="media/how-to-configure-user-customizations/user-customizations-enabled.png" alt-text="Screenshot of a dev box project showing the user customizations feature enabled in the dev box settings." lightbox="media/how-to-configure-user-customizations/user-customizations-enabled.png":::
+
+1. To disable user customizations, clear the **Enable** checkbox, and then select **Apply**.
+
+### Developer experience in the developer portal
+
+When you disable user customizations for a project, developers can still upload a user customization file during dev box creation, but the validation process fails, and the customizations aren't applied to the dev box.
 
 If you create a dev box with user customizations in a project where user customizations are disabled, you see the following in the developer portal:
 
-1. A message displays on the new dev box tile indicating that errors have been encountered while applying customizations.
+1. A message on the new dev box tile shows errors applying customizations.
 
    :::image type="content" source="media/how-to-configure-user-customizations/user-customizations-disabled-tile-error.png" alt-text="Screenshot of a dev box tile showing the message We encountered errors while applying customizations. A See details button is highlighted.":::
 
-1. The details advise you to contact your admin.
+1. The details say to contact your admin.
 
    :::image type="content" source="media/how-to-configure-user-customizations/user-customizations-disabled-error-details.png" alt-text="Screenshot of the error details pane in the developer portal, displaying a message that customizations failed and advising the user to contact their administrator.":::
 
-1. Your dev box is created without the user customizations.
+1. The dev box doesn't include user customizations.
 
 ## Related content
 
 - [Microsoft Dev Box customizations](concept-what-are-dev-box-customizations.md)
-- [Configure Dev Box imaging](how-to-configure-dev-box-imaging.md)
-- [Add and configure a catalog from GitHub or Azure Repos](../deployment-environments/how-to-configure-catalog.md)
+- [Configure dev center imaging](how-to-configure-dev-center-imaging.md)
+- [Add and manage catalogs in Microsoft Dev Box](how-to-configure-catalog.md)

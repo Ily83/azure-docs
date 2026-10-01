@@ -8,13 +8,15 @@ services: azure-communication-services
 
 ms.author: prakulka
 ms.date: 11/27/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: sms
 ms.custom: references_regions
 ---
 
 # 10DLC registration guidelines
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 To send application-to-person (A2P) SMS messages by using a 10-digit long code (10DLC), businesses must complete *brand registration* and *campaign registration*. Registering ensures compliance with carrier and CTIA (formerly called Cellular Telecommunications Industry Association) guidelines while enabling high-quality message delivery.
 

@@ -6,12 +6,14 @@ author:  mkhribech
 services: azure-communication-services
 ms.author: mkhribech
 ms.date: 03/16/2021
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-communication-services
 ms.subservice: data
 ---
 
 # SMS Insights Dashboard
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes the available insights dashboard to monitor SMS logs and metrics.
 

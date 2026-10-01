@@ -7,12 +7,14 @@ ms.author: micahvivion
 
 services: azure-communication-services
 ms.date: 5/10/2023
-ms.topic: conceptual
+ms.topic: feature-guide
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 # Data Channel
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 > [!NOTE]
 > This article describes the Data Channel feature of the Azure Communication Services Calling SDK.

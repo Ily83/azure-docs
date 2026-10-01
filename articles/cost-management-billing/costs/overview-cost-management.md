@@ -2,9 +2,9 @@
 title: Overview of Cost Management
 titleSuffix: Microsoft Cost Management
 description: You use Cost Management features to monitor and control Azure spending and to optimize Azure resource use.
-author: shasulin
-ms.author: shasulin
-ms.reviewer: shasulin
+author: vikramdesai01
+ms.author: vikdesai
+ms.reviewer: vikdesai
 ms.date: 06/27/2025
 ms.topic: overview
 ms.service: cost-management-billing
@@ -126,4 +126,4 @@ Microsoft offers a wide range of tools for optimizing your costs. Some of these 
 
 ## Next steps
 
-For other options, see [Azure benefits and incentives](https://azure.microsoft.com/pricing/offers/#cloud).
+For other options, see [Azure benefits and incentives](https://azure.microsoft.com/pricing/offers?cid=msft_learn).

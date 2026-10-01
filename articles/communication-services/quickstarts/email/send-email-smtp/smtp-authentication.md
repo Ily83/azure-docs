@@ -12,11 +12,13 @@ ms.service: azure-communication-services
 
 # Create credentials for Simple Mail Transfer Protocol (SMTP) authentication
 
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article describes how to use a Microsoft Entra application to create the authentication credentials for using Simple Mail Transfer Protocol (SMTP) to send an email using Azure Communication Services.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). 
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). 
 - An Azure Communication Email Resource created and ready with a provisioned domain. [Get started with Creating Email Communication Resource](../create-email-communication-resource.md)
 - An active Azure Communication Services Resource connected with Email Domain and a Connection String. [Get started by Connecting Email Resource with a Communication Resource](../connect-email-communication-resource.md)
 - A Microsoft Entra application with access to the Azure Communication Services Resource. [Register an application with Microsoft Entra ID and create a service principal](/entra/identity-platform/howto-create-service-principal-portal#register-an-application-with-microsoft-entra-id-and-create-a-service-principal)

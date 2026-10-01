@@ -1,17 +1,19 @@
 ---
 title: Support and help options for Azure Communication Services
 description: Learn about the various help and support options available for Azure Communication Services.
-author: tophpalmer
+author: sundiraman
 manager: chpalm
 services: azure-communication-services
 
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 06/30/2021
 ms.topic: overview
 ms.service: azure-communication-services
 ---
 
 # Help and support options for Azure Communication Services
+
+[!INCLUDE [Retirement and breaking changes](includes/acs-retirement-breakingchange-callout.md)]
 
 If you have an issue or question about Azure Communication Services, you have many options.
 

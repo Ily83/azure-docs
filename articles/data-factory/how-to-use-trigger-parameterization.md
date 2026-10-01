@@ -4,13 +4,15 @@ description: Learn how to reference trigger metadata in pipelines.
 ms.subservice: orchestration
 author: kromerm
 ms.author: makromer
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 02/13/2025
 ---
 
 # Reference trigger metadata in pipeline runs
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article describes how trigger metadata, such as the trigger start time, can be used in a pipeline run.
 

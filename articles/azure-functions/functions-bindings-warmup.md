@@ -4,10 +4,9 @@ description: Understand how to use the warmup trigger in Azure Functions.
 keywords: azure functions, functions, event processing, warmup, cold start, premium, dynamic compute, serverless architecture
 ms.service: azure-functions
 ms.topic: reference
-ms.devlang: csharp
 # ms.devlang: csharp, java, javascript, python
 ms.custom: devx-track-csharp, devx-track-extended-java, devx-track-js, devx-track-python, devx-track-ts
-ms.date: 09/04/2023
+ms.date: 09/15/2026
 zone_pivot_groups: programming-languages-set-functions
 ---
 
@@ -20,13 +19,24 @@ The following considerations apply when using a warmup trigger:
 * There can be only one warmup trigger function per function app, and it can't be invoked after the instance is already running.
 * The name of the function that is the warmup trigger for your app should be `warmup` (case-insensitive). 
 * The warmup trigger isn't available to apps running on the [Consumption plan](./consumption-plan.md).
-* The warmup trigger isn't supported on version 1.x of the Functions runtime.  
 * Support for the warmup trigger is provided by default in all development environments. You don't have to manually install the package or register the extension.
 * The warmup trigger is only called during scale-out operations, not during restarts or other nonscaling startups. Make sure your logic can load all required dependencies without relying on the warmup trigger. Lazy loading is a good pattern to achieve this goal.
-* Dependencies created by warmup trigger should be shared with other functions in your app. To learn more, see [Static clients](manage-connections.md#static-clients).
+* Dependencies created by warmup trigger should be shared with other functions in your app. To learn more, see [Static clients](manage-connections.md#reuse-client-instances).
 * If the [built-in authentication](../app-service/overview-authentication-authorization.md) (also known as Easy Auth) is used, [HTTPS Only](../app-service/configure-ssl-bindings.md#enforce-https) should be enabled for the warmup trigger to get invoked.
 
+::: zone pivot="programming-language-csharp"  
+## Install extension
+
+You must install this [NuGet package](https://www.nuget.org/packages/Microsoft.Azure.Functions.Worker.Extensions.Warmup) when your C# class library function app runs in the [isolated worker process](dotnet-isolated-process-guide.md). When your C# app [runs in-process with the host](functions-dotnet-class-library.md), you don't need to install an extra package. 
+
+[!INCLUDE [functions-in-process-model-retirement-note](../../includes/functions-in-process-model-retirement-note.md)]  
+::: zone-end  
+
 ## Example
+
+::: zone pivot="programming-language-go"
+Go support isn't currently available for this binding.
+::: zone-end
 
 ::: zone pivot="programming-language-csharp"
 
@@ -115,7 +125,7 @@ The [configuration](#configuration) section explains these properties.
 Here's the JavaScript code:
 
 ```JavaScript
-module.exports = async function (warmupContext, context) {
+module.exports = async function (context, warmupContext) {
     context.log('Function App instance is warm.');
 };
 ```

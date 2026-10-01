@@ -2,8 +2,12 @@
 title: Deploy resources to tenant
 description: Describes how to deploy resources at the tenant scope in an Azure Resource Manager template.
 ms.topic: how-to
-ms.date: 08/05/2025
-ms.custom: devx-track-azurepowershell, devx-track-azurecli, devx-track-arm-template
+ms.date: 08/06/2026
+ms.custom:
+  - devx-track-azurepowershell
+  - devx-track-azurecli
+  - devx-track-arm-template
+  - sfi-ga-nochange
 ---
 
 # Tenant deployments with ARM templates
@@ -168,7 +172,7 @@ Resources defined within the **resources** section of the template are applied t
 
 ### Scope to management group
 
-To target a management group within the tenant, add a nested deployment and specify the `scope` property:
+To target a management group within the tenant, add a nested deployment and specify the `scope` property. Set the `scope` property to the fully qualified resource ID of the management group. Use the [`tenantResourceId()`](template-functions-resource.md#tenantresourceid) function to construct the ID in the `/providers/Microsoft.Management/managementGroups/<mg-name>` format.
 
 ```json
 {
@@ -180,12 +184,12 @@ To target a management group within the tenant, add a nested deployment and spec
     }
   },
   "variables": {
-    "mgId": "[concat('Microsoft.Management/managementGroups/', parameters('mgName'))]"
+    "mgId": "[tenantResourceId('Microsoft.Management/managementGroups', parameters('mgName'))]"
   },
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2022-09-01",
+      "apiVersion": "2025-04-01",
       "name": "nestedMG",
       "scope": "[variables('mgId')]",
       "location": "eastus",
@@ -214,7 +218,7 @@ To target a subscription within the tenant, use a nested deployment and the `sub
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2021-04-01",
+      "apiVersion": "2025-04-01",
       "name": "nestedSub",
       "location": "westus2",
       "subscriptionId": "00000000-0000-0000-0000-000000000000",
@@ -248,7 +252,7 @@ To target a resource group within the tenant, use a nested deployment. Set the `
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2021-04-01",
+      "apiVersion": "2025-04-01",
       "name": "nestedRGDeploy",
       "subscriptionId": "00000000-0000-0000-0000-000000000000",
       "resourceGroup": "demoResourceGroup",

@@ -7,7 +7,7 @@ author: n0elleli
 ms.author: noelleli
 ms.reviewer: whhender
 ms.topic: how-to
-ms.date: 04/24/2025
+ms.date: 10/06/2025
 ms.subservice: orchestration
 ---
 
@@ -15,12 +15,12 @@ ms.subservice: orchestration
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-xxx-md.md)]
 
-The Azure Databricks Job Activity (Preview) in a [pipeline](concepts-pipelines-activities.md) runs Databricks jobs in your Azure Databricks workspace, including serverless jobs. This article builds on the [data transformation activities](transform-data.md) article, which presents a general overview of data transformation and the supported transformation activities. Azure Databricks is a managed platform for running Apache Spark.
+> [!TIP]
+> For the equivalent activity in Data Factory in Microsoft Fabric, see [Azure Databricks activity](/fabric/data-factory/azure-databricks-activity).
+
+The Azure Databricks Job Activity in a [pipeline](concepts-pipelines-activities.md) runs Databricks jobs in your Azure Databricks workspace, including serverless jobs. This article builds on the [data transformation activities](transform-data.md) article, which presents a general overview of data transformation and the supported transformation activities. Azure Databricks is a managed platform for running Apache Spark.
 
 You can create a Databricks job directly through the Azure Data Factory Studio user interface.
-
-> [!IMPORTANT]
-> The Azure Databricks Jobs activity is currently in preview. This information relates to a pre-release product that may be substantially modified before it's released. Microsoft makes no warranties, expressed or implied, with respect to the information provided here.
 
 ## Add a Job activity for Azure Databricks to a pipeline with UI
 
@@ -28,7 +28,10 @@ To use a Job activity for Azure Databricks in a pipeline, complete the following
 
 1. Search for _Job_ in the pipeline Activities pane, and drag a Job activity to the pipeline canvas.
 1. Select the new Job activity on the canvas if it isn't already selected.
-1. Select the  **Azure Databricks** tab to select or create a new Azure Databricks linked service that executes the Job activity.
+1. Select the **Azure Databricks** tab to select or create a new Azure Databricks linked service.
+
+   > [!Note]
+   > The Azure Databricks Job activity automatically runs on serverless clusters, so you don't need to specify a cluster in your linked service configuration. Instead, choose the **Serverless** option.
 
    :::image type="content" source="media/transform-data-databricks-job/job-activity.png" lightbox="media/transform-data-databricks-job/job-activity.png" alt-text="Screenshot of the UI for a Job activity, with the Azure Databricks tab highlighted.":::
    
@@ -72,7 +75,7 @@ definition:
 |type|For Databricks Job Activity, the activity type is DatabricksJob.|Yes|
 |linkedServiceName|Name of the Databricks Linked Service on which the Databricks job runs. To learn about this linked service, see [Compute linked services](compute-linked-services.md) article.|Yes|
 |jobId|The ID of the job to be run in the Databricks Workspace.|Yes|
-|jobParameters|An array of Key-Value pairs. Job parameters can be used for each activity run. If the job takes a parameter that isn't specified, the default value from the job will be used. Find more on parameters in [Databricks Jobs](https://docs.databricks.com/api/latest/jobs.html#jobsparampair).|No|
+|jobParameters|An array of Key-Value pairs. Job parameters can be used for each activity run. If the job takes a parameter that isn't specified, the job uses the default value. For more information about parameters, see, [Databricks Jobs](/azure/databricks/jobs/job-parameters).|No|
 
 
 ## Passing parameters between jobs and pipelines

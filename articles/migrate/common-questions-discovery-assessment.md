@@ -1,10 +1,12 @@
 ---
-title: Questions about assessments in Azure Migrate
+title: Questions about Assessments in Azure Migrate
 description: Get answers to common questions about assessments in Azure Migrate.
 ms.topic: concept-article
 ms.service: azure-migrate
 ms.date: 05/08/2025
+ms.reviewer: v-gajeronika
 ms.custom: engagement-fy25
+ms.update-cycle: 365-days
 # Customer intent: As a cloud migration planner, I want to find detailed answers to common questions regarding assessments in Azure Migrate, so that I can effectively evaluate and prepare my on-premises servers for migration to Azure environments.
 ---
 
@@ -69,9 +71,9 @@ If any of the performance counters are missing, Azure SQL assessment falls back 
 
 Performance data isn't captured for Azure App Service assessment and hence you don't see confidence rating for this assessment type. Azure App Service assessment takes configuration data of web apps in to account while performing assessment calculation.
 
-## Why is the confidence rating of my assessment low?
+## Why is the performance coverage of my assessment low?
 
-The confidence rating is calculated for **Performance-based** assessments based on the percentage of [available data points](./assessment-report.md#confidence-ratings-performance-based) needed to compute the assessment. Below are the reasons why an assessment could get a low confidence rating:
+The performance coverage is calculated for **Performance-based** assessments based on the percentage of [available data points](./assessment-report.md#coverage) needed to compute the assessment. Below are the reasons why an assessment could get a low confidence rating:
 
 - You didn't profile your environment for the duration for which you're creating the assessment. For example, if you're creating an assessment with performance duration set to one week, you need to wait for at least a week after you start the discovery for all the data points to get collected. If you can't wait for the duration, change the performance duration to a smaller period and **Recalculate** the assessment.
 - Assessment isn't able to collect the performance data for some or all the servers in the assessment period. For a high confidence rating, ensure that: 
@@ -83,8 +85,8 @@ The confidence rating is calculated for **Performance-based** assessments based 
 
     **Recalculate** the assessment to reflect the latest changes in confidence rating.
 
-- For Azure VM and AVS assessments, few servers were created after discovery had started. For example, if you're creating an assessment for the performance history of last one month, but few servers were created in the environment only a week ago. In this case, the performance data for the new servers won't be available for the entire duration and the confidence rating would be low. [Learn more](./assessment-report.md#confidence-ratings-performance-based).
-- For Azure SQL assessments, few SQL instances or databases were created after discovery had started. For example, if you're creating an assessment for the performance history of last one month, but few SQL instances or databases were created in the environment only a week ago. In this case, the performance data for the new servers won't be available for the entire duration and the confidence rating would be low. [Learn more](./assessment-report.md#confidence-ratings-performance-based).
+- For Azure VM and AVS assessments, few servers were created after discovery had started. For example, if you're creating an assessment for the performance history of last one month, but few servers were created in the environment only a week ago. In this case, the performance data for the new servers won't be available for the entire duration and the performance coverage would be low. [Learn more](./assessment-report.md#coverage).
+- For Azure SQL assessments, few SQL instances or databases were created after discovery had started. For example, if you're creating an assessment for the performance history of last one month, but few SQL instances or databases were created in the environment only a week ago. In this case, the performance data for the new servers won't be available for the entire duration and the confidence rating would be low. [Learn more](./assessment-report.md#coverage).
 
 ## Why is my RAM utilization greater than 100%?
 
@@ -215,13 +217,13 @@ For Azure SQL Managed Instance, there's no storage cost added for the first 32 G
 - AVS assessment can be done on groups that have only VMware machines. Remove any non-VMware machine from the group if you intend to perform an AVS assessment.
 - If you're running AVS assessments in Azure Migrate for the first time, it's advisable to create a new group of VMware machines.
 
-## Queries regarding Ultra disks
+## Queries regarding Ultra Disks
 
-### Can I migrate my disks to Ultra disk using Azure Migrate?
+### Can I migrate my disks to Ultra Disk using Azure Migrate?
 
-No. Currently, both Azure Migrate and Azure Site Recovery don't support migration to Ultra disks. Find steps to deploy Ultra disk [here](/azure/virtual-machines/disks-enable-ultra-ssd?tabs=azure-portal#deploy-an-ultra-disk)
+No. Currently, both Azure Migrate and Azure Site Recovery don't support migration to Ultra Disks. Find steps to deploy Ultra Disk [here](/azure/virtual-machines/disks-enable-ultra-ssd?tabs=azure-portal#deploy-an-ultra-disk)
 
-### Why are the provisioned IOPS and throughput in my Ultra disk more than my on-premises IOPS and throughput?
+### Why are the provisioned IOPS and throughput in my Ultra Disk more than my on-premises IOPS and throughput?
 
 As per the [official pricing page](https://azure.microsoft.com/pricing/details/managed-disks/), Ultra Disk is billed based on the provisioned size, provisioned IOPS, and provisioned throughput. As per an example provided:
 
@@ -229,13 +231,13 @@ If you provisioned a 200 GiB Ultra Disk, with 20,000 IOPS and 1,000 MB/second an
 
 IOPS to be provisioned =  (Throughput discovered) *1024/256
 
-### Does the Ultra disk recommendation consider latency?
+### Does the Ultra Disk recommendation consider latency?
 
 No, currently only disk size, total throughput, and total IOPS are used for sizing and costing.
 
-### I can see M series supports Ultra disk, but in my assessment where Ultra disk was recommended, it says “No VM found for this location”?
+### I can see M series supports Ultra Disk, but in my assessment where Ultra Disk was recommended, it says “No VM found for this location”?
 
-This is possible as not all VM sizes that support Ultra disk are present in all Ultra disk supported regions. Change the target assessment region to get the VM size for this server.
+This is possible as not all VM sizes that support Ultra Disk are present in all Ultra Disk supported regions. Change the target assessment region to get the VM size for this server.
 
 ## I can't see some VM types and sizes in Azure Government
 
@@ -265,8 +267,8 @@ For example, if an on-premises server has 4 cores and 8 GB of memory at 50% CPU 
 
 Similarly, disk sizing depends on sizing criteria and storage type:
 
-- If the sizing criteria are "performance-based" and the storage type is automatic, Azure Migrate takes the IOPS and throughput values of the disk into account when it identifies the target disk type (Standard, Premium, or Ultra disk).
-- If the sizing criteria are "as on premises" and the storage type is Premium, Azure Migrate recommends a Premium disk SKU based on the size of the on-premises disk. The same logic is applied to disk sizing when the sizing is as-on-premises and the storage type is Standard, Premium, or Ultra disk.
+- If the sizing criteria are "performance-based" and the storage type is automatic, Azure Migrate takes the IOPS and throughput values of the disk into account when it identifies the target disk type (Standard, Premium, or Ultra Disk).
+- If the sizing criteria are "as on premises" and the storage type is Premium, Azure Migrate recommends a Premium disk SKU based on the size of the on-premises disk. The same logic is applied to disk sizing when the sizing is as-on-premises and the storage type is Standard, Premium, or Ultra Disk.
 
 ## Does performance history and utilization affect sizing in an Azure VM assessment?
 

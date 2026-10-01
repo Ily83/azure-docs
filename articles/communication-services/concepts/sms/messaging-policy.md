@@ -8,10 +8,12 @@ services: azure-communication-services
 
 ms.author: prakulka
 ms.date: 06/30/2021
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ---
 # Azure Communication Services messaging policy
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services is transforming the way our customers engage with their clients by building rich, custom communication experiences that take advantage of the same enterprise-grade services that back Microsoft Teams, Skype, and Exchange. You can easily integrate SMS and email messaging functionality into your communications solutions to reach your customers anytime and anywhere they need support. You just need to keep in mind a few messaging requirements and industry standards to get started.
 

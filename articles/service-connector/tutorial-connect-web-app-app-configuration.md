@@ -5,7 +5,7 @@ author: maud-lv
 ms.author: malev
 ms.service: service-connector
 ms.topic: tutorial
-ms.date: 07/24/2025
+ms.date: 06/18/2026
 ms.custom: engagement-fy23, devx-track-azurecli
 #customer intent: As an app developer, I want to connect an app running on Azure App Service to Azure App Configuration.
 ---
@@ -28,7 +28,7 @@ In this tutorial, use the Azure CLI to complete the following tasks:
 
 ## Prerequisites
 
-- An Azure account with an active subscription. Your access role in the subscription must be *Contributor* or *Owner*. [Create an account for free](https://azure.microsoft.com/free).
+- An Azure account with an active subscription. Your access role in the subscription must be *Contributor* or *Owner*. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - The Azure CLI. You can use it in [Azure Cloud Shell](https://shell.azure.com/) or [install it locally](/cli/azure/install-azure-cli).
 - [Git](/devops/develop/git/install-and-set-up-git)
 
@@ -255,7 +255,7 @@ Create a connection between your web application and your App Configuration stor
 az webapp connection create appconfig --resource-group $RESOURCE_GROUP_NAME --name $APP_SERVICE_NAME --app-config $APP_CONFIG_NAME --tg $RESOURCE_GROUP_NAME --connection "app_config_sp" --service-principal client-id=<mySPClientId>  secret=<mySPSecret>
 ```
 
-`service-principal` refers to the service principal authentication type. Service Connector also supports the following authentications: system-assigned managed identity (UMI), user-assigned managed identity (UMI), and connection string (secret).
+`service-principal` refers to the service principal authentication type. Service Connector also supports the following authentications: system-assigned managed identity (SMI), user-assigned managed identity (UMI), and connection string (secret).
 
 ### [Connection string](#tab/connectionstring)
 

@@ -8,13 +8,15 @@ services: azure-communication-services
 
 ms.author: prakulka
 ms.date: 3/22/2023
-ms.topic: conceptual
+ms.topic: faq
 ms.service: azure-communication-services
 ms.subservice: sms
 ms.custom: references_regions
 ---
 
 # SMS FAQ
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article answers commonly asked questions about SMS in Azure Communication Services.
 

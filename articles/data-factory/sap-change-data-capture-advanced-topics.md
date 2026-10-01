@@ -4,7 +4,7 @@ titleSuffix: Azure Data Factory
 description: Learn about advanced features and best practices for SAP change data capture in Azure Data Factory.
 author: ukchrist
 ms.subservice: data-movement
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 01/05/2024
 ms.author: ulrichchrist
 ---
@@ -12,6 +12,8 @@ ms.author: ulrichchrist
 # SAP CDC advanced topics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 Learn about advanced topics for the SAP CDC connector like metadata driven data integration, debugging, and more.
 

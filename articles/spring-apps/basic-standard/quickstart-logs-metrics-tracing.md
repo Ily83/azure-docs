@@ -5,9 +5,14 @@ author: KarlErickson
 ms.author: karler
 ms.service: azure-spring-apps
 ms.topic: quickstart
-ms.date: 06/27/2024
-ms.custom: devx-track-java, devx-track-extended-java, mode-other
+ms.date: 08/19/2025
+ms.update-cycle: 1095-days
 zone_pivot_groups: programming-languages-spring-apps
+ms.custom:
+  - devx-track-java
+  - devx-track-extended-java
+  - mode-other
+  - sfi-image-nochange
 ---
 
 # Quickstart: Monitoring Azure Spring Apps apps with logs, metrics, and tracing
@@ -120,7 +125,7 @@ Executing ObjectResult, writing value of type 'System.Collections.Generic.KeyVal
 
 ::: zone pivot="programming-language-java"
 
-With the built-in monitoring capability in Azure Spring Apps, you can debug and monitor complex issues. Azure Spring Apps integrates [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth) with Azure's [Application Insights](/azure/azure-monitor/app/app-insights-overview). This integration provides powerful logs, metrics, and distributed tracing capability from the Azure portal. The following procedures explain how to use Log Streaming, Log Analytics, Metrics, and Distributed tracing with deployed PetClinic apps.
+With the built-in monitoring capability in Azure Spring Apps, you can debug and monitor complex issues. Azure Spring Apps integrates [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud) with Azure's [Application Insights](/azure/azure-monitor/app/app-insights-overview). This integration provides powerful logs, metrics, and distributed tracing capability from the Azure portal. The following procedures explain how to use Log Streaming, Log Analytics, Metrics, and Distributed tracing with deployed PetClinic apps.
 
 ## Prerequisites
 

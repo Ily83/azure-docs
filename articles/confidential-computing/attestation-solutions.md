@@ -2,11 +2,11 @@
 title: Attestation Types and Scenarios
 description: Learn what attestation is and how to use it at Microsoft.
 author: jl-pm
-ms.service: azure-virtual-machines
-ms.subservice: azure-confidential-computing
+ms.service: azure-confidential-computing
 ms.topic: concept-article
 ms.date: 05/02/2023
 ms.author: joelinscott
+ms.custom: sfi-image-nochange
 # Customer intent: As a security architect, I want to understand the different types of attestation and their scenarios, so that I can effectively implement trust verification for our computing systems and ensure compliance with regulatory standards.
 ---
 

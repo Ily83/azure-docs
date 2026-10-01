@@ -13,13 +13,15 @@ ms.subservice: chat
 
 # Add Adaptive Cards in chat
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 [Adaptive Cards](https://adaptivecards.microsoft.com/) are a way to present interactive, visually rich content within chat messages. With the Azure Communication Services Web UI Library, you can embed Adaptive Cards directly into chat conversations, allowing users to view and interact with forms, surveys, or actionable content without leaving the chat interface.
 
 This article shows you how to integrate Adaptive Cards into your chat application using the UI Library chat composites or chat components.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 ## Explore Adaptive Card examples in Storybook
 

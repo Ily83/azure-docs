@@ -9,8 +9,28 @@ items:
     href: environment/overview.md
   - name: Compare web hosting options
     href: /azure/architecture/guide/technology-choices/compute-decision-tree?toc=/azure/app-service/toc.json&bc=/azure/app-service/breadcrumb/toc.json
+  - name: Managed Instance overview
+    href: overview-managed-instance.md
 - name: Integrate AI with App Service
-  href: overview-ai-integration.md
+  items:
+  - name: Overview
+    href: overview-ai-integration.md
+  - name: Chatbots and RAG applications
+    href: scenario-ai-chatbot-retrieval-augmented-generation.md
+  - name: Agentic web applications
+    href: scenario-ai-agentic-web-apps.md
+  - name: OpenAPI tools for Foundry agents
+    href: scenario-ai-openapi-tool.md
+  - name: Model Context Protocol servers
+    href: scenario-ai-model-context-protocol-server.md
+  - name: Built-in MCP (Preview)
+    href: configure-mcp-built-in.md
+  - name: MCP hosting options
+    href: /azure/container-apps/mcp-choosing-azure-service?toc=/azure/app-service/toc.json&bc=/azure/app-service/breadcrumb/toc.json
+  - name: Local small language models
+    href: scenario-ai-local-small-language-model.md
+  - name: Secure AI applications
+    href: scenario-ai-authentication.md
 - name: Get started
   items:
   - name: Get started
@@ -19,12 +39,16 @@ items:
     items: 
     - name: Quickstart
       href: quickstart-dotnetcore.md
+    - name: Aspire Quickstart
+      href: quickstart-aspire.md
     - name: Configure
       items:
       - name: ASP.NET
         href: configure-language-dotnet-framework.md
       - name: ASP.NET Core
         href: configure-language-dotnetcore.md
+      - name: Aspire
+        href: configure-language-aspire.md
     - name: Connect
       items:
       - name: ASP.NET Core with SQL DB
@@ -51,22 +75,23 @@ items:
         href: app-service-asp-net-migration.md
       - name: Migrate containerized .NET
         href: ../migrate/tutorial-app-containerization-aspnet-app-service.md?bc=/azure/bread/toc.json&toc=/azure/app-service/toc.json
+      - displayName: Migrate legacy apps with Managed Instance
+        name: Migrate to Managed Instance
+        href: quickstart-managed-instance.md
     - name: AI
       items:
         - name: Chatbot with OpenAI
           href: tutorial-ai-openai-chatbot-dotnet.md
-        - name: RAG with Azure OpenAI and your data
-          href: tutorial-ai-openai-search-dotnet.md
         - name: RAG Azure OpenAI and Azure SQL
           href: deploy-intelligent-apps-dotnet-to-azure-sql.md
         - name: Add MCP server to app
           href: tutorial-ai-model-context-protocol-server-dotnet.md
-        - name: AI Foundry Agent calling web app
+        - name: Foundry agent calling web app
           href: tutorial-ai-integrate-azure-ai-agent-dotnet.md
         - name: Agentic web app (.NET)
           href: tutorial-ai-agent-web-app-semantic-kernel-foundry-dotnet.md
-        - name: Invoke OpenAPI app from Azure AI Agent
-          href: invoke-openapi-web-app-from-azure-ai-agent-service.md
+        - name: Monitor agents with OpenTelemetry
+          href: tutorial-ai-agent-monitoring-dotnet.md
         - name: Chatbot with local SLM
           href: tutorial-ai-slm-dotnet.md
 
@@ -114,13 +139,11 @@ items:
       items:
         - name: Chatbot with OpenAI
           href: tutorial-ai-openai-chatbot-java.md
-        - name: RAG with Azure OpenAI with your data
-          href: tutorial-ai-openai-search-java.md
         - name: Chatbot with local SLM
           href: tutorial-ai-slm-spring-boot.md
         - name: Add MCP server to app
           href: tutorial-ai-model-context-protocol-server-java.md
-        - name: AI Foundry Agent calling web app
+        - name: Foundry agent calling web app
           href: tutorial-ai-integrate-azure-ai-agent-java.md
         - name: Agentic web app
           href: tutorial-ai-agent-web-app-semantic-kernel-java.md
@@ -144,13 +167,11 @@ items:
       items:
         - name: Chatbot with OpenAI
           href: tutorial-ai-openai-chatbot-node.md
-        - name: RAG with Azure OpenAI and your data
-          href: tutorial-ai-openai-search-nodejs.md
         - name: Chatbot with local SLM
           href: tutorial-ai-slm-expressjs.md
         - name: Add MCP server to app
           href: tutorial-ai-model-context-protocol-server-node.md
-        - name: AI Foundry Agent calling web app
+        - name: Foundry agent calling web app
           href: tutorial-ai-integrate-azure-ai-agent-node.md
         - name: Agentic web app
           href: tutorial-ai-agent-web-app-langgraph-foundry-node.md
@@ -174,11 +195,15 @@ items:
       items:
         - name: Chatbot with OpenAI
           href: tutorial-ai-openai-chatbot-python.md
-        - name: RAG with Azure OpenAI and your data
-          href: tutorial-ai-openai-search-python.md
         - name: Chatbot with local SLM
           href: tutorial-ai-slm-fastapi.md
-        - name: Web app from Azure AI Foundry
+        - name: Add MCP server to app
+          href: tutorial-ai-model-context-protocol-server-python.md
+        - name: Foundry agent calling web app
+          href: tutorial-ai-integrate-azure-ai-agent-python.md
+        - name: Agentic web app
+          href: tutorial-ai-agent-web-app-langgraph-foundry-python.md
+        - name: Web app from Microsoft Foundry
           href: /azure/ai-foundry/tutorials/deploy-chat-web-app?toc=/azure/app-service/toc.json&bc=/azure/bread/toc.json
   - name: PHP
     items:
@@ -212,6 +237,10 @@ items:
         href: wordpress-faq.md
 - name: Deployment and configuration
   items:
+    - name: Deploy Managed Instance
+      href: quickstart-managed-instance.md
+    - name: Configure a Managed Instance
+      href: configure-managed-instance.md
     - name: Deployment best practices
       href: deploy-best-practices.md
     - name: Deploy using ARM template
@@ -267,11 +296,13 @@ items:
       href: ../sre-agent/troubleshoot-azure-app-service.md  
     - name: Monitor App Service
       href: monitor-app-service.md
+    - name: Use the App Service site status page
+      href: use-app-service-site-status-page.md
     - name: Monitoring data reference
       href: monitor-app-service-reference.md
     - name: Azure Monitor tutorial
       href: tutorial-troubleshoot-monitor.md
-    - name: Stream diagnostic logs
+    - name: Enable diagnostic logs
       href: troubleshoot-diagnostic-logs.md
     - name: Open SSH session to a web app in a container
       href: configure-linux-open-ssh-session.md
@@ -306,13 +337,16 @@ items:
         - name: Overview of TLS/SSL in App Service
           href: overview-tls.md
           displayName: TLS, SSL
+        - name: Minimum TLS version
+          href: tls-minimum-version.md
+          displayName: TLS, TLS 1.0, TLS 1.1, minimum TLS
         - name: Secure a custom domain with HTTPS
           href: configure-ssl-bindings.md
           displayName: SSL
         - name: Add and manage TLS/SSL certificates
           href: configure-ssl-certificate.md
           displayName: SSL
-        - name: Create and Manage App Service certificates
+        - name: Buy and manage App Service certificates
           href: configure-ssl-app-service-certificate.md
           displayName: SSL
         - name: Use TLS/SSL certificates in app code
@@ -321,10 +355,16 @@ items:
         - name: Configure TLS mutual authentication
           href: app-service-web-configure-tls-mutual-auth.md
           displayName: TLS
+        - name: Industry-wide certificate changes 
+          href: industry-wide-certificate-changes.md
+          displayName: 2026 certificate changes
 - name: Database and service connection
   items:
     - name: Connectivity scenarios overview
       href: tutorial-connect-overview.md           
+    - name: Managed connectors
+      href: overview-managed-connectors.md
+      displayName: connector namespace, triggers, SDK actions, Office 365, Teams, SharePoint, SaaS
     - name: Connect by using secrets
       items:
         - name: Use secrets in app settings
@@ -339,7 +379,7 @@ items:
                   href: tutorial-send-email.md
             - name: Secrets in Key Vault
               items:
-              - name: Connect to Azure AI services
+              - name: Connect to Foundry Tools
                 items: 
                 - name: Use .NET
                   href: tutorial-connect-msi-key-vault.md
@@ -359,6 +399,8 @@ items:
           href: tutorial-auth-aad.md
         - name: App to app to another Azure service as user
           href: tutorial-connect-app-app-graph-javascript.md
+    - name: Connect by using agent identity
+      href: overview-agent-identity.md
 - name: Scaling and performance
   items:
     - name: Scale up server capacity
@@ -410,9 +452,17 @@ items:
       href: configure-authentication-api-version.md
     - name: Use file-based configuration
       href: configure-authentication-file-based.md
+    - name: Authenticate Microsoft Foundry tool calls
+      href: configure-authentication-ai-foundry-openapi-tool.md
+    - name: Authentication for MCP servers
+      items:
+        - name: Overview
+          href: configure-authentication-mcp.md
+        - name: Secure calls from Visual Studio Code
+          href: configure-authentication-mcp-server-vscode.md
 - name: Security and networking
   items:
-    - name: Security overview
+    - name: Secure your Azure App Service deployment
       href: overview-security.md
     - name: Deploy a multi-region app (tutorial)
       href: tutorial-multi-region-app.md
@@ -432,8 +482,6 @@ items:
           href: overview-name-resolution.md
         - name: About subdomain takeover
           href: reference-dangling-subdomain-prevention.md
-        - name: Security baseline reference
-          href: /security/benchmark/azure/baselines/app-service-security-baseline?toc=/azure/app-service/toc.json
         - name: Security controls by Azure Policy reference
           displayName: regulatory, compliance, standards, domains
           href: ./security-controls-policy.md
@@ -552,7 +600,7 @@ items:
 - name: Reliability
   items:
   - name: Reliability in Azure App Service
-    href: ../reliability/reliability-app-service.md?toc=/azure/app-service/toc.json&bc=/azure/app-service/breadcrumb/toc.json
+    href: /azure/reliability/reliability-app-service?toc=/azure/app-service/toc.json&bc=/azure/app-service/breadcrumb/toc.json
   - name: Configure App Service for zone redundancy
     href: configure-zone-redundancy.md
 - name: Samples
@@ -607,14 +655,6 @@ items:
       href: configure-grpc.md
     - name: Recommended services (preview)
       href: recommended-services.md      
-    - name: App Service on Azure Arc (preview)
-      items:
-        - name: Azure Arc hosting overview
-          href: overview-arc-integration.md
-        - name: Enable App Service on Azure Arc
-          href: manage-create-arc-environment.md
-        - name: Create app on Azure Arc
-          href: quickstart-arc.md
     - name: Best practices
       href: app-service-best-practices.md
     - name: Samples

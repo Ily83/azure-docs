@@ -8,11 +8,13 @@ services: azure-communication-services
 
 ms.author: micahvivion
 ms.date: 07/22/2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.subservice: calling
 ms.service: azure-communication-services
 ---
 # Simulcast
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Simulcast is a video streaming method that enables a sender, such as a WebJS client, to deliver multiple variants of the same video feed at varying resolutions and bitrates. This approach allows the Azure Communication Services infrastructure to dynamically select and distribute the most suitable stream to each participant according to their device capabilities, prevailing network conditions, and CPU performance. Simulcast enhances video quality and reliability in group calls, particularly when participants are accessing the service under diverse technical environments.
 

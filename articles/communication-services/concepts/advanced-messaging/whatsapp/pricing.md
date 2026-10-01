@@ -7,12 +7,14 @@ manager: sundraman
 services: azure-communication-services
 ms.author: darmour
 ms.date: 02/12/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: advanced-messaging
 ---
 
 # Pricing for Advanced Messaging
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 Prices for Advanced Messaging in Azure Communication Services consist of two components: the usage fee and the channel fee.
 
@@ -38,7 +40,7 @@ When you connect your WhatsApp Business account to Azure, Azure Communication Se
 - WhatsApp will charge [per-message for template messages](https://developers.facebook.com/docs/whatsapp/pricing/updates-to-pricing#per-message-pricing) instead of per-conversation.
 - Utility template messages sent within an open customer service window [will become free](https://developers.facebook.com/docs/whatsapp/pricing/updates-to-pricing#free-utility-templates-in-the-customer-service-window).
 
-See [Pricing Updates on the WhatsApp Business Platform](https://developers.facebook.com/docs/whatsapp/pricing/updates-to-pricing/) for additional details.
+See [Pricing Updates on the WhatsApp Business Platform](https://developers.facebook.com/docs/whatsapp/pricing/updates-to-pricing/) for additional details. To view the original amount billed by Meta, prior to any Azure benefits or adjustments, refer to the Quantity column in your [Azure usage details file](/azure/cost-management-billing/understand/download-azure-daily-usage).
 
 ## Pricing example: Contoso sends appointment reminders to their WhatsApp customers
 

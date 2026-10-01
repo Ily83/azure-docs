@@ -5,9 +5,11 @@ services: traffic-manager
 author: asudbring
 ms.service: azure-traffic-manager
 ms.topic: how-to
-ms.date: 08/08/2024
+ms.date: 08/10/2026
 ms.author: allensu
-ms.custom: template-how-to
+ms.custom:
+  - template-how-to
+  - sfi-image-nochange
 # Customer intent: "As a network administrator, I want to configure Traffic Manager to route user traffic based on specific subnets, so that I can ensure requests are directed to the appropriate internal or production endpoints according to their IP origin."
 ---
 
@@ -17,7 +19,7 @@ This article describes how to configure the subnet traffic-routing method. The *
 
 In the scenario discussed in this article, using subnet routing, depending on the IP address of the user's query, traffic is either routed to an internal website or a production website.
 
-If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 ## Prerequisites
 In order to see the Traffic Manager in action, this tutorial requires that you deploy the following:
@@ -39,7 +41,7 @@ In this section, you create two website instances that provide the two service e
 #### Create VMs for running websites
 In this section, you create two VMs *myEndpointVMEastUS* and *myEndpointVMWEurope* in the **East US** and **West Europe** Azure regions.
 
-1. On the upper, left corner of the Azure portal, select **Create a resource** > **Compute** > **Windows Server 2016 VM**.
+1. On the upper, left corner of the Azure portal, select **Create a resource** > **Compute** > **Windows Server 2019 Datacenter**.
 2. Enter, or select, the following information for **Basics**, accept the defaults for the remaining settings, and then select **Create**:
 
     |Setting|Value|
@@ -125,7 +127,7 @@ Traffic Manager routes user traffic based on DNS name of the service endpoints. 
 
 In this section, you create a VM (*mVMEastUS* and *myVMWestEurope*) in each Azure region (**East US** and **West Europe**. You will use these VMs to test how Traffic Manager routes traffic to the nearest IIS server when you browse to the website.
 
-1. On the upper, left corner of the Azure portal, select **Create a resource** > **Compute** > **Windows Server 2016 VM**.
+1. On the upper, left corner of the Azure portal, select **Create a resource** > **Compute** > **Windows Server 2019 Datacenter**.
 2. Enter, or select, the following information for **Basics**, accept the defaults for the remaining settings, and then select **Create**:
 
     |Setting|Value|
@@ -167,7 +169,7 @@ Create a Traffic Manager profile that allows you to return specific endpoints ba
 
     | Setting                 | Value                                              |
     | ---                     | ---                                                |
-    | Name                   | This name needs to be unique within the `trafficmanager.net` zone and results in the DNS name, `trafficmanager.net` that is used to access your Traffic Manager profile.                                   |
+    | Name                   | Enter a name that's unique within the `trafficmanager.net` zone. This name creates the DNS name `<name>.trafficmanager.net` that you use to access your Traffic Manager profile.                                   |
     | Routing method          | Select the **Subnet** routing method.                                       |
     | Subscription            | Select your subscription.                          |
     | Resource group          | Select **Existing** and enter *myResourceGroupTM1*. |

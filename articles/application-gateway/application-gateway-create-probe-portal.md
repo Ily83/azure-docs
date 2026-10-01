@@ -6,8 +6,9 @@ services: application-gateway
 author: mbender-ms
 ms.service: azure-application-gateway
 ms.topic: how-to
-ms.date: 06/10/2022
+ms.date: 08/04/2026
 ms.author: mbender
+ms.custom: sfi-image-nochange
 # Customer intent: As an IT administrator, I want to create a custom health probe for the application gateway using the portal, so that I can monitor the health of backend resources effectively.
 ---
 
@@ -33,7 +34,7 @@ Probes are configured in a two-step process through the portal. The first step i
 
 ### <a name="createprobe"></a>Enter probe properties
 
-1. Sign in to the [Azure portal](https://portal.azure.com). If you don't already have an account, you can sign up for a [free one-month trial](https://azure.microsoft.com/free)
+1. Sign in to the [Azure portal](https://portal.azure.com). If you don't already have an account, you can sign up for a [free one-month trial](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 
 2. In the Azure portal Favorites pane, select All resources. Select the application gateway in the All resources blade. If the subscription you selected already has several resources in it, you can enter partners.contoso.net in the Filter by name… box to easily access the application gateway.
 
@@ -61,6 +62,9 @@ Probes are configured in a two-step process through the portal. The first step i
    > [!IMPORTANT]
    > The probe monitors the health of the backend only when it's associated with one or more backend settings. It monitors the backend resources of those backend pools which are associated to the backend settings to which this probe is associated with. The probe request will be sent as \<protocol\>://\<hostName\>:\<port\>/\<urlPath\>.
 
+   > [!NOTE]
+   > Before you save the probe, confirm that the **Path** you specify actually exists on every backend target in the associated backend pool. A probe path that's missing on even one backend instance causes Application Gateway to mark that instance unhealthy, which can result in HTTP 502 errors for clients. Use the **Test** step in [Test backend health with the probe](#test-backend-health-with-the-probe) to validate the path before you select **Add** to save and associate the probe.
+
 ### Test backend health with the probe
 
 After entering the probe properties, you can test the health of the backend resources to verify that the probe configuration is correct and that the backend resources are working as expected.
@@ -84,7 +88,7 @@ Probes are configured in a two-step process through the portal. The first step i
 
 ### <a name="createprobe"></a>Create the probe
 
-1. Sign in to the [Azure portal](https://portal.azure.com). If you don't already have an account, you can sign up for a [free one-month trial](https://azure.microsoft.com/free)
+1. Sign in to the [Azure portal](https://portal.azure.com). If you don't already have an account, you can sign up for a [free one-month trial](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 
 2. In the Azure portal Favorites pane, select **All resources**. Select the application gateway in the **All resources** page. If the subscription you selected already has several resources in it, you can enter partners.contoso.net in the Filter by name… box to easily access the application gateway.
 

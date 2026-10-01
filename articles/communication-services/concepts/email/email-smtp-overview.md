@@ -7,11 +7,13 @@ manager: darmour
 services: azure-communication-services
 ms.author: bashan
 ms.date:  12/01/2023
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
 ---
 
 # Email SMTP support in Azure Communication Services
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Email is still a vital channel for global businesses to connect with customers. It's an essential part of business communications.
 

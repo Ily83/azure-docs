@@ -7,6 +7,7 @@ ms.service: azure-expressroute
 ms.topic: how-to
 ms.date: 07/10/2025
 ms.author: duau
+ms.custom: sfi-image-nochange
 
 # Customer intent: As a network engineer, I want to configure Azure ExpressRoute Direct, so that I can establish a direct connection to Microsoft's global network for improved performance and reliability in data transfer.
 ---
@@ -15,7 +16,7 @@ ms.author: duau
 
 ExpressRoute Direct gives you the ability to directly connect to Microsoft's global network through peering locations strategically distributed across the world. For more information, see [About ExpressRoute Direct Connect](expressroute-erdirect-about.md).
 
-This article shows you how to create ExpressRoute Direct using the Azure Portal, PowerShell and Azure CLI.
+This article shows you how to create ExpressRoute Direct using the Azure portal, PowerShell and Azure CLI.
 
 ## Before you begin
 

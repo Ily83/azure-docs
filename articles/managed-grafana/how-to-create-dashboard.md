@@ -7,7 +7,7 @@ ms.author: malev
 ms.service: azure-managed-grafana
 ms.custom: devx-track-azurecli
 ms.topic: how-to
-ms.date: 04/16/2025
+ms.date: 07/10/2026
 ---
 
 # Create a dashboard in Azure Managed Grafana
@@ -21,7 +21,7 @@ A Grafana dashboard contains panels and rows. You can import a Grafana dashboard
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An Azure Managed Grafana workspace. If you don't have one yet, [create an Azure Managed Grafana workspace](./quickstart-managed-grafana-portal.md).
 - Another existing Azure resource with monitoring data.
 
@@ -51,7 +51,7 @@ Import a dashboard template from the Grafana Labs website.
 
     ### [Azure CLI](#tab/azure-cli)
     
-    Run the [az grafana dashboard import](/cli/azure/grafana/dashboard#az-grafana-update) command and replace the placeholders `<AMG-name>`, `<AMG-resource-group>`, and `<dashboard-id>` with the name of the Azure Managed Grafana workspace, its resource group, and the dashboard ID you copied earlier.
+    Run the [az grafana dashboard import](/cli/azure/grafana/dashboard#az-grafana-dashboard-import) command and replace the placeholders `<AMG-name>`, `<AMG-resource-group>`, and `<dashboard-id>` with the name of the Azure Managed Grafana workspace, its resource group, and the dashboard ID you copied earlier.
 
    ```azurecli
    az grafana dashboard import --name <AMG-name> --resource-group <AMG-resource-group> --definition <dashboard-id>
@@ -74,7 +74,7 @@ Follow these steps to import a JSON dashboard to Grafana:
 
 ### [Azure CLI](#tab/azure-cli)
 
-Run the [az grafana dashboard import](/cli/azure/grafana/dashboard#az-grafana-update) command and replace the placeholders `<AMG-name>`, `<AMG-resource-group>`, and `<local-path-to-file>` with the name of the Azure Managed Grafana workspace, its resource group, and the path to the JSON File on your local machine, ending with `.json`.
+Run the [az grafana dashboard import](/cli/azure/grafana/dashboard#az-grafana-dashboard-import) command and replace the placeholders `<AMG-name>`, `<AMG-resource-group>`, and `<local-path-to-file>` with the name of the Azure Managed Grafana workspace, its resource group, and the path to the JSON File on your local machine, ending with `.json`.
 
    ```azurecli
    az grafana dashboard import --name <AMG-name> --resource-group <AMG-resource-group> --definition @<local-path-to-file>
@@ -212,6 +212,19 @@ az grafana dashboard update --name <AMG-name> --resource-group <AMG-resource-gro
 ```
 
 ---
+
+## Manage dashboards as code with Git Sync
+
+By using Git Sync, you can store your dashboards as JSON files in a Git repository and manage them as code. You can version control your dashboards, collaborate through pull requests, and automate deployments. Git Sync is bidirectional: changes you make in the Grafana UI can be committed to your repository, and changes made in your repository are synchronized back to Grafana.
+
+You configure and use Git Sync from the Grafana UI. To authenticate to your repository, use a GitHub app or a personal access token (PAT).
+
+Azure Managed Grafana supports up to 10 repositories, with up to 1,000 resources per repository.
+
+> [!NOTE]
+> Git Sync in Azure Managed Grafana supports GitHub repositories only, and requires Grafana version 13 or later.
+
+To set up Git Sync and synchronize your dashboards, follow the [Set up Git Sync](https://grafana.com/docs/grafana/latest/as-code/observability-as-code/git-sync/git-sync-setup/) documentation on the Grafana Labs website.
 
 ## Next step
 

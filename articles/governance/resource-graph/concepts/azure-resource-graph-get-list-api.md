@@ -1,12 +1,12 @@
 ---
-title: Azure Resource Graph GET/LIST API Guidance (Preview)
+title: Azure Resource Graph GET/LIST API Guidance 
 description: Learn to use the GET/LIST API to avoid requests being throttled in Azure Resource Graph.
 ms.date: 05/14/2025
-ms.topic: conceptual
+ms.topic: reference
 ms.custom: devx-track-csharp
 ---
 
-# Azure Resources Graph (ARG) GET/LIST API (Preview)
+# Azure Resources Graph (ARG) GET/LIST API  
 
 The ARG GET/LIST API is designed to significantly reduce READ throttling by offloading GET and LIST requests to an alternate ARG platform. This action is achieved through intelligent control plane routing, which directs requests to the alternate platform when a specific parameter is present. If the parameter is absent, requests are seamlessly routed back to the original Resource Provider, ensuring flexibility.
 
@@ -17,7 +17,7 @@ ARG GET/LIST provides a default quota of 4k per minute, user, and subscription, 
 - The API provides a response header “x-ms-user-quota-remaining" indicating remaining quota and "x-ms-user-quota-resets-after" indicating the time for a full quota reset based on which you can understand your quota consumption.  
 
 > [!NOTE]
-> Keep in mind that the Azure Resource Manager quota applies to these calls. Read about the [Azure Resource Manager limits](../../../azure-resource-manager/management/request-limits-and-throttling.md#azure-resource-graph-throttling), which are the new limits that Azure Resource Manager follows for Azure Public cloud.  
+> All requests to Azure Resource Graph (ARG) — including GET/LIST API calls — are subject to Azure Resource Manager (ARM) quotas and throttling policies. Read about the [Azure Resource Manager limits](../../../azure-resource-manager/management/request-limits-and-throttling.md#azure-resource-graph-throttling), which are the new limits that Azure Resource Manager follows for Azure Public cloud. Since every request is routed through ARM before reaching ARG, any throttling applied by ARM will take precedence. If you believe the current ARM limits are insufficient for your scenario, please email a brief summary of your use case to the Azure Resource Graph team <azureresourcegraphsupport@microsoft.com>. This will help the team better understand your requirements and provide appropriate guidance.
 
 > [!VIDEO https://www.youtube.com/embed/h6ieZqCO_90]
 
@@ -25,9 +25,10 @@ ARG GET/LIST provides a default quota of 4k per minute, user, and subscription, 
 
 To use the [ARG GET/LIST API](./guidance-for-throttled-requests.md#arg-getlist-api), first identify whether or not your scenario matches the conditions mentioned in the guidance for throttled requests. You can then append the flag `&useResourceGraph=true` to your applicable GET/LIST API calls, which routes the request to this ARG backend for response.
 
-While the `useResourceGraph` flag will function as expected, we recommend sharing a brief summary of your scenario via email to [Azure Resource Graph team](mailto:azureresourcegraphsupport@microsoft.com). This will help the Azure Resource Graph (ARG) team better understand your use case and provide appropriate guidance. 
+This opt-in model was deliberately chosen to allow the Azure Resource Graph team to better understand customer usage patterns and make improvements as needed. 
 
- This opt-in model was deliberately chosen to allow the Azure Resource Graph team to better understand customer usage patterns and make improvements as needed. 
+> [!NOTE]
+> ARG follows an eventual consistent model. Data is indexed with a short latency. For more information and guidance on managing eventual consistency, see [Choose the right query strategy for Azure Resource Graph](../choose-query-strategy.md).
 
 Refer to some known limitations [here](#known-limitations) and [frequently asked questions](#frequently-asked-questions).
 
@@ -135,6 +136,22 @@ For this specific example, use the following requests to retrieve the list of st
 HTTP GET https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/microsoft.storage/storageAccounts?api-version=2024-01-01&useResourceGraph=true 
 ```
 
+## Building Resilient Resource Queries with ARG and  Resource Provider Approach 
+
+In scenarios where data quality and reliability are critical, a hybrid querying strategy is highly recommended. This approach combines Azure Resource Graph (ARG) calls with a fallback to the Resource Provider (RP) API, which serves as the source of truth for each resource. By introducing intelligent logic that automatically triggers a fallback when data freshness issues, indexing delays, or latency problems arise, you can significantly improve the resilience of your solution. This ensures that users experience minimal disruption and continue to receive accurate, up-to-date resource information. 
+
+### A common scenario: polling immediately after resource creation 
+
+Many users poll resources immediately after creation—sometimes within 1–2 seconds—as part of a write workflow, as an example - until resource provisioningState reaches a final state, or until certain properties appear in the response. Since ARG indexing may not have completed yet, callers may receive 404 Not Found even though the resource exists. In these cases, a hybrid strategy helps avoid false negatives. 
+
+Two Workarounds to handle the brief window before ARG indexing completes, you can: 
+
+1. Retry using the useResourceGraph=true flag a few times until the call returns 200 OK. 
+
+2. Retry without the useResourceGraph=true flag to fall back directly to the Resource Provider API. 
+
+Both strategies help ensure that users always retrieve the most accurate state of the resource—without being impacted by short-lived data freshness gaps. 
+
 ## Known Limitations  
 
 - **VMSS VM health status** isn't currently supported. If you require this data, you can share your scenario and propose the feature addition on our [feedback forums](https://feedback.azure.com/d365community/forum/675ae472-f324-ec11-b6e6-000d3a4f0da0).
@@ -211,7 +228,7 @@ internal class ArgGetListHttpPipelinePolicy : HttpPipelineSynchronousPolicy
     There are a few ways that you can identify when a request the ARG GET/LIST:  
     - In the response body, the `apiVersion` field of resources will be populated, if served by ARG GET/LIST.  
     - ARG GET/LIST/ARG returns some more response headers, some of which are:   
-        - x-ms-arg-snapshot  
+        - x-ms-arg-snapshot-timestamp  
         - x-ms-user-quota-remaining  
         - x-ms-user-quota-resets-after  
         - x-ms-resource-graph-request-duration  
@@ -256,3 +273,11 @@ internal class ArgGetListHttpPipelinePolicy : HttpPipelineSynchronousPolicy
 - What should I do if I encounter issues while using the useResourceGraph parameter when calling Azure Resource Graph?
 
     If you experience any issues while using the `useResourceGraph` parameter with ARG, create a support ticket under the Azure Resource Graph service in the [Azure portal](https://ms.portal.azure.com/#home) under **Help + Support.**
+
+- How do you differentiate between ARM and ARG throttling?
+
+    Please refer to [differentiating between throttling request for ARG and ARM](/azure/governance/resource-graph/concepts/guidance-for-throttled-requests).
+
+- What should I do if ARG GET/LIST API is down?
+    
+    Treat it as a backend Resource Provider down scenario with a 500 Internal Server Error. ARM does not auto-retry, so first retry with `useResourceGraph=true`. If it still fails, retry without the flag and the call will go directly to the Resource Provider.

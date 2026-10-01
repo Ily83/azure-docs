@@ -8,12 +8,14 @@ manager: mvivion
 
 services: azure-communication-services
 ms.date: 7/10/2023
-ms.topic: conceptual
+ms.topic: best-practice
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 # Improve and manage call quality
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article introduces key tools that you can use to monitor, troubleshoot, and improve call quality in Azure Communication Services. The following materials help you plan for the best user experience.
 

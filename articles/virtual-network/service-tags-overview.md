@@ -6,9 +6,9 @@ services: virtual-network
 author: asudbring
 ms.service: azure-virtual-network
 ms.topic: concept-article
-ms.date: 07/15/2025
+ms.date: 09/16/2026
 ms.author: allensu
-# Customer intent: "As a network administrator, I want to utilize service tags for defining security rules, so that I can simplify network access controls and maintain effective security management for Azure resources."
+#customer intent: As a network administrator, I want to utilize service tags for defining security rules, so that I can simplify network access controls and maintain effective security management for Azure resources.
 ---
 
 # Azure service tags overview for virtual network security
@@ -115,10 +115,11 @@ By default, service tags reflect the ranges for the entire cloud. Some service t
 | **AzureWebPubSub** | AzureWebPubSub | Both | Yes | Yes |
 | **[BatchNodeManagement](/azure/batch/batch-virtual-network)** | Management traffic for deployments dedicated to Azure Batch. | Both | Yes | Yes |
 | **[ChaosStudio](/azure/chaos-studio/chaos-studio-permissions-security)** | Azure Chaos Studio. <br/><br/>**Note**: If you have enabled Application Insights integration on the Chaos Agent, the AzureMonitor tag is also required. | Both | No | Yes |
-| **CognitiveServicesFrontend** | The address ranges for traffic for Azure AI services frontend portals. | Both | No | Yes |
-| **CognitiveServicesManagement** | The address ranges for traffic for Azure AI services. | Both | No | Yes |
+| **CognitiveServicesFrontend** | The address ranges for traffic for Foundry Tools frontend portals. | Both | No | Yes |
+| **CognitiveServicesManagement** | The address ranges for traffic for Foundry Tools. | Both | No | Yes |
 | **DataFactory**  | Azure Data Factory | Both | Yes | Yes |
 | **DataFactoryManagement** | Management traffic for Azure Data Factory. | Outbound | No | Yes |
+| **DevOpsInfrastructure** | The IP addresses for the Management Control Plane for Managed DevOps Pools. Managed DevOps Pools VMs require outgoing connections to these IPs to operate. | Both | No | Yes |
 | **[Dynamics365ForMarketingEmail](/dynamics365/customer-insights/journeys/public-ip-addresses-for-email-sending)** | The address ranges for the marketing email service of Dynamics 365. | Both | Yes | Yes |
 | **[Dynamics365BusinessCentral](/dynamics365/business-central/dev-itpro/security/security-service-tags)** | This tag or the IP addresses covered by this tag can be used to restrict access from/to the Dynamics 365 Business Central Services. | Both | No | Yes |
 | **EOPExternalPublishedIPs** | This tag represents the IP addresses used for Security & Compliance Center PowerShell. Refer to the [Connect to Security & Compliance Center PowerShell using the EXO V2 module for more details](/powershell/exchange/connect-to-scc-powershell). | Both | No | Yes |
@@ -148,6 +149,7 @@ By default, service tags reflect the ranges for the entire cloud. Some service t
 | **[Storage](/azure/storage/file-sync/file-sync-networking-overview#configuring-firewalls-and-service-tags)** | Azure Storage. <br/><br/>**Note**: This tag represents the service, but not specific instances of the service. For example, the tag represents the Azure Storage service, but not a specific Azure Storage account. | Outbound | Yes | Yes |
 | **[StorageSyncService](/azure/storage/file-sync/file-sync-networking-overview#configuring-firewalls-and-service-tags)** | Storage Sync Service. | Both | No | Yes |
 | **StorageMover** | Storage Mover. | Outbound | Yes | Yes |
+| **[SystemServiceAzureSpringAppsResourceProvider](../spring-apps/basic-standard/how-to-custom-domain.md?tabs=Azure-portal#key-vault-private-link-considerations)** | Azure Spring Apps.<br/><br/>This tag represents the IP addresses used for Azure Spring Apps Resource Provider outbound traffic. | Inbound | Yes | Yes |
 | **[WindowsAdminCenter](/windows-server/manage/windows-admin-center/azure/manage-vm#networking-requirements)** | Allow the Windows Admin Center backend service to communicate with customers' installation of Windows Admin Center. | Outbound | No | Yes |
 | **[WindowsVirtualDesktop](/azure/virtual-desktop/required-fqdn-endpoint?tabs=azure#service-tags-and-fqdn-tags)** | Azure Virtual Desktop (formerly Windows Virtual Desktop). | Both | No | Yes |
 | **[VideoIndexer](/azure/azure-video-indexer/network-security)** | Video Indexer.</br> Used to allow customers opening up their NSG to Video Indexer service and receive callbacks to their service. | Both | No | Yes |

@@ -8,12 +8,14 @@ services: azure-communication-services
 
 ms.author: krkutser
 ms.date: 03/30/2023
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 ms.custom: references_regions
 ---
 
 # Phone number management for United States
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Use the following tables to find all the relevant information on number availability, eligibility, and restrictions for phone numbers in United States.
 
@@ -38,14 +40,14 @@ More details on eligible subscription types are as follows:
 | Toll-Free and Local (Geographic) | Modern Customer Agreement (Field and Customer Led), Modern Partner Agreement (CSP), Enterprise Agreement*, Pay-As-You-Go |
 | Short-Codes                      | Modern Customer Agreement (Field Led), Enterprise Agreement**, Pay-As-You-Go                                      |
 
-\** Applications from all other subscription types are reviewed and approved on a case-by-case basis. Reach out to acstns@microsoft.com for assistance with your application.
+\** Applications from all other subscription types are reviewed and approved on a case-by-case basis. Create a ticket to https://pstnsd.powerappsportals.com/ for assistance.
 
 ## Azure subscription billing locations where United States phone numbers are available for 10DLC SMS
 
 | Country/Region |
 | :---------- |
 |Canada|
-|United States|
+|United States (excl. Puerto Rico)|
 
 ## Azure subscription billing locations where United States local and toll-free phone numbers are available
 
@@ -79,3 +81,4 @@ For more information about Azure Communication Services telephony options, see:
 
 - [Learn more about Telephony](../telephony/telephony-concept.md)
 - Get a Telephony capable [phone number](../../quickstarts/telephony/get-phone-number.md)
+

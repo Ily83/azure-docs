@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: dbasantes
 ms.date: 12/04/2024
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
 ms.subservice: sms
 ---
 
 # Opt-Out management overview
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 [!INCLUDE [Public Preview Disclaimer](../../includes/public-preview-include.md)]
 

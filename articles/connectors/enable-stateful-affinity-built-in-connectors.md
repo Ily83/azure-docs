@@ -1,12 +1,15 @@
 ---
-title: Enable stateful mode for stateless built-in connectors
+title: Enable Stateful Mode for Stateless Built-in Connectors
 description: Enable stateless built-in connectors to run in stateful mode for Standard workflows in Azure Logic Apps.
 services: logic-apps
 ms.suite: integration
 ms.reviewer: estfan, edwardhe, azla
 ms.topic: how-to
-ms.custom: devx-track-azurepowershell
-ms.date: 07/12/2025
+ms.update-cycle: 1095-days
+ms.date: 07/10/2026
+ms.custom:
+  - devx-track-azurepowershell
+  - sfi-image-nochange
 ---
 
 # Enable stateful mode for stateless built-in connectors in Azure Logic Apps
@@ -23,7 +26,7 @@ To run these connector operations in stateful mode, you must enable this capabil
 
 ## Prerequisites
 
-- An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - The Standard logic app resource where you plan to create the workflow that uses the stateful mode-enabled connector operations. If you don't have this resource, [create your Standard logic app resource now](/azure/logic-apps/create-single-tenant-workflows-azure-portal).
 

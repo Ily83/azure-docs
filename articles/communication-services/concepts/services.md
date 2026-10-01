@@ -4,12 +4,14 @@ description: Learn about the services provided by Azure Communication Services.
 author: sroons
 ms.author: serooney
 ms.service: azure-communication-services
-ms.topic: conceptual
+ms.topic: overview
 ms.date: 01/01/2024
 ms.custom: template-concept
 ---
 
 # Services
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services provides the following cloud-based communication and customer engagement features you can integrate with your applications.
 

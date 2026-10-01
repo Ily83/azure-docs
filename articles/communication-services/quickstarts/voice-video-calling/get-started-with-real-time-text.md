@@ -14,6 +14,8 @@ zone_pivot_groups: acs-programming-languages-javascript-java-swift-csharp
 
 # Enable Real Time Text (RTT)
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 >[!NOTE]
 >RTT is an accessibility compliance requirement for voice and video platforms in the EU starting June 30, 2025. For more information, see [Directive 2019/882](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32019L0882).
 
@@ -28,7 +30,7 @@ Real Time Text (RTT) facilitates communication for users who might have difficul
 On supported platforms, RTT data can display alongside captions derived from Speech to Text, providing a comprehensive view of all communications during a call.
 
 >[!NOTE]
->RTT for PSTN or Teams Interop isn't available at this time
+>RTT for PSTN isn't available at this time.
 
 ## Naming Conventions
 

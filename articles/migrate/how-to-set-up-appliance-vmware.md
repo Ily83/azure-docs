@@ -1,12 +1,14 @@
 ---
 title: Set up an Azure Migrate appliance for server assessment in a VMware environment
 description: Learn how to set up an Azure Migrate appliance to assess and migrate servers in VMware environment.
-author: vikram1988
-ms.author: vibansa
-ms.manager: abhemraj
+author: molishv
+ms.author: molir
+ms.manager: runai
 ms.topic: how-to
 ms.service: azure-migrate
+ms.reviewer: v-gajeronika
 ms.date: 05/09/2025
+ms.update-cycle: 365-days
 ms.custom: vmware-scenario-422, engagement-fy23
 # Customer intent: As a cloud administrator, I want to set up an appliance for Azure Migrate in my VMware environment, so that I can effectively assess and migrate my servers to Azure.
 ---
@@ -61,31 +63,7 @@ In **2: Download Azure Migrate appliance**, select the OVA file, and select **Do
 
 ##### Verify security
 
-Before you deploy the OVA file, verify that the file is secure:
-
-1. On the server on which you downloaded the file, open a Command Prompt window by using the **Run as administrator** option.
-1. Run the following command to generate the hash for the OVA file:
-
-    ```
-    C:\>CertUtil -HashFile <file_location> <hashing_algorithm>
-    ```
-
-    For example:
-    ```
-    C:\>CertUtil -HashFile C:\Users\Administrator\Desktop\MicrosoftAzureMigration.ova SHA256
-    ```
-
-1. Verify the latest appliance versions and hash values:
-
-    - For the Azure public cloud:
-    
-      [!INCLUDE [public-cloud-vmware.md](./includes/public-cloud-vmware.md)]
-
-    - For Azure Government:
-
-        **Algorithm** | **Download** | **SHA256**
-        --- | --- | ---
-        VMware (85.8 MB) | [Latest version](https://go.microsoft.com/fwlink/?linkid=2191847) | [!INCLUDE [security-hash-value.md](./includes/security-hash-value.md)]
+Before you deploy the OVA file, [verify security](migrate-appliance.md#verify-security) by validating the SHA256 values.
 
 #### Create the appliance server
 
@@ -139,7 +117,7 @@ In the configuration manager, select **Set up prerequisites**, and complete thes
 
     1. For the appliance to run auto-update, paste the project key that you copied from the portal. If you don't have the key, go to **Azure Migrate: Discovery and assessment** > **Overview** > **Manage existing appliances**. Select the appliance name you provided when you generated the project key, and copy the key that's shown.
 	2. The appliance will verify the key and start the auto-update service, which updates all the services on the appliance to their latest versions. When the auto-update has run, you can select **View appliance services** to see the status and versions of the services running on the appliance server.
-    3. To register the appliance, you need to select **Login**. In **Continue with Azure Login**, select **Copy code & Login** to copy the device code (you must have a device code to authenticate with Azure) and open an Azure sign-in prompt in a new browser tab. Make sure you've disabled the pop-up blocker in the browser to see the prompt.
+    3. To register the appliance, you need to select **Login**. In **Continue with Azure Login**, select **Copy code & Login** to copy the device code (you must have a device code to authenticate with Azure) and go to an Azure sign-in prompt in a new browser tab. Make sure you've disabled the pop-up blocker in the browser to see the prompt.
 
         :::image type="content" source="./media/tutorial-discover-vmware/device-code.png" alt-text="Screenshot that shows where to copy the device code and sign in.":::
     4. In a new tab in your browser, paste the device code and sign in by using your Azure username and password. Signing in with a PIN isn't supported.
@@ -149,7 +127,7 @@ In the configuration manager, select **Set up prerequisites**, and complete thes
 
         After the appliance is successfully registered, select **View details** to see the registration details.
 
-1. **Install the VDDK**: The appliance checks if the VMware vSphere Virtual Disk Development Kit (VDDK) is installed. Download VDDK version 8.0 from the [Broadcom Developer portal](https://developer.broadcom.com/sdks/vmware-virtual-disk-development-kit-vddk/8.0). After downloading, extract the zip file to the default location: C:\Program Files\VMware\VMware Virtual Disk Development Kit, as mentioned in the installation instructions.
+1. [!INCLUDE [vmware-vddk-download](includes/vmware-vddk-download.md)]
 
     The Migration and modernization tool uses the VDDK to replicate servers during migration to Azure.
 

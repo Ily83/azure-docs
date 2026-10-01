@@ -2,16 +2,19 @@
 title: Push notifications overview
 titleSuffix: An Azure Communication Services article
 description: This article describes how to send notifications to users of apps built on Azure Communication Services.
-author: tophpalmer
+author: sundiraman
 manager: chpalm
 services: azure-communication-services
 
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 06/27/2025
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
+ms.custom: sfi-ropc-nochange
 ---
 # Push notifications overview
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 The Azure Communication Services Chat SDK and Calling SDK create a real-time messaging channel that enables signaling messages to be pushed to connected clients in an efficient, reliable manner. This ability enables you to build rich, real-time communication functionality into your applications without the need to implement complicated HTTP polling logic. However, on mobile applications, this signaling channel only remains connected when your application is active in the foreground. If you want your users to receive incoming calls or chat messages while your application is in the background, you should use push notifications.
 
@@ -133,5 +136,5 @@ If you regenerated the connection string of your linked Azure Notification Hub, 
 
 ## Next steps
 
-* For an introduction to Azure Event Grid, see [What is Event Grid?](../../event-grid/overview.md).
+* For an introduction to Azure Event Grid, see [What is Event Grid?](../../event-grid/overview.md)
 * To learn more on the Azure Notification Hub concepts, see [Azure Notification Hubs documentation](../../notification-hubs/index.yml).

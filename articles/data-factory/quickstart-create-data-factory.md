@@ -4,9 +4,10 @@ description: Learn how to create a data factory using Azure Data Factory Studio 
 author: whhender
 ms.topic: quickstart
 ms.subservice: authoring
-ms.date: 04/23/2025
+ms.date: 07/29/2026
 ms.author: whhender
 ms.reviewer: xupzhou
+ms.custom: sfi-image-nochange
 
 #customer intent: As a new data factory customer, I want to create a data factory instance so I can test its functions for my organization, or get started using it.
 
@@ -16,18 +17,20 @@ ms.reviewer: xupzhou
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
 
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
+
 This quickstart describes how to use either [Azure Data Factory Studio](https://adf.azure.com) or the [Azure portal UI](https://portal.azure.com) to create a data factory.
 
 If you're new to Azure Data Factory, see the [introduction to the service](introduction.md) before you try this quickstart.
 
 ## Prerequisites
 
-- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/) before you begin.
+- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 - Make sure that you have the required Azure roles to create a data factory. For more information, see [Roles and permissions for Azure Data Factory](concepts-roles-permissions.md).
 
 ## Create a data factory in Azure Data Factory Studio
 
-Using Azure Data Factory Studio, you can create a data factory in seconds:
+By using Azure Data Factory Studio, you can create a data factory in seconds:
 
 1. Open the Microsoft Edge or Google Chrome web browser. Currently, the Data Factory UI is supported only in these browsers.
 
@@ -57,7 +60,7 @@ When you use the Azure portal to create a data factory, the creation options are
    - Select an existing resource group from the dropdown list.
    - Select **Create new**, and then enter the name of a new resource group.
 
-   To learn about resource groups, see [What is a resource group?](../azure-resource-manager/management/overview.md#resource-groups).
+   To learn about resource groups, see [What is a resource group?](../azure-resource-manager/management/overview.md#resource-groups)
 
 1. For **Region**, select a location for the data factory.
 

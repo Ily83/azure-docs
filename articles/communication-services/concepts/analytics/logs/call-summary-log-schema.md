@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: amagginetti
 ms.date: 02/04/2025
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 # Call summary log schema
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 The call summary log contains data to help you identify key properties of all calls. A different call summary log is created for each `participantId` (or `endpointId` for peer-to-peer [P2P] calls) value in the call.
 

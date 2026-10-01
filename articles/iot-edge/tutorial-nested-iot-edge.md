@@ -1,17 +1,18 @@
 ---
 title: Create a hierarchy of Azure IoT Edge devices
 description: This tutorial shows you how to create a hierarchical structure of IoT Edge devices with secure communication. The configuration is also known as nested edge.
-author: PatAltimore
-
-ms.author: patricka
-ms.date: 07/11/2025
+author: sethmanheim
+ms.author: sethm
+ms.date: 07/16/2026
 ms.topic: tutorial
 ms.service: azure-iot-edge
-ms.custom: devx-track-azurecli
 services: iot-edge
 content_well_notification: 
   - AI-contribution
 ai-usage: ai-assisted
+ms.custom:
+  - devx-track-azurecli
+  - sfi-image-nochange
 ---
 
 # Tutorial: Create a hierarchy of IoT Edge devices
@@ -30,7 +31,7 @@ This tutorial shows you how to create a hierarchy of IoT Edge devices, deploy Io
 > * Configure the IoT Edge runtime on the devices in your hierarchy.
 > * Install consistent certificates across your device hierarchy.
 > * Add workloads to the devices in your hierarchy.
-> * Use the [IoT Edge API Proxy module](https://mcr.microsoft.com/artifact/mar/azureiotedge-api-proxy) to securely route HTTP traffic over a single port from your lower layer devices.
+> * Use the [IoT Edge API Proxy module](https://mcr.microsoft.com/artifact/mar/azureiotedge-api-proxy/tags) to securely route HTTP traffic over a single port from your lower layer devices.
 
 >[!TIP]
 >This tutorial includes a mixture of manual and automated steps to provide a showcase of nested IoT Edge features.
@@ -57,10 +58,10 @@ This tutorial uses a two device hierarchy for simplicity. The **top layer device
 To create a hierarchy of IoT Edge devices, you need:
 
 * A computer (Windows or Linux) with internet connectivity.
-* An Azure account with a valid subscription. If you don't have an [Azure subscription](../guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create a [free account](https://azure.microsoft.com/free/) before you begin.
+* An Azure account with a valid subscription. If you don't have an [Azure subscription](../guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 * A free or standard tier [IoT Hub](../iot-hub/iot-hub-create-through-portal.md) in Azure.
 * A Bash shell in Azure Cloud Shell using [Azure CLI](/cli/azure/install-azure-cli) with the [Azure IoT extension](https://github.com/Azure/azure-iot-cli-extension) installed. This tutorial uses the [Azure Cloud Shell](../cloud-shell/overview.md). To see your current versions of the Azure CLI modules and extensions, run [az version](/cli/azure/reference-index?#az-version).
-* Two Linux devices to configure your hierarchy. If you don't have devices available, you can create Azure virtual machines for each device in your hierarchy using the [IoT Edge Azure Resource Manager template](https://github.com/Azure/iotedge-vm-deploy). IoT Edge version 1.5 is preinstalled with this Resource Manager template. If you're installing IoT Edge on your own devices, see [Install Azure IoT Edge for Linux](how-to-provision-single-device-linux-symmetric.md) or [Update IoT Edge](how-to-update-iot-edge.md).
+* Two Linux devices to configure your hierarchy. If you don't have devices available, you can create Azure virtual machines for each device in your hierarchy using the [IoT Edge Azure Resource Manager template](https://github.com/Azure/iotedge-vm-deploy). IoT Edge version 1.6 is preinstalled with this Resource Manager template. If you're installing IoT Edge on your own devices, see [Install Azure IoT Edge for Linux](how-to-provision-single-device-linux-symmetric.md) or [Update IoT Edge](how-to-update-iot-edge.md).
 * To simplify network communication between devices, the virtual machines should be on the same virtual network or use virtual network peering.
 * Make sure that the following ports are open inbound for all devices except the lowest layer device: 443, 5671, 8883:
    * 443: Used between parent and child edge hubs for REST API calls and to pull docker container images.
@@ -115,7 +116,7 @@ You create a group of nested edge devices with containing a parent device with o
    az iot edge devices create \
       --hub-name <hub-name> \
       --output-path <config-bundle-output-path> \
-      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.5" \
+      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.6" \
       --device id=<parent-device-name> \
          deployment=<parent-deployment-manifest> \
          hostname=<parent-fqdn-or-ip> \
@@ -131,7 +132,7 @@ You create a group of nested edge devices with containing a parent device with o
    az iot edge devices create \
       --hub-name my-iot-hub \
       --output-path ./output \
-      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.5" \
+      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.6" \
       --device id=parent-1 \
          deployment=./deploymentTopLayer.json \
          hostname=10.0.0.4 \
@@ -164,7 +165,7 @@ In addition to the provisioning of your devices, the configuration steps establi
 
 To configure the IoT Edge runtime, apply the configuration bundles to your devices. The configurations are different for the *top layer device* and a *lower layer device*, so make sure you use the right configuration file for each device.
 
-1. Copy each configuration bundle archive file to its corresponding device. You can use a USB drive, a service like [Azure Key Vault](/azure/key-vault/general/overview), or with a function like [Secure file copy](https://www.ssh.com/ssh/scp/). Choose one of these methods that best matches your scenario. 
+1. Copy each configuration bundle archive file to its corresponding device. You can use a USB drive, a service like [Azure Key Vault](/azure/key-vault/general/overview), or with a function like [Secure file copy](https://www.ssh.com/academy/ssh/scp). Choose one of these methods that best matches your scenario. 
 
    For example, to send the *parent-1* configuration bundle to the home directory on the *parent-1* VM, you could use a command like the following example:
 
@@ -338,17 +339,17 @@ If a downstream device uses a different processor architecture than the parent d
 
 ```toml
 [agent.config]
-image = "$upstream:443/azureiotedge-agent:1.5.0-linux-amd64"
+image = "$upstream:443/azureiotedge-agent:1.6.0-linux-amd64"
 
 "systemModules": {
    "edgeAgent": {
       "settings": {
-            "image": "$upstream:443/azureiotedge-agent:1.5.0-linux-amd64"
+            "image": "$upstream:443/azureiotedge-agent:1.6.0-linux-amd64"
       },
    },
    "edgeHub": {
       "settings": {
-            "image": "$upstream:443/azureiotedge-hub:1.5.0-linux-amd64",
+            "image": "$upstream:443/azureiotedge-hub:1.6.0-linux-amd64",
       }
    }
 }

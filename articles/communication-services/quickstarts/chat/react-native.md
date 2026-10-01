@@ -2,8 +2,8 @@
 title: Use Chat SDK with React Native
 titleSuffix: An Azure Communication Services quickstart
 description: This article describes how to use the Azure Communication Services Chat SDK with React Native.
-author: ashwinder
-ms.author: askaur
+author: awang119
+ms.author: anniewang
 ms.date: 11/30/2021
 ms.topic: quickstart
 ms.service: azure-communication-services
@@ -11,6 +11,8 @@ ms.custom: mode-other
 ---
 
 # Use Chat SDK with React Native
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes how to set up the packages in the Azure Communication Services Chat JavaScript SDK to support chat in your React Native app. The following steps work for Azure Communication Services JavaScript Chat SDK 1.1.1 and later.
 
@@ -44,20 +46,23 @@ After you [initialize your React Native project](https://reactnative.dev/docs/en
    npm install react-native-url-polyfill --save-dev
    ```
 
-1. Update _metro.config.js_ to use React Native-compatible Node Core modules:
+1. Create or update the _metro.config.js_ file in the same directory as your _app.js_ file to configure React Native-compatible Node Core modules. If the file doesn’t exist, create a new one with the following content:
 
    ```javascript
-   module.exports = {
-       // ...
-       resolver: {
-           extraNodeModules: {
-               ...require('stream-browserify'),
-               ...require('node-libs-react-native'),
-               net: require.resolve('node-libs-react-native/mock/net'),
-               tls: require.resolve('node-libs-react-native/mock/tls')
-       }
+   // metro.config.js
+
+   const { getDefaultConfig } = require('expo/metro-config');
+   
+   const config = getDefaultConfig(__dirname);
+   
+   config.resolver.extraNodeModules = {
+     ...require('node-libs-react-native'),
+     stream: require.resolve('stream-browserify'),
+     net: require.resolve('node-libs-react-native/mock/net'),
+     tls: require.resolve('node-libs-react-native/mock/tls'),
    };
-   }
+   
+   module.exports = config;
    ```
 
 1. Add the following `import` commands at the top of your entry point file:

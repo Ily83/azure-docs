@@ -7,6 +7,7 @@ ms.author: dobett
 ms.date: 05/23/2025
 ms.topic: how-to
 ms.service: azure-iot-central
+ms.custom: sfi-image-nochange
 
 # This topic applies to administrators and device developers.
 ---
@@ -17,6 +18,9 @@ IoT Central lets you upload media and other files from connected devices to clou
 You can also manage and preview files uploaded by your devices inside your IoT Central application.
 
 To learn how to configure file uploads by using the IoT Central REST API, see [Add a file upload storage account configuration](howto-manage-iot-central-with-rest-api.md#add-a-file-upload-storage-account-configuration).
+
+> [!NOTE]
+> IoT Central's auto scale behavior doesn't consider **file-upload operations**. If your solution relies heavily on file uploads, you may need to manually scale the underlying IoT Hub instance to avoid throttling. If this is the case, contact Microsoft support.
 
 ## Prerequisites
 
@@ -42,6 +46,16 @@ To configure device file uploads:
 
 :::image type="content" source="media/howto-configure-file-uploads/file-upload-configuration.png" alt-text="Screenshot that shows a properly configured file upload." lightbox="media/howto-configure-file-uploads/file-upload-configuration.png":::
 
+## Best practices to avoid unexpected throttling for file upload scenarios
+
+To avoid unexpected throttling when using file uploads, consider the following best practices:
+
+- Stagger uploads across devices.
+- Avoid synchronized uploads. For example, at top of the hour.
+- Implement client-side exponential backoff on `429 / ThrottleBacklogTimeout` errors.
+- Consider alternative ingestion mechanisms such as ADX ingestion, Fabric pipelines, or direct storage writes.
+- Test workload behavior under expected production upload patterns.
+
 ## Disable device file uploads
 
 To turn off device file uploads in your IoT Central application:
@@ -58,7 +72,7 @@ Use roles and permissions to control who can view and delete uploaded files. To 
 
 ## Upload a file from a device
 
-IoT Central uses IoT Hub's file upload feature to enable devices to upload files. For sample code that shows how to upload files from a device, see the [IoT Central file upload device sample](/samples/azure-samples/iot-central-file-upload-device/iotc-file-upload-device/).
+IoT Central uses IoT Hub's file upload feature to enable devices to upload files. For sample code that shows how to upload files from a device, see the [IoT Central file upload device sample](https://github.com/Azure/iot-central-file-upload-device).
 
 ## View and manage uploaded files
 

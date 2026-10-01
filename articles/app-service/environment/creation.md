@@ -2,17 +2,23 @@
 title: Create an App Service Environment
 description: Learn how to create an App Service Environment, which integrates with an Azure virtual network and supports internal or external virtual IP types.
 author: seligj95
-ms.topic: article
-ms.date: 05/07/2025
+ms.topic: quickstart
+ms.date: 08/24/2026
 ms.author: jordanselig
+ms.service: azure-app-service
 ms.custom:
   - build-2025
-ms.service: azure-app-service
+  - sfi-image-nochange
+
+# As a developer, I want to create an App Service Environment so that I can integrate App Service with an Azure virtual network.
+
 ---
 
-# Create an App Service Environment
+# Quickstart: Create an App Service Environment
 
-An [App Service Environment][Intro] is a single-tenant deployment of Azure App Service that integrates with an Azure virtual network. Each App Service Environment deployment requires a dedicated subnet that other resources can't use.
+In this quickstart, you create an App Service Environment. [App Service Environment](overview.md) is a single-tenant deployment of Azure App Service that integrates with an Azure virtual network. Each App Service Environment deployment requires a dedicated subnet, which you can't use for other resources.
+
+If you don't have an Azure account, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 ## Before you create an App Service Environment
 
@@ -38,11 +44,11 @@ An [App Service Environment][Intro] is a single-tenant deployment of Azure App S
 
 - Select your deployment type. The deployment type determines how your apps are distributed across the App Service Environment. Choose between the following three types:
     
-   - *Regional deployment:* Also called a *nonzonal* deployment, this option is available in all regions that support App Service Environment v3. In regions with availability zones, your apps run in a single zone. If any availability zone in the region experiences an outage, regional deployments can experience downtime.
+   - *Regional deployment:* Also called a *nonzonal* deployment, this option is available in all regions that support App Service Environment v3. A regional deployment doesn't distribute App Service plan instances across availability zones. Regional deployments can experience downtime during a zone or region outage.
      
      You must pay a minimum charge for one instance of Windows Isolated v2 in your App Service plan. When you use one or more instances, the charge is removed. This fee isn't additive.
     
-   - *Zone redundant deployment:* Zone redundancy ensures that workloads remain available even if one zone experiences an outage. In regions that support availability zones, you can configure App Service Environments so that apps are distributed across multiple availability zones within the same region. You must include at least two instances in your App Service plan to ensure redundancy across zones. You can scale out by adding one or more instances at a time. For more information, see [Reliability in App Service Environment](../../reliability/reliability-app-service-environment.md).
+   - *Zone redundant deployment:* In regions that support availability zones, zone redundancy distributes eligible App Service plan instances across multiple availability zones within the same region. Each zone-redundant App Service plan must have at least two instances. Workload continuity during a zone outage also depends on the app or deployment slot having multiple active replicas and being ready to run on multiple instances. A [per-app scaling](../manage-scale-per-app.md) limit of one doesn't provide a simultaneous app replica in another zone. If the zone that hosts the active replica becomes unavailable, recovery depends on App Service starting a replacement replica on available plan capacity in another zone. This cold-start recovery isn't guaranteed to succeed. You can scale out by adding one or more instances at a time. For more information, see [Reliability in App Service Environment](/azure/reliability/reliability-app-service-environment).
    
    - *Host group deployment:* Your apps are deployed onto a dedicated host group. The dedicated host group isn't zone redundant. You can install and use your App Service Environment on dedicated hardware. There's no minimum instance charge for using an App Service Environment on a dedicated host group. However, you must pay for the host group when you provision the App Service Environment. You must also pay a discounted App Service plan rate when you create your plans and scale out.
    
@@ -86,7 +92,7 @@ To create an App Service Environment in the Azure portal, do the following steps
 
    :::image type="content" source="./media/creation/creation-hosting.png" alt-text="Screenshot that shows the App Service Environment hosting selections." border="true" lightbox="./media/creation/creation-hosting.png":::
    
-1. In the **Networking** tab, do the following steps:
+1. On the **Networking** tab, complete the following steps:
 
     - Select or create your **Virtual Network**.
     - Select or create your **Subnet**.
@@ -112,8 +118,6 @@ To create an App Service Environment in the Azure portal, do the following steps
 
 After you successfully create your App Service Environment, you can select it as a location when you create your apps.
 
-For more information, see [Create an App Service Environment by using an Azure Resource Manager template](how-to-create-from-template.md).
+## Related content
 
-<!--Links-->
-[Intro]: ./overview.md
-[UseAppServiceEnvironment]: ./using.md
+- [Create an App Service Environment - Azure Resource Manager template](how-to-create-from-template.md)

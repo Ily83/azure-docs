@@ -1,10 +1,16 @@
 ---
 title: App settings reference for Azure Functions
 description: Reference documentation for the Azure Functions app settings or environment variables used to configure functions apps.
-ms.topic: conceptual
-ms.custom: devx-track-extended-java, devx-track-python, ignite-2023, build-2024, linux-related-content
-ms.date: 07/11/2025
-#customer intent: As a developer, I need easy access to the behavior and use of application settings to implement Azure Functions.
+ms.topic: reference
+ms.date: 09/15/2026
+ms.custom:
+  - devx-track-extended-java
+  - devx-track-python
+  - ignite-2023
+  - build-2024
+  - linux-related-content
+  - sfi-ropc-nochange
+#customer intent: As a developer, I want to understand the behavior and use of application settings so that I can configure and implement Azure Functions effectively.
 ---
 
 # App settings reference for Azure Functions
@@ -21,7 +27,7 @@ Azure Functions uses the Azure App Service platform for hosting. You might find 
 
 When you use app settings, you should be aware of the following considerations:
 
-- Changes to function app settings require your function app to be restarted.
+- Changing application settings causes your function app to restart by default across all hosting plans. For zero-downtime deployments when changing settings, use the [Flex Consumption plan](flex-consumption-plan.md) with [rolling updates as the site update strategy](flex-consumption-site-updates.md). For other hosting plans, see [optimize deployments](functions-best-practices.md#optimize-deployments) for guidance on minimizing downtime.
 
 - In setting names, double-underscore (`__`) and colon (`:`) are considered reserved values. Double-underscores are interpreted as hierarchical delimiters on both Windows and Linux. Colons are interpreted in the same way only on Windows. For example, the setting `AzureFunctionsWebHost__hostid=somehost_123456` would be interpreted as the following JSON object:
 
@@ -90,44 +96,12 @@ To connect to Application Insights with Microsoft Entra authentication, you shou
 ## AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL
 
 > [!IMPORTANT]
-> Azure Functions proxies is a legacy feature for [versions 1.x through 3.x](functions-versions.md) of the Azure Functions runtime. For more information about legacy support in version 4.x, see [Functions proxies](functions-proxies.md).
-
-By default, Functions proxies use a shortcut to send API calls from proxies directly to functions in the same function app. This shortcut is used instead of creating a new HTTP request. This setting allows you to disable that shortcut behavior.
-
-|Key|Value|Description|
-|-|-|-|
-|AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL|`true`|Calls with a backend URL pointing to a function in the local function app aren't sent directly to the function. Instead, the requests are directed back to the HTTP frontend for the function app.|
-|AZURE_FUNCTION_PROXY_DISABLE_LOCAL_CALL|`false`|Calls with a backend URL pointing to a function in the local function app are forwarded directly to the function. `false` is the default value. |
+> Azure Functions Proxies is a legacy feature that isn't supported in the current Functions runtime. For historical configuration details, see [Application settings in the legacy Proxies reference](/previous-versions/azure/azure-functions/legacy-proxies#application-settings).
 
 ## AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES
 
 > [!IMPORTANT]
-> Azure Functions proxies is a legacy feature for [versions 1.x through 3.x](functions-versions.md) of the Azure Functions runtime. For more information about legacy support in version 4.x, see [Functions proxies](functions-proxies.md).
-
-This setting controls whether the characters `%2F` are decoded as slashes in route parameters when they're inserted into the backend URL.
-
-|Key|Value|Description|
-|-|-|-|
-|AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES|`true`|Route parameters with encoded slashes are decoded. |
-|AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES|`false`|All route parameters are passed along unchanged, which is the default behavior. |
-
-For example, consider the proxies.json file for a function app at the `myfunction.com` domain.
-
-```JSON
-{
-    "$schema": "http://json.schemastore.org/proxies",
-    "proxies": {
-        "root": {
-            "matchCondition": {
-                "route": "/{*all}"
-            },
-            "backendUri": "example.com/{all}"
-        }
-    }
-}
-```
-
-When `AZURE_FUNCTION_PROXY_BACKEND_URL_DECODE_SLASHES` is set to `true`, the URL `example.com/api%2ftest` resolves to `example.com/api/test`. By default, the URL remains unchanged as `example.com/test%2fapi`. For more information, see [Functions proxies](functions-proxies.md).
+> Azure Functions Proxies is a legacy feature that isn't supported in the current Functions runtime. For historical configuration details, see [Application settings in the legacy Proxies reference](/previous-versions/azure/azure-functions/legacy-proxies#application-settings).
 
 ## AZURE_FUNCTIONS_ENVIRONMENT
 
@@ -141,11 +115,9 @@ Configures the runtime [hosting environment](/dotnet/api/microsoft.extensions.ho
 
 Use this setting instead of `ASPNETCORE_ENVIRONMENT` when you need to change the runtime environment in Azure to something other than `Production`. For more information, see [Environment-based Startup class and methods](/aspnet/core/fundamentals/environments#environments).
 
-This setting isn't available in version 1.x of the Functions runtime.
-
 ## AzureFunctionsJobHost__\*
 
-In version 2.x and later versions of the Functions runtime, application settings can override [host.json](functions-host-json.md) settings in the current environment. These overrides are expressed as application settings named `AzureFunctionsJobHost__path__to__setting`. For more information, see [Override host.json values](functions-host-json.md#override-hostjson-values).
+Application settings can override [host.json](functions-host-json.md) settings in the current environment. These overrides are expressed as application settings named `AzureFunctionsJobHost__path__to__setting`. For more information, see [Override host.json values](functions-host-json.md#override-hostjson-values).
 
 ## AzureFunctionsWebHost__hostid
 
@@ -165,16 +137,6 @@ An easy way to generate an ID is to take a GUID, remove the dashes, and make it 
 |AzureFunctionsWebHost__hostid|`myuniquefunctionappname123456789`|
 
 For more information, see [Host ID considerations](storage-considerations.md#host-id-considerations).
-
-## AzureWebJobsDashboard
-
-_This setting is deprecated and is only supported when running on version 1.x of the Azure Functions runtime._ 
-
-Optional storage account connection string for storing logs and displaying them in the **Monitor** tab in the Azure portal. The storage account must be a general-purpose one that supports blobs, queues, and tables. To learn more, see [Storage account requirements](storage-considerations.md#storage-account-requirements).
-
-|Key|Sample value|
-|---|------------|
-|AzureWebJobsDashboard|`DefaultEndpointsProtocol=https;AccountName=...`|
 
 ## AzureWebJobsDisableHomepage
 
@@ -210,7 +172,7 @@ Currently supported feature flags:
 
 |Flag value | Description |
 | ----- | ----- |
-| `EnableProxies` | Re-enables proxies on version 4.x of the Functions runtime while you plan your migration to Azure API Management. For more information, see [Re-enable proxies in Functions v4.x](./legacy-proxies.md#re-enable-proxies-in-functions-v4x). |
+| `EnableProxies` | Re-enables proxies on version 4.x of the Functions runtime while you plan your migration to Azure API Management. For more information, see [Re-enable proxies in Functions v4.x](/previous-versions/azure/azure-functions/legacy-proxies#re-enable-proxies-in-functions-v4x). |
 | `EnableAzureMonitorTimeIsoFormat` | Enables the `ISO 8601` time format in Azure Monitor logs for Linux apps running on a Dedicated (App Service) plan. |
 
 ## AzureWebJobsKubernetesSecretName 
@@ -304,7 +266,7 @@ Specifies the repository or provider to use for key storage. Keys are always enc
 |Key| Value| Description|
 |---|------------|---|
 |AzureWebJobsSecretStorageType|`blob`|Keys are stored in a Blob storage container in the account provided by the `AzureWebJobsStorage` setting. Blob storage is the default behavior when `AzureWebJobsSecretStorageType` isn't set.<br/>To specify a different storage account, use the `AzureWebJobsSecretStorageSas` setting to indicate the SAS URL of a second storage account. |
-|AzureWebJobsSecretStorageType  | `files` | Keys are persisted on the file system. This behavior is the default for Functions v1.x.|
+|AzureWebJobsSecretStorageType  | `files` | Keys are persisted on the file system.|
 |AzureWebJobsSecretStorageType |`keyvault` | Keys are stored in a key vault instance set by `AzureWebJobsSecretStorageKeyVaultName`. | 
 |AzureWebJobsSecretStorageType | `kubernetes` | Supported only when running the Functions runtime in Kubernetes. When `AzureWebJobsKubernetesSecretName` isn't set, the repository is considered read only. In this case, the values must be generated before deployment. The [Azure Functions Core Tools](functions-run-local.md) generates the values automatically when deploying to Kubernetes.|
 
@@ -318,7 +280,7 @@ Specifies the connection string for an Azure Storage account that the Functions 
 |---|------------|
 |AzureWebJobsStorage|`DefaultEndpointsProtocol=https;AccountName=...`|
 
-Instead of a connection string, you can use an identity-based connection for this storage account. For more information, see [Connecting to host storage with an identity](functions-reference.md#connecting-to-host-storage-with-an-identity).
+Instead of a connection string, you can use an identity-based connection for this storage account. For more information, see [Connecting to host storage with an identity](manage-connections.md?pivots=functions-auth-identity&tabs=host#define-connections).
 
 ## AzureWebJobsStorage__accountName
 
@@ -338,7 +300,7 @@ When using an identity-based storage connection, sets the data plane URI of the 
 |---|------------|
 |AzureWebJobsStorage__blobServiceUri|`https://<STORAGE_ACCOUNT_NAME>.blob.core.windows.net`|
 
-Use this setting instead of `AzureWebJobsStorage__accountName` in sovereign clouds or when using a custom DNS. For more information, see [Connecting to host storage with an identity](functions-reference.md#connecting-to-host-storage-with-an-identity).
+Use this setting instead of `AzureWebJobsStorage__accountName` in sovereign clouds or when using a custom DNS. For more information, see [Connecting to host storage with an identity](manage-connections.md?pivots=functions-auth-identity&tabs=host#define-connections).
 
 ## AzureWebJobsStorage__clientId
 
@@ -360,7 +322,7 @@ When using an identity-based storage connection, sets the data plane URI of the 
 |---|------------|
 |AzureWebJobsStorage__queueServiceUri|`https://<STORAGE_ACCOUNT_NAME>.queue.core.windows.net`|
 
-Use this setting instead of `AzureWebJobsStorage__accountName` in sovereign clouds or when using a custom DNS. For more information, see [Connecting to host storage with an identity](functions-reference.md#connecting-to-host-storage-with-an-identity).
+Use this setting instead of `AzureWebJobsStorage__accountName` in sovereign clouds or when using a custom DNS. For more information, see [Connecting to host storage with an identity](manage-connections.md?pivots=functions-auth-identity&tabs=host#define-connections).
 
 ## AzureWebJobsStorage__tableServiceUri
 
@@ -370,7 +332,7 @@ When using an identity-based storage connection, sets data plane URI of a table 
 |---|------------|
 |AzureWebJobsStorage__tableServiceUri|`https://<STORAGE_ACCOUNT_NAME>.table.core.windows.net`|
 
-Use this setting instead of `AzureWebJobsStorage__accountName` in sovereign clouds or when using a custom DNS. For more information, see [Connecting to host storage with an identity](functions-reference.md#connecting-to-host-storage-with-an-identity).
+Use this setting instead of `AzureWebJobsStorage__accountName` in sovereign clouds or when using a custom DNS. For more information, see [Connecting to host storage with an identity](manage-connections.md?pivots=functions-auth-identity&tabs=host#define-connections).
 
 ## AzureWebJobs_TypeScriptPath
 
@@ -394,7 +356,7 @@ Indicates the account used to access a private container registry. This setting 
 
 ## DOCKER_SHM_SIZE
 
-Sets the shared memory size (in bytes) when the Python worker is using shared memory. To learn more, see [Shared memory](functions-reference-python.md#shared-memory).
+Sets the shared memory size (in bytes) when the Python worker is using shared memory. To learn more, see [Shared memory](https://github.com/Azure/azure-functions-python-worker/wiki/Shared-Memory).
 
 |Key|Sample value|
 |---|------------|
@@ -430,14 +392,9 @@ The version of the Functions runtime that hosts your function app. A tilde (`~`)
 |---|------------|
 |FUNCTIONS\_EXTENSION\_VERSION|`~4`|
 
-The following major runtime version values are supported:
+Version 4 is currently the only supported Azure Functions runtime version.
 
-| Value | Runtime target | Comment |
-| ------ | -------- | --- |
-| `~4` | 4.x | Recommended |
-| `~1` | 1.x | Support ends September 14, 2026 |
-
-A value of `~4` means that your app runs on version 4.x of the runtime. A value of `~1` pins your app to version 1.x of the runtime. Runtime versions 2.x and 3.x are no longer supported. For more information, see [Azure Functions runtime versions overview](functions-versions.md).
+A value of `~4` means that your app runs on version 4.x of the runtime. Runtime versions 2.x and 3.x are no longer supported. For more information, see [Azure Functions runtime versions overview](functions-versions.md).
 
 If requested by support to pin your app to a specific minor version, use the full version number, for example, `4.0.12345`. For more information, see [How to target Azure Functions runtime versions](set-runtime-version.md).
 
@@ -469,16 +426,20 @@ For Node.js v18 or lower, the app setting is used, and the default behavior depe
 
 ## FUNCTIONS\_REQUEST\_BODY\_SIZE\_LIMIT
 
-Overrides the default limit on the body size of requests sent to HTTP endpoints. The value is given in bytes, with a default maximum request size of 104,857,600 bytes. 
+Sets the supported body size, in bytes, of requests sent to HTTP endpoints. This setting lets you restrict the amount of data sent to HTTP endpoints. By default, this setting is the maximum request size of 220,200,960 bytes across all plans. While you can reduce the body size, you can't increase it beyond the default maximum limit. For more information, see **Max request size** in the [service limits table](functions-scale.md#service-limits). 
+
+If your application requires larger payloads, you should instead store the payload in Azure Blob storage and reference its URL in the blob container in the http request. You can also use the [Event Grid Blob trigger pattern](functions-event-grid-blob-trigger.md).
 
 |Key|Sample value|
 |---|------------|
-|FUNCTIONS\_REQUEST\_BODY\_SIZE\_LIMIT |`250000000`|
+| FUNCTIONS\_REQUEST\_BODY\_SIZE\_LIMIT |`100000000`|
+
+This sample `FUNCTIONS_REQUEST_BODY_SIZE_LIMIT` value limits the message body in requests to 100 MB.
 
 ## FUNCTIONS\_V2\_COMPATIBILITY\_MODE
 
 >[!IMPORTANT]
-> This setting is no longer supported. It was originally provided to enable a short-term workaround for apps that targeted the v2.x runtime. They would be able to instead run on the v3.x runtime while it was still supported. Except for legacy apps that run on version 1.x, all function apps must run on version 4.x of the Functions runtime: `FUNCTIONS_EXTENSION_VERSION=~4`. For more information, see [Azure Functions runtime versions overview](functions-versions.md).
+> This setting is no longer supported. It was originally provided to enable a short-term workaround for apps that targeted the v2.x runtime. They would be able to instead run on the v3.x runtime while it was still supported. All function apps must run on version 4.x of the Functions runtime: `FUNCTIONS_EXTENSION_VERSION=~4`. For more information, see [Azure Functions runtime versions overview](functions-versions.md).
 
 ## FUNCTIONS\_WORKER\_PROCESS\_COUNT
 
@@ -516,7 +477,7 @@ This setting enables the Python worker to use shared memory to improve throughpu
 |---|------------|
 |FUNCTIONS_WORKER_SHARED_MEMORY_DATA_TRANSFER_ENABLED|`1`|
 
-With this setting enabled, you can use the [DOCKER_SHM_SIZE](#docker_shm_size) setting to set the shared memory size. To learn more, see [Shared memory](functions-reference-python.md#shared-memory).
+With this setting enabled, you can use the [DOCKER_SHM_SIZE](#docker_shm_size) setting to set the shared memory size. To learn more, see [Shared memory](https://github.com/Azure/azure-functions-python-worker/wiki/Shared-Memory).
 
 ## JAVA_APPLICATIONINSIGHTS_ENABLE_TELEMETRY
 
@@ -591,23 +552,23 @@ Sets an optional list of headers that are applied to all outgoing data exported 
 
 ## PIP\_INDEX\_URL
 
-This setting lets you override the base URL of the Python Package Index, which by default is `https://pypi.org/simple`. Use this setting when you need to run a remote build using custom dependencies. These custom dependencies can be in a package index repository compliant with PEP 503 (the simple repository API) or in a local directory that follows the same format.
+Overrides the default base URL of the Python Package Index (`https://pypi.org/simple`) when running a remote build. Because this setting replaces the package index, you might see unexpected behaviour on restore. Only use this setting when you need to use a complete set of custom dependencies. When possible, you should instead use `PIP_EXTRA_URL`, which lets you reference an additional package index. For more information, see [Custom dependencies](python-build-options.md#custom-dependencies) in the Python build article.
 
 |Key|Sample value|
 |---|------------|
 |PIP\_INDEX\_URL|`http://my.custom.package.repo/simple` |
 
-To learn more, see [`pip` documentation for `--index-url`](https://pip.pypa.io/en/stable/cli/pip_wheel/?highlight=index%20url#cmdoption-i) and using [Custom dependencies](functions-reference-python.md#remote-build-with-extra-index-url) in the Python developer reference.
+These custom dependencies can be in a package index repository compliant with PEP 503 (the simple repository API) or in a local directory that follows the same format. For more information, see [`pip` documentation for `--index-url`](https://pip.pypa.io/en/stable/cli/pip_wheel/?highlight=index%20url#cmdoption-i).
 
 ## PIP\_EXTRA\_INDEX\_URL
 
-The value for this setting indicates an extra index URL for custom packages for Python apps, to use in addition to the `--index-url`. Use this setting when you need to run a remote build using custom dependencies that are found in an extra package index. Should follow the same rules as `--index-url`.
+The value for this setting indicates an extra index URL for custom packages for Python apps, to use in addition to the `--index-url`. Use this setting when you need to run a remote build using custom dependencies that are found in an extra package index. For more information, see [Custom dependencies](python-build-options.md#custom-dependencies) in the Python build article.
 
 |Key|Sample value|
 |---|------------|
 |PIP\_EXTRA\_INDEX\_URL|`http://my.custom.package.repo/simple` |
 
-To learn more, see [`pip` documentation for `--extra-index-url`](https://pip.pypa.io/en/stable/cli/pip_wheel/?highlight=index%20url#cmdoption-extra-index-url) and [Custom dependencies](functions-reference-python.md#remote-build-with-extra-index-url) in the Python developer reference.
+Should follow the same rules as `--index-url`. For more information, see [`pip` documentation for `--extra-index-url`](https://pip.pypa.io/en/stable/cli/pip_wheel/?highlight=index%20url#cmdoption-extra-index-url).
 
 ## PROJECT
 
@@ -642,7 +603,7 @@ Indicates whether the Python worker process should export telemetry to an Open T
 
 ## PYTHON\_ENABLE\_WORKER\_EXTENSIONS
 
-The configuration is specific to Python function apps. Setting this value to `1` allows the worker to load in [Python worker extensions](functions-reference-python.md#python-worker-extensions) defined in requirements.txt. It enables your function app to access new features provided by partner packages. It can also change the behavior of function load and invocation in your app. Ensure the extension you choose is trustworthy as you bear the risk of using it. Azure Functions gives no express warranties to any extensions. For how to use an extension, visit the extension's manual page or readme doc. By default, this value sets to `0`.
+The configuration is specific to Python function apps. Setting this value to `1` allows the worker to load in [Python worker extensions](./develop-python-worker-extensions.md) defined in requirements.txt. It enables your function app to access new features provided by partner packages. It can also change the behavior of function load and invocation in your app. Ensure the extension you choose is trustworthy as you bear the risk of using it. Azure Functions gives no express warranties to any extensions. For how to use an extension, visit the extension's manual page or readme doc. By default, this value sets to `0`.
 
 |Key|Value|Description|
 |---|-----|-----------|
@@ -689,6 +650,25 @@ Controls the timeout, in seconds, when connected to streaming logs. The default 
 
 The preceding sample value of `1800` sets a timeout of 30 minutes. For more information, see [Enable streaming execution logs in Azure Functions](streaming-logs.md).
 
+## WEBSITE\_AUTH\_ENCRYPTION\_KEY
+
+By default, Azure Functions automatically generates and manages an encryption key for each function app. When you set `WEBSITE_AUTH_ENCRYPTION_KEY`, Functions uses the specified key instead of the automatically generated key. Set this value only when you need to control the encryption key.
+
+| Key | Sample value |
+| --- | --- |
+| `WEBSITE_AUTH_ENCRYPTION_KEY` | `<EncryptionKey>` |
+
+Replace `<EncryptionKey>` with the hexadecimal or Base64 encoding of a 32-byte key. Functions uses this key to encrypt the following data:
+
+- The function app's secret store, which contains host keys, function keys, and system keys. These *function access keys* authorize requests to HTTP-triggered functions, system webhooks, and administrative APIs. For more information, see [Function access keys](function-keys-how-to.md).
+- App Service authentication (Easy Auth) tokens and sessions.
+- Administrative JSON Web Tokens (JWTs).
+
+> [!IMPORTANT]
+> Treat `WEBSITE_AUTH_ENCRYPTION_KEY` as a high-value secret. Don't reuse the key across function apps unless all the apps belong to the same trust boundary. Any app configured with the key can decrypt data protected by that key, including function access keys, authentication tokens, and sessions.
+>
+> App Service documents this setting as a way to support sharing authentication tokens or sessions across apps. For function apps, reuse the key only when every app configured with it is in the same trust boundary. For more information, see [Environment variables and app settings in Azure App Service](../app-service/reference-app-settings.md).
+
 ## WEBSITE\_CONTENTAZUREFILECONNECTIONSTRING
 
 Connection string for storage account where the function app code and configuration are stored in event-driven scaling plans. For more information, see [Storage account connection setting](storage-considerations.md#storage-account-connection-setting).
@@ -697,24 +677,28 @@ Connection string for storage account where the function app code and configurat
 |---|------------|
 |WEBSITE_CONTENTAZUREFILECONNECTIONSTRING|`DefaultEndpointsProtocol=https;AccountName=...`|
 
-This setting is required for Consumption and Elastic Premium plan apps running on both Windows and Linux. It's not required for Dedicated plan apps, which Functions doesn't dynamically scale. 
+This setting is required for both Consumption and Elastic Premium plan apps. It's not required for Dedicated plan apps, which Functions doesn't dynamically scale. 
+
+[!INCLUDE [functions-flex-consumption-recommended-serverless](../../includes/functions-flex-consumption-recommended-serverless.md)]
 
 Changing or removing this setting can cause your function app to not start. To learn more, see [this troubleshooting article](functions-recover-storage-account.md#storage-account-application-settings-were-deleted).
 
-Azure Files doesn't support using managed identity when accessing the file share. For more information, see [Azure Files supported authentication scenarios](../storage/files/storage-files-active-directory-overview.md#supported-authentication-scenarios). 
+Azure Files doesn't currently support using managed identity when accessing the file share. For more information, see [Azure Files supported authentication scenarios](../storage/files/storage-files-active-directory-overview.md#supported-authentication-scenarios). 
+
+You might use a [KeyVault reference](../app-service/app-service-key-vault-references.md) for this connection setting. However, additional configuration is required to create and dynamically scale a function app in a Premium or Consumption plan when the storage connection string is maintained in a KeyVault. For more information, see [Considerations for Azure Files mounting](../app-service/app-service-key-vault-references.md#considerations-for-azure-files-mounting).
 
 ## WEBSITE\_CONTENTOVERVNET
 
 > [!IMPORTANT]
 > WEBSITE_CONTENTOVERVNET is a legacy app setting that has been replaced by the [vnetContentShareEnabled](#vnetcontentshareenabled) site property.
 
-A value of `1` enables your function app to scale when you have your storage account restricted to a virtual network. You should enable this setting when restricting your storage account to a virtual network. Only required when using `WEBSITE_CONTENTSHARE` and `WEBSITE_CONTENTAZUREFILECONNECTIONSTRING`. To learn more, see [Restrict your storage account to a virtual network](configure-networking-how-to.md#restrict-your-storage-account-to-a-virtual-network).
+A value of `1` enables your function app to scale across stamps when you have your storage account restricted to a virtual network. You should enable this setting when restricting your storage account to a virtual network. Only required when using `WEBSITE_CONTENTSHARE` and `WEBSITE_CONTENTAZUREFILECONNECTIONSTRING`. To learn more, see [Restrict your storage account to a virtual network](configure-networking-how-to.md#restrict-your-storage-account-to-a-virtual-network).
 
 |Key|Sample value|
 |---|------------|
 |WEBSITE_CONTENTOVERVNET|`1`|
 
-This app setting is required on the [Elastic Premium](functions-premium-plan.md) and [Dedicated (App Service) plans](dedicated-plan.md) (Standard and higher). Not supported when running on a [Consumption plan](consumption-plan.md).
+This app setting is required for cross-stamp scaling on the [Elastic Premium](functions-premium-plan.md) and [Dedicated (App Service) plans](dedicated-plan.md) (Standard and higher) when the storage account is VNet-restricted. Without this setting, the function app can only scale within a single stamp (approximately 1-20 instances). Not supported when running on a [Consumption plan](consumption-plan.md).
 
 [!INCLUDE [functions-content-over-vnet-shared-storage-note](../../includes/functions-content-over-vnet-shared-storage-note.md)]
 
@@ -726,7 +710,9 @@ The name of the file share that Functions uses to store function app code and co
 |---|------------|
 |WEBSITE_CONTENTSHARE|`functionapp091999e2`|
 
-This setting is required for Consumption and Premium plan apps on both Windows and Linux. It's not required for Dedicated plan apps, which aren't dynamically scaled by Functions. 
+This setting is required only for Consumption and Premium plan apps. It's not required for Dedicated plan apps, which aren't dynamically scaled by Functions. 
+
+[!INCLUDE [functions-flex-consumption-recommended-serverless](../../includes/functions-flex-consumption-recommended-serverless.md)]
 
 The share is created when your function app is created. Changing or removing this setting can cause your function app to not start. To learn more, see [this troubleshooting article](functions-recover-storage-account.md#storage-account-application-settings-were-deleted).
 
@@ -759,6 +745,17 @@ Disables caching when deploying function apps using Azure Resource Manager (ARM)
 |---|------------|
 | WEBSITE_FUNCTIONS_ARMCACHE_ENABLED| 0 |
 
+## WEBSITE\_LOAD\_CERTIFICATES
+
+Comma-separated thumbprint values of certificates to load in your code, or `*` to allow all certificates to be loaded. Only [certificates added to your app](../app-service/configure-ssl-certificate.md) can be loaded. For more information, see [Use a TLS/SSL certificate in your code](../app-service/configure-ssl-certificate-in-code.md).
+
+> [!NOTE]
+> This setting isn't used in the [Flex Consumption plan](flex-consumption-plan.md), which uses a [per-certificate toggle](flex-consumption-how-to.md#make-a-certificate-accessible-to-your-code) instead.
+
+|Key|Sample value|
+|---|------------|
+|WEBSITE\_LOAD\_CERTIFICATES|`*`|
+
 
 ## WEBSITE\_MAX\_DYNAMIC\_APPLICATION\_SCALE\_OUT
 
@@ -774,11 +771,11 @@ The maximum number of instances that the app can scale out to. Default is no lim
 ## WEBSITE\_NODE\_DEFAULT_VERSION
 
 _Windows only._
-Sets the version of Node.js to use when running your function app on Windows. You should use a tilde (`~`) to have the runtime use the latest available version of the targeted major version. For example, when set to `~18`, the latest version of Node.js 18 is used. When a major version is targeted with a tilde, you don't have to manually update the minor version.
+Sets the version of Node.js to use when running your function app on Windows. You should use a tilde (`~`) to have the runtime use the latest available version of the targeted major version. For example, when set to `~22`, the latest version of Node.js 22 is used. When a major version is targeted with a tilde, you don't have to manually update the minor version.
 
 |Key|Sample value|
 |---|------------|
-|WEBSITE\_NODE\_DEFAULT_VERSION|`~18`|
+|WEBSITE\_NODE\_DEFAULT_VERSION|`~22`|
 
 ## WEBSITE\_OVERRIDE\_STICKY\_DIAGNOSTICS\_SETTINGS
 
@@ -806,16 +803,18 @@ Enables your function app to run from a package file, which can be locally mount
 |---|------------|
 |WEBSITE\_RUN\_FROM\_PACKAGE|`1`|
 
-Valid values are either a URL that resolves to the location of an external deployment package file, or `1`. When set to `1`, the package must be in the `d:\home\data\SitePackages` folder. When you use zip deployment with `WEBSITE_RUN_FROM_PACKAGE` enabled, the package is automatically uploaded to this location. For more information, see [Run your functions from a package file](run-functions-from-deployment-package.md).
+Valid values are either a URL that resolves to the location of an external deployment package file, or `1`. When set to `1`, the package must be in the `d:\home\data\SitePackages` folder. When you use zip deployment with `WEBSITE_RUN_FROM_PACKAGE` enabled, the package is automatically uploaded to this location. For more information, see [Run functions from the deployment package](deployment-zip-push.md#run-functions-from-the-deployment-package).
+
+Don't use this setting for a container deployment. When you convert an existing code-based function app to use a custom container, remove `WEBSITE_RUN_FROM_PACKAGE` so that the Functions host uses the content in your container image. For more information, see [Use application settings with containerized function apps](functions-how-to-custom-container.md#use-application-settings).
 
 When you use `WEBSITE_RUN_FROM_PACKAGE=<URL>`, the URL must resolve to the package file location in an accessible storage location, such as an Azure Blob Storage container. The container must be private to prevent unauthorized access, which requires you to use either a shared access signature (SAS) in the URL or Microsoft Entra ID authentication to allow access. Using Microsoft Entra ID with managed identities is recommended. 
 
-This is an example of setting `WEBSITE_RUN_FROM_PACKAGE` to the URL of a deployment package in an Azure Blog Storage container:  
+This is an example of setting `WEBSITE_RUN_FROM_PACKAGE` to the URL of a deployment package in an Azure Blob Storage container:
 `WEBSITE_RUN_FROM_PACKAGE=https://contosostorageaccount.blob.core.windows.net/mycontainer/mypackage.zip`
 
 When using SAS, you append the token to the URL as a query parameter.  
 
-When you [deploy a package from Azure Blob Storage using a user-assigned managed identity](run-functions-from-deployment-package.md#fetch-a-package-from-azure-blob-storage-using-a-managed-identity), you must also set [`WEBSITE_RUN_FROM_PACKAGE_BLOB_MI_RESOURCE_ID`](#website_run_from_package_blob_mi_resource_id) to the resource ID of the user-assigned managed identity. When you deploy from an external package URL, you must also manually sync triggers. For more information, see [Trigger syncing](functions-deployment-technologies.md#trigger-syncing).
+When you [deploy a package from Azure Blob Storage by using a user-assigned managed identity](deployment-zip-push.md#fetch-a-package-from-azure-blob-storage-by-using-a-managed-identity), you must also set [`WEBSITE_RUN_FROM_PACKAGE_BLOB_MI_RESOURCE_ID`](#website_run_from_package_blob_mi_resource_id) to the resource ID of the user-assigned managed identity. When you deploy from an external package URL, you must also manually sync triggers. For more information, see [Trigger syncing](functions-deployment-technologies.md#trigger-syncing).
 
 ## WEBSITE_RUN_FROM_PACKAGE_BLOB_MI_RESOURCE_ID
 
@@ -911,7 +910,7 @@ On a function app running in a [Dedicated (App Service) plan](./dedicated-plan.m
 
 Determines whether the built-in administrator (`/admin`) endpoints in your function app can be accessed. When set to `false` (the default), the app allows requests to endpoints under `/admin` when those requests present a [master key](function-keys-how-to.md#understand-keys) in the request. When `true`, `/admin` endpoints can't be accessed, even with a master key.
 
-This property can't be set for apps running on the Linux Consumption SKU. It can't be set for apps running on version 1.x of Azure Functions. If you're using version 1.x, you must first [migrate to version 4.x](./migrate-version-1-version-4.md). 
+This property can't be set for apps running on Linux in a Consumption plan.
 
 ## linuxFxVersion 
 
@@ -921,13 +920,15 @@ This value is set for you when you create your Linux function app. You might nee
 
 ### Valid linuxFxVersion values
 
-You can use the following Azure CLI command to see a table of current `linuxFxVersion` values, by supported Functions runtime version:
+You can use the following Azure CLI command to see a table of current `linuxFxVersion` values:
 
 ```azurecli-interactive
 az functionapp list-runtimes --os linux --query "[].{stack:join(' ', [runtime, version]), LinuxFxVersion:linux_fx_version, SupportedFunctionsVersions:to_string(supported_functions_versions[])}" --output table
 ```
 
 The previous command requires you to upgrade to version 2.40 of the Azure CLI.  
+
+Some managed Linux image updates use a three-part value in the format `<LANGUAGE>|<VERSION>|<IMAGE_VERSION>`. These values explicitly select the Linux distribution and aren't returned by the preceding command. For supported values and update instructions for affected Python and Java apps, see [Update the managed Linux image](set-runtime-version.md?pivots=platform-linux#update-the-managed-linux-image).
 
 ### Custom images
 
@@ -952,7 +953,7 @@ When running locally, you instead use the [`FUNCTIONS_WORKER_RUNTIME_VERSION`](f
 
 ## vnetContentShareEnabled
 
-Apps running in a Premium plan use a file share to store content. The name of this content share is stored in the [`WEBSITE_CONTENTSHARE`](#website_contentshare) app setting and its connection string is stored in [`WEBSITE_CONTENTAZUREFILECONNECTIONSTRING`](#website_contentazurefileconnectionstring). To route traffic between your function app and content share through a virtual network, you must also set `vnetContentShareEnabled` to `true`. Enabling this site property is a requirement when [restricting your storage account to a virtual network](configure-networking-how-to.md#restrict-your-storage-account-to-a-virtual-network) in the Elastic Premium and Dedicated hosting plans.
+Apps running in a Premium plan use a file share to store content. The name of this content share is stored in the [`WEBSITE_CONTENTSHARE`](#website_contentshare) app setting and its connection string is stored in [`WEBSITE_CONTENTAZUREFILECONNECTIONSTRING`](#website_contentazurefileconnectionstring). To route traffic between your function app and content share through a virtual network, you must also set `vnetContentShareEnabled` to `true`. Enabling this site property is required for cross-stamp scaling when [restricting your storage account to a virtual network](configure-networking-how-to.md#restrict-your-storage-account-to-a-virtual-network) in the Elastic Premium and Dedicated hosting plans. Without this setting, the function app can only scale within a single stamp (approximately 1-20 instances).
 
 [!INCLUDE [functions-content-over-vnet-shared-storage-note](../../includes/functions-content-over-vnet-shared-storage-note.md)]
 
@@ -975,7 +976,7 @@ In the [Flex Consumption plan](./flex-consumption-plan.md), these site propertie
 | Setting/property | Reason | 
 | ----- | ----- | 
 | `ENABLE_ORYX_BUILD` |Replaced by the `remoteBuild` parameter when deploying in Flex Consumption|
-| `FUNCTIONS_EXTENSION_VERSION` |App Setting is set by the backend. A value of ~1 can be ignored. |
+| `FUNCTIONS_EXTENSION_VERSION` | App setting is managed by the platform and shouldn't be set manually. |
 | `FUNCTIONS_WORKER_RUNTIME` |Replaced by `name` in `properties.functionAppConfig.runtime`|
 | `FUNCTIONS_WORKER_RUNTIME_VERSION` |Replaced by `version` in `properties.functionAppConfig.runtime`|
 | `FUNCTIONS_MAX_HTTP_CONCURRENCY` |Replaced by scale and concurrency's trigger section|
@@ -993,6 +994,7 @@ In the [Flex Consumption plan](./flex-consumption-plan.md), these site propertie
 | `WEBSITE_VNET_ROUTE_ALL` |Not used for networking in Flex Consumption|
 | `properties.alwaysOn` |Not valid|
 | `properties.containerSize` |Renamed as `instanceMemoryMB`|
+| 'properties.dnsConfiguration.dnsServers'| DNS is inherited from the integrated virtual network in a Flex Consumption plan. |
 | `properties.ftpsState` | FTPS not supported | 
 | `properties.isReserved` |Not valid|
 | `properties.IsXenon` |Not valid|

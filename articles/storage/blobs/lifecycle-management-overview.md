@@ -5,7 +5,7 @@ description: Use Azure Blob Storage lifecycle management policies to create auto
 author: normesta
 
 ms.author: normesta
-ms.date: 06/13/2025
+ms.date: 09/15/2025
 ms.service: azure-blob-storage
 ms.topic: concept-article
 ms.custom: references_regions, engagement-fy23
@@ -85,11 +85,15 @@ For more information about pricing, see [Block Blob pricing](https://azure.micro
 
 - The delete action of a lifecycle management policy won't work with any blob in an immutable container. With an immutable policy, objects can be created and read, but not modified or deleted. For more information, see [Store business-critical blob data with immutable storage](./immutable-storage-overview.md).
 
+- The delete action of a lifecycle management policy won't work with any blob that is in a soft-deleted state. Lifecycle management policies that delete objects in a storage account with soft-delete enabled will put the object in a soft-deleted state that is retained for the duration of the soft-delete. See [Soft delete for blobs](./soft-delete-blob-overview.md). 
+
+- A delete action might fail if an Azure Storage Action attempts to delete the same blob. 
+
 - Lifecycle management doesn't affect system containers such as the `$logs` or `$web containers`.
 
 ## Frequently asked questions (FAQ)
 
-See [Lifecycle management FAQ](storage-blob-faq.yml#lifecycle-management-policies).
+See [Lifecycle management policy FAQ](lifecycle-management-policy-faq.md).
 
 ## Next steps
 

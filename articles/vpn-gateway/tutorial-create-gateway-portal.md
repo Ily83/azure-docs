@@ -2,11 +2,12 @@
 title: 'Tutorial – Create & manage a VPN gateway – Azure portal'
 titleSuffix: Azure VPN Gateway
 description: In this tutorial, learn how to create and manage an Azure VPN gateway by using the Azure portal.
-author: cherylmc
-ms.author: cherylmc
+author: duongau
+ms.author: duau
 ms.service: azure-vpn-gateway
 ms.topic: tutorial
 ms.date: 06/24/2025
+ms.custom: sfi-image-nochange
 
 # Customer intent: "As a network administrator, I want to create and manage a VPN gateway using the cloud portal, so that I can securely connect our on-premises resources to our virtual network."
 ---
@@ -35,13 +36,13 @@ In this tutorial, you learn how to:
 
 ## Prerequisites
 
-You need an Azure account with an active subscription. If you don't have one, [create one for free](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio).
+You need an Azure account with an active subscription. If you don't have one, [create one for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 ## <a name="CreateVNet"></a>Create a virtual network
 
 This article uses the Azure portal to create a virtual network. You can also use a different tool or method to create a virtual network. For more information or steps, see [Create a virtual network](../virtual-network/quick-create-portal.md). For this exercise, the virtual network doesn't require the configuration of additional services, such as [Azure Bastion](../bastion/bastion-overview.md) or [DDoS Protection](../ddos-protection/ddos-protection-overview.md). However, you can add these services if you want to use them.
 
-[!INCLUDE [Virtual network values](../../includes/vpn-gateway-virtual-network-values.md)]
+[!INCLUDE [Virtual network values](../networking/includes/vpn-gateway/virtual-network-values.md)]
 
 [!INCLUDE [Create a VNet](../../includes/vpn-gateway-virtual-network-steps.md)]
 

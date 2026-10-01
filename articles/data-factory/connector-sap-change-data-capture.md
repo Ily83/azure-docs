@@ -5,7 +5,7 @@ description: Learn how to transform data from an SAP ODP source by using mapping
 author: ukchrist
 ms.author: ulrichchrist
 ms.subservice: data-movement
-ms.topic: conceptual
+ms.topic: how-to
 ms.custom: synapse
 ms.date: 02/13/2025
 ---
@@ -13,6 +13,8 @@ ms.date: 02/13/2025
 # Transform data from an SAP ODP source using the SAP CDC connector in Azure Data Factory or Azure Synapse Analytics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article outlines how to use mapping data flow to transform data from an SAP ODP source using the SAP CDC connector. To learn more, read the introductory article for [Azure Data Factory](introduction.md) or [Azure Synapse Analytics](../synapse-analytics/overview-what-is.md). For an introduction to transforming data with Azure Data Factory and Azure Synapse analytics, read [mapping data flow](concepts-data-flow-overview.md) or the [tutorial on mapping data flow](tutorial-data-flow.md).
 

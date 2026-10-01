@@ -7,12 +7,14 @@ ms.service: azure-data-factory
 ms.subservice: data-movement
 ms.topic: concept-article
 ms.custom: references_regions
-ms.date: 07/14/2025
+ms.date: 11/19/2025
 ---
 
 # Guidance on using the Bring Your Own Driver (BYOD) approach
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article provides step-by-step guidance for using connectors with Bring Your Own Driver (BYOD) approach and upgrading from outdated V1 connectors to the latest V2 connectors in scenarios where the BYOD approach is required.
 
@@ -89,7 +91,6 @@ This article provides step-by-step guidance for using connectors with Bring Your
 
 ### Related connectors
 
-- [Amazon Redshift (version 2.0 (Preview))](connector-amazon-redshift.md)
 - [Netezza (version 2.0)](connector-netezza.md)
 - [Vertica (version 2.0)](connector-vertica.md)
 

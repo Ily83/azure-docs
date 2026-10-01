@@ -3,7 +3,7 @@ title: Run Bicep deployment script privately over a private endpoint
 description: Learn how to run Bicep deployment script privately over a private endpoint.
 ms.custom: devx-track-bicep
 ms.topic: how-to
-ms.date: 04/28/2025
+ms.date: 08/18/2026
 ---
 
 # Run Bicep deployment script privately over a private endpoint
@@ -27,6 +27,9 @@ To run deployment scripts privately, you need the following infrastructure as se
 - Create a user-assigned managed identity with `Storage File Data Privileged Contributor` permissions on the storage account and specify it in the `identity` property in the deployment script resource. To assign the identity, see [Identity](/azure/azure-resource-manager/bicep/deployment-script-develop#identity).
 - The ACI resource is created automatically by the deployment script resource.
 
+> [!IMPORTANT]
+> If you assign a managed identity with permissions that exceed the script's operational requirements, the script author is responsible for ensuring the storage account is protected from unintended access. Wherever possible, follow the principle of least privilege.
+
 The following Bicep file configures the infrastructure required for running a deployment script privately:
 
 ```bicep
@@ -43,12 +46,12 @@ var vnetAddressPrefix = '192.168.4.0/23'
 var subnetEndpointAddressPrefix = '192.168.4.0/24'
 var subnetACIAddressPrefix = '192.168.5.0/24'
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2024-11-30' = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2025-01-31-preview' = {
   name: userAssignedIdentityName
   location: location
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2025-06-01' = {
   name: storageAccountName
   kind: 'StorageV2'
   location: location
@@ -64,7 +67,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2024-01-01' = {
   }
 }
 
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
+resource privateEndpoint 'Microsoft.Network/privateEndpoints@2025-01-01' = {
    name: storageAccount.name
    location: location
    properties: {
@@ -129,7 +132,7 @@ resource privateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   }
 }
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-01-01' = {
   name: vnetName
   location: location
   properties:{

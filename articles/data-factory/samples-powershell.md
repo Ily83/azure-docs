@@ -5,13 +5,15 @@ ms.custom: devx-track-azurepowershell
 author: ssabat
 ms.author: susabat
 ms.reviewer: whhender
-ms.topic: conceptual
+ms.topic: reference
 ms.date: 05/15/2024
 ---
 
 # Azure PowerShell samples for Azure Data Factory
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 The following table includes links to sample Azure PowerShell scripts for Azure Data Factory.
 

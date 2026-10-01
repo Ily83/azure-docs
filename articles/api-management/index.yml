@@ -8,9 +8,9 @@ metadata:
   description: Learn how to use API Management to publish APIs to external, partner, and employee developers securely and at scale. Shows you how to create and manage modern API gateways for existing backend services hosted anywhere.
   ms.service: azure-api-management
   ms.topic: landing-page
-  author: dlepow
-  ms.author: danlep
-  ms.date: 07/23/2024
+  author: PatAltimore
+  ms.author: patricka
+  ms.date: 09/12/2025
 
 # linkListType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | sample | tutorial | video | whats-new
 
@@ -100,11 +100,17 @@ landingContent:
           - text: API Management policy reference
             url: api-management-policies.md
 # Card
-  - title: New content
+  - title: AI gateway
     linkLists:
+      - linkListType: concept
+        links:
+          - text: AI gateway capabilities
+            url: genai-gateway-capabilities.md
+          - text: Manage MCP servers
+            url: mcp-server-overview.md
       -  linkListType: how-to-guide
          links:
-          - text: Import Azure AI Foundry API
+          - text: Import Microsoft Foundry API
             url: azure-ai-foundry-api.md
           - text: Import Azure OpenAI API
             url: azure-openai-api-from-specification.md
@@ -112,14 +118,17 @@ landingContent:
             url: openai-compatible-llm-api.md
           - text: Expose REST API as MCP server
             url: export-rest-mcp-server.md
+# Card
+  - title: AI Gateway tier
+    linkLists:
       - linkListType: concept
         links:
-          - text: Premium v2 tier (preview)
-            url: v2-service-tiers-overview.md
-          - text: Workspaces
-            url: workspaces-overview.md
-          - text: AI gateway capabilities
-            url: genai-gateway-capabilities.md       
+          - text: AI Gateway tier overview
+            url: ai-gateway-overview.md
+      -  linkListType: get-started
+         links:
+          - text: Get started
+            url: quickstart-ai-gateway-create.md
 # Card
   - title: Related services
     linkLists:

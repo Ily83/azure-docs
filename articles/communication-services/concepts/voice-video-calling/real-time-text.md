@@ -5,11 +5,13 @@ description: This article describes Real Time Text (RTT) in Azure Communication 
 author: ahammer
 ms.date: 06/24/2025
 ms.author: adamhammer
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 # Real Time Text (RTT) overview
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 >[!NOTE]
 >RTT is an accessibility compliance requirement for voice and video platforms in the EU starting June 30, 2025. For more information, see [Directive 2019/882](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32019L0882).
@@ -50,7 +52,7 @@ The `RealTimeTextInfo` (or `RealTimeTextDetails` on certain platforms) class is 
 Developers can subscribe to RTT events through a single event subscription, allowing them to manage their own list and ordering of RTT messages. This approach aligns with the Captions API, facilitating easier integration and maintenance. The UI is responsible for binding the data to the screen, managing the display list, and handling text input interactions based on message finalization.
 
 >[!NOTE]
->RTT for PSTN or Teams Interop scenarios isn't available at this time.
+>RTT for PSTN scenarios isn't available at this time.
 
 ### Privacy Concerns
 

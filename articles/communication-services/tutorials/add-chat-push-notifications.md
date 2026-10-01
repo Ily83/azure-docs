@@ -9,9 +9,12 @@ ms.author: angellan
 ms.date: 09/14/2022
 ms.topic: tutorial
 ms.service: azure-communication-services
+ms.custom: sfi-image-nochange
 ---
 
 # Enable push notifications in your chat app
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes how to create push notifications in your iOS app by using the Azure Communication Services Chat SDK.
   

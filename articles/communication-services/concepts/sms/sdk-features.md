@@ -8,11 +8,13 @@ services: azure-communication-services
 
 ms.author: prakulka
 ms.date: 04/10/2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: sms
 ---
 # SMS SDK overview
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 [!INCLUDE [Regional Availability Notice](../../includes/regional-availability-include.md)]
 

@@ -2,10 +2,10 @@
 title: Add chat to your app
 titleSuffix: An Azure Communication Services article
 description: This article describes how to add Communication Services chat to your app.
-author: tophpalmer
+author: sundiraman
 manager: phans
 services: azure-communication-services
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 06/30/2021
 ms.topic: quickstart
 ms.service: azure-communication-services
@@ -15,6 +15,8 @@ ms.custom: mode-other, devx-track-azurecli, devx-track-extended-java, devx-track
 ---
 
 # Add Chat to your App
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Add real-time chat to your app using the Communication Services Chat SDK. This article describes how to use the Chat SDK to create chat threads that enable users to have conversations with one another. To learn more about Chat concepts, see [chat conceptual documentation](../../concepts/chat/concepts.md).
 

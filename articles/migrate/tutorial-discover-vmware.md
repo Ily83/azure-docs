@@ -4,7 +4,9 @@ description: Learn how to discover on-premises servers, applications, and depend
 author: Vikram1988
 ms.author: vibansa
 ms.manager: abhemraj
+ms.reviewer: v-gajeronika
 ms.topic: tutorial
+ms.update-cycle: 365-days
 ms.date: 05/12/2025
 ms.service: azure-migrate
 ms.custom: vmware-scenario-422, mvc, subject-rbac-steps, engagement-fy24
@@ -13,9 +15,9 @@ ms.custom: vmware-scenario-422, mvc, subject-rbac-steps, engagement-fy24
 
 # Tutorial: Discover servers running in a VMware environment with Azure Migrate
 
-As part of your migration journey to Azure, you discover your on-premises inventory and workloads.
+As part of your migration journey to Azure, you discover your on-premises or Azure VMware Solution (AVS) inventory and workloads.
 
-This tutorial shows you how to discover the servers that are running in your VMware environment by using the Azure Migrate: Discovery and assessment tool, a lightweight Azure Migrate appliance. You deploy the appliance as a server running in your vCenter Server instance, to continuously discover servers and their performance metadata, applications that are running on servers, server dependencies, web apps, and SQL Server instances and databases.
+This tutorial shows you how to discover the servers that are running in your on-premises or AVS environments by using the **Azure Migrate: Discovery and assessment** tool, a lightweight Azure Migrate appliance. You deploy the appliance as a server running in your vCenter Server instance, to continuously discover servers and their performance metadata, applications that are running on servers, server dependencies, web apps, and SQL Server instances and databases.
 
 In this tutorial, you learn how to:
 
@@ -26,61 +28,40 @@ In this tutorial, you learn how to:
 > * Set up the Azure Migrate appliance.
 > * Start continuous discovery.
 
+If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/free-trial/) before you begin.
+
+Watch the following video to learn how to discover on-premises servers running in a VMware environment as part of your migration to Azure. 
+
+> [!VIDEO https://learn-video.azurefd.net/vod/player?id=edbc7f22-2ba1-44cd-a534-465dfd426a14]
+
 > [!NOTE]
 > Tutorials show you the quickest path for trying out a scenario. They use default options where possible. This scenario is also applicable for discovery of VM servers from AVS.
 
-If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/free-trial/) before you begin.
-
 ## Prerequisites
 
-Before you begin this tutorial, check that you have these prerequisites in place:
+Before you begin this tutorial, check that you have these prerequisites:
 
 Requirement | Details
 --- | ---
-**vCenter Server/ESXi host** | You need a server running vCenter Server version 8.0, 7.0, 6.7, 6.5, 6.0, or 5.5.<br /><br /> Servers must be hosted on an ESXi host running version 5.5 or later.<br /><br /> On the vCenter Server, allow inbound connections on TCP port 443 so that the appliance can collect configuration and performance metadata.<br /><br /> The appliance connects to vCenter Server on port 443 by default. If the server running vCenter Server listens on a different port, you can modify the port when you provide the vCenter Server details in the appliance configuration manager.<br /><br /> On the ESXi hosts, ensure that inbound access is allowed on TCP port 443 for discovery of installed applications and for agentless dependency analysis on servers.
+**vCenter Server/ESXi host** | You need a server running vCenter Server version [!INCLUDE [vmware-discovery-supported-versions](includes/vmware-discovery-supported-versions.md)].<br /><br /> Servers must be hosted on an ESXi host running version 5.5 or later.<br /><br /> On the vCenter Server, allow inbound connections on TCP port 443 so that the appliance can collect configuration and performance metadata.<br /><br /> The appliance connects to vCenter Server on port 443 by default. If the server running vCenter Server listens on a different port, you can modify the port when you provide the vCenter Server details in the appliance configuration manager.<br /><br /> On the ESXi hosts, ensure that inbound access is allowed on TCP port 443 for discovery of installed applications and for agentless dependency analysis on servers.
 **Azure Migrate appliance** | vCenter Server must have these resources to allocate to a server that hosts the Azure Migrate appliance:<br /><br /> - 32 GB of RAM, 8 vCPUs, and approximately 80 GB of disk storage.<br /><br /> - An external virtual switch and internet access on the appliance server, directly or via a proxy.
-**Servers** | All Windows and Linux OS versions are supported for discovery of configuration and performance metadata. <br /><br /> For application discovery on servers, all Windows and Linux OS versions are supported. Check the [OS versions supported for agentless dependency analysis](migrate-support-matrix-vmware.md#dependency-analysis-requirements-agent-based) <br /><br /> For discovery of installed applications and for agentless dependency analysis, VMware Tools (version 10.2.1 or later) must be installed and running on servers. Windows servers must have PowerShell version 2.0 or later installed.<br /><br /> For Linux servers, SSH key-based authentication supports discovery of configuration and performance data, installed applications, agentless dependency analysis, and workload discovery. <br /><br > To discover Linux servers using SSH key-based authentication, the appliance needs a direct connection to the target servers. <br /><br /> To discover SQL Server instances and databases, check [supported SQL Server and Windows OS versions and editions](migrate-support-matrix-vmware.md#sql-server-instance-and-database-discovery-requirements) and Windows authentication mechanisms.<br /><br /> To discover ASP.NET web apps running on IIS web server, check [supported Windows OS and IIS versions](migrate-support-matrix-vmware.md).<br /><br />  To discover Java web apps running on Apache Tomcat web server, check [supported Linux OS and Tomcat versions](migrate-support-matrix-vmware.md#web-apps-discovery-requirements). 
+**Servers** | All Windows and Linux OS versions are supported for discovery of configuration and performance metadata. <br /><br /> For application discovery on servers, all Windows and Linux OS versions are supported. Check the [OS versions supported for agentless dependency analysis](migrate-support-matrix-vmware.md) <br /><br /> For discovery of installed applications and for agentless dependency analysis, VMware Tools (version 10.2.1 or later) must be installed and running on servers. Windows servers must have PowerShell version 2.0 or later installed.<br /><br /> For Linux servers, SSH key-based authentication supports discovery of configuration and performance data, installed applications, agentless dependency analysis, and workload discovery. <br /><br > To discover Linux servers using SSH key-based authentication, the appliance needs a direct connection to the target servers. <br /><br /> To discover SQL Server instances and databases, check [supported SQL Server and Windows OS versions and editions](migrate-support-matrix-vmware.md#sql-server-instance-and-database-discovery-requirements) and Windows authentication mechanisms.<br /><br /> To discover ASP.NET web apps running on IIS web server, check [supported Windows OS and IIS versions](migrate-support-matrix-vmware.md).<br /><br />  To discover Java web apps running on Apache Tomcat web server, check [supported Linux OS and Tomcat versions](migrate-support-matrix-vmware.md#web-apps-discovery-requirements). 
 **SQL Server access** | To discover SQL Server instances and databases, the Windows account, or SQL Server account [requires these permissions](migrate-support-matrix-vmware.md#sql-server-instance-and-database-discovery-requirements) for each SQL Server instance. You can use the [account provisioning utility](least-privilege-credentials.md) to create custom accounts or use any existing account that is a member of the sysadmin server role for simplicity.
+**Supported NSX version** | You need VMware NSX-T version 3.2, 4.0, 4.1, or 4.2 to discover NSX networking constructs.
+**NSX Manager permissions** | The NSX Manager account used for discovery must have read-only permissions to access the networking constructs required for discovery.
+**Connectivity to NSX Manager** | Ensure that the Azure Migrate appliance can communicate with the NSX Manager endpoint. The NSX Manager endpoint must be reachable from the appliance.
 
 ## Prepare an Azure user account
 
-To create a project and register the Azure Migrate appliance, you must have an Azure account that has these permissions:
+Refer to [this article](prepare-azure-accounts.md) to prepare Azure accounts.
 
-- Contributor or Owner permissions in the Azure subscription.
-- Permissions to register Microsoft Entra apps.
-- Owner or Contributor and User Access Administrator permissions at subscription level to create an instance of Azure Key Vault, which is used during agentless server migration.
-
-If you created a free Azure account, by default, you're the owner of the Azure subscription. If you're not the subscription owner, work with the owner to assign permissions.
-
-To set Contributor or Owner permissions in the Azure subscription:
-
-1. In the Azure portal, search for **Subscriptions**. Under **Services** in the search results, select **Subscriptions**.
-
-    :::image type="content" source="./media/tutorial-discover-vmware/search-subscription.png" alt-text="Screenshot that shows how to search for an Azure subscription in the search box.":::
-
-1. In **Subscriptions**, select the subscription in which you want to create a project. 
-1. Select **Access control (IAM)**. 
-1. Select **Add** > **Add role assignment** to open the **Add role assignment** page.
-1. Assign the following role. For detailed steps, see [Assign Azure roles using the Azure portal](/azure/role-based-access-control/role-assignments-list-portal).
-
-
-
-    | Setting | Value |
-    | --- | --- |
-    | Role | Contributor or Owner |
-    | Assign access to | User |
-    | Members | azmigrateuser |
-
-    :::image type="content" source="~/reusable-content/ce-skilling/azure/media/role-based-access-control/add-role-assignment-page.png" alt-text="Add role assignment page in Azure portal.":::
-
-    To give the account the required permissions to register Microsoft Entra apps:
-
-1. In the portal, go to **Microsoft Entra ID** > **Users**. 
-1. Request the tenant or global admin to assign the [Application Developer role](../active-directory/roles/permissions-reference.md#application-developer) to the account to allow Microsoft Entra app registration by users. [Learn more](../active-directory/roles/manage-roles-portal.md#assign-a-role).
+>[!IMPORTANT]
+> Ensure the Azure user account has the required Azure Migrate built-in roles to create projects, register appliances, and access discovery results. To understand the minimum role requirements, see [Azure Migrate built‑in roles](prepare-azure-accounts.md).
 
 ## Prepare VMware
+You can skip this step if you are discovering VMs from your Azure VMware Solution environment. You should be able to use your [AVS CloudAdmin account](/azure/azure-vmware/architecture-identity#vcenter-server-access-and-identity) to discover and assess servers.
 
-On vCenter Server, check that your account has [permissions](migrate-support-matrix-vmware-migration.md#vmware-vsphere-requirements-agentless) to create a VM by using a VMware Open Virtualization Appliance (OVA) virtual machine (VM) installation file. You must have these [permissions](migrate-support-matrix-vmware-migration.md#vmware-vsphere-requirements-agentless) when you deploy the Azure Migrate appliance as a VMware VM by using an OVA file.
+On your on-premises vCenter Server, check that your account has [permissions](migrate-support-matrix-vmware-migration.md#vmware-vsphere-requirements-agentless) to create a VM by using a VMware Open Virtualization Appliance (OVA) virtual machine (VM) installation file. You must have these [permissions](migrate-support-matrix-vmware-migration.md#vmware-vsphere-requirements-agentless) when you deploy the Azure Migrate appliance as a VMware VM by using an OVA file.
 
 Azure Migrate must have a vCenter Server read-only account to discover and assess servers running in your VMware environment. If you also want to run discovery of installed applications and agentless dependency analysis, the account must have [permissions](migrate-support-matrix-vmware-migration.md#vmware-vsphere-requirements-agentless) enabled in VMware for VM guest operations.
 
@@ -101,17 +82,17 @@ In VMware vSphere Web Client, set up a read-only account to use for vCenter Serv
 > [!NOTE]
 > - For vCenter Server 7.x and above you must clone the Read Only system role and add the Guest Operations Privileges to the cloned role.  Assign the cloned role to the vCenter Account. Learn how to [create a custom role in VMware vCenter](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.security.doc/GUID-41E5E52E-A95B-4E81-9724-6AD6800BEF78.html). 
 > - You can scope the vCenter Server account to limit discovery to specific vCenter Server datacenters, clusters, hosts, folders of clusters or hosts, or individual servers. Learn how to [scope the vCenter Server user account](set-discovery-scope.md).
-> - vCenter assets connected via Linked-Mode to the vCenter server specified for discovery will not be discovered by Azure Migrate.
+> - vCenter assets connected via Linked-Mode to the vCenter server specified for discovery won't be discovered by Azure Migrate.
 
 ### Create an account to access servers
 
 > [!NOTE]
-> Lightweight Directory Access Protocol (LDAP) accounts are not supported for discovery.
+> Lightweight Directory Access Protocol (LDAP) accounts aren't supported for discovery.
 
 Refer to security best practices to set up user accounts. 
 
 > [!NOTE]
-> You can add multiple server credentials in the Azure Migrate appliance configuration manager to initiate discovery of installed applications, agentless dependency analysis, and discovery of web apps, and SQL Server instances and databases. You can add multiple domain, Windows (non-domain), Linux (non-domain), Linux (SSH-key) or SQL Server authentication credentials. Learn how to [add server credentials](add-server-credentials.md).
+> You can add multiple server credentials in the Azure Migrate appliance configuration manager to initiate discovery of installed applications, agentless dependency analysis, and discovery of web apps, and SQL Server instances and databases. You can add multiple domains, Windows (non-domain), Linux (non-domain), Linux (SSH-key), or SQL Server authentication credentials. Learn how to [add server credentials](add-server-credentials.md).
 
 ## Set up a project
 
@@ -124,8 +105,11 @@ To set up a new project:
 1. In **Create project**, select your Azure subscription and resource group. Create a resource group if you don't have one.
 1. In **Project Details**, specify the project name and the geography where you want to create the project. Review [supported geographies for public clouds](supported-geographies.md#public-cloud) and [supported geographies for government clouds](supported-geographies.md#azure-government).
 
-    > [!Note]
-    > Use the **Advanced** configuration section to create an Azure Migrate project with private endpoint connectivity. [Learn more](discover-and-assess-using-private-endpoints.md#create-a-project-with-private-endpoint-connectivity).
+> [!NOTE]
+> Network assessments are supported only in the geographies listed in [supported geographies](supported-geographies.md#network-assessment). Ensure that your Azure Migrate project is created in one of the supported metadata locations before creating a network assessment.
+ 
+> [!NOTE]
+> Use the **Advanced** configuration section to create an Azure Migrate project with private endpoint connectivity. [Learn more](discover-and-assess-using-private-endpoints.md#create-a-project-with-private-endpoint-connectivity).
 
 1. Select **Create**.
 1. Wait a few minutes for the project to deploy. The **Azure Migrate: Discovery and assessment** tool is added by default to the new project.
@@ -135,7 +119,7 @@ To set up a new project:
 
 ## Set up the appliance
 
-The Azure Migrate: Discovery and assessment tool uses a lightweight Azure Migrate appliance. The appliance completes server discovery and sends server configuration and performance metadata to Azure Migrate. Set up the appliance by deploying an OVA template that can be downloaded from the project.
+The **Azure Migrate: Discovery and assessment** tool uses a lightweight Azure Migrate appliance. The appliance completes server discovery and sends server configuration and performance metadata to Azure Migrate. Set up the appliance by deploying an OVA template that can be downloaded from the project.
 
 > [!NOTE]
 > If you can't set up the appliance by using the OVA template, you can set it up by running a PowerShell script on an existing server running Windows Server 2019 or Windows Server 2022. Learn how to [use PowerShell to set up an Azure Migrate appliance](deploy-appliance-script.md#set-up-the-appliance-for-vmware). <br/>
@@ -146,7 +130,7 @@ The Azure Migrate: Discovery and assessment tool uses a lightweight Azure Migrat
 To set up the appliance by using an OVA template, complete these steps, which are described in more detail in this section:
 
 1. Provide an appliance name and generate a project key in the portal.
-1. Download an OVA template file, and then import it to vCenter Server. Verify that the OVA is secure.
+1. Download an OVA template file and then import it to vCenter Server. Verify that the OVA is secure.
 1. Create the appliance from the OVA file. Verify that the appliance can connect to Azure Migrate.
 1. Configure the appliance for the first time. 
 1. Register the appliance with the project by using the project key.
@@ -177,7 +161,7 @@ Import the downloaded file, and then create a server in the VMware environment:
 1. In **Host/Cluster**, select the host or cluster on which the server will run.
 1. In **Storage**, select the storage destination for the server.
 1. In **Disk Format**, select the disk type and size.
-1. In **Network Mapping**, select the network the server will connect to. The network requires internet connectivity to send metadata to Azure Migrate.
+1. In **Network Mapping**, select the network the server connects to. The network requires internet connectivity to send metadata to Azure Migrate.
 1. Review and confirm the settings, and then select **Finish**.
 
 #### Verify appliance access to Azure
@@ -195,7 +179,7 @@ To set up the appliance for the first time:
 1. Select or enter the language, time zone, and password for the appliance.
 1. Open a browser on any computer that can connect to the appliance. Then, open the URL of the appliance configuration manager: `https://appliance name or IP address: 44368`.
 
-     Or, you can open the configuration manager from the appliance server desktop by selecting the shortcut for the configuration manager.
+     Or you can go to the configuration manager from the appliance server desktop by selecting the shortcut for the configuration manager.
 1. Accept the license terms and read the third-party information.
 
 #### Set up prerequisites and register the appliance
@@ -211,9 +195,9 @@ In the configuration manager, select **Set up prerequisites**, and then complete
 1. **Install updates and register appliance**: To run auto-update and register the appliance, follow these steps:
 
     :::image type="content" source="./media/tutorial-discover-vmware/prerequisites.png" alt-text="Screenshot that shows setting up the prerequisites in the appliance configuration manager.":::
-1. For the appliance to run auto-update, paste the project key that you copied from the portal. If you don't have the key, go to **Azure Migrate: Discovery and assessment** > **Overview** > **Manage existing appliances**. Select the appliance name you provided when you generated the project key, and then copy the key that's shown.
-1. The appliance will verify the key and start the auto-update service, which updates all the services on the appliance to their latest versions. When the auto-update has run, you can select **View appliance services** to see the status and versions of the services running on the appliance server.
-1. To register the appliance, you need to select **Login**. In **Continue with Azure Login**, select **Copy code & Login** to copy the device code (you must have a device code to authenticate with Azure) and open an Azure sign in prompt in a new browser tab. Ensure you've disabled the pop-up blocker in the browser to see the prompt.
+1. For the appliance to run auto-update, paste the project key that you copied from the portal. If you don't have the key, go to **Azure Migrate: Discovery and assessment** > **Overview** > **Manage existing appliances**. Select the appliance name you provided when you generated the project key and then copy the key that's shown.
+1. The appliance verifies the key and start the auto-update service, which updates all the services on the appliance to their latest versions. When the auto-update has run, you can select **View appliance services** to see the status and versions of the services running on the appliance server.
+1. To register the appliance, you need to select **Login**. In **Continue with Azure Login**, select **Copy code & Login** to copy the device code (you must have a device code to authenticate with Azure) and go to an Azure sign in prompt in a new browser tab. Ensure you've disabled the pop-up blocker in the browser to see the prompt.
 
     :::image type="content" source="./media/tutorial-discover-vmware/device-code.png" alt-text="Screenshot that shows where to copy the device code and sign in."::: 
 
@@ -226,7 +210,7 @@ In the configuration manager, select **Set up prerequisites**, and then complete
 
     After the appliance is successfully registered, to see the registration details, select **View details**. 
 
-1. **Install the VDDK**: The appliance checks if the VMware vSphere Virtual Disk Development Kit (VDDK) is installed. Download VDDK version 8.0 from the [Broadcom Developer portal](https://developer.broadcom.com/sdks/vmware-virtual-disk-development-kit-vddk/8.0). After downloading, extract the zip file to the default location: C:\Program Files\VMware\VMware Virtual Disk Development Kit, as mentioned in the installation instructions.
+1. [!INCLUDE [vmware-vddk-download](includes/vmware-vddk-download.md)]
 
 The Migration and modernization tool uses the VDDK to replicate servers during migration to Azure.
 
@@ -240,19 +224,74 @@ Complete the setup steps in the appliance configuration manager to prepare for a
 
 The appliance must connect to vCenter Server to discover the configuration and performance data of the servers:
 
-1. In **Step 1: Provide vCenter Server credentials**, select **Add credentials** to enter a name for the credentials. Add the username and password for the vCenter Server account that the appliance will use to discover servers running on vCenter Server.
-    - You should have set up an account with the required permissions as described earlier in this article.
-    - If you want to scope discovery to specific VMware objects (vCenter Server datacenters, clusters, hosts, folders of clusters or hosts, or individual servers), review the instructions to [set discovery scope](set-discovery-scope.md) to restrict the account that Azure Migrate uses.
-    - If you want to add multiple credentials at once, select **Add more** to save and add more credentials. Multiple credentials are supported for discovery of servers across multiple vCenter Servers using a single appliance.
-1. In **Step 2: Provide vCenter Server details**, select **Add discovery source** to add the IP address or FQDN of a vCenter Server. You can leave the port as the default (443) or specify a custom port on which vCenter Server listens. Select the friendly name for credentials you would like to map to the vCenter Server and select **Save**.
+1. In **Step 1: Provide vCenter Server credentials**, select **Add credentials** to enter a name for the credentials. Add the username and password for the vCenter Server account that the appliance uses to discover servers running on vCenter Server.
 
-    Select **Add more** to save the previous details and add more vCenter Server details. **You can add up to 10 vCenter Servers per appliance.**
+   - Set up an account with the required permissions as described earlier in this article. If you're discovering your AVS environment, use the CloudAdmin account in this step.
+   - To scope discovery to specific VMware objects (vCenter Server datacenters, clusters, hosts, folders of clusters or hosts, or individual servers), review the instructions to [set discovery scope](set-discovery-scope.md) to restrict the account that Azure Migrate uses.
+   - To add multiple credentials at once, select **Add more** to save and add more credentials. The appliance supports multiple credentials for discovery of servers across multiple vCenter Servers. 
+   - Complete this step only if your environment uses VMware NSX. Otherwise, skip to the next step.
 
-:::image type="content" source="./media/tutorial-discover-vmware/add-discovery-source.png" alt-text="Screenshot that allows to add more vCenter Server details.":::
-1. The appliance attempts to validate the connection to the vCenter Server(s) added by using the credentials mapped to each vCenter Server. It displays the validation status with the vCenter Server(s) IP address or FQDN in the sources table. 
-1. You can *revalidate* the connectivity to the vCenter Server(s) anytime before starting discovery.
+1. To add the **NSX credentials**, follow these steps:
 
-:::image type="content" source="./media/tutorial-discover-vmware/appliance-manage-sources.png" alt-text="Screenshot that shows managing credentials and discovery sources for vCenter Server in the appliance configuration manager.":::
+    To discover networking resources from VMware environments that use NSX, the appliance must connect to the NSX Manager.  
+
+    :::image type="content" source="./media/tutorial-discover-vmware/add-credentials.png" alt-text="Screenshot that shows to add the credentials." lightbox="./media/tutorial-discover-vmware/add-credentials.png":::
+
+1. Select **Add credentials**.
+1. In **Source type**, select **NSX Manager**.
+1. Enter a **Friendly name** for the credentials.
+1. Enter the **NSX Manager** username and password.
+1. Select **Save**.
+
+    >[!NOTE]
+    > NSX credentials are used for network discovery and are different from server credentials. Server credentials are used for software inventory and dependency analysis, whereas NSX credentials are used to discover networking resources from VMware environments that use NSX.
+
+1. In **Step 2: Provide vCenter Server details**, select **Add discovery source** to add the IP address or FQDN of a vCenter Server. You can leave the port as the default (443) or specify a custom port on which vCenter Server listens. Select the friendly name for credentials you want to map to the vCenter Server and select **Save**.
+1. Select **Add more** to save the previous details and add more vCenter Server details. **You can add up to 10 vCenter Servers per appliance.**
+
+    :::image type="content" source="./media/tutorial-discover-vmware/add-discovery-source.png" alt-text="Screenshot that allows to add more vCenter Server details.":::
+
+**Validate connectivity**:
+
+- The appliance attempts to validate the connection to the vCenter Servers you added by using the credentials you mapped to each vCenter Server. It displays the validation status with the vCenter Servers IP address or FQDN in the sources table. 
+- You can *revalidate* the connectivity to the vCenter Servers anytime before starting discovery.
+
+    :::image type="content" source="./media/tutorial-discover-vmware/appliance-manage-sources.png" alt-text="Screenshot that shows managing credentials and discovery sources for vCenter Server in the appliance configuration manager.":::
+
+To add the **NSX Manager**, details, enter the information for the NSX Manager that Azure Migrate uses to discover networking resources.
+
+  :::image type="content" source="./media/tutorial-discover-vmware/add-manager-discovery-source.png" alt-text="Screenshot that shows to add NSX Manager details that is used to discover networking resources." lightbox="./media/tutorial-discover-vmware/add-manager-discovery-source.png":::
+
+To configure an NSX Manager discovery source, follow these steps:
+
+1. In **Discovery source**, select **NSX Manager**.
+1. Enter the **IP Address/FQDN** of the NSX Manager.
+1. Enter the **HTTPS port**. Use the default port (443) unless the NSX Manager is configured to use a different port.
+1. In **Map credentials** select the NSX credentials that you want to associate with the NSX Manager.
+1. Select **Save**.
+1. To add another NSX Manager, select **Add more**.
+
+**Validate connectivity**:  After you add the NSX Manager details, Azure Migrate validates the connection to each NSX Manager by using the associated credentials.
+
+1. Azure Migrate validates connectivity to each NSX Manager and displays the validation status in the Sources table.
+1. You can **Revalidate** connectivity at any time before starting discovery.
+1. Add vCenter Server and NSX Manager as discovery sources and verify that discovery is initiated.
+
+    :::image type="content" source="./media/tutorial-discover-vmware/manager.png" alt-text="Screenshot that shows to add NSX Manager details." lightbox="./media/tutorial-discover-vmware/manager.png":::
+
+After you enable NSX discovery, Azure Migrate can discover networking resources including: 
+
+- NSX segments 
+- VMware port groups 
+- Tier-0 gateways 
+- Tier-1 gateways 
+- Load balancers and backend pools 
+- Firewall policies and firewall rules 
+- NAT policies 
+- NS groups 
+- Port groups 
+
+Use these networking constructs to enrich inventory and dependency views.
 
 ### Provide server credentials
 
@@ -321,6 +360,7 @@ To start vCenter Server discovery, select **Start discovery**. After the discove
 * Discovery of installed applications might take longer than 15 minutes. The duration depends on the number of discovered servers. For 500 servers, it takes approximately one hour for the discovered inventory to appear in the Azure Migrate project in the portal.
 * [Software inventory](how-to-discover-applications.md) identifies web server role existing on discovered servers. If a server is found to have web server role enabled, Azure Migrate will perform web apps discovery on the server. Web apps configuration data is updated once every 24 hours.
 * During software inventory, the added server credentials are iterated against servers and validated for agentless dependency analysis. When the discovery of servers is finished, in the portal, you can enable agentless dependency analysis on the servers. Only the servers on which validation succeeds can be selected to enable [agentless dependency analysis](how-to-create-group-machine-dependencies-agentless.md).
+* Along with software inventory, pending updates for Windows and Linux servers are gathered. No additional permissions are required for identifying pending updates. Software and pending updates metadata is processed further to generate [Insights](/azure/migrate/insights-overview) that provides security risks in the datacenter.
 * Web apps and SQL Server instances and databases data begin to appear in the portal within 24 hours after you start discovery.
 * By default, Azure Migrate uses the most secure way of connecting to SQL instances that is, Azure Migrate encrypts communication between the Azure Migrate appliance and the source SQL Server instances by setting the TrustServerCertificate property to `true`. Additionally, the transport layer uses TLS to encrypt the channel and bypass the certificate chain to validate trust. Hence, the appliance server must be set up to trust the certificate's root authority. However, you can modify the connection settings, by selecting **Edit SQL Server connection properties** on the appliance. [Learn more](/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine) to understand what to choose.
 
@@ -353,7 +393,7 @@ To view the remaining duration until end of support, that is, the number of mont
 ## Onboard to Azure Local (optional)
 
 > [!Note]
-> Perform this step only if you are migrating to [Azure Local](/azure-stack/hci/overview).
+> Perform this step only if you're migrating to [Azure Local](/azure-stack/hci/overview).
 Provide the Azure Stack cluster information and the credentials to connect to the cluster. For more information, see [Download the Azure Local software](/azure-stack/hci/deploy/download-azure-stack-hci-software).
 
 

@@ -1,13 +1,15 @@
 ---
-author: dlepow
+author: PatAltimore
 ms.service: azure-api-management
 ms.topic: include
-ms.date: 08/04/2025
-ms.author: danlep
+ms.date: 01/16/2026
+ms.collection: ce-skilling-ai-copilot
+ms.update-cycle: 180-days
+ms.author: patricka
 ---
 ## Configure policies for the MCP server
 
-Configure one or more API Management [policies](../articles/api-management/api-management-howto-policies.md) to help manage the MCP server. The policies are applied to all API operations exposed as tools in the MCP server and can be used to control access, authentication, and other aspects of the tools.
+Configure one or more API Management [policies](../articles/api-management/api-management-howto-policies.md) to help manage the MCP server. The policies apply to all API operations exposed as tools in the MCP server. Use these policies to control access, authentication, and other aspects of the tools.
 
 Learn more about configuring policies:
 
@@ -17,28 +19,39 @@ Learn more about configuring policies:
 * [Secure access to MCP server](../articles/api-management/secure-mcp-servers.md)
 
 > [!CAUTION]
-> Do not access the response body using the `context.Response.Body` variable within MCP server policies. Doing so triggers response buffering, which interferes with the streaming behavior required by MCP servers and may cause them to malfunction.
+> Don't access the response body by using the `context.Response.Body` variable within MCP server policies. Doing so triggers response buffering, which interferes with the streaming behavior required by MCP servers and might cause them to malfunction.
 
-To configure policies for the MCP server: 
+To configure policies for the MCP server, follow these steps: 
 
-1. In the [Azure portal](https://portal.azure.com), navigate to your API Management instance.
+1. In the [Azure portal](https://portal.azure.com), go to your API Management instance.
 1. In the left-hand menu, under **APIs**, select **MCP Servers**.
 1. Select an MCP server from the list.
 1. In the left menu, under **MCP**, select **Policies**.
-1. In the policy editor, add or edit the policies you want to apply to the MCP server's tools. The policies are defined in XML format. For example, you can add a policy to limit calls to the MCP server's tools (in this example, 5 calls per 30 seconds per client IP address).
+1. In the policy editor, add or edit the policies you want to apply to the MCP server's tools. Define the policies in XML format. 
+
+    For example, you can add policies to the Inbound section to limit calls to the MCP server's tools (in this example, 5 calls per 30 seconds per IP address) and to add a custom trace of the agent ID of the caller.
 
     ```xml
-    <rate-limit-by-key calls="5" renewal-period="30" counter-key="@(context.Request.IpAddress)" remaining-calls-variable-name="remainingCallsPerIP" />
+    <inbound>
+        <base />
+        <rate-limit-by-key calls="5" renewal-period="30" counter-key="@(context.Request.IpAddress)" remaining-calls-variable-name="remainingCallsPerIP" />
+		<trace source="My MCP" severity="information">
+			<message>My MCP trace info</message>
+			<metadata name="agent-id" value="@(context.Request.Headers.GetValueOrDefault("agent-id", "n/a"))" />
+    </inbound>
     ```
 
-    :::image type="content" source="../articles/api-management/media/export-rest-mcp-server/mcp-server-policies-small.png" alt-text="Screenshot of the policy editor for an MCP server." lightbox="../articles/api-management/media/export-rest-mcp-server/mcp-server-policies.png":::
+    :::image type="content" source="../articles/api-management/media/export-rest-mcp-server/mcp-server-policies.png" alt-text="Screenshot of the policy editor for an MCP server." lightbox="../articles/api-management/media/export-rest-mcp-server/mcp-server-policies.png":::
+
+> [!NOTE]
+> API Management evaluates policies configured at the global (all APIs) scope before it evaluates policies at the MCP server scope.
 
 ## Validate and use the MCP server
 
 Use a compliant LLM agent (such as GitHub Copilot, Semantic Kernel, or Copilot Studio) or a test client (such as `curl`) to call the API Management-hosted MCP endpoint. Ensure that the request includes appropriate headers or tokens, and confirm successful routing and response from the MCP server.
 
 > [!TIP]
-> If you use the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) to test an MCP server managed by API Management, we recommend using version 0.9.0.
+> If you use the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) to test an MCP server managed by API Management, use version 0.9.0.
 
 ### Add the MCP server in Visual Studio Code
 
@@ -48,7 +61,7 @@ To add the MCP server in Visual Studio Code:
 
 1. Use the **MCP: Add Server** command from the Command Palette. 
 1. When prompted, select the server type: **HTTP (HTTP or Server Sent Events)**.
-1. Enter the **Server URL** of the MCP server in API Management. Example: `https://<apim-service-name>.azure-api.net/<api-name>-mcp/mcp` (for MCP endpoint)
+1. Enter the **Server URL** of the MCP server in API Management. For example, `https://<apim-service-name>.azure-api.net/<api-name>-mcp/mcp` for the MCP endpoint.
 1. Enter a **Server ID** of your choice.
 1. Select whether to save the configuration to your **workspace settings** or **user settings**. 
     * **Workspace settings** - The server configuration is saved to a `.vscode/mcp.json` file only available in the current workspace.
@@ -57,7 +70,7 @@ To add the MCP server in Visual Studio Code:
 
     :::image type="content" source="../articles/api-management/media/export-rest-mcp-server/mcp-servers-visual-studio-code.png" alt-text="Screenshot of MCP servers configured in Visual Studio Code.":::
         
-Add fields to the JSON configuration for settings such as authentication header. The following example shows the configuration for an API Management subscription key passed in a header as in input value. Learn more about the [configuration format](https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_configuration-format)   
+Add fields to the JSON configuration for settings such as authentication header. The following example shows the configuration for an API Management subscription key passed in a header as an input value. Learn more about the [configuration format](https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_configuration-format)   
 
 :::image type="content" source="../articles/api-management/media/export-rest-mcp-server/mcp-server-with-header-visual-studio-code.png" alt-text="Screenshot of authentication header configuration for an MCP server":::
 
@@ -69,7 +82,7 @@ After adding an MCP server in Visual Studio Code, you can use tools in agent mod
 
     :::image type="content" source="../articles/api-management/media/export-rest-mcp-server/tools-button-visual-studio-code.png" alt-text="Screenshot of Tools button in chat.":::
 
-1. Select one or more tools from the MCP server to be available in the chat.
+1. Select one or more tools from the MCP server to make available in the chat.
 
     :::image type="content" source="../articles/api-management/media/export-rest-mcp-server/select-tools-visual-studio-code.png" alt-text="Screenshot of selecting tools in Visual Studio Code.":::
 
@@ -87,7 +100,7 @@ After adding an MCP server in Visual Studio Code, you can use tools in agent mod
 
 | **Problem**                                | **Cause**                                 | **Solution**                                           |
 |-------------------------------------------|-------------------------------------------|--------------------------------------------------------|
-| `401 Unauthorized` error from backend           | Authorization header not forwarded        | Use `set-header` policy to manually attach token         |
+| `401 Unauthorized` error from backend           | Authorization header not forwarded        | If necessary, use `set-header` policy to manually attach token         |
 | API call works in API Management but fails in agent | Incorrect base URL or missing token       | Double-check security policies and endpoint            |
 | MCP server streaming fails when diagnostic logs are enabled | Logging of response body or accessing response body through policy interferes with MCP transport        | Disable response body logging at the All APIs scope - see [Prerequisites](#prerequisites) |
 

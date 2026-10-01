@@ -8,11 +8,13 @@ services: azure-communication-services
 
 ms.author: tchladek
 ms.date: 12/01/2021
-ms.topic: conceptual
+ms.topic: feature-guide
 ms.service: azure-communication-services
 ms.subservice: teams-interop
 ---
 # Teams meeting support for Teams user in Calling SDK
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 The Azure Communication Services Calling SDK enables Microsoft 365 users to join and participate in voice and video meeting experiences. This page provides detailed descriptions of Teams meeting features. To get started right away, check out [Calling quickstarts](../../../quickstarts/voice-video-calling/get-started-with-voice-video-calling-custom-teams-client.md). 
 

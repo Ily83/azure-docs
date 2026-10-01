@@ -10,9 +10,9 @@ metadata:
   description: Site reliability engineering is an engineering discipline devoted to helping an organization sustainably achieve the appropriate level of reliability in their systems, services, and products.
   ms.service: site-reliability-engineering
   ms.topic: hub-page
-  author: dnblankedelman
-  ms.author: dnb
-  ms.date: 02/18/2020
+  author: orin-thomas
+  ms.author: orthomas
+  ms.date: 06/18/2026
 
 # highlightedContent section (optional)
 # Maximum of 8 items
@@ -169,7 +169,7 @@ conceptualContent:
         - url: /azure/terraform/
           itemType: get-started
           text: Terraform on Azure
-        - url: https://help.github.com/actions
+        - url: https://docs.github.com/en/actions
           itemType: get-started
           text: GitHub Actions
 

@@ -2,8 +2,8 @@
 title: Show call transcription state on the client
 titleSuffix: An Azure Communication Services article
 description: Use Azure Communication Services SDKs to display the call transcription state
-author: tophpalmer
-ms.author: chpalm
+author: sundiraman
+ms.author: sundraman
 ms.service: azure-communication-services
 ms.subservice: calling
 ms.topic: how-to 
@@ -14,11 +14,13 @@ zone_pivot_groups: acs-plat-web-ios-android-windows
 
 # Show call transcription state on the client
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 You need to collect consent from all participants in the call before you can transcribe them. Microsoft Teams enables users to start transcription in the meetings or calls. You receive an event when transcription starts. You can check the transcription state if transcription started before you joined the call or meeting. You can provide explicit consent to transcription if a meeting or call requires it, and you already collected it.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). 
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). 
 - A deployed Communication Services resource. [Create a Communication Services resource](../../quickstarts/create-communication-resource.md).
 - A user access token to enable the calling client. For more information, see [Create and manage access tokens](../../quickstarts/identity/access-tokens.md).
 - Optional: Complete the quickstart to [add voice calling to your application](../../quickstarts/voice-video-calling/getting-started-with-calling.md)

@@ -1,13 +1,11 @@
 ---
 title: Monitoring Data Reference for Azure API Management
 description: This article contains important reference material you need when you monitor Azure API Management by using Azure Monitor.
-ms.date: 05/14/2025
+ms.date: 09/05/2025
 ms.custom:
   - horz-monitor
   - build-2025
 ms.topic: reference
-author: dlepow
-ms.author: danlep
 ms.service: azure-api-management
 ---
 
@@ -23,7 +21,10 @@ See [Monitor API Management](monitor-api-management.md) for details on the data 
 
 ### Supported metrics for Microsoft.ApiManagement/service
 
-The following table lists the metrics available for the Microsoft.ApiManagement/service resource type.
+The following tables list the metrics available for the Microsoft.ApiManagement/service resource type.
+
+> [!NOTE]
+> Event Hubs event metrics are currently unavailable for API Management v2 tiers.
 
 [!INCLUDE [horz-monitor-ref-metrics-tableheader](~/reusable-content/ce-skilling/azure/includes/azure-monitor/horizontals/horz-monitor-ref-metrics-tableheader.md)]
 

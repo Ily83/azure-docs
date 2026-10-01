@@ -3,16 +3,16 @@ title: Include file
 description: Include file
 ms.service: azure-backup
 ms.topic: include
-ms.date: 02/18/2025
-author: jyothisuri
-ms.author: jsuri
+ms.date: 01/22/2026
+author: AbhishekMallick-MS
+ms.author: v-mallicka
 ---
 
 ## Run an on-demand backup
 
 To trigger an on-demand backup (that's not in the schedule specified in the policy) for the database, follow these steps:
 
-1. Go to **Business Continuity Center** > **Protection inventory** > **Protected items**, and then select the **Datasource type** as **Azure Database for PostgreSQL flexible servers** to view the protected items.
+1. Go to **Resiliency** > **Protection inventory** > **Protected items**, and then select the **Datasource type** as **Azure Database for PostgreSQL flexible servers** to view the protected items.
 
    :::image type="content" source="./media/postgresql-flexible-server-on-demand-backup/filter-datasource-type.png" alt-text="screenshot shows the selection of datasource type." lightbox="./media/postgresql-flexible-server-on-demand-backup/filter-datasource-type.png":::
 

@@ -1,15 +1,17 @@
 ---
-title: Migrate to Azure Files using RoboCopy
+title: Migrate to Azure Files Using RoboCopy
 description: Learn how to move or migrate files to an SMB Azure file share using RoboCopy.
 author: khdownie
 ms.service: azure-file-storage
 ms.topic: how-to
-ms.date: 07/14/2025
+ms.date: 12/19/2025
 ms.author: kendownie
 # Customer intent: As an IT administrator, I want to migrate files to Azure file shares using RoboCopy, so that I can ensure data integrity and minimize downtime during the transition to cloud storage.
 ---
 
 # Use RoboCopy to migrate to Azure file shares
+
+**Applies to:** :heavy_check_mark: SMB file shares
 
 This migration article describes the use of RoboCopy to move or migrate files to an SMB Azure file share. RoboCopy is a trusted and well-known file copy utility with a feature set that makes it well suited for migrations. It uses the SMB protocol, which makes it broadly applicable to any source and target combination that supports SMB.
 
@@ -21,32 +23,20 @@ This migration article describes the use of RoboCopy to move or migrate files to
 > [!IMPORTANT]
 > There are many different migration routes for different source and deployment combinations. Before completing the steps in this article, make sure you've read the [migration overview](storage-files-migration-overview.md), determined that RoboCopy is the tool that best suits your needs, and deployed the necessary Azure storage resources for the migration.
 
-## Applies to
-
-| File share type | SMB | NFS |
-|-|:-:|:-:|
-| Standard file shares (GPv2), LRS/ZRS | ![Yes](../media/icons/yes-icon.png) | ![No](../media/icons/no-icon.png) |
-| Standard file shares (GPv2), GRS/GZRS | ![Yes](../media/icons/yes-icon.png) | ![No](../media/icons/no-icon.png) |
-| Premium file shares (FileStorage), LRS/ZRS | ![Yes](../media/icons/yes-icon.png) | ![No](../media/icons/no-icon.png) |
-
 ## AzCopy vs. RoboCopy
 
-AzCopy and RoboCopy are two fundamentally different file copy tools. RoboCopy uses any version of the SMB protocol. AzCopy is a "born-in-the-cloud" tool that can be used to move data as long as the target is in Azure storage. AzCopy depends on a REST protocol.
+AzCopy and RoboCopy are fundamentally different tools. RoboCopy uses SMB and copies files in full fidelity, making it well-suited for migrations. See [migration basics](storage-files-migration-overview.md#migration-basics) for more information on file fidelity. AzCopy is a cloud-native tool that uses REST.
 
-RoboCopy, as a trusted, Windows-based copy tool, has the home-turf advantage when it comes to copying files at full fidelity. RoboCopy supports many migration scenarios due to its rich set of features and the ability to copy files and folders in full fidelity. Check out the [file fidelity section in the migration overview article](storage-files-migration-overview.md#migration-basics) to learn more about the importance of copying files at maximum possible fidelity.
-
-AzCopy, on the other hand, has only recently expanded to support file copy with some fidelity and added the first features needed to be considered as a migration tool. However, there are still gaps, and there can easily be misunderstandings of functionality when comparing AzCopy flags to RoboCopy flags.
-
-An example: *RoboCopy /MIR* will mirror source to target - that means added, changed, and deleted files are considered. An important difference in using *AzCopy -sync* is that deleted files on the source aren't removed on the target. That makes for an incomplete differential-copy feature set. AzCopy will continue to evolve. At this time, we don't recommend using AzCopy for migration scenarios with Azure file shares as the target.
+The key behavioral difference: *RoboCopy /MIR* mirrors source to target. It handles added, changed, and deleted files. *AzCopy sync* doesn't remove files deleted on the source from the target, making it incomplete for migration scenarios. For this reason, don't use AzCopy for migration scenarios with Azure file shares as the target.
 
 ## Mount the Azure file share
 
 Before you can use RoboCopy, you need to make the Azure file share accessible over SMB. The easiest way is to mount the share as a local network drive to the Windows Server you're planning on using for RoboCopy.
 
 > [!IMPORTANT]
-> Mount the Azure file share using the storage account access key. Don't use a domain identity.
+> Mount the Azure file share with [admin-level access](storage-files-identity-configure-file-level-permissions.md#mount-the-file-share-with-admin-level-access): either with identity-based access with admin-level Azure RBAC roles (recommended) or with storage account key (less secure).
 
-Once you're ready, review [Use an Azure file share with Windows](storage-how-to-use-files-windows.md). Then mount the Azure file share you want to start the RoboCopy for.
+Review [Use an Azure file share with Windows](storage-how-to-use-files-windows.md), then mount the SMB Azure file share you want to start the RoboCopy for.
 
 ## Use RoboCopy to copy files to Azure file share
 
@@ -75,13 +65,21 @@ robocopy <SourcePath> <Dest.Path> /MT:20 /R:2 /W:1 /B /MIR /IT /COPY:DATSO /DCOP
 | `/Z`                  | **Use cautiously** </br>Copies files in restart mode. This switch is recommended only in an unstable network environment. It significantly reduces copy performance because of extra logging. |
 | `/ZB`                 | **Use cautiously** </br>Uses restart mode. If access is denied, this option uses backup mode. This option significantly reduces copy performance because of checkpointing. |
 
+RoboCopy might report that files were copied even when no data transfer was necessary. This behavior occurs because robocopy evaluates both file data and metadata changes when producing its output.
+
+To correctly interpret the results, review the file status in the command output:
+- Newer: File data is copied to the destination.
+- Modified: Only metadata is updated; file data isn't recopied.
+
+In both cases, RoboCopy might report byte counts as though data was transferred. This behavior can lead to confusion when validating copy operations.
+
 > [!IMPORTANT]
 > We recommend using a Windows Server 2022 or newer. When using a Windows Server 2019, ensure at the latest patch level or at least [OS update KB5005103](https://support.microsoft.com/topic/august-26-2021-kb5005103-os-build-18363-1766-preview-4e23362c-5e43-4d8f-95e5-9fdade60605f) is installed. It contains important fixes for certain Robocopy scenarios.
 
 > [!TIP]
 > [Check out the Troubleshooting section](#troubleshoot-and-optimize) if RoboCopy is impacting your production environment, reports lots of errors, or isn't progressing as fast as expected.
 
-## User cut-over
+## Complete the migration cutover
 
 When you run the RoboCopy command for the first time, your users and applications are still accessing files on the source of your migration and potentially changing them. It's possible that RoboCopy has processed a directory, moved on to the next, and then a user on the source location adds, changes, or deletes a file that will now not be processed in this current RoboCopy run. This behavior is expected.
 
@@ -110,7 +108,7 @@ Speed and success rate of a given RoboCopy run will depend on several factors:
 
 ### IOPS and bandwidth considerations
 
-In this category, you need to consider abilities of the **source storage**, the **target storage**, and the **network** connecting them. The maximum possible throughput is determined by the slowest of these three components. Make sure your network infrastructure is configured to support optimal transfer speeds to its best abilities.
+In this category, consider the **source storage**, the **target storage**, and the **network** connecting them. The slowest of these three components determines the maximum possible throughput.
 
 > [!CAUTION]
 > While copying as fast as possible is often most desirable, consider the utilization of your local network and NAS appliance for other, often business-critical tasks.
@@ -129,20 +127,20 @@ A similar line of thought applies to the IOPS observed on the NAS. The cluster s
 
 ### Processing speed
 
-RoboCopy will traverse the namespace it's pointed to and evaluate each file and folder for copy. Every file will be evaluated during an initial copy and during catch-up copies. For example, repeated runs of RoboCopy /MIR against the same source and target storage locations. These repeated runs are useful to minimize downtime for users and apps, and to improve the overall success rate of files migrated.
+RoboCopy traverses the namespace you specify and evaluates each file and folder for copy, both during the initial run and on every subsequent catch-up run. These repeated runs minimize downtime and improve the overall success rate of migrated files.
 
-We often default to considering bandwidth as the most limiting factor in a migration - and that can be true. But the ability to enumerate a namespace can influence the total time to copy even more for larger namespaces with smaller files. Consider that copying 1 TiB of small files will take considerably longer than copying 1 TiB of fewer but larger files, assuming that all other variables remain the same. Therefore, you may experience slow transfer if you're migrating a large number of small files. This is an expected behavior.
+Bandwidth isn't always the most limiting factor. For large namespaces with many small files, namespace enumeration speed can have a greater impact on total copy time than throughput. Copying 1 TiB of small files takes considerably longer than copying 1 TiB of larger files. This difference is expected.
 
-The cause for this difference is the processing power needed to walk through a namespace. RoboCopy supports multi-threaded copies through the `/MT:n` parameter where **n** stands for the number of threads to be used. So when provisioning a machine specifically for RoboCopy, consider the number of processor cores and their relationship to the thread count they provide. Most common are two threads per core. The core and thread count of a machine is an important data point to decide what multi-thread values `/MT:n` you should specify. Also consider how many RoboCopy jobs you plan to run in parallel on a given machine.
+RoboCopy supports multithreaded copies through the `/MT:n` option, where **n** stands for the number of threads to use. When provisioning a machine for RoboCopy, consider the number of processor cores (most CPUs provide two threads per core) and how many RoboCopy jobs you plan to run in parallel.
 
-More threads will copy our 1 TiB example of small files considerably faster than fewer threads. At the same time, the extra resource investment on our 1 TiB of larger files may not yield proportional benefits. A high thread count will attempt to copy more of the large files over the network simultaneously. This extra network activity increases the probability of getting constrained by throughput or storage IOPS.
+More threads copy small files considerably faster, but they might not provide proportional benefits for large files. A high thread count for large files increases the probability of throughput or IOPS constraints.
 
-During a first RoboCopy into an empty target or a differential run with lots of changed files, you're likely constrained by your network throughput. Start with a high thread count for an initial run. A high thread count, even beyond your currently available threads on the machine, helps saturate the available network bandwidth. Subsequent /MIR runs are progressively impacted by processing items. Fewer changes in a differential run mean less transport of data over the network. Your speed is now more dependent on your ability to process namespace items than to move them over the network link. For subsequent runs, match your thread count value to your processor core count and thread count per core. Consider if cores need to be reserved for other tasks a production server may have.
+For an initial RoboCopy run, use a high thread count to saturate available network bandwidth. For subsequent `/MIR` runs with fewer changes, processing speed becomes the bottleneck, so match your thread count to your processor core count. Consider whether cores need to be reserved for other tasks on a production server.
 
 > [!TIP]
 > Rule of thumb: The first RoboCopy run (that will move a lot of data of a higher-latency network) benefits from over-provisioning the thread count (`/MT:n`). Subsequent runs will copy fewer differences, and you're more likely to shift from network throughput constrained to compute constrained. Under these circumstances, it's often better to match the RoboCopy thread count to the actually available threads on the machine. Over-provisioning in that scenario can lead to more context shifts in the processor, possibly slowing down your copy.
 
-### Avoid unnecessary work
+### Avoid namespace changes during migration
 
 Avoid large-scale changes in your namespace, such as moving files between directories, changing properties at a large scale, or changing directory and file-level permissions (NTFS ACLs). Especially ACL changes can have a high impact because they often have a cascading change effect on files lower in the folder hierarchy. Consequences can be:
 
@@ -158,17 +156,21 @@ You should be prepared to run multiple rounds of RoboCopy against a given namesp
 
 `/R:5 /W:5` is a reasonable setting that you can adjust to your liking. In this example, a failed file will be retried five times, with five-second wait time between retries. If the file still fails to copy, the next RoboCopy job will try again. Often files that failed because they are in use or because of timeout issues might eventually be copied successfully this way.
 
+### Use Robocopy to copy files from an Azure Files snapshot to a local drive
+
+You can use Robocopy to copy files and folders from a snapshot view of an SMB Azure file share back to a local drive. For more information, see [Copying data back to a local drive from share snapshot](storage-snapshots-files.md#copying-data-back-to-a-local-drive-from-share-snapshot).
+
 ### Estimating storage transaction charges
 
 As you begin your migration to Azure Files, RoboCopy copies your files and folders into Azure. Depending on your billing model for Azure Files, transaction charges might apply. See [Understanding billing](understanding-billing.md).
 
-If you're using a pay-as-you-go billing model for standard Azure file shares, it might be difficult to estimate the number of transactions your migration will generate.
+If your HDD (standard) Azure file shares use the pay-as-you-go billing model, it might be difficult to estimate the number of transactions your migration will generate.
 
 - It's not possible to estimate the number of transactions based on the utilized storage capacity of the source. The number of transactions scales with the number of namespace items (files and folder) and their properties that are migrated, not their size. For example, more transactions are required to migrate 1 GiB of small files than 1 GiB of larger files.
-- In order to minimize downtime, you might need to run copy operations several times from source to target. All source and target items are processed during each copy operation, though subsequent runs finish faster. After the initial operations, only the differences introduced between copy runs are transported over the network. It's important to understand that although less data is being transported, the number of transactions required might remain the same.
-- Copying the same file twice might not result in the same number of transactions. Processing an item migrated in a previous copy run might result in only a few read transactions. In contrast, changes to metadata or content between copy runs might require a larger number of transactions to update the target. Each file in your namespace might have unique requirements, resulting in a different number of transactions.
+- To minimize downtime, you might need to run copy operations several times from source to target. Each copy operation processes all source and target items, though subsequent runs finish faster. After the initial operations, only the differences introduced between copy runs are transported over the network. It's important to understand that although less data is being transported, the number of transactions required might remain the same.
+- Copying the same file twice might not result in the same number of transactions. Processing an item migrated in a previous copy run might result in only a few read transactions. In contrast, changes to metadata or content between copy runs might require a larger number of transactions to update the target.
 
-It's advisable to run some initial tests on your own data to better understand how many transactions are incurred. This will give you a better idea of the total number of transactions a file migration might generate.
+Run some initial tests on your own data to better understand how many transactions a file migration generates.
 
 ## Next steps
 

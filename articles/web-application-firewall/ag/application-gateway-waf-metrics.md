@@ -17,6 +17,8 @@ ms.custom:
 
 # Azure Web Application Firewall Monitoring and Logging
 
+**Applies to:** :heavy_check_mark: Application Gateway
+
 Azure Web Application Firewall (WAF) monitoring and logging are provided through logging and integration with Azure Monitor and Azure Monitor logs.
 
 ## Azure Monitor
@@ -47,7 +49,7 @@ New WAF metrics are only available for Core Rule Set 3.2 or greater, or with bot
 
 <sup>2</sup> Rule name for custom rules and Rule ID for the Bot Manager Rule Set.
 
-<sup>3</sup> Application Gateway for Containers WAF does not support JavaScript challenge in preview.
+<sup>3</sup> Application Gateway for Containers WAF does not support JavaScript challenge.
 
 For metrics supported by Application Gateway V2 SKU, see [Application Gateway v2 metrics](../../application-gateway/application-gateway-metrics.md#metrics-supported-by-application-gateway-v2-sku)
 

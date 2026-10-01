@@ -14,6 +14,8 @@ ms.subservice: advanced-messaging
 
 # Register WhatsApp Business Account
 
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
+
 Get started with the Azure Communication Services Advanced Messaging, which extends messaging to users on WhatsApp. This feature enables your organization to send and receive messages with WhatsApp users using a WhatsApp Business Account. The Advanced Communication Messages SDK extends your communications to interact with the large global WhatsApp community for common scenarios:
 
 - Receive inquiries from your customers for product feedback or support, price quotes, and reschedule appointments.
@@ -28,7 +30,7 @@ This article describes how to register a WhatsApp Business Account with Azure Co
 ## Prerequisites
 
 - [Azure Communication Services resource](../../create-communication-resource.md)
-- [Set-up Event Grid viewer](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/)
+- [Set-up Event Grid viewer](/azure/event-grid/)
 - [Set-up Event subscription for SMS received and SMS delivery events.](../../telephony/get-phone-number.md?tabs=windows&pivots=platform-azp)
 - [Facebook account](https://www.facebook.com/index.php)
 - Phone number using [Azure Communication Services phone number](../..//telephony/get-phone-number.md?tabs=windows&pivots=platform-azp) **or** bring your own phone number with the given capabilities:

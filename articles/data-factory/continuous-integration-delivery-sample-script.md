@@ -5,7 +5,7 @@ ms.subservice: ci-cd
 author: kromerm
 ms.author: makromer
 ms.reviewer: whhender
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 01/29/2025
 ms.custom: devx-track-azurepowershell
 ---
@@ -13,6 +13,8 @@ ms.custom: devx-track-azurepowershell
 # Sample pre- and post-deployment script
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 The following sample demonstrates how to use a pre- and post-deployment script with continuous integration and delivery in Azure Data Factory.
 

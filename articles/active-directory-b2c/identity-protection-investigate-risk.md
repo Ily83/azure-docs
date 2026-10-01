@@ -9,12 +9,15 @@ ms.author: godonnell
 author: garrodonnell
 manager: CelesteDG
 zone_pivot_groups: b2c-policy-type
+ms.custom: sfi-image-nochange
 
 #Customer Intent: As an Azure AD B2C administrator, I want to investigate and mitigate identity-based risks using Identity Protection, so that I can identify at-risk users, view risk detections, and take appropriate actions to secure the Azure AD B2C tenant.
 
 ---
 
 # Investigate risk with Identity Protection in Azure AD B2C
+
+[!INCLUDE [active-directory-b2c-identity-protection-retirement](../../includes/active-directory-b2c-identity-protection-retirement.md)]
 
 [!INCLUDE [active-directory-b2c-end-of-sale-notice-b](../../includes/active-directory-b2c-end-of-sale-notice-b.md)]
 

@@ -6,13 +6,14 @@ description: Learn how to integrate with SendGrid to customize the verification 
 author: kengaderdus
 manager: CelesteDG
 
-ms.service: azure-active-directory
+ms.service: entra-id
 
 ms.topic: how-to
 ms.date: 02/21/2025
 ms.author: kengaderdus
 ms.subservice: b2c
 zone_pivot_groups: b2c-policy-type
+ms.custom: sfi-image-nochange
 
 
 #Customer intent: As a developer using Azure Active Directory B2C, I want to send customized email to users that sign up for my applications using a third-party email provider like SendGrid, so that I can use my own email template and address and support localization and custom one-time password settings.

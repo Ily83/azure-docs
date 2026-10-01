@@ -2,8 +2,10 @@
 title: 'Troubleshoot error: Azure Functions Runtime is unreachable'
 description: Learn how to troubleshoot an invalid storage account. It describes various causes for a specific runtime error.
 ms.topic: article
-ms.custom: linux-related-content
 ms.date: 05/07/2025
+ms.custom:
+  - linux-related-content
+  - sfi-ropc-nochange
 ---
 
 # Troubleshoot error: "Azure Functions Runtime is unreachable"
@@ -66,7 +68,7 @@ To verify the quota in the [Azure portal](https://portal.azure.com), select **Pl
 
 > "The Function App has reached daily usage quota and has been stopped until the next 24 hours time frame."
 
-To resolve this issue, remove or increase the daily quota, and then restart your app. Otherwise, the execution of your app is blocked until the next day.
+To resolve this issue, reset the quota to zero or increase the daily quota, and then restart your app. Otherwise, the execution of your app is blocked until the next day.
 
 ## App is behind a firewall
 

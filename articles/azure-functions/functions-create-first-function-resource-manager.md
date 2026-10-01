@@ -4,7 +4,7 @@ description: Create and deploy to Azure a simple HTTP triggered serverless funct
 ms.date: 03/17/2025
 ms.topic: quickstart
 ms.service: azure-functions
-zone_pivot_groups: programming-languages-set-functions
+zone_pivot_groups: programming-languages-set-functions-no-go
 ms.custom: subject-armqs, mode-arm, devx-track-arm-template
 ---
 
@@ -26,7 +26,7 @@ After you create the function app, you can deploy your Azure Functions project c
 
 ### Azure account 
 
-Before you begin, you must have an Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/).
+Before you begin, you must have an Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 ## Review the template
 
@@ -95,7 +95,7 @@ read -p "Enter a supported Azure region: " location &&
 resourceGroupName=exampleRG &&
 templateUri="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.web/function-app-flex-managed-identities/azuredeploy.json" &&
 az group create --name $resourceGroupName --location "$location" &&
-az deployment group create --resource-group $resourceGroupName --template-uri  $templateUri --parameters functionAppRuntime=powerShell functionAppRuntimeVersion=7.4 &&
+az deployment group create --resource-group $resourceGroupName --template-uri  $templateUri --parameters functionAppRuntime=powerShell functionAppRuntimeVersion=7.6 &&
 echo "Press [ENTER] to continue ..." &&
 read
 ```
@@ -157,11 +157,12 @@ $location = Read-Host -Prompt "Enter a supported Azure region"
 $templateUri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.web/function-app-flex-managed-identities/azuredeploy.json"
 
 New-AzResourceGroup -Name $resourceGroupName -Location "$location"
-New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateUri $templateUri -functionAppRuntime "powershell" -functionAppRuntimeVersion "7.4"
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateUri $templateUri -functionAppRuntime "powershell" -functionAppRuntimeVersion "7.6"
 
 Read-Host -Prompt "Press [ENTER] to continue ..."
 ```
 ::: zone-end  
+
 
 ---
 

@@ -3,6 +3,7 @@ title: Tutorial - Back up Windows Server to Azure
 description: This tutorial details backing up on-premises Windows Servers to a Recovery Services vault.
 ms.topic: tutorial
 ms.date: 05/22/2025
+ms.update-cycle: 1095-days
 ms.custom: mvc, engagement-fy23
 ms.service: azure-backup
 author: AbhishekMallick-MS
@@ -84,7 +85,7 @@ To configure backup and retention on the server where you downloaded the agent, 
 
 2. On the Recovery Services agent console, select **Schedule Backup** under the **Actions Pane**.
 
-    ![Screenshot shows tbe Schedule Backup option.](./media/tutorial-backup-windows-server-to-azure/mars-schedule-backup.png)
+    ![Screenshot shows the Schedule Backup option.](./media/tutorial-backup-windows-server-to-azure/mars-schedule-backup.png)
 
 3. Select **Next** to go to the **Select Items to Back up** pane.
 

@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: mkhribech
 ms.date: 04/25/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: data
 ---
 
 # End of call survey 
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 > [!NOTE]
 > End of Call Survey is currently supported only for our JavaScript / Web SDK.

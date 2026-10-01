@@ -2,18 +2,20 @@
 title: Data residency and user privacy for Azure Communication Services
 titleSuffix: An Azure Communication Services article
 description: This article describes data residency and privacy related matters on Azure Communication Services.
-author: tophpalmer
+author: sundiraman
 manager: anvalent
 services: azure-communication-services
 
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 03/07/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.custom: references_regions
 ---
 
 # Data residency and user privacy
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Azure Communication Services is committed to helping our customers meet their privacy and personal data requirements. As a developer using Communication Services with a direct relationship with humans using the application, you're potentially a controller of their data. Since Azure Communication Services is storing and encrypting this data at rest on your behalf, we're most likely a processor of this data. This page summarizes how the service retains data and how you can identify, export, and delete this data.
 
@@ -69,7 +71,7 @@ You can use the Azure portal or Azure Resource Manager APIs with Azure Communica
 
 ### Telephone number management
 
-Azure Communication Services maintains a directory of phone numbers associated with a Communication Services resource. Use [Phone Number Administration APIs](/rest/api/communication/phonenumbers) to retrieve phone numbers and delete them:
+Azure Communication Services maintains a directory of phone numbers associated with a Communication Services resource. Use [Phone Number Administration APIs](/rest/api/communication/phonenumbers/phone-numbers) to retrieve phone numbers and delete them:
 
 - `Get All Phone Numbers`
 - `Release Phone Number`
@@ -125,4 +127,4 @@ Azure Communication Services feed into Azure Monitor logging data for understand
 
 - [Azure Data Subject Requests for the GDPR and CCPA](/microsoft-365/compliance/gdpr-dsr-azure).
 - [Microsoft Trust Center](https://www.microsoft.com/trust-center/privacy/data-location).
-- [Azure Interactive Map - Where is my customer data?](https://infrastructuremap.microsoft.com/).
+- [Azure Interactive Map - Where is my customer data?](https://infrastructuremap.microsoft.com/)

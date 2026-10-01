@@ -5,12 +5,13 @@ description: Migrate user accounts from another identity provider to Azure AD B2
 
 author: kengaderdus
 manager: CelesteDG
-ms.service: azure-active-directory
+ms.service: entra-id
 
 ms.topic: how-to
 ms.date: 01/11/2024
 ms.author: kengaderdus
 ms.subservice: b2c
+ms.custom: sfi-image-nochange
 
 
 #Customer intent: As an IT admin migrating user accounts to Azure AD B2C, I want to understand the different migration methods (pre migration and seamless migration), so that I can choose the appropriate approach and write the necessary application or script using the Microsoft Graph API.

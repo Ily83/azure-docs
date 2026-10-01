@@ -6,10 +6,11 @@ ms.author: dobett
 ms.topic: tutorial
 ms.custom:
   - ignite-2023
-ms.date: 04/30/2025
+ms.date: 07/16/2026
 
 #CustomerIntent: As an OT user, I want to send my OPC UA data to the cloud so that I can derive insights from it by using a tool such as Real-Time Dashboards.
 ms.service: azure-iot-operations
+ms.subservice: azure-data-flows
 ---
 
 # Tutorial: Send messages from assets to the cloud using a data flow
@@ -66,7 +67,7 @@ To create an Event Hubs namespace and an event hub, run the following Azure CLI 
 # [Bash](#tab/bash)
 
 ```bash
-az eventhubs namespace create --name ${CLUSTER_NAME:0:24} --resource-group $RESOURCE_GROUP --disable-local-auth true
+az eventhubs namespace create --name ${CLUSTER_NAME:0:24} --resource-group $RESOURCE_GROUP
 
 az eventhubs eventhub create --name destinationeh --resource-group $RESOURCE_GROUP --namespace-name ${CLUSTER_NAME:0:24} --retention-time 1 --partition-count 1 --cleanup-policy Delete
 ```
@@ -74,7 +75,7 @@ az eventhubs eventhub create --name destinationeh --resource-group $RESOURCE_GRO
 # [PowerShell](#tab/powershell)
 
 ```powershell
-az eventhubs namespace create --name $CLUSTER_NAME.Substring(0, [MATH]::Min($CLUSTER_NAME.Length, 24)) --resource-group $RESOURCE_GROUP --disable-local-auth true
+az eventhubs namespace create --name $CLUSTER_NAME.Substring(0, [MATH]::Min($CLUSTER_NAME.Length, 24)) --resource-group $RESOURCE_GROUP
 
 az eventhubs eventhub create --name destinationeh --resource-group $RESOURCE_GROUP --namespace-name $CLUSTER_NAME.Substring(0, [MATH]::Min($CLUSTER_NAME.Length, 24)) --retention-time 1 --partition-count 1 --cleanup-policy Delete
 ```
@@ -109,7 +110,7 @@ az role assignment create --role "Azure Event Hubs Data Sender" --assignee $PRIN
 
 Use the operations experience web UI to create and configure a data flow in your cluster that:
 
-- Renames the `temperature` field in the incoming message to `TemperatureF`.
+- Renames the `temperature` field in the incoming message to `ThermostatTemperatureF`.
 - Adds a field called `AssetId` that contains the name of the asset.
 - Forwards the transformed messages from the MQTT topic to the event hub you created.
 
@@ -133,9 +134,9 @@ To create the data flow:
 
     :::image type="content" source="media/tutorial-upload-messages-to-cloud/new-dataflow.png" alt-text="Screenshot of the data flows page.":::
 
-1. In the data flow editor, select **Select source**. Then select the thermostat asset you created previously and select **Apply**.
+1. In the data flow editor, select **Select source**. Then select the thermostat asset you created previously and select **Proceed**.
 
-1. In the data flow editor, select **Select data flow endpoint**. Then select the **event-hubs-target** endpoint you created previously and select **Proceed**.
+1. In the data flow editor, select **Select destination**. Then select the **event-hubs-target** endpoint you created previously and select **Proceed**.
 
 1. On the next page, enter *destinationeh* as the topic. The topic refers to the hub you created in the Event Hubs namespace. Select **Apply**. Your data flow now has the thermostat asset as its source and a hub in your Event Hubs namespace as its destination.
 

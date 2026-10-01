@@ -4,12 +4,14 @@ description: Support for government clouds for Azure Communication Chat service
 author: kperla97
 ms.author: kaperla
 ms.date: 12/01/2023
-ms.topic: conceptual
+ms.topic: feature-availability
 ms.service: azure-communication-services
 ms.subservice: chat
 ---
 
 # Chat support for government clouds
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Developers can build a chat application in government cloud for real-time text communications. 
 

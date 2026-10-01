@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: amagginetti
 ms.date: 02/04/2025
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 # Call diagnostics log schema
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 
 Call diagnostics logs provide important information about the endpoints and the media transfers for each participant. They also provide measurements that help you understand quality problems.

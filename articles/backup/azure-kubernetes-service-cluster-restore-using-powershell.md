@@ -3,7 +3,7 @@ title: Restore Azure Kubernetes Service (AKS) via PowerShell using Azure Backup
 description: This article explains how to restore backed-up Azure Kubernetes Service (AKS) using Azure PowerShell.
 ms.topic: how-to
 ms.service: azure-backup
-ms.date: 01/30/2025
+ms.date: 01/07/2026
 ms.custom:
   - devx-track-azurepowershell
   - ignite-2023
@@ -34,7 +34,7 @@ Before you restore an AKS cluster, ensure that you meet the following prerequisi
 
 For more information on the limitations and supported scenarios, see the [support matrix](azure-kubernetes-service-cluster-backup-support-matrix.md).
 
-## Initialize Variables for Resource Commands
+## Initialize Variables for Resource Commands for AKS cluster restore
 
 Here, provide the necessary details for each resource to be used in your commands.
 
@@ -113,7 +113,7 @@ To prepare the restore request, run the following cmdlets:
     $aksRestoreRequest = Initialize-AzDataProtectionRestoreRequest -DatasourceType AzureKubernetesService  -SourceDataStore OperationalStore -RestoreLocation $restoreLocation -RestoreType AlternateLocation -TargetResourceId $targetAKSClusterId -RecoveryPoint $rp[0].Property.RecoveryPointId -RestoreConfiguration $aksRestoreCriteria -BackupInstance $AllInstances[2]
     ```
 
-## Trigger the restore
+## Trigger the restore for AKS cluster
 
 To trigger the restore operation, run the following cmdlets:
 
@@ -125,10 +125,10 @@ To trigger the restore operation, run the following cmdlets:
 
    >[!Note]
    >During the restore operation, the Backup vault and the AKS cluster need to have certain roles assigned to perform the restore:
-
-   - *Target AKS* cluster should have *Contributor* role on the *Snapshot Resource Group*.
-   - The *User Identity* attached with the Backup Extension should have *Storage Account Contributor* roles on the *storage account* where backups are stored. 
-   - The *Backup vault* should have a *Reader* role on the *Target AKS cluster* and *Snapshot Resource Group*.
+   >
+   > - *Target AKS* cluster should have *Contributor* role on the *Snapshot Resource Group*.
+   > - The *User Identity* attached with the Backup Extension should have *Storage Blob Data Contributor* roles on the *storage account* where backups are stored in case of Operational Tier and on the *staging storage account* in case of Vault Tier. 
+   > - The *Backup vault* should have a *Reader* role on the *Target AKS cluster* and *Snapshot Resource Group*.
 
 2. To trigger the restore operation with the request prepared earlier by using the `Start-AzDataProtectionBackupInstanceRestore` cmdlet.
 
@@ -136,7 +136,10 @@ To trigger the restore operation, run the following cmdlets:
     $restoreJob = Start-AzDataProtectionBackupInstanceRestore -SubscriptionId $vaultSubId  -ResourceGroupName $vaultRgName -VaultName $vaultName -BackupInstanceName $AllInstances[2].BackupInstanceName -Parameter $aksRestoreRequest
     ```
 
-## Track the restore job
+    >[!NOTE]
+    >The resources hydrated in the staging resource group and storage account aren't automatically cleaned up after the restore job finishes. You need to delete them manually.
+
+## Track the restore job for AKS cluster
 
 Track all the jobs using the `Get-AzDataProtectionJob` cmdlet. You can list all jobs and fetch a particular job detail. Alternatively, use Az.ResourceGraph to track jobs across all Backup vaults.
 

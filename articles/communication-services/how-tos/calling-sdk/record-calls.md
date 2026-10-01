@@ -2,8 +2,8 @@
 title: Manage call recording on the client
 titleSuffix: An Azure Communication Services how-to guide
 description: Use Azure Communication Services SDKs to manage call recording on the client.
-author: tophpalmer
-ms.author: chpalm
+author: sundiraman
+ms.author: sundraman
 ms.service: azure-communication-services
 ms.topic: how-to
 ms.subservice: calling 
@@ -16,13 +16,15 @@ zone_pivot_groups: acs-plat-web-ios-android-windows
 
 # Manage call recording on the client
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 [!INCLUDE [Public Preview Disclaimer](../../includes/public-preview-include-document.md)]
 
 [Call recording](../../concepts/voice-video-calling/call-recording.md) lets your users record calls that they make with Azure Communication Services. In this article, you learn how to manage recording on the client side. Before you start, you need to set up recording on the [server side](../../quickstarts/voice-video-calling/call-recording-sample.md).
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - A deployed Communication Services resource. [Create a Communication Services resource](../../quickstarts/create-communication-resource.md).
 - A user access token to enable the calling client. For more information, see [Create and manage access tokens](../../quickstarts/identity/access-tokens.md).
 - Optional: Completion of the [quickstart to add voice calling to your application](../../quickstarts/voice-video-calling/getting-started-with-calling.md).

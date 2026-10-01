@@ -2,11 +2,11 @@
 title: 'Connect a VNet to a Virtual WAN hub - portal'
 titleSuffix: Azure Virtual WAN
 description: Learn how to connect a VNet to a Virtual WAN hub using the portal.
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.topic: how-to
 ms.date: 03/26/2025
-ms.author: cherylmc
+ms.author: duau
 
 ---
 # Connect a virtual network to a Virtual WAN hub - portal
@@ -24,11 +24,14 @@ Before you create a connection, be aware of the following:
 
 ## Add a connection
 
-[!INCLUDE [Connect](../../includes/virtual-wan-connect-vnet-hub-include.md)]
+[!INCLUDE [Connect](../networking/includes/virtual-wan/connect-vnet-hub.md)]
 
 > [!NOTE]
 >
 > * To delete a virtual network connected to the virtual hub, you must delete both the virtual network connection and virtual network resource. 
+
+## <a name="bypassexplained"> </a> Understanding Bypass Next Hop IP for workloads within this VNet
+[!INCLUDE [Bypass Next Hop IP](../networking/includes/virtual-wan/bypass-next-hop-ip.md)]
 
 ## Next steps
 

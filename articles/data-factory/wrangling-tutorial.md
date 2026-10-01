@@ -4,13 +4,16 @@ description: A tutorial on how to prepare data in Azure Data Factory using wrang
 author: kromerm
 ms.author: makromer
 ms.subservice: data-flows
-ms.topic: conceptual
+ms.topic: tutorial
 ms.date: 05/15/2024
+ms.custom: sfi-image-nochange
 ---
 
 # Prepare data with data wrangling
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 Data wrangling in data factory allows you to build interactive Power Query mash-ups natively in ADF and then execute those at scale inside of an ADF pipeline.
 

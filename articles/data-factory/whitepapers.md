@@ -1,15 +1,17 @@
 ---
 title: Whitepapers that describe Azure Data Factory
 description: These whitepapers describe Azure Data Factory in depth.
-author: dearandyxu
-ms.author: yexu
-ms.topic: conceptual
+author: kromerm
+ms.author: makromer
+ms.topic: reference
 ms.date: 05/15/2024
 ---
 
 # Azure Data Factory whitepapers 
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 Whitepapers allow you to explore Azure Data Factory at a deeper level. This article provides you with a list of available whitepapers for Azure Data Factory.
 

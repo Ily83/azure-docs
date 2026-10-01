@@ -1,12 +1,12 @@
 ---
 title: Integrate Azure Firewall with Azure Standard Load Balancer
 description: You can integrate an Azure Firewall into a virtual network with an Azure Standard Load Balancer (either public or internal).
-services: firewall
 author: varunkalyana
+ms.author: duau
 ms.service: azure-firewall
 ms.topic: how-to
-ms.date: 03/04/2025
-ms.author: duau
+ms.date: 08/27/2026
+ms.custom: sfi-image-nochange
 # Customer intent: As a network engineer, I want to integrate Azure Firewall with an Azure Standard Load Balancer, so that I can optimize traffic routing and enhance security in my virtual network setup.
 ---
 
@@ -14,23 +14,23 @@ ms.author: duau
 
 You can integrate an Azure Firewall into a virtual network with either a public or internal Azure Standard Load Balancer.
 
-The preferred design is to use an internal load balancer with your Azure Firewall, as it simplifies the setup. If you already have a public load balancer deployed and wish to continue using it, be aware of potential asymmetric routing issues that could disrupt functionality.
+The preferred design is to use an internal load balancer with your Azure Firewall, as it simplifies the setup. If you already have a public load balancer deployed and want to continue using it, be aware of potential asymmetric routing problems that could disrupt functionality.
 
 For more information about Azure Load Balancer, see [What is Azure Load Balancer?](../load-balancer/load-balancer-overview.md)
 
 ## Public load balancer
 
-With a public load balancer, the load balancer is deployed with a public frontend IP address.
+When you use a public load balancer, you deploy the load balancer with a public frontend IP address.
 
 ### Asymmetric routing
 
-Asymmetric routing is where a packet takes one path to the destination and takes another path when returning to the source. This issue occurs when a subnet has a default route going to the firewall's private IP address and you're using a public load balancer. In this case, the incoming load balancer traffic is received via its public IP address, but the return path goes through the firewall's private IP address. Since the firewall is stateful, it drops the returning packet because the firewall isn't aware of such an established session.
+Asymmetric routing occurs when a packet takes one path to the destination and takes another path when returning to the source. This problem occurs when a subnet has a default route going to the firewall's private IP address and you're using a public load balancer. In this case, the incoming load balancer traffic comes through its public IP address, but the return path goes through the firewall's private IP address. Since the firewall is stateful, it drops the returning packet because the firewall isn't aware of such an established session.
 
 ### Fix the routing issue
 
 #### Scenario 1: Azure Firewall without NAT Gateway
-When deploying an Azure Firewall into a subnet, you need to create a default route for the subnet. This route directs packets through the firewall's private IP address located on the AzureFirewallSubnet. For detailed steps, see [Deploy and configure Azure Firewall using the Azure portal](tutorial-firewall-deploy-portal.md#create-a-default-route).
-When integrating the firewall into your load balancer scenario, ensure that your Internet traffic enters through the firewall's public IP address. The firewall applies its rules and NAT the packets to the load balancer's public IP address. The issue arises when packets arrive at the firewall's public IP address but return via the private IP address (using the default route).
+When you deploy an Azure Firewall into a subnet, you need to create a default route for the subnet. This route directs packets through the firewall's private IP address located on the AzureFirewallSubnet. For detailed steps, see [Deploy and configure Azure Firewall using the Azure portal](tutorial-firewall-deploy-portal.md#create-a-default-route).
+When you integrate the firewall into your load balancer scenario, ensure that your Internet traffic enters through the firewall's public IP address. The firewall applies its rules and NATs the packets to the load balancer's public IP address. The problem arises when packets arrive at the firewall's public IP address but return via the private IP address (using the default route).
 
 To prevent asymmetric routing, add a specific route for the firewall's public IP address. Packets intended for the firewall's public IP address are directed through the Internet, bypassing the default route to the firewall's private IP address.
 
@@ -50,7 +50,7 @@ For more information, see [Integration of NAT Gateway with Azure Firewall](../na
 
 :::image type="content" source="media/integrate-lb/nat-firewall-routing.png" alt-text="Diagram of routing with NAT Gateway associated to the Azure Firewall subnet.":::
 
-When a NAT Gateway is associated with the Azure Firewall subnet, inbound traffic from the internet lands on the Azure Firewall's public IP address. The Azure Firewall then changes (SNAT) the source IP to the NAT Gateway's public IP address before forwarding the traffic to the load balancer's public IP address.
+When a NAT Gateway is associated with the Azure Firewall subnet, inbound traffic from the internet lands on the Azure Firewall's public IP address. The firewall forwards that traffic to the load balancer's public IP address using its own private IP address, and the NAT Gateway performs the public SNAT as the traffic leaves the subnet. The load balancer therefore sees the NAT Gateway's public IP address as the source. For more information about this traffic flow, see [Integrate Azure Firewall with NAT Gateway V2](integrate-with-nat-gateway-v2.md).
 
 Without a NAT Gateway, the Azure Firewall changes the source IP address to its own public IP address before forwarding the traffic to the load balancer's public IP address.
 

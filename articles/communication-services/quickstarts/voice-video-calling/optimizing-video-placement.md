@@ -14,6 +14,8 @@ ms.custom: mode-other, devx-track-js
 
 # Optimize video placement on your web app
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 A crucial element to consider when building web apps is how to best integrate video into the page layout. The placement and number of videos can impact page performance, user quality experience, and overall aesthetic. This article includes guidelines to help developers determine how many videos to place on a web page and the best video resolution size to optimize the end user experience.
 
 ## Understanding video resolution
@@ -81,6 +83,29 @@ optimalVideoCountFeature.on('optimalVideoCountChanged', () =\> {
 When there's a change in the optimal video count value, if the result indicates increased capacity on the local computer for more incoming videos, you can create a new incoming video using the [`createView`](/javascript/api/azure-communication-services/@azure/communication-calling/videostreamrenderer?view=azure-communication-services-js&preserve-view=true#@azure-communication-calling-videostreamrenderer-createview) method to display more incoming video streams to be displayed on the page.
 
 Conversely, if the optimal count decreases and is [less than the current number of videos on the page](../../resources/troubleshooting/voice-video-calling/video-issues/reaching-max-number-of-active-video-subscriptions.md), consider disposing of a video using the dispose method and updating the application layout accordingly.
+
+#### Optimal video count changed reason
+
+When the SDK adjusts the number of rendered video streams, developers can see why the change occurred. The `optimalVideoCountChanged` event includes a `reason` property, helping you adapt UI and troubleshoot quality issues.
+
+Supported reasons:
+- Bandwidth – Network limitations  
+- Performance – Device constraints  
+
+Examples:
+```javascript
+const ovcFeature = this.call.feature(Features.OptimalVideoCount);
+
+// Shows the optimalVideoCount value
+console.log(ovcFeature.optimalVideoCount);
+
+// shows the last reason for a change
+console.log(ovcFeature.lastOvcChangeReason); 
+
+// listener for getting updates on changes
+ovcFeature.on('optimalVideoCountChanged', () => {}); 
+```
+
 
 ### Things to consider when adding a 1080p or 720p video to a page.
 
@@ -188,10 +213,8 @@ The following table illustrates how video resolution changes based on the number
 | 17 to 25         | 180p                  |
 
 > [!NOTE]  
-> The GA version of the calling WebJS SDK allows for up to **16** incoming video streams for desktop browsers (4x4 grid).
+> The GA version of the calling WebJS SDK allows for up to **25** incoming video streams for desktop browsers (5x5 grid) in version 1.40.0 and later.
 
-> [!NOTE]  
-> The public preview 1.37.1-beta.1 and greater of the calling WebJS SDK currently supports up to **25** incoming video streams for desktop browsers (5x5 grid).
 
 ## Conclusion
 

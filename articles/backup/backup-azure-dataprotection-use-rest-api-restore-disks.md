@@ -2,7 +2,7 @@
 title: Restore Azure Disks using Azure Data Protection REST API
 description: In this article, learn how to restore Azure Disks using Azure Data protection REST API.
 ms.topic: how-to
-ms.date: 06/11/2025
+ms.date: 02/13/2026
 ms.assetid: 30f4e7ff-2a55-4a85-be44-55feedc24607
 ms.custom: engagement-fy24
 author: AbhishekMallick-MS
@@ -20,6 +20,8 @@ Azure Disk Backup offers a turnkey solution that provides snapshot lifecycle man
 >- Currently, the Original-Location Recovery (OLR) option to restore by replacing the existing source disk (from where the backups were taken) isn't supported.
 >- You can restore from a recovery point to create a new disk in the same resource group of the source disk or in any other resource group. It's known as Alternate-Location Recovery (ALR).
 
+To view the supported Azure Disk backup and restore scenarios, region availability, and limitations, see the [support matrix](disk-backup-support-matrix.md). For common questions, see the [frequently asked questions](disk-backup-faq.yml).
+
 ## Prerequisites
 
 - [Create a Backup vault](backup-azure-dataprotection-use-rest-api-create-update-backup-vault.md)
@@ -36,7 +38,7 @@ Backup vault uses managed identity to access other Azure resources. To restore f
 
 Backup vault uses a system-assigned managed identity, which is restricted to one per resource and is tied to the lifecycle of this resource. To grant permissions to the managed identity, use the Azure role-based access control (Azure RBAC). Managed identity is a specific service principal that you may only use with Azure resources. Learn more about [Managed Identities](../active-directory/managed-identities-azure-resources/overview.md).
 
-Assign the relevant permissions for vault's system-assigned managed identity on the target resource group where the disks will be restored/created. [Learn more](restore-managed-disks.md#restore-to-create-a-new-disk).
+Assign the relevant permissions for vault's system-assigned managed identity on the target resource group where the disks will be restored/created. [Learn more](restore-managed-disks.md#restore-a-new-disk-from-a-recovery-point).
 
 ## Fetch the list of recovery points
 
@@ -445,12 +447,13 @@ Use the *GET* command to track the _JobId_ present in the [trigger restore respo
 
 The job status above indicates that the restore job is completed and the disks have been recovered to the specified subscription and target resource group.
 
-## Next step
+## Next steps
 
-[Overview of Azure Disk backup](disk-backup-overview.md)
+- [Overview of Azure Disk backup](disk-backup-overview.md).
+- [Troubleshoot Azure Disk backup](disk-backup-troubleshoot.md).
 
-For more information on the Azure Backup REST APIs, see the following articles:
+  For more information on the Azure Backup REST APIs, see the following articles:
 
-- [Azure Data Protection provider REST API](/rest/api/dataprotection/)
-- [Get started with Azure REST API](/rest/api/azure/)
-- [Manage backup and restore jobs](backup-azure-arm-userestapi-managejobs.md)
+  - [Azure Data Protection provider REST API](/rest/api/dataprotection/)
+  - [Get started with Azure REST API](/rest/api/azure/)
+  - [Manage backup and restore jobs](backup-azure-arm-userestapi-managejobs.md)

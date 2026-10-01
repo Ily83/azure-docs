@@ -7,6 +7,7 @@ ms.service: azure-netapp-files
 ms.topic: how-to
 ms.date: 04/16/2025
 ms.author: anfdocs
+ms.custom: sfi-image-nochange
 # Customer intent: As a system administrator, I want to configure NFSv4.1 Kerberos encryption for Azure NetApp Files so that I can ensure secure access and data protection while managing NFS volumes in my environment.
 ---
 # Configure NFSv4.1 Kerberos encryption for Azure NetApp Files
@@ -18,7 +19,12 @@ Azure NetApp Files supports NFS client encryption in Kerberos modes (krb5, krb5i
 The following requirements apply to NFSv4.1 client encryption: 
 
 * Active Directory Domain Services (AD DS) or Microsoft Entra Domain Services connection to facilitate Kerberos ticketing
-* DNS A/PTR record creation for both the client and Azure NetApp Files NFS server IP addresses
+* DNS A and PTR records for:
+    * Each NFS client that uses Kerberos.
+    * The Azure NetApp Files NFS server or volume endpoint.
+    * Every AD DS domain controller or LDAP server that Azure NetApp Files can discover or use for UNIX user and group lookups.
+
+    Forward and reverse records must resolve consistently and must be accessible through the DNS servers configured in the Azure NetApp Files Active Directory connection. Ensure that a reverse lookup zone exists for each applicable subnet. If you configure an AD site or preferred LDAP servers, validate forward and reverse DNS resolution for every applicable domain controller or LDAP server. For more information, see [Troubleshoot volume errors](troubleshoot-volumes.md#errors-for-missing-or-inconsistent-dns-records).
 * **A Linux client:** This article provides guidance for RHEL and Ubuntu clients. Other clients also work with similar configuration steps. 
 * **NTP server access:** You can use one of the commonly used Active Directory Domain Controller (AD DC) domain controllers.
 * To leverage Domain or LDAP user authentication, ensure that NFSv4.1 volumes are enabled for LDAP. See [Configure ADDS LDAP with extended groups](configure-ldap-extended-groups.md).
@@ -52,7 +58,7 @@ The following requirements apply to NFSv4.1 client encryption:
 
 2.	Under **Kerberos Realm**, enter the **AD Server Name** and the **KDC IP** address.
 
-    AD Server and KDC IP can be the same server. This information is used to create the SPN computer account used by Azure NetApp Files. After the computer account is created, Azure NetApp Files uses DNS Server records to locate additional KDC servers as needed. 
+    AD Server and KDC IP can be the same server. This information is used to create the SPN computer account used by Azure NetApp Files. After the computer account is created, Azure NetApp Files uses DNS Server records to locate additional KDC servers as needed. In the AD Server Name, provide the hostname of the machine without appending the domain.
 
     ![Kerberos Realm](./media/configure-kerberos-encryption/kerberos-realm.png)
  

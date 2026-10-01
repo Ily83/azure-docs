@@ -1,12 +1,12 @@
 ---
 title: Assign Azure roles using Azure Resource Manager templates - Azure RBAC
 description: Learn how to grant access to Azure resources for users, groups, service principals, or managed identities using Azure Resource Manager templates and Azure role-based access control (Azure RBAC).
-author: jenniferf-skc
+author: rolyon
 manager: pmwongera
 ms.service: role-based-access-control
 ms.topic: how-to
 ms.date: 03/30/2025
-ms.author: jfields
+ms.author: rolyon
 ms.custom: devx-track-azurepowershell, devx-track-azurecli, devx-track-arm-template
 ms.devlang: azurecli
 ---
@@ -358,7 +358,7 @@ To use the template, you must specify the following inputs:
             ],
             "properties": {
                 "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
-                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30').principalId]",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30').properties.principalId]",
                 "principalType": "ServicePrincipal"
             }
         }

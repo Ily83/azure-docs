@@ -1,12 +1,12 @@
 ---
 title: Replicate Azure virtual machines running in a proximity placement group
 description: Learn how to replicate Azure virtual machines running in proximity placement groups by using Azure Site Recovery.
-ms.author: jsuri
-author: jyothisuri
+ms.author: v-gajeronika
+author: Jeronika-MS
 ms.topic: how-to
 ms.service: azure-site-recovery
 ms.custom: devx-track-azurepowershell
-ms.date: 04/26/2025
+ms.date: 09/21/2026
 # Customer intent: "As an IT administrator, I want to replicate Azure virtual machines in a proximity placement group to another region using Site Recovery, so that I can ensure continuity and reduce downtime for latency-sensitive applications in case of a regional failure."
 ---
 
@@ -125,7 +125,7 @@ You can easily update your selection of a proximity placement group in the DR re
 5. [Create a Site Recovery protection container](./azure-to-azure-powershell.md#create-a-site-recovery-protection-container-in-the-primary-fabric) for both the primary and recovery fabrics.
 6. [Create a replication policy](./azure-to-azure-powershell.md#create-a-replication-policy).
 7. [Create a protection container mapping between the primary and recovery protection containers](./azure-to-azure-powershell.md#create-a-protection-container-mapping-between-the-primary-and-recovery-protection-container), and [create a protection container mapping for failback](./azure-to-azure-powershell.md#create-a-protection-container-mapping-for-failback-reverse-replication-after-a-failover).
-8. [Create cache storage account](./azure-to-azure-powershell.md#create-cache-storage-account-and-target-storage-account).
+8. [Create a cache storage account](./azure-to-azure-powershell.md#create-a-cache-storage-account).
 9. [Create the required network mappings](./azure-to-azure-powershell.md#create-network-mappings).
 10. Replicate an Azure virtual machine with managed disks by using the following PowerShell cmdlet:
 

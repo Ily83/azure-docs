@@ -4,7 +4,7 @@ description: Find information on updates made during each Azure Container Apps e
 services: container-apps
 author: craigshoemaker
 ms.service: azure-container-apps
-ms.topic: conceptual
+ms.topic: release-notes
 ms.date: 05/01/2025
 ms.author: cshoe
 ms.custom:
@@ -122,7 +122,7 @@ ms.custom:
 ## v1.37.7 (October 2024)
 
 - Resolved issue with MDM Init container which caused container to crash in event it couldn't be pulled
-- Added support for [Logic Apps Hybrid Deployment Model (Public Preview)](https://techcommunity.microsoft.com/t5/azure-integration-services-blog/announcement-introducing-the-logic-apps-hybrid-deployment-model/ba-p/4271568)
+- Added support for [Logic Apps Hybrid Deployment Model (Public Preview)](https://techcommunity.microsoft.com/blog/integrationsonazureblog/announcement-introducing-the-logic-apps-hybrid-deployment-model-public-preview/4271568)
 
 ## v1.37.8 (March 2025)
 
@@ -131,3 +131,95 @@ ms.custom:
 - Added support for health probes for Logic Apps
 - Added support for JWT authentication for sync trigger
 - Added User Event for when system namespace is the same as the app namespace
+
+## v1.47.62 (September 2025)
+
+- Bumped Dapr to 1.12
+- Upgraded Dapr Otel Collect image version to 0.96.0
+- Bumped Keda to 2.15
+- Updated EasyAuth to 1.10.1 to resolve MISE version compliance issue
+- Updated Envoy version to 1.27.7
+- Loosened default upstream retry circuit breaker
+- Enabled proxy server authentication with namespace scope
+- Added pod status change log
+- Added support for incremental revision numbering
+- Increased app status controller concurrent reconcile settings
+- Updated file upload size limits for middleware sidecar
+- Raised InitialStreamWindowSize
+- Improved Envoy controller for app routes
+- Upgraded sidecar image to address vulnerabilities
+- Handled setting cooldownPeriod and pollingInterval to default values
+- Fixed get executions API call
+- Increased webhook timeout for container app to 30 seconds
+- Updated filter chain server name for access forbidden listener
+- Fixed app controller not watching secret changes
+- Enabled job suspend/resume operations
+- Fixed batchv1.joblist high memory consumption for multiple executions across jobs
+- Refined event processor
+- Fixed panic caused by getting job name from pod owner reference
+- Set job history limit via Helm
+- Made envoysc log level configurable
+- Fixed log processor legacy naming when variant mode is off
+- Listed configmap before starting mdsd container in k8se-log-processor pod
+- Improved deactivation handling
+- Created a new app in labels mode
+- Ignored case for domain validation URL
+- Added support for stopping all job executions
+- Made sidecar resources scale with ContainerApp's resources
+- Basic setup for labels mode
+- Added ForwarderTimeoutSeconds for EasyAuth container
+- Supported HTTP/2 for EasyAuth
+- Fixed scaled job execution
+- Fixed schema and lease lock issue
+- Fixed job stop sidecar issue
+- Upgraded Kubernetes packages
+- Allowed TargetPort = 0 and remapped to discovered port
+- Fixed logic for reconciling Envoy exposed ports during app changes
+- Fixed list revision limit continue issue
+- Disabled auto_sni for clusters
+- Merged labels during revision update
+- Explicitly disabled http2logging
+- Ensured exec is not attempted for stopped containers
+- Fixed reconciler cache issue and unified apiReader
+- Fixed client certificate mode not working on label URL
+- Dynamically scaled out Envoy resources and replicas based on customer core usage
+- Fixed local proxy failing to connect to controller
+- Fixed revision activation bug when no active revisions
+- Extended CA valid period to 5 years and added flag to rotate CA
+- Fixed job pod failed to exit
+- Added detailed execution status for list job execution API
+- Moved triggerAuth to revision level
+- Removed envoysc in job if not enabled
+- Updated cookie header attributes to use SameSite=None
+- Enabled storage secret compatibility for Azure File on Arc
+- Redacted sig in internalLog in EventsProcessorEvents
+- Fixed Kind not set issue
+- Enabled ACA on Arc billing meters
+- Supported dynamic concurrency for workflow trigger
+- Added RabbitMQ Keda translation
+- Fixed issues for OpenShift cluster
+
+## v1.50.1 (December 2025)
+
+- Updated base image to Azure Linux 3.0.
+- Upgraded EasyAuth to version 1.12.0.
+- Upgraded Dapr to 1.13.6-msft.6.
+- Updated KEDA to 2.17.2-msft.1.
+- Enhanced system sidecar and updated k8s.io/kubernetes to address security vulnerabilities.
+- Upgraded Geneva MDM and MDSD image versions.
+- Increased memory limits for the KEDA operator.
+- Increased Envoy resources limits.
+- Updated Auth container resource limits.
+- Set `maxInactiveRevisionsDefault` to 200.
+- Adopted KEDA-specific annotation for pausing event-triggered jobs.
+- Fixed `useMonitor` logic in Timer trigger KEDA SyncTrigger.
+- Added readiness and liveness probe configurations for the Dapr injector.
+- Implemented logic to restart the event processor if no event has been updated in the last 5 minutes.
+- Enhanced Envoy controller for app routes.
+- Added validation for SMB changes.
+- Enabled named job execution.
+- Enabled IP restrictions for HTTP routes.
+- Added `containerName` for CPU/memory autoscaling.
+- Increased localproxy sidecar readiness probe failure threshold.
+- Improved lifecycle and history management for labels mode.
+- Prevented creation of new revisions or replicasets when only the `TargetLabel` changes.

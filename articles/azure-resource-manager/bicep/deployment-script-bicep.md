@@ -3,7 +3,7 @@ title: Use deployment scripts in Bicep
 description: Learn how to create, monitor, and troubleshoot deployment scripts in Bicep.
 ms.custom: devx-track-bicep
 ms.topic: how-to
-ms.date: 03/25/2025
+ms.date: 08/18/2026
 ---
 
 # Use deployment scripts in Bicep
@@ -26,14 +26,12 @@ The benefits of deployment scripts include:
 
 The deployment script resource is available only in the regions where Azure Container Instances is available. For more information, see [Resource availability & quota limits for ACI](/azure/container-instances/container-instances-resource-and-quota-limits) and [Products available by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/).
 
+The deployment script service creates two supporting resources - a storage account and a container instance - to run and troubleshoot scripts. The names of these resources are generated using a deterministic hash of the deployment script's resource ID, with the suffix azscripts appended (for example, *jgczqtxom5oreazscripts*). As a result, repeated executions of the same deployment script may reuse the same storage account.
+
+In rare cases, you may encounter the error "The storage account named \<storage-account-name> is already taken." This typically occurs when a storage account created by a previous execution of the same deployment script was not cleaned up successfully.
+
 > [!WARNING]
-> The deployment script service requires two extra resources to run and troubleshoot scripts: a storage account and a container instance. Generally, the service cleans up these resources after the deployment script finishes. You incur charges for these resources until they're removed.
->
-> For pricing information, see [Azure Container Instances pricing](https://azure.microsoft.com/pricing/details/container-instances/) and [Azure Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/). To learn more, see [Clean up deployment script resources](./deployment-script-develop.md#clean-up-deployment-script-resources).
-
-### Training resources
-
-If you prefer to learn about deployment scripts through step-by-step guidance, see the [Extend Bicep and ARM templates by using deployment scripts](/training/modules/extend-resource-manager-template-deployment-scripts) Microsoft Learn module.
+> Generally, the service cleans up these supporting resources after the deployment script finishes. You incur charges for these resources until they're removed. For pricing information, see [Azure Container Instances pricing](https://azure.microsoft.com/pricing/details/container-instances/) and [Azure Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/). To learn more, see [Clean up deployment script resources](./deployment-script-develop.md#clean-up-deployment-script-resources).
 
 ## Configure the minimum permissions
 
@@ -71,6 +69,9 @@ For deployment script API version `2020-10-01` or later, two principals are invo
   - Pass the service principal credentials as secure environment variables, and then call [`Connect-AzAccount`](/powershell/module/az.accounts/connect-azaccount) or [`az login`](/cli/azure/reference-index#az-login) in the deployment script.
 
   If you use a managed identity, the deployment principal needs the built-in Managed Identity Operator role assigned to the managed identity resource.
+
+  > [!IMPORTANT]
+  > If you assign a managed identity with permissions that exceed the script's operational requirements, the script author is responsible for ensuring the storage account is protected from unintended access. Wherever possible, follow the principle of least privilege.
 
 A built-in role isn't tailored for configuring deployment script permissions at this time.
 
@@ -161,7 +162,7 @@ param storageAccountData {
 var storageBlobDataReaderRoleId = '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
 
 @description('The storage account to read blobs from.')
-resource storageAccount 'Microsoft.Storage/storageAccounts@2023-04-01' existing = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2025-06-01' existing = {
   name: storageAccountData.name
 }
 
@@ -172,7 +173,7 @@ resource storageBlobDataReaderRoleDef 'Microsoft.Authorization/roleDefinitions@2
 }
 
 @description('The user identity for the deployment script.')
-resource scriptIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+resource scriptIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2025-01-31-preview' = {
   name: 'script-identity'
   location: location
 }
@@ -291,6 +292,9 @@ Select **Outputs** to display outputs of the script.
 :::image type="content" source="./media/deployment-script-bicep/bicep-deployment-script-portal-resource-output.png" alt-text="Screenshot of deployment script outputs.":::
 
 Go back to the resource group, select the storage account, select **File shares**, and then select the file share with _azscripts_ appended to the share name. Two folders appear in the list: _azscriptinput_ and _azscriptoutput_. The output folder contains an _executionresult.json_ file and the script output file. The _executionresult.json_ file contains the script execution error message. The output file is created only when you run the script successfully.
+
+> [!IMPORTANT]
+> Deployment script logs can include content written to `Write-Host`, `echo`, `stdout`, and `stderr`. You might retrieve this information through the `/deploymentScripts/logs` endpoint or related APIs. Don't write sensitive information to script output, including access tokens, bearer tokens, SAS tokens, connection strings, credentials, or other secrets. Script authors are responsible for ensuring that deployment script logs don't expose sensitive information.
 
 :::image type="content" source="./media/deployment-script-bicep/bicep-deployment-script-portal-az-script-output.png" alt-text="Screenshot of the contents of a deployment script's output folder.":::
 
@@ -501,9 +505,7 @@ You can run deployment scripts in private networks with some additional configur
 
 ## Next steps
 
-In this article, you learned how to use deployment scripts. To learn more, see the [Extend Bicep and ARM templates using deployment scripts](/training/modules/extend-resource-manager-template-deployment-scripts) module from Microsoft Learn.
-
-To explore the topics in this article, see:
+In this article, you learned how to use deployment scripts. To explore the topics in this article, see:
 
 - [Develop a deployment script in Bicep](./deployment-script-develop.md)
 - [Access a private virtual network from a Bicep deployment script](./deployment-script-vnet.md)

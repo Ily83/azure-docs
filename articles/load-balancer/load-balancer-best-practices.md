@@ -6,14 +6,12 @@ services: load-balancer
 author: cozhang8
 ms.service: azure-load-balancer
 ms.topic: troubleshooting
-ms.date: 01/13/2025
+ms.date: 08/27/2026
 ms.author: mbender
 # Customer intent: As a cloud architect, I want to implement best practices for deploying and configuring a load balancer, so that I can enhance the reliability and performance of my Azure network infrastructure.
 ---
 
 # Azure Load Balancer Best Practices
-<!-- Before Publishing: -->
-<!-- Verify TOC entry is added to TOC.yml -->
 
 This article discusses a collection of Azure best practices for your load balancer deployment. These best practices are derived from our experience with Azure networking and the experiences of customers like yourself.  
 
@@ -42,7 +40,7 @@ Zone-redundancy provides the best resiliency by protecting the data path from zo
 - Public IP addresses can't be changed to zone redundant but we're updating all non-zonal Standard Public IPs to be zone redundant by default. For more information, visit the following Microsoft Azure Blog [Azure Public IPs are now zone-redundant by default | Microsoft Azure Blog](https://azure.microsoft.com/blog/azure-public-ips-are-now-zone-redundant-by-default/?msockid=028aa4446a5a601f37ecb0076b7761c7). To see the most updated list of regions that support zone redundant Standard Public IPs by default, see [Public IP addresses in Azure](../virtual-network/ip-services/public-ip-addresses.md)
 - If you can't deploy as zone-redundant, the next option is to have a zonal load balancer deployment.
 - A Zonal frontend is recommended when the backend is concentrated in a particular zone. Though we recommend deploying backend pool members across multiple zones to benefit from zone redundancy.
-- Refer to the following the doc if you want to migrate existing deployments to zonal or zone-redundant [Migrate Load Balancer to availability zone support](../reliability/migrate-load-balancer.md).
+- Refer to the following the doc if you want to migrate existing deployments to zonal or zone-redundant [Migrate Load Balancer to availability zone support](/azure/reliability/migrate-load-balancer).
 
 #### Redundancy in your backend pool
 
@@ -52,7 +50,7 @@ Ensure that the backend pool contains at least two instances. If your backend po
 
 Standard Load Balancer supports cross-region load balancing enabling regional redundancy through linking a global load balancer to your existing regional load balancers. With a global load balancer, if one region fails, the traffic is routed to the next closest healthy regional load balancer. For more details, visit the [Global Load Balancer documentation](cross-region-overview.md).
 
-For more information, see [Azure Load Balancer Reliability documentation](../reliability/reliability-load-balancer.md).
+For more information, see [Azure Load Balancer Reliability documentation](/azure/reliability/reliability-load-balancer).
 
 ### Reliability with Gateway Load Balancer
 
@@ -72,11 +70,11 @@ The following configuration guidance is best practices for configuring your Azur
 
 ### Create Network Security Groups (NSGs)
 
-To explicitly permit allowed inbound traffic, you should create Network Security Groups (NSGs). NSGs must be created on the subnet or network interface card (NIC) of your VM, otherwise there will be no inbound connectivity to your Standard external load balancers. For more information, see [Create, change, or delete an Azure network security group](../virtual-network/manage-network-security-group.md).
+Use a load-balancing rule to map frontend traffic to a backend pool, and use a network security group (NSG) on the backend subnet or network interface to allow the application traffic. For load-balanced traffic, the NSG evaluates the source IP address and source port of the client, not the load balancer, so allow the client source-port range rather than only the application's destination port. For more information, see [Create, change, or delete an Azure network security group](../virtual-network/manage-network-security-group.md).
 
 ### Unblock 168.63.129.16 IP address
 
-Ensure 168.63.129.16 IP address isn't blocked by any Azure network security groups and local firewall policies. This IP address enables health probes from Azure Load Balancer to determine the health state of the VM. If it isn't allowed, the health probe fails as it is unable to reach your instance and it marks your instance as down. For more information, see [Azure Load Balancer health probe](load-balancer-custom-probe-overview.md) and [What is IP address 168.63.129.16?](../virtual-network/what-is-ip-address-168-63-129-16.md)s.
+Check health-probe access separately from application-traffic access. Allow health probes from the `AzureLoadBalancer` service tag in NSGs and from 168.63.129.16 in local firewall policies. If you block application traffic but the probes succeed, review the application-traffic NSG rule. If the probes fail, review the probe allowance and the application listening on the probe port. For more information, see [Azure Load Balancer health probe](load-balancer-custom-probe-overview.md) and [What is IP address 168.63.129.16?](../virtual-network/what-is-ip-address-168-63-129-16.md)
 
 ### Use outbound rules with manual port allocation
 
@@ -109,11 +107,11 @@ Along with new improvements and updates to Azure Load Balancer, there are also d
 
 ### Use or upgrade to Standard Load Balancer
 
-[Basic Load Balancer will be retired September 30, 2025](https://azure.microsoft.com/updates?id=azure-basic-load-balancer-will-be-retired-on-30-september-2025-upgrade-to-standard-load-balancer) and customers should upgrade from Basic Load Balancer to Standard Load Balancer by then. Standard Load Balancer provides significant improvements including high performance, ultra-low latency, security by default, and SLA of 99.99% availability. 
+[Basic Load Balancer was retired on September 30, 2025](https://azure.microsoft.com/updates?id=azure-basic-load-balancer-will-be-retired-on-30-september-2025-upgrade-to-standard-load-balancer). If you're still using Basic Load Balancer, upgrade to Standard Load Balancer as soon as possible. Standard Load Balancer provides significant improvements including high performance, ultra-low latency, security by default, and an SLA of 99.99% availability.
 
 ### Don't use default outbound access
 
-Moving forward, don't use [default outbound access](../virtual-network/ip-services/default-outbound-access.md) and ensure all VMs have a defined explicit outbound method. This is recommended for better security and greater control over how your VMs connect to the internet. Default outbound access will [retire September 30, 2025](https://azure.microsoft.com/updates?id=default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access) and VMs created after this date must use one of the following outbound solutions to communicate to the internet:
+Moving forward, don't use [default outbound access](../virtual-network/ip-services/default-outbound-access.md) and ensure all VMs have a defined explicit outbound method. This approach offers better security and greater control over how your VMs connect to the internet. Default outbound access was [retired March 31, 2026](https://azure.microsoft.com/updates?id=default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access) and VMs created after this date must use one of the following outbound solutions to communicate to the internet:
 - Associate a NAT GW to the subnet
 - Use one or more frontend IPs of a Load Balancer for outbound via outbound rules
 - Assign an instance-level public IP address to the VM 

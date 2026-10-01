@@ -2,9 +2,9 @@
 title: Overview of Billing
 titleSuffix: Microsoft Cost Management
 description: You use Billing features to manage billing accounts, invoices, and purchased products. You also use the features to monitor and control Azure spending and to optimize Azure resource use.
-author: shasulin
-ms.author: shasulin
-ms.reviewer: shasulin
+author: vikramdesai01
+ms.author: vikdesai
+ms.reviewer: vikdesai
 ms.date: 06/27/2025
 ms.topic: overview
 ms.service: cost-management-billing
@@ -134,7 +134,7 @@ Microsoft offers a wide range of tools for optimizing your costs. Some of these 
 - [**Azure reservations**](https://azure.microsoft.com/reservations/) help you save up to 72% compared to pay-as-you-go rates by pre-committing to specific usage amounts for a set time duration.
 - [**Azure Hybrid Benefit**](https://azure.microsoft.com/pricing/hybrid-benefit/) helps you significantly reduce costs by using on-premises Windows Server and SQL Server licenses or RedHat and SUSE Linux subscriptions on Azure.
 
-For other options, see [Azure benefits and incentives](https://azure.microsoft.com/pricing/offers/#cloud).
+For other options, see [Azure benefits and incentives](https://azure.microsoft.com/pricing/offers?cid=msft_learn).
 
 ## Next steps
 

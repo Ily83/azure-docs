@@ -2,7 +2,7 @@
 ::: zone pivot="programming-language-csharp"  
 + [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
 
-+ [Azurite storage emulator](../articles/storage/common/storage-use-azurite.md?tabs=npm#install-azurite) 
++ [Azurite storage emulator](../articles/storage/common/storage-install-azurite.md?tabs=npm#install-azurite) 
 ::: zone-end  
 ::: zone pivot="programming-language-java"  
 + [Java 17 Developer Kit](/azure/developer/java/fundamentals/java-support-on-azure)
@@ -11,13 +11,15 @@
 + [Apache Maven 3.8.x](https://maven.apache.org)  
 ::: zone-end  
 ::: zone pivot="programming-language-javascript,programming-language-typescript"  
-+ [Node.js 20](https://nodejs.org/)  
++ [Node.js 22](https://nodejs.org/)  
 ::: zone-end  
 ::: zone pivot="programming-language-powershell"  
-+ [PowerShell 7.2](/powershell/scripting/install/installing-powershell-core-on-windows)
++ [PowerShell 7.6](/powershell/scripting/install/installing-powershell)
 
-+ [.NET 6.0 SDK](https://dotnet.microsoft.com/download)  
++ [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 ::: zone-end
 ::: zone pivot="programming-language-python" 
-+ [Python 3.11](https://www.python.org/).
++ [Python 3.11](https://www.python.org/)
+
++ [Azurite storage emulator](../articles/storage/common/storage-use-azurite.md)
 ::: zone-end  

@@ -2,10 +2,12 @@
 title: Quickstart to create an Azure Migrate project using an Azure Resource Manager template.
 description: In this quickstart, you learn how to create an Azure Migrate project using an Azure Resource Manager template (ARM template).
 ms.date: 05/08/2025
-author: vijain
-ms.author: vijain
+author: Jeronika-MS
+ms.author: v-gajeronika
 ms.manager: kmadnani
 ms.service: azure-migrate
+ms.reviewer: v-gajeronika
+ms.update-cycle: 1095-days
 ms.topic: quickstart
 ms.custom: subject-armqs, mode-arm, devx-track-arm-template, engagement-fy25
 # Customer intent: As a cloud administrator, I want to create an Azure Migrate project using an ARM template, so that I can efficiently assess and migrate my on-premises servers and applications to Azure.
@@ -25,7 +27,7 @@ If your environment meets the prerequisites and you're familiar with using ARM t
 
 ## Prerequisites
 
-If you don't have an active Azure subscription, you can create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+If you don't have an active Azure subscription, you can create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 ## Review the template
 
@@ -37,7 +39,7 @@ The template used in this quickstart is from [Azure Quickstart Templates](https:
 
 To deploy the template, the **Subscription**, **Resource group**, **Project name**, and **Location** are required.
 
-1. To sign in to Azure and open the template, select the **Deploy to Azure** image.
+1. To sign in to Azure and go to the template, select the **Deploy to Azure** image.
 
    :::image type="content" source="~/reusable-content/ce-skilling/azure/media/template-deployments/deploy-to-azure-button.svg" alt-text="Button to deploy the Resource Manager template to Azure." border="false" link="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.migrate%2Fmigrate-project-create%2Fazuredeploy.json":::
 

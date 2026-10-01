@@ -5,7 +5,7 @@ author: mbender-ms
 ms.author: mbender
 ms.service: azure-virtual-network-manager
 ms.topic: concept-article
-ms.date: 07/11/2025
+ms.date: 07/29/2026
 ---
 
 # Manage configuration deployments in Azure Virtual Network Manager
@@ -19,7 +19,7 @@ Learn how configuration deployments in Azure Virtual Network Manager are applied
 When committing a deployment, you select the regions where you want the selected configurations to apply. The time it takes for a deployment to complete depends on how large the configuration is. Once the virtual networks are members of a network group targeted by a configuration, deploying that configuration onto that network group can take a few minutes. This scenario includes adding or removing virtual networks to or from the targeted network group manually or conditionally with Azure Policy. Safe deployment practices recommend gradually rolling out changes on a per-region basis.
 
 > [!IMPORTANT]
-> Only one security admin configuration can be deployed from a single network manager to a region at a time. However, multiple connectivity and routing configurations can exist in a region. To deploy multiple sets of security admin rules to a region, you can create multiple rule collections within a security admin configuration.
+> For security admin and routing configurations, only one of each configuration can be deployed from a single network manager to a region at a time. However, multiple connectivity configurations can exist in a region. To deploy multiple sets of security admin rules or routing rules to a region, you can create multiple rule collections within those respective configurations.
 
 ## Deployment latency and timing
 
@@ -39,9 +39,22 @@ When you commit a configuration deployment, the API forms a POST operation. Once
 
 :::image type="content" source="./media/tutorial-create-secured-hub-and-spoke/deployment-in-progress.png" alt-text="Screenshot of deployment in progress in deployment list.":::
 
+The deployment status reflects only the overall success or failure of the configuration deployment, not the result for an individual resource such as a single virtual network or subnet. Error messages appear only when the deployment status is **Failed**. When a deployment succeeds, the error message field remains empty, so you can focus on actionable errors rather than on internal or resource-level failures that don't affect the overall deployment.
+
+The deployment status has the following values:
+
+| Status | What it reflects | Where to get resource-level detail |
+| --- | --- | --- |
+| **NotStarted** | The deployment request is accepted but didn't start. | Not applicable. |
+| **Deploying** | Azure Virtual Network Manager is applying the goal state to the targeted regions. | The deployment details for the deployment. |
+| **Deployed** | The configuration deployment succeeded across the targeted regions. The error message field is empty. | The deployment details for the deployment. |
+| **Failed** | The configuration deployment didn't succeed. The error message states the reason for the failure. | The deployment details and logs, which show why an individual virtual network or subnet failed. |
+
 ## <a name = "goalstate"></a> Goal state model
 
 When you commit a deployment of configurations, you describe the goal state of your network manager in the targeted regions. This goal state is enforced during the next deployment. For example, when you commit configurations *Config1* and *Config2* into a region, these two configurations get applied and become the region's goal state. If you decided to commit configurations *Config1* and *Config3* into the same region, *Config2* would then be removed, and *Config3* would be added. To remove all configurations, you would deploy **None** to the regions where you no longer wish to have any configurations applied.
+
+You may have multiple connectivity configurations deployed simultaneously in a given region. The connectivity defined in each configuration is additive. If you modify one configuration, under this goal state model you must still deploy all connectivity configurations you want to take effect in that region. For example, given the *East US* region has *Config1* and *Config2* deployed there, if you modify *Config1*, you must deploy both *Config1* and *Config2* again in *East US* in order for both the changes from *Config1* and the behavior from *Config2* to take effect on the virtual networks in the region.
 
 ## Configuration availability
 

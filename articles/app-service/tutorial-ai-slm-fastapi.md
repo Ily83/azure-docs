@@ -3,10 +3,12 @@ title: "Tutorial: FastAPI chatbot with SLM extension"
 description: "Learn how to deploy a FastAPI application integrated with a Phi-4 sidecar extension on Azure App Service."
 author: cephalin
 ms.author: cephalin
-ms.date: 05/07/2025
+ms.date: 07/27/2026
 ms.topic: tutorial
 ms.custom:
   - build-2025
+ms.collection: ce-skilling-ai-copilot
+ms.update-cycle: 180-days
 ms.service: azure-app-service
 ---
 
@@ -18,13 +20,13 @@ This tutorial guides you through deploying a FastAPI-based chatbot application i
 
 ## Prerequisites
 
-- An [Azure account](https://azure.microsoft.com/free/) with an active subscription.
+- An [Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) with an active subscription.
 - A [GitHub account](https://github.com/).
 
 ## Deploy the sample application
 
 1. In the browser, navigate to the [sample application repository](https://github.com/Azure-Samples/ai-slm-in-app-service-sidecar).
-2. Start a new Codespace from the repository.
+1. Start a new Codespace from the repository.
 1. Log in with your Azure account:
 
     ```azurecli
@@ -36,10 +38,17 @@ This tutorial guides you through deploying a FastAPI-based chatbot application i
     ```azurecli
     cd use_sidecar_extension/fastapiapp
     az webapp up --sku P3MV3
+    ```
+
+1. If you're using **Python 3.13 or earlier**, configure the startup command:
+
+    ```azurecli
     az webapp config set --startup-file "gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app"
     ```
 
-This startup command is a common setup for deploying FastAPI applications to Azure App Service. For more information, see [Quickstart: Deploy a Python (Django, Flask, or FastAPI) web app to Azure App Service](quickstart-python.md).
+    If you're using **Python 3.14 or later**, no startup command is required.
+
+For more information, see [Quickstart: Deploy a Python (Django, Flask, or FastAPI) web app to Azure App Service](quickstart-python.md).
 
 [!INCLUDE [phi-4-extension-create-test](includes/tutorial-ai-slm/phi-4-extension-create-test.md)]
 

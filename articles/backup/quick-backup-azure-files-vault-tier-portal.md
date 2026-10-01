@@ -5,7 +5,7 @@ ms.devlang: azurecli
 ms.custom:
   - ignite-2024
 ms.topic: quickstart
-ms.date: 05/22/2025
+ms.date: 01/28/2026
 ms.service: azure-backup
 author: AbhishekMallick-MS
 ms.author: v-mallicka
@@ -30,7 +30,7 @@ A backup policy defines the schedule, frequency of recovery point creation, and 
 
 To create a backup policy, follow these steps:
 
-1. Go to **Business Continuity Center** > **Protection policies**, and then select **+ Create policy** > **Create backup policy**.
+1. Go to **Resiliency** > **Protection policies**, and then select **+ Create policy** > **Create backup policy**.
 
    :::image type="content" source="./media/tutorial-backup-azure-files-vault-tier-portal/create-backup-policy.png" alt-text="Screenshot shows how to start creating a Backup policy." lightbox="./media/tutorial-backup-azure-files-vault-tier-portal/create-backup-policy.png":::
  
@@ -48,7 +48,7 @@ To create a backup policy, follow these steps:
 5. Under the **Backup schedule** section, configure the backup schedule as per the requirement.
 
    >[!Note]
-   > You can configure up to **six backups** per day. The snapshots are taken as per the schedule defined in the policy. In case of vaulted backup, the data from the last snapshot of the day is transferred to the vault.
+   > You can configure up to **24 snapshots** per day. The snapshots are taken as per the schedule defined in the policy. In case of vaulted backup, the data from the last snapshot of the day is transferred to the vault.
 6. Under the **Snapshot retention** and **Vault retention** sections, configure the retention duration to determine the expiry date of the recovery points, and then select **OK**.
 
    :::image type="content" source="./media/tutorial-backup-azure-files-vault-tier-portal/trigger-create-policy.png" alt-text="Screenshot shows how to set the backup schedule and retention duration.":::

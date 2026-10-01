@@ -1,12 +1,12 @@
 ---
 title: Support matrix for moving Azure VMs to another region with Azure Resource Mover
 description: Review support for moving Azure VMs between regions with Azure Resource Mover.
-author: jasminemehndir
-ms.author: v-jasmineme
-ms.date: 07/31/2025
+author: RochakSingh-blr
+ms.author: v-rochak2
+ms.date: 08/03/2026
 ms.service: azure-resource-mover
 ms.topic: how-to
-ms.update-cycle: 180-days
+ms.update-cycle: 365-days
 ms.custom: engagement-fy23, UpdateFrequency.5, linux-related-content
 # Customer intent: As a cloud administrator, I want to understand the prerequisites and supported configurations for moving Azure VMs between regions using Resource Mover, so that I can ensure a successful migration process without service interruptions.
 ---
@@ -19,21 +19,24 @@ This article summarizes support and prerequisites when you move virtual machines
 
 Resource Mover supports Azure VMs running these Windows operating systems.
 
-> [!NOTE]
-> Windows Trusted Launch VMs are supported by Resource Mover. 
+[!INCLUDE [end-of-support-notes-windows-server-2008-2012](./includes/end-of-support-notes-windows-server-2008-2012.md)]
 
 **Operating system** | **Details**
 --- | ---
+Windows Server 2025 | Supported.
+Windows Server 2022 | Supported.
 Windows Server 2019 | Supported for Server Core, Server with Desktop Experience.
 Windows Server 2016  | Supported Server Core, Server with Desktop Experience.
 Windows Server 2012 R2 | Supported.
 Windows Server 2012 | Supported.
-Windows Server 2008 R2 with SP1/SP2 | Supported.<br/><br/> For machines running Windows Server 2008 R2 with SP1/SP2, you need to install a Windows [servicing stack update (SSU)](https://support.microsoft.com/help/4490628) and [SHA-2 update](https://support.microsoft.com/help/4474419).  SHA-1 isn't supported from September 2019, and if SHA-2 code signing isn't enabled the agent extension won't install/upgrade as expected. Learn more about [SHA-2 upgrade and requirements](https://aka.ms/SHA-2KB).
+Windows Server 2008 R2 with SP1/SP2 | Supported.<br/><br/> For machines running Windows Server 2008 R2 with SP1/SP2, you need to install a Windows [servicing stack update (SSU)](https://support.microsoft.com/help/4490628) and [SHA-2 update](https://support.microsoft.com/help/4474419). SHA-1 isn't supported from September 2019, and if SHA-2 code signing isn't enabled the agent extension won't install/upgrade as expected. Learn more about [SHA-2 upgrade and requirements](https://aka.ms/SHA-2KB).
 Windows 10 (x64) | Supported.
 Windows 8.1 (x64) | Supported.
 Windows 8 (x64) | Supported.
-Windows 7 (x64) with SP1 onwards | Install a Windows [servicing stack update (SSU)](https://support.microsoft.com/help/4490628) and [SHA-2 update](https://support.microsoft.com/help/4474419) on machines running Windows 7 with SP1.  SHA-1 isn't supported from September 2019, and if SHA-2 code signing isn't enabled the 'prepare' step won't succeed. Learn more about [SHA-2 upgrade and requirements](https://aka.ms/SHA-2KB).
+Windows 7 (x64) with SP1 onwards | Install a Windows [servicing stack update (SSU)](https://support.microsoft.com/help/4490628) and [SHA-2 update](https://support.microsoft.com/help/4474419) on machines running Windows 7 with SP1. SHA-1 isn't supported from September 2019, and if SHA-2 code signing isn't enabled the 'prepare' step won't succeed. Learn more about [SHA-2 upgrade and requirements](https://aka.ms/SHA-2KB).
 
+> [!NOTE]
+> Windows Trusted Launch VMs are supported by Resource Mover.
 
 ## Linux VM support
 
@@ -48,6 +51,9 @@ Red Hat Enterprise Linux | 6.7, 6.8, 6.9, 6.10, 7.0, 7.1, 7.2, 7.3, 7.4, 7.5, 7.
 Ubuntu 14.04 LTS Server | [Supported kernel versions](#supported-ubuntu-kernel-versions)
 Ubuntu 16.04 LTS Server | [Supported kernel version](#supported-ubuntu-kernel-versions)<br/><br/> Ubuntu servers using password-based authentication and sign-in, and the cloud-init package to configure cloud VMs, might have password-based sign-in disabled on failover (depending on the cloud-init configuration). Password-based sign-in can be reenabled on the virtual machine by resetting the password from the Support > Troubleshooting > Settings menu (of the failed over VM in the Azure portal.
 Ubuntu 18.04 LTS Server | [Supported kernel version](#supported-ubuntu-kernel-versions).
+Ubuntu 20.04 LTS Server | Includes support for all 20.04.*x* versions. [Supported kernel versions](../site-recovery/azure-to-azure-support-matrix.md#supported-ubuntu-kernel-versions-for-azure-vms).
+Ubuntu 22.04 LTS Server | Includes support for all 22.04.*x* versions. [Supported kernel versions](../site-recovery/azure-to-azure-support-matrix.md#supported-ubuntu-kernel-versions-for-azure-vms).
+Ubuntu 24.04 LTS Server | Includes support for all 24.04.*x* versions. [Supported kernel versions](../site-recovery/azure-to-azure-support-matrix.md#supported-ubuntu-kernel-versions-for-azure-vms).
 Debian 7 | [Supported kernel versions](#supported-debian-kernel-versions).
 Debian 8 | [Supported kernel versions](#supported-debian-kernel-versions).
 SUSE Linux Enterprise Server 12 | SP1, SP2, SP3, SP4. [Supported kernel versions](#supported-suse-linux-enterprise-server-12-kernel-versions)
@@ -119,12 +125,12 @@ This table summarized support for the Azure VM OS disk, data disk, and temporary
 
 **Component** | **Support** | **Details**
 --- | --- | ---
-OS disk maximum size | 2048 GB | [Learn more](/azure/virtual-machines/managed-disks-overview) about VM disks.
+OS disk maximum size | 2,048 GB | [Learn more](/azure/virtual-machines/managed-disks-overview) about VM disks.
 Temporary disk | Not supported | The temporary disk is always excluded from the prepare process.<br/><br/> Don't store any persistent data on the temporary disk. [Learn more](/azure/virtual-machines/managed-disks-overview#temporary-disk).
-Data disk maximum size | 8192 GB for managed disks
+Data disk maximum size | 8,192 GB for managed disks
 Data disk minimum size |  2 GB for managed disks |
 Data disk maximum number | Up to 64, in accordance with support for a specific Azure VM size | [Learn more](/azure/virtual-machines/sizes) about VM sizes.
-Data disk change rate | Maximum of 10 MBps per disk for premium storage. Maximum of 2 MBps per disk for Standard storage. | If the average data change rate on the disk is continuously higher than the maximum, the preparation won't catch up.<br/><br/>  However, if the maximum is exceeded sporadically, preparation can catch up, but you might see slightly delayed recovery points.
+Data disks change rate | Maximum of 10 MBps per disk for premium storage. Maximum of 2 MBps per disk for Standard storage. | If the average data change rate on the disk is continuously higher than the maximum, the preparation won't catch up.<br/><br/>  However, if the maximum is exceeded sporadically, preparation can catch up, but you might see slightly delayed recovery points.
 Data disk (Standard storage account) | Not supported. | Change the storage type to managed disk, and then try moving the VM.
 Data disk (Premium storage account) | Not supported | Change the storage type to managed disk, and then try moving the VM.
 Managed disk (Standard) | Supported  |
@@ -146,7 +152,7 @@ Premium P10 or P15 disk | 8 KB    | 2 MB/s | 168 GB per disk
 Premium P10 or P15 disk | 16 KB | 4 MB/s |    336 GB per disk
 Premium P10 or P15 disk | 32 KB or greater | 8 MB/s | 672 GB per disk
 Premium P20 or P30 or P40 or P50 disk | 8 KB    | 5 MB/s | 421 GB per disk
-Premium P20 or P30 or P40 or P50 disk | 16 KB or greater |20 MB/s | 1684 GB per disk
+Premium P20 or P30 or P40 or P50 disk | 16 KB or greater |20 MB/s | 1,684 GB per disk
 
 ## Supported VM networking settings
 
@@ -183,10 +189,10 @@ If you're using a network security group (NSG) rules to control outbound connect
 - Create a Storage tag rule for the source region.
 - Create an *AzureSiteRecovery* tag rule, to allow access to the Site Recovery service in any region. This tag has dependencies on these other tags, so you need to create rules for them to:
     - *AzureActiveDirectory*
-    - **EventHub*
+    - *EventHub*
     - *AzureKeyVault*
     - *GuestAndHybridManagement*
-- We recommend you test rules in a non-production environment. [Review some examples](../site-recovery/azure-to-azure-about-networking.md#outbound-connectivity-using-service-tags).
+- We recommend you test rules in a nonproduction environment. [Review some examples](../site-recovery/azure-to-azure-about-networking.md#outbound-connectivity-using-service-tags).
 
 ## Next steps
 

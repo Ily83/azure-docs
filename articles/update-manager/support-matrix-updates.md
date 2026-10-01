@@ -2,8 +2,8 @@
 title: Azure Update Manager support matrix for updates
 description: This article provides a summary of support for updates, one time updates, periodic assessments and scheduled patching.
 ms.service: azure-update-manager
-author: habibaum
-ms.author: v-uhabiba
+author: Jeronika-MS
+ms.author: v-gajeronika
 ms.date: 03/18/2025
 ms.topic: overview
 zone_pivot_groups: support-matrix-updates
@@ -33,14 +33,15 @@ The Azure Marketplace image has the following attributes:
 Update Manager supports the following operating system versions on VMs for all operations except automatic VM guest patching. You might experience failures if there are any configuration changes on the VMs, such as package or repository.
 
 >[!NOTE]
-> * Only x64 operating systems are currently supported. Neither ARM64 nor x86 are supported for any operating system.
-> * Updates might fail to install on SUSE machines if they require accepting the EULA.
+> * x64 and select ARM64 operating systems are currently supported.
+> * x86 operating systems aren't supported.
+> * Azure Update Manager (AUM) doesn't accept End User License Agreements on behalf of users. As a result, AUM can't install updates that require EULA acceptance.
 
 Following is the list of supported images and no other marketplace images released by any other publisher are supported for use with Azure Update Manager.
 
-The asterisk (*) in the Offer or Plan columns acts as a wildcard. * means all possible values are supported.
+An asterisk (*) in the Offer or Plan columns represents a wildcard character. It indicates that all possible values are supported.
 
-#### [Supported Windows OS images](#tab/mpir-winos)
+#### [Supported Windows x64 OS images](#tab/mpir-winos)
 
 |Publisher |Offer |Plan |Unsupported image(s) |
 |--|--|--|--|
@@ -105,9 +106,12 @@ The asterisk (*) in the Offer or Plan columns acts as a wildcard. * means all po
 | tidalmediainc | windows-server-2022-datacenter | windows-server-2022-datacenter |  |
 | veeam | office365backup | veeamoffice365backup |  |
 | veeam | veeam-backup-replication | veeam-backup-replication-v* |  |
+| microsoft-ads | windows-data-science-vm | * |  |
+| mirantis | windows_2022_with_mirantis_container_runtime | win_2022_mcr_25_0 |  |
+| microsoftwindowsserver | windowsserver2022 | * |  |
 
 
-#### [Supported Linux OS images](#tab/mpir-linos)
+#### [Supported Linux x64 OS images](#tab/mpir-linos)
 
 | Publisher| Offer| Plan| Unsupported image(s)|
 |--|--|--|--|
@@ -207,7 +211,7 @@ The asterisk (*) in the Offer or Plan columns acts as a wildcard. * means all po
 |openlogic | centos-ci | 7-ci | |
 |openlogic | centos-hpc | |* | 
 |openlogic | centos-lvm | 7-lvm <br> 7-lvm-gen2 <br> 8-lvm | |
-|openvpn| openvpnas| access_server_byol||
+|openvpn| openvpnas| access_server_byol </br> </br> openvpnas ||
 |oracle| oracle-database-*| 18.*||
 |oracle| oracle-database-19-3| oracle-database-19-0904 |
 |oracle| oracle-database| oracle_db_21||
@@ -219,12 +223,13 @@ The asterisk (*) in the Offer or Plan columns acts as a wildcard. * means all po
 |procomputers| rhel-8-9-gen2| rhel-8-9-gen2||
 |rapid7| nexpose-scan-engine| nexpose-scan-engine||
 |rapid7| rapid7-vm-console| rapid7-vm-console||
-|redhat| rhel-byos| rhel-raw76 <br> rhel-lvm7* <br> rhel-lvm8* <br> rhel-lvm92 <br> rhel-lvm-92-gen2||
+|redhat| rhel-byos| rhel-raw76 <br> rhel-lvm7* <br> rhel-lvm8* <br> rhel-lvm92 <br> rhel-lvm-92-gen2 </br></br> rhel-lvm95 </br></br> rhel-lvm95-gen2 ||
+|redhat| rhel-cvm | 9_4_cvm  ||
 |redhat| rhel-ha| 8* <br> 9_2 <br> 9_2-gen2 |81_gen2|
 |redhat| rhel-raw| 7* <br> 8* <br> 9*||
 |redhat| rhel-sap-*| 9_0||
 |redhat| rhel-sap-apps| 7* <br> 8* <br> 9_0 <br> 90sapapps-gen2 <br> 9_2 <br> 92sapapps-gen2||
-|redhat| rhel-sap-ha| 7* <br> 8* <br> 9_2 <br> 92sapha-gen2||
+|redhat| rhel-sap-ha| 7* <br> 8* <br> 9_2 <br> 92sapha-gen2 </br></br> 94sapha-gen2 ||
 |redhat| rhel-sap| 7*||
 |redhat| rhel| 7* <br> 8* <br> 9*||
 |resf| rockylinux-x86_64 | 8-base </br> 8-lvm </br> 9-base </br> 9-lvm || 
@@ -273,6 +278,22 @@ The asterisk (*) in the Offer or Plan columns acts as a wildcard. * means all po
 |tenable| tenablecorewas| tenablecoreol8wasbyol||
 |thorntechnologiesllc| sftpgateway| sftpgateway||
 |zscaler| zscaler-private-access| zpa-con-azure||
+|almalinux| almalinux-x86_64| 9-gen*||
+|center-for-internet-security-inc| cis-ubuntu| cis-ubuntulinux2404-l1-gen*||
+|microsoftcblmariner| azure-linux-3| azure-linux-3-gen2||
+|microsoftcblmariner| cbl-mariner| cbl-mariner-2-arm64 </br> cbl-mariner-2-gen2-fips||
+
+#### [Supported Linux ARM64 OS images](#tab/mpir-arm)
+
+| Publisher| Offer| Plan| Unsupported image(s)|
+|--|--|--|--|
+| canonical  | * |* |  |
+|redhat | rhel-arm64 | 9_0-arm64 | |
+|redhat | rhel-arm64 |8_6-arm64 | |
+|redhat |rhel-arm64 | 9_1-arm64 ||
+|debian |debian-12 | 12-arm64 | |
+|debian |debian-12-daily |12-arm64 | |
+|debian |debian-12-daily | 12-backports-arm64 | | 
 
 ---
 

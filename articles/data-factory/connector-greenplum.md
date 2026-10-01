@@ -2,20 +2,29 @@
 title: Copy data from Greenplum
 description: Learn how to copy data from Greenplum to supported sink data stores using a copy activity in an Azure Data Factory or Synapse Analytics pipeline.
 titleSuffix: Azure Data Factory & Azure Synapse
-author: jianleishen
+author: simplywilson
 ms.subservice: data-movement
-ms.custom: synapse
-ms.topic: conceptual
-ms.date: 06/06/2025
-ms.author: jianleishen
+ms.topic: how-to
+ms.date: 01/23/2026
+ms.author: tinglee
+ms.custom:
+  - synapse
+  - sfi-image-nochange
+  - sfi-ropc-nochange
 ---
 # Copy data from Greenplum using Azure Data Factory or Synapse Analytics
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
+
 This article outlines how to use the Copy Activity in an Azure Data Factory or Synapse Analytics pipeline to copy data from Greenplum. It builds on the [copy activity overview](copy-activity-overview.md) article that presents a general overview of copy activity.
 
+> [!NOTE]
+> This connector is also available in [Data Factory in Microsoft Fabric](/fabric/data-factory/data-factory-overview). For Fabric-specific configuration and features, see the [Fabric Greenplum connector documentation](/fabric/data-factory/connector-greenplum-for-pipeline-overview).
+
+
 > [!IMPORTANT]
-> The Greenplum connector version 2.0 provides improved native Greenplum support. If you are using Greenplum connector version 1.0 in your solution, please [upgrade the Greenplum connector](#upgrade-the-greenplum-connector) before **August 31, 2025**. Refer to this [section](#differences-between-greenplum-version-20-and-version-10) for details on the difference between version 2.0 and version 1.0.
+> The Greenplum connector version 1.0 is at [removal stage](connector-release-stages-and-timelines.md). You are recommended to [upgrade the Greenplum connector](#upgrade-the-greenplum-connector) from version 1.0 to 2.0.
 
 ## Supported capabilities
 
@@ -86,7 +95,7 @@ The Greenplum linked service supports the following properties when apply versio
 | port | The TCP port of the database server. The default value is `5432`.| No |
 | database | The database to connect to. | Yes |
 | username | The username to connect with. Not required if using IntegratedSecurity. |Yes |
-| password| The password to connect with. Not required if using IntegratedSecurity. Mark this field as **SecureString** to store it securely. Or, you can [reference a secret stored in Azure Key Vault](store-credentials-in-key-vault.md). | Yes |
+| pwd| The password to connect with. Not required if using IntegratedSecurity. Mark this field as **SecureString** to store it securely. Or, you can [reference a secret stored in Azure Key Vault](store-credentials-in-key-vault.md). | Yes |
 | sslMode | Controls whether SSL is used, depending on server support. <br/>- **Disable**: SSL is disabled. If the server requires SSL, the connection will fail. <br/>- **Allow**: Prefer non-SSL connections if the server allows them, but allow SSL connections. <br/>- **Prefer**: Prefer SSL connections if the server allows them, but allow connections without SSL. <br/>- **Require**: Fail the connection if the server doesn't support SSL. <br/>- **Verify-ca**: Fail the connection if the server doesn't support SSL. Also verifies server certificate. <br/>- **Verify-full**: Fail the connection if the server doesn't support SSL. Also verifies server certificate with host's name. <br/> Options: Disable (0) / Allow (1) / Prefer (2) / Require (3) **(Default)** / Verify-ca (4) / Verify-full (5) | Yes |
 | authenticationType | Authentication type for connecting to the database. Only supports **Basic**. | Yes |
 | connectVia | The [Integration Runtime](concepts-integration-runtime.md) to be used to connect to the data store. Learn more from [Prerequisites](#prerequisites) section. If not specified, it uses the default Azure Integration Runtime. |No |
@@ -107,7 +116,7 @@ The Greenplum linked service supports the following properties when apply versio
             "port": 5432,
             "database": "<database>",
             "username": "<username>",
-            "password": {
+            "pwd": {
                 "type": "SecureString",
                 "value": "<password>"
             },
@@ -121,7 +130,7 @@ The Greenplum linked service supports the following properties when apply versio
     }
 }
 ```
-**Example: store password in Azure Key Vault**
+**Example: store pwd in Azure Key Vault**
 ```json
 {
     "name": "GreenplumLinkedService",
@@ -133,7 +142,7 @@ The Greenplum linked service supports the following properties when apply versio
             "port": 5432,
             "database": "<database>",
             "username": "<username>",
-            "password": { 
+            "pwd": { 
                 "type": "AzureKeyVaultSecret", 
                 "store": { 
                     "referenceName": "<Azure Key Vault linked service name>", 

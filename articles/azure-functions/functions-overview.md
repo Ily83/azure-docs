@@ -1,10 +1,11 @@
 ---
-title: Azure Functions overview
+title: Azure Functions Overview
 description: Learn how you can use Azure Functions to build robust serverless apps without writing extra code.
 ms.assetid: 01d6ca9f-ca3f-44fa-b0b9-7ffee115acd4
 ms.topic: overview
-ms.date: 03/06/2025
+ms.date: 09/04/2026
 ms.custom: devdivchpfy22, build-2023
+#customer intent: As a developer, I want an overview of Azure Functions capabilities and hosting options so that I can choose the right model and plan for my workload.
 ---
 
 # What is Azure Functions?
@@ -23,30 +24,38 @@ The following list includes common integrated scenarios that use Functions.
 | --- | --- |
 | [Process file uploads](./functions-scenarios.md#process-file-uploads) | Run code when a file is uploaded or changed in blob storage. |
 | [Process data in real time](./functions-scenarios.md#real-time-stream-and-event-processing)| Capture and transform data from event and IoT source streams on the way to storage.   |
-| [Run AI inference](./functions-scenarios.md#machine-learning-and-ai)| Pull text from a queue and present it to various AI services for analysis and classification. |
+| [Build AI-enabled apps](./functions-scenarios.md#build-ai-enabled-apps) | Make data and APIs available to AI clients, and add AI reasoning to event-driven applications. |
 | [Run scheduled task](./functions-scenarios.md#run-scheduled-tasks)| Execute data clean-up code on predefined timed intervals. |
 | [Build a scalable web API](./functions-scenarios.md#build-a-scalable-web-api)| Implement a set of REST endpoints for your web applications using HTTP triggers. |
 | [Build a serverless workflow](./functions-scenarios.md#build-a-serverless-workflow)| Create an event-driven workflow from a series of functions using Durable Functions. |
 | [Respond to database changes](./functions-scenarios.md#respond-to-database-changes)| Run custom logic when a document is created or updated in a database. |
 | [Create reliable message systems](./functions-scenarios.md#create-reliable-message-systems)| Process message queues using Azure Queue Storage, Service Bus, or Event Hubs. |
+| [Integrate with SaaS and business services](./functions-connectors-overview.md) | Use managed connectors to respond to events and call operations in services such as Microsoft 365, Teams, and SharePoint. |
 
 These scenarios allow you to build event-driven systems using modern architectural patterns. For more information, see [Azure Functions scenarios](functions-scenarios.md).
 
 ## Development lifecycle
 
-With Functions, you write your function code in your preferred language using your favorite development tools, and then deploy your code to the Azure cloud. Functions provides native support for developing in [C#, Java, JavaScript, PowerShell, or Python](./supported-languages.md), plus the ability to use [custom handlers](./functions-custom-handlers.md) for other languages, such as Rust and Go.
+Functions supports you through every stage of app development:
 
-Functions integrates directly with Visual Studio, Visual Studio Code, Maven, and other popular development tools to enable seamless debugging and [deployments](functions-deployment-technologies.md). 
-
-Functions also integrates with Azure Monitor and Azure Application Insights to provide comprehensive monitoring and analysis of your [functions in the cloud](functions-monitoring.md).
+1. **Code** in [C#, Java, JavaScript, PowerShell, Python, or Go](./supported-languages.md), or use [custom handlers](./functions-custom-handlers.md) for languages like Rust.
+1. **Develop and debug** locally with [Visual Studio, Visual Studio Code, Maven, and other tools](functions-develop-local.md).
+1. **Deploy** to Azure using [CLI, CI/CD pipelines, or your IDE](functions-deployment-technologies.md).
+1. **Monitor** performance and diagnose issues with built-in [Azure Monitor and Application Insights](functions-monitoring.md) integration.
 
 ## Hosting options
 
-Functions provides various [hosting options](functions-scale.md) for your business needs and application workload. [Event-driven scaling hosting options](event-driven-scaling.md) range from fully serverless, where you only pay for execution time (Consumption plan), to always-warm instances kept ready for the fastest response times (Premium plan).
+Functions provides various [hosting options](functions-scale.md) for your business needs and application workload.
 
-When you have excess App Service hosting resources, you can host your functions in an existing App Service plan. This kind of Dedicated hosting plan is also a good choice when you need predictable scaling behaviors and costs from your functions.
+| Hosting option | Description |
+| --- | --- |
+| [Flex Consumption plan](flex-consumption-plan.md) | **Recommended.** Fast event-driven scaling, virtual network integration, and pay-as-you-go billing. |
+| [Premium plan](functions-premium-plan.md) | Always-warm instances for the fastest response times, unlimited execution duration, and virtual network integration. |
+| [Dedicated plan](dedicated-plan.md) | Run functions in an existing App Service plan with predictable scaling and costs. |
+| [Container Apps](../container-apps/functions-overview.md) | Deploy fully customized containerized function apps alongside microservices in Azure Container Apps. |
+| [Consumption plan](consumption-plan.md) | Legacy serverless plan (Windows only). Use the Flex Consumption plan for new apps. |
 
-If you want complete control over your runtime environment and dependencies, you can even deploy your functions in containers that you can fully customize. Your custom containers can be hosted by Functions, deployed as part of a microservices architecture in Azure Container Apps, or even self-hosted in Kubernetes.
+For a detailed comparison, see [Azure Functions hosting options](functions-scale.md).
 
 ## Related content
 

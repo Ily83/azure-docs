@@ -5,7 +5,7 @@ description: Learn how to integrate Azure AD B2C authentication with Nevis for p
 author: gargi-sinha
 manager: martinco
 ms.reviewer: kengaderdus
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.topic: how-to
 ms.date: 01/26/2024
 ms.author: gasinh
@@ -29,7 +29,7 @@ To get started, you'll need:
 
 - An Azure subscription
 
-  - If you don't have one, you can get an [Azure free account](https://azure.microsoft.com/free/)
+  - If you don't have one, you can get an [Azure free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 
 - An [Azure AD B2C tenant](./tutorial-create-tenant.md) linked to your Azure subscription
 

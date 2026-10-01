@@ -1,10 +1,9 @@
 ---
 title: Tutorial - Create a hierarchy of IoT Edge devices - Azure IoT Edge for Linux on Windows
 description: This tutorial shows you how to create a hierarchical structure of IoT Edge for Linux on Windows devices.
-author: PatAltimore
-
-ms.author: patricka
-ms.date: 07/22/2025
+author: sethmanheim
+ms.author: sethm
+ms.date: 07/16/2026
 ms.topic: tutorial
 ms.service: azure-iot-edge
 ms.custom: devx-track-azurecli, linux-related-content
@@ -27,7 +26,7 @@ This tutorial shows you how to create a hierarchy of IoT Edge devices using IoT 
 > * Configure the IoT Edge runtime on the devices in your hierarchy.
 > * Install consistent certificates across your device hierarchy.
 > * Add workloads to the devices in your hierarchy.
-> * Use the [IoT Edge API Proxy module](https://mcr.microsoft.com/en-us/artifact/mar/azureiotedge-api-proxy/) to securely route HTTP traffic over a single port from your lower layer devices.
+> * Use the [IoT Edge API Proxy module](https://mcr.microsoft.com/artifact/mar/azureiotedge-api-proxy/) to securely route HTTP traffic over a single port from your lower layer devices.
 
 >[!TIP]
 >This tutorial includes a mixture of manual and automated steps to provide a showcase of nested IoT Edge features.
@@ -62,7 +61,7 @@ To create a hierarchy of IoT Edge devices, you need:
 > For more information about networking, see [Azure IoT Edge for Linux on Windows networking](./iot-edge-for-linux-on-windows-networking.md) and [Networking configuration for Azure IoT Edge for Linux on Windows](./how-to-configure-iot-edge-for-linux-on-windows-networking.md).
 >
 > If you need to set up the EFLOW devices on a DMZ, see [How to configure Azure IoT Edge for Linux on Windows Industrial IoT & DMZ configuration](how-to-configure-iot-edge-for-linux-on-windows-iiot-dmz.md).
-* An Azure account with a valid subscription. If you don't have an [Azure subscription](../guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create a [free account](https://azure.microsoft.com/free/) before you begin.
+* An Azure account with a valid subscription. If you don't have an [Azure subscription](../guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 * A free or standard tier [IoT Hub](../iot-hub/iot-hub-create-through-portal.md) in Azure.
 * Make sure that the following ports are open inbound for all devices except the lowest layer device: 443, 5671, and 8883:
   * 443: Used between parent and child edge hubs for REST API calls and to pull docker container images.
@@ -114,7 +113,7 @@ You create a group of nested edge devices with containing a parent device with o
    az iot edge devices create \
       --hub-name <hub-name> \
       --output-path <config-bundle-output-path> \
-      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.5" \
+      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.6" \
       --device id=<parent-device-name> \
          deployment=<parent-deployment-manifest> \
          hostname=<parent-fqdn-or-ip> \
@@ -130,7 +129,7 @@ You create a group of nested edge devices with containing a parent device with o
    az iot edge devices create \
       --hub-name my-iot-hub \
       --output-path ./output \
-      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.5" \
+      --default-edge-agent "mcr.microsoft.com/azureiotedge-agent:1.6" \
       --device id=parent-1 \
          deployment=./deploymentTopLayer.json \
          hostname=10.0.0.4 \
@@ -163,20 +162,20 @@ In addition to the provisioning of your devices, the configuration steps establi
 
 To configure the IoT Edge runtime, you need to apply the configuration bundles to your devices. The configurations differ between the *top layer device* and a *lower layer device*, so be mindful of the device configuration file you're applying to each device.
 
-Each device needs its corresponding configuration bundle. You can use a USB drive or [secure file copy](https://www.ssh.com/ssh/scp/) to move the configuration bundles to each device. You need to copy the configuration bundle to the Windows host OS of each EFLOW device and then copy it to the EFLOW VM. 
+Each device needs its corresponding configuration bundle. You can use a USB drive or [secure file copy](https://www.ssh.com/academy/ssh/scp) to move the configuration bundles to each device. You need to copy the configuration bundle to the Windows host OS of each EFLOW device and then copy it to the EFLOW VM. 
 
 > [!WARNING]
 > Be sure to send the correct configuration bundle to each device. 
 
 #### Top-layer device configuration
 
-1. Connect to your *top level* Windows host device and copy the **parent-1.tzg** file to the device.
+1. Connect to your *top level* Windows host device and copy the **parent-1.tgz** file to the device.
 
 1. Start an elevated *PowerShell* session using **Run as Administrator**.
 
-1.  Copy **parent-1.tzg** into the EFLOW VM.
+1.  Copy **parent-1.tgz** into the EFLOW VM.
     ```powershell
-    Copy-EflowVmFile -fromFile parent-1.tzg -toFile ~/ -pushFile
+    Copy-EflowVmFile -fromFile parent-1.tgz -toFile ~/ -pushFile
     ```
 
 1. Connect to your EFLOW virtual machine
@@ -235,14 +234,14 @@ If you want a closer look at what modifications are being made to your device's 
 
 #### Lower-layer device configuration
 
-1. Connect to your *lower level* Windows host device and copy the **child-1.tzg** file to the device.
+1. Connect to your *lower level* Windows host device and copy the **child-1.tgz** file to the device.
 
 1. Start an elevated *PowerShell* session using **Run as Administrator**.
 
-1.  Copy **child-1.tzg** into the EFLOW VM.
+1.  Copy **child-1.tgz** into the EFLOW VM.
 
     ```powershell
-    Copy-EflowVmFile -fromFile child-1.tzg -toFile ~/ -pushFile
+    Copy-EflowVmFile -fromFile child-1.tgz -toFile ~/ -pushFile
     ```
 
 1. Connect to your EFLOW virtual machine
@@ -281,7 +280,7 @@ If you want a closer look at what modifications are being made to your device's 
 1. Run the configuration and connectivity checks on your devices. For the **lower layer device**, the diagnostics image needs to be manually passed in the command:
 
     ```bash
-    sudo iotedge check --diagnostics-image-name <parent_device_fqdn_or_ip>:443/azureiotedge-diagnostics:1.2
+    sudo iotedge check --diagnostics-image-name <parent_device_fqdn_or_ip>:443/azureiotedge-diagnostics:1.6
     ```
 
 If you completed the earlier steps correctly, you can verify your devices are configured correctly. Once you're satisfied your configurations are correct on each device, you're ready to proceed.
@@ -347,7 +346,7 @@ You can run `iotedge check` in a nested hierarchy, even if the downstream device
 When you run `iotedge check` from the lower layer, the program tries to pull the image from the parent through port 443.
 
 ```bash
-sudo iotedge check --diagnostics-image-name $upstream:443/azureiotedge-diagnostics:1.2
+sudo iotedge check --diagnostics-image-name $upstream:443/azureiotedge-diagnostics:1.6
 ```
 
 The `azureiotedge-diagnostics` value is pulled from the container registry that's linked with the registry module. This tutorial sets it by default to https://mcr.microsoft.com:
@@ -362,17 +361,17 @@ If a downstream device has a different processor architecture from the parent de
 
 ```toml
 [agent.config]
-image = "$upstream:443/azureiotedge-agent:1.5.15-linux-amd64"
+image = "$upstream:443/azureiotedge-agent:1.6.15-linux-amd64"
 
 "systemModules": {
    "edgeAgent": {
       "settings": {
-            "image": "$upstream:443/azureiotedge-agent:1.5.15-linux-amd64"
+            "image": "$upstream:443/azureiotedge-agent:1.6.15-linux-amd64"
       },
    },
    "edgeHub": {
       "settings": {
-            "image": "$upstream:443/azureiotedge-hub:1.5.15-linux-amd64",
+            "image": "$upstream:443/azureiotedge-hub:1.6.15-linux-amd64",
       }
    }
 }

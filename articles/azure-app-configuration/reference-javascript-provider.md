@@ -138,9 +138,12 @@ const appConfig = await load(endpoint, credential);
 const { size, color } = appConfig.get("font");
 ```
 
+> [!NOTE]
+> Starting with version *2.2.0* of `@azure/app-configuration-provider`, the configuration provider allows comments, as defined in ([JSONC](https://jsonc.org/)), in key-values with an `application/json` content type.
+
 ### Load specific key-values using selectors
 
-By default, the `load` method will load all configurations with no label from the configuration store. You can configure the behavior of the `load` method through the optional parameter of [`AzureAppConfigurationOptions`](https://github.com/Azure/AppConfiguration-JavaScriptProvider/blob/main/src/AzureAppConfigurationOptions.ts) type.
+By default, the `load` method will load all configurations with no label from the configuration store. You can configure the behavior of the `load` method through the optional parameter of [`AzureAppConfigurationOptions`](https://github.com/Azure/AppConfiguration-JavaScriptProvider/blob/main/src/appConfigurationOptions.ts) type.
 
 To refine or expand the configurations loaded from the App Configuration store, you can specify the key or label selectors under the `AzureAppConfigurationOptions.selectors` property.
 
@@ -151,8 +154,9 @@ const appConfig = await load(endpoint, credential, {
             keyFilter: "app1.*",
             labelFilter: "test"
         },
-        { // load the subset of keys starting with "dev" label"
-            labelFilter: "dev*"
+        { // load the subset of keys with "dev" label"
+            keyFilter: "*",
+            labelFilter: "dev"
         }
     ]
 });
@@ -160,6 +164,29 @@ const appConfig = await load(endpoint, credential, {
 
 > [!NOTE]
 > Key-values are loaded in the order in which the selectors are listed. If multiple selectors retrieve key-values with the same key, the value from the last one will override any previously loaded value.
+
+#### Tag filters
+
+The tag filters parameter selects key-values with specific tags. A key-value is only loaded if it has all of the tags and corresponding values specified in the filters.
+
+```typescript
+const appConfig = await load(endpoint, credential, {
+    selectors: [
+        { // load the subset of keys with "test" label" and three tags
+            keyFilter: "*",
+            labelFilter: "test",
+            tagFilters: [
+                "emptyTag=",
+                "nullTag=\0",
+                "tag1=value1"
+            ]
+        }
+    ]
+});
+```
+
+> [!NOTE]
+> The characters asterisk (`*`), comma (`,`), and backslash (`\`) are reserved and must be escaped with a backslash when used in a tag filter.
 
 ### Trim prefix from keys
 
@@ -176,7 +203,7 @@ const appConfig = await load(endpoint, credential, {
 
 ## Configuration refresh
 
-Dynamic refresh for the configurations lets you pull their latest values from the App Configuration store without having to restart the application. You can set `AzureAppConfigurationOptions.refreshOptions` to enable the refresh and configure refresh options. The loaded configuration will be updated when any change of selected key-values is detected on the server. By default, a refresh interval of 30 seconds is used, but you can override it with the `refreshIntervalInMs` property.
+The provider can be configured to pull the latest settings from the App Configuration store without having to restart the application. You can set `AzureAppConfigurationOptions.refreshOptions` to enable the refresh and configure refresh options. The loaded configuration will be updated when any change of selected key-values is detected on the server. By default, a refresh interval of 30 seconds is used, but you can override it with the `refreshIntervalInMs` property.
 
 ```typescript
 const appConfig = await load(endpoint, credential, {
@@ -290,7 +317,7 @@ import { ConfigurationMapFeatureFlagProvider, FeatureManager } from "@microsoft/
 // Create a feature flag provider which uses the configuration provider as feature flag source
 const ffProvider = new ConfigurationMapFeatureFlagProvider(appConfig);
 // Create a feature manager which will evaluate the feature flag
-const fm = new FeatureManager(ffProvider);
+const featureManager = new FeatureManager(ffProvider);
 
 import express from "express";
 const server = express();
@@ -391,6 +418,29 @@ const appConfig = await load(endpoint, credential, {
 > When resolving secret in parallel, you may encounter the [service limit](/azure/key-vault/general/service-limits#secrets-managed-storage-account-keys-and-vault-transactions) of Azure Key Vault.
 > To handle throttling effectively, implement the [client-side throttling best practices](/azure/key-vault/general/overview-throttling#how-to-throttle-your-app-in-response-to-service-limits) by configuring appropriate retry options for the `SecretClient`. You can either register custom `SecretClient` instances or configure `clientOptions` via the `AzureAppConfigurationOptions.keyVaultOptions`.
 
+### Key Vault secret refresh
+
+Azure App Configuration enables you to configure secret refresh intervals independently of your configuration refresh cycle. This is crucial for security because while the Key Vault reference URI in App Configuration remains unchanged, the underlying secret in Key Vault might be rotated as part of your security practices.
+
+> [!NOTE] 
+> Secret refresh uses a minimum interval of **one minute**. This prevents excessive secret reloads which may induce Key Vault throttling.
+
+To ensure your application always uses the most current secret values, configure the `secretRefreshIntervalInMs` property in `KeyVaultOptions`. This forces the provider to retrieve fresh secret values from Key Vault when:
+
+- Your application calls `AzureAppConfiguration.refresh`
+- The configured refresh interval for the secret has elapsed
+
+This mechanism works even when no changes are detected in your App Configuration store, ensuring your application stays in sync with rotated secrets.
+
+```typescript
+const credential = new DefaultAzureCredential();
+const appConfig = await load(endpoint, credential, {
+    keyVaultOptions: {
+        credential: credential,
+        secretRefreshIntervalInMs: 7200_000 // 2 hours
+    }
+});
+```
 
 ## Snapshot
 
@@ -414,6 +464,15 @@ const appConfig = await load(endpoint, credential, {
 });
 ```
 
+### Snapshot reference
+
+A snapshot reference is a configuration setting that references a snapshot in the same App Configuration store. When loaded, the provider resolves it and adds all key-values from that snapshot. Using snapshot references enables switching between snapshots at runtime, unlike adding a snapshot selector, which requires code changes and/or restarts to switch to a new snapshot.
+
+For more information about creating a snapshot reference, go to [snapshot reference concept](./concept-snapshot-references.md).
+
+> [!NOTE] 
+> To use snapshot references, use the version *2.3.0* or later of `@azure/app-configuration-provider`.
+
 ## Startup retry
 
 Configuration loading is a critical path operation during application startup. To ensure reliability, the Azure App Configuration provider implements a robust retry mechanism during the initial configuration load. This helps protect your application from transient network issues that might otherwise prevent successful startup.
@@ -431,6 +490,30 @@ const appConfig = await load(endpoint, credential, {
 ## Geo-replication
 
 For information about using geo-replication, go to [Enable geo-replication](./howto-geo-replication.md).
+
+## Connect to Azure Front Door
+
+The Azure Front Door integration allows client applications to fetch configuration from edge-cached endpoints rather than directly from App Configuration. This architecture delivers secure, scalable configuration access with the performance benefits of global CDN distribution.
+
+The following example demonstrates how to load configuration settings from Azure Front Door:
+
+```typescript
+import { loadFromAzureFrontDoor } from "@azure/app-configuration-provider";
+
+const appConfig = await loadFromAzureFrontDoor("{YOUR-AFD-ENDPOINT}", {
+    selectors: [{
+        keyFilter: "app.*"
+    }],
+    refreshOptions: {
+        enabled: true,
+        refreshIntervalInMs: 60_000
+    }
+});
+
+const message = appConfig.get("app.message");
+```
+
+For more information about Azure Front Door, see [Load Configuration from Azure Front Door in Client Applications](./how-to-load-azure-front-door-configuration-provider.md).
 
 ## Next steps
 

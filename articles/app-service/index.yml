@@ -43,6 +43,8 @@ landingContent:
         links:
           - text: ASP.NET
             url: quickstart-dotnetcore.md
+          - text: Aspire
+            url: quickstart-aspire.md
           - text: Java
             url: quickstart-java.md
           - text: Node.js
@@ -64,16 +66,14 @@ landingContent:
             url: overview-ai-integration.md
       - linkListType: tutorial
         links:
-          - text: Build a RAG application with Azure OpenAI and Azure AI Search (.NET)
-            url: tutorial-ai-openai-search-dotnet.md
+          - text: Build grounded agent applications with RAG
+            url: scenario-ai-chatbot-retrieval-augmented-generation.md
           - text: Build a chatbot with Azure OpenAI (Blazor)
             url: tutorial-ai-openai-chatbot-dotnet.md            
           - text: Build a chatbot with Azure OpenAI (Spring Boot)
             url: tutorial-ai-openai-chatbot-java.md            
           - text: Run a chatbot with a local SLM (Express.js)
             url: tutorial-ai-slm-expressjs.md
-          - text: Invoke a web app from Azure AI Agent
-            url: invoke-openapi-web-app-from-azure-ai-agent-service.md
 
   - title: Secure and deploy  
     linkLists:

@@ -7,23 +7,24 @@ ms.service: azure-container-apps
 ms.custom:
   - ignite-2024
   - build-2025
+  - references_regions
 ms.topic: how-to
-ms.date: 06/02/2025
+ms.date: 09/21/2026
 ms.author: cshoe
 ---
 
 # Using serverless GPUs in Azure Container Apps
 
-Azure Container Apps provides access to GPUs on-demand without you having to manage the underlying infrastructure. As a serverless feature, you only pay for GPUs in use. When enabled, the number of GPUs used for your app rises and falls to meet the load demands of your application. Serverless GPUs enable you to seamlessly run your workloads with automatic scaling, optimized cold start, per-second billing with scale down to zero when not in use, and reduced operational overhead. 
+Azure Container Apps provides access to GPUs on demand without you having to manage the underlying infrastructure. As a serverless feature, you pay only for GPUs in use. When enabled, the number of GPUs used for your app rises and falls to meet the load demands of your application. Serverless GPUs enable you to seamlessly run your workloads with automatic scaling, optimized cold start, per-second billing with scale down to zero when not in use, and reduced operational overhead. 
 
-Serverless GPUs are only supported for Consumption workload profiles. The feature isn't supported for Consumption-only environments.
+Serverless GPUs are supported only for Consumption workload profiles. The feature isn't supported for Consumption-only environments.
 
 > [!NOTE]
-> Access to GPUs is only available after you request GPU quotas. You can submit your GPU quota request via a [customer support case](/azure/azure-portal/supportability/how-to-create-azure-support-request).
+> You must create a workload profiles environment in a supported region before you can request the required [managed environment GPU quota](./quota-requests.md#managed-environment-quota-requests).
 
 ## Benefits
 
-Serverless GPUs accelerate AI development by allowing you to focus on your core AI code and less on managing infrastructure when using GPUs. This feature provides a middle layer option between the [Azure AI model catalog](/azure/machine-learning/concept-model-catalog)'s serverless APIs and hosting models on managed compute.
+Serverless GPUs accelerate AI development by allowing you to focus on your core AI code and less on managing infrastructure when using GPUs. This feature provides a middle layer option between the [Foundry model catalog](/azure/machine-learning/concept-model-catalog)'s serverless APIs and hosting models on managed compute.
 
 The Container Apps serverless GPU support provides full data governance as your data never leaves the boundaries of your container while still providing a managed, serverless platform from which to build your applications.
 
@@ -41,23 +42,23 @@ When you use serverless GPUs in Container Apps, your apps get:
 
 ## Common scenarios
 
-The following scenarios, while not comprehensive, describe common use cases for serverless GPUs.
+The following scenarios describe common use cases for serverless GPUs.
 
-- **Real-time and batch inferencing**: Using custom open-source models with fast startup times, automatic scaling, and a per-second billing model. Serverless GPUs are ideal for dynamic applications. You pay only for the compute you use, and your apps automatically scale in and out to meet demand.
+- **Real-time and batch inferencing**: Use custom open-source models with fast startup times, automatic scaling, and a per-second billing model. Serverless GPUs are ideal for dynamic applications. You pay only for the compute you use, and your apps automatically scale in and out to meet demand.
 
 - **Machine learning scenarios**: Significantly speed up applications that implement fine-tuned custom generative AI models, deep learning, neural networks, or large-scale data analysis.
 
-- **High-Performance Computing (HPC)**: Applications that require complex calculations and simulations, such as scientific computing, financial modeling, or weather forecasting use GPUs as resources for high computational demands.
+- **High-Performance Computing (HPC)**: Use GPUs as resources for high computational demands in applications that require complex calculations and simulations, such as scientific computing, financial modeling, or weather forecasting.
 
-- **Rendering and Visualization**: Applications that involve 3D rendering, image processing, or video transcoding often use GPUs to accelerate rendering process and enable real-time visualization.
+- **Rendering and Visualization**: Use GPUs to accelerate the rendering process and enable real-time visualization in applications that involve 3D rendering, image processing, or video transcoding.
 
 - **Big Data Analytics**: GPUs can accelerate data processing and analysis among massive datasets.
 
 ## Considerations
 
-Keep in mind the following items as you use serverless GPUs:
+Keep the following items in mind as you use serverless GPUs:
 
-- **CUDA version**: Serverless GPUs support the latest CUDA version
+- **CUDA version**: Serverless GPUs support the latest CUDA version. For details on the current driver and runtime versions, see [GPU software stack](#gpu-software-stack).
 
 - **Support limitations**:
   - Only one container in an app can use the GPU at a time. If you have multiple containers in an app, the first container gets access to the GPU.
@@ -67,12 +68,44 @@ Keep in mind the following items as you use serverless GPUs:
 
 - **IP addresses**: Consumption GPUs use one IP address per replica when you set up integration with your own virtual network.
 
-## Request serverless GPU quota
+## GPU software stack
 
-Access to this feature is only available after you have serverless GPU quota. You can submit your GPU quota request via a [customer support case](/azure/azure-portal/supportability/how-to-create-azure-support-request). When opening a support case for a GPU quota request, select issue type "Technical."
+Azure Container Apps periodically updates the NVIDIA GPU software stack to incorporate security patches, performance improvements, and new capabilities.
+
+The following table shows the current and upcoming platform-provided GPU software versions:
+
+| Component | Current version | Upcoming version |
+|---|---|---|
+| NVIDIA driver | 570 | 580 |
+| Platform-provided CUDA runtime | 12.x | 13.x |
+
+> [!IMPORTANT]
+> The platform is transitioning to the upcoming versions listed in this table. The rollout begins no earlier than May 23, 2026 and completes over several days as updates are applied region by region. Validate your application against the upcoming versions before the update takes effect. For guidance, see [Validate your application](#validate-your-application).
+
+### Validate your application
+
+When the platform updates the GPU software stack, you must verify that your application remains compatible. The steps you take depend on how your container image consumes CUDA.
+
+**If your application ships its own CUDA runtime** (for example, by using a pinned CUDA base image):
+
+- Verify that your application works with the current NVIDIA driver version.
+- No container image changes are required.
+
+**If your application relies on the platform-provided CUDA runtime**:
+
+- Verify that your application works with both the current NVIDIA driver and CUDA runtime versions.
+- If your application isn't yet compatible with the latest CUDA version, pin an earlier CUDA version in your container image to retain previous behavior.
+
+### Version policy
+
+GPU software versions in Azure Container Apps serverless environments follow these principles:
+
+- GPU software versions are documented at the **major or minor family level** (for example, CUDA 12.x or CUDA 13.x).
+- Patch versions are managed by the platform and may change without notice.
+- This documentation is updated when significant GPU software version transitions are planned or introduced.
 
 > [!NOTE]
-> Customers with enterprise agreements and pay-as-you-go customers have A100 and T4 quota enabled by default.
+> The GPU software stack information in this section applies only to serverless GPU workloads. For dedicated GPU workloads, the operating system, including the driver and CUDA runtime, is updated automatically by the platform.
 
 ## Supported regions
 
@@ -80,11 +113,23 @@ Serverless GPUs are available in the following regions:
 
 | Region | A100 | T4 |
 |--|--|--|
-| West US 3 | Yes | Yes |
-| West US | Yes | No |
 | Australia East | Yes | Yes |
+| Brazil South | Yes | Yes |
+| Central India | No | Yes |
+| Canada Central | Yes | Yes |
+| East US | Yes | Yes |
+| France Central | No | Yes |
+| Italy North | Yes | Yes |
+| Japan East | No | Yes |
+| North Central US | No | Yes |
+| South Central US | No | Yes |
+| South East Asia | No | Yes |
+| South India | No | Yes |
 | Sweden Central | Yes | Yes |
 | West Europe<sup>1</sup> | No | Yes |
+| West US | Yes | Yes |
+| West US 2 | No | Yes |
+| West US 3 | Yes | Yes |
 
 <sup>1</sup> To add a T4 serverless GPU workload profile in West Europe, you must create a new workload profile environment in the region.
 
@@ -94,19 +139,28 @@ When you create a container app through the Azure portal, you can set up your co
 
 In the *Container* tab of the create process, set the following settings:
 
-1. Under the *Container resource allocation* section, check the **GPU** checkbox.
+1. Under the *Container resource allocation* section, select the **GPU** checkbox.
 
 1. For the **GPU Type**, select either the NVIDIA A100 or NVIDIA T4 option.
 
 ## Manage serverless GPU workload profile
 
-Serverless GPUs are run on consumption GPU workload profiles. You manage a consumption GPU workload profile in the same manner as any other workload profile. You can manage your workload profile using the [CLI](workload-profiles-manage-cli.md) or the [Azure portal](workload-profiles-manage-portal.md).
+Serverless GPUs run on consumption GPU workload profiles. You manage a consumption GPU workload profile in the same manner as any other workload profile. You can manage your workload profile by using the [CLI](workload-profiles-manage-cli.md) or the [Azure portal](workload-profiles-manage-portal.md).
+
+## Request serverless GPU quota
+
+> [!NOTE]
+> Customers with enterprise agreements and pay-as-you-go customers have A100 and T4 quota enabled by default.
+
+You need serverless GPU quota to access this feature. First, create a workload profiles environment in one of the [supported regions](#supported-regions), and then check the environment's **Quota** page. If the available quota is insufficient, request an increase for either **Managed Environment Consumption NCA100 GPUs** or **Managed Environment Consumption T4 GPUs**. For instructions, see [Submit a managed environment quota request](./quota-requests.md#submit-a-managed-environment-quota-request).
+
+If the GPU quota doesn't appear on the **Quota** page, the selected GPU type might not be available in the environment's region, or the environment type might not support serverless GPUs.
 
 ## Improve GPU cold start
 
 You can significantly improve cold start times by enabling artifact streaming and locating large files, like large language models, in a storage mount.
 
-- [Artifact streaming](/azure/container-registry/container-registry-artifact-streaming): Azure Container Registry offers image streaming which can significantly speed up image startup times. To use artifact streaming, your container images must be hosted in a premium Azure Container Registry.
+- [Artifact streaming](/azure/container-registry/container-registry-artifact-streaming): Azure Container Registry offers image streaming, which can significantly speed up image startup times. To use artifact streaming, you must host your container images in a premium Azure Container Registry.
 
 - [Storage mounts](cold-start.md#manage-large-downloads): Reduce the effects of network latency by storing large files in an Azure storage account associated with your container app.
 
@@ -114,7 +168,7 @@ You can significantly improve cold start times by enabling artifact streaming an
 
 ## Deploy Foundry models to serverless GPUs (preview)
 
-Azure Container Apps serverless GPUs now support Azure AI Foundry models in public preview. Azure AI Foundry Models have two deployment options:
+Azure Container Apps serverless GPUs now support Microsoft Foundry models in public preview. Foundry Models have two deployment options:
 
 - [**Serverless APIs**](/azure/ai-foundry/how-to/deploy-models-serverless?tabs=azure-ai-studio) which provide pay-as-you-go billing for some of the most popular models.
 
@@ -144,17 +198,17 @@ az containerapp up \
 
 For any model not in this list, you need to:
 
-1. Download the github template for the model image from the [Azure Container Apps repo](https://github.com/microsoft/azure-container-apps/tree/main/templates/azml-app).
+1. Download the GitHub template for the model image from the [Azure Container Apps repo](https://github.com/microsoft/azure-container-apps/tree/main/templates/azml-app).
 
-1. Modify the score.py file to match your model type. The scoring script (named *score.py*) defines how you interact with the model. The following example shows [how to use a custom score.py file](/azure/machine-learning/how-to-deploy-online-endpoints?view=azureml-api-2&tabs=cli).
+1. Modify the score.py file to match your model type. The scoring script (named *score.py*) defines how you interact with the model. The following example shows [how to use a custom score.py file](/azure/machine-learning/how-to-deploy-online-endpoints).
 
 1. Build the image and deploy it to a container registry.
 
-1. Use the previous CLI command to deploy the model to serverless GPUs, but specify the `--image`. By using the `--model-registry`, `--model-name`, and `--model-version` parameters, the key environment variables are set for you to optimize cold start for your app.
+1. Use the previous CLI command to deploy the model to serverless GPUs, but specify the `--image`. When you use the `--model-registry`, `--model-name`, and `--model-version` parameters, the key environment variables are set for you to optimize cold start for your app.
 
 ## Submit feedback
 
-Submit issue to the [Azure Container Apps GitHub repo](https://github.com/microsoft/azure-container-apps).
+Submit issues to the [Azure Container Apps GitHub repo](https://github.com/microsoft/azure-container-apps).
 
 ## Next steps
 

@@ -1,14 +1,15 @@
 ---
 title: SELinux Support
-description: SELinux support for Azure CycleCloud.
+description: Learn about SELinux support in Azure CycleCloud and how to run CycleCloud-managed nodes with SELinux set to enforcing mode.
 author: staer
-ms.date: 07/01/2025
+ms.date: 06/19/2026
+ms.topic: how-to
 ms.author: danharri
 ---
 
 # SELinux and Azure CycleCloud
 
-Most modern Red Hat based Linux distributions (RHEL, CentOS) come with [Security Enhanced Linux](https://selinuxproject.org/page/Main_Page) (SELinux) installed and set to `enforcing` by default. SELinux is a security enhancement to Linux that gives administrators more control over access control. Azure CycleCloud supports SELinux by default, but to support a number of HPC applications, CycleCloud modifies the SELinux environment for the administrator.
+Most modern Red Hat based Linux distributions (RHEL, Alma, Rocky, etc.) come with Security Enhanced Linux (SELinux) installed and set to `enforcing` by default. SELinux is a security enhancement to Linux that gives administrators more control over access control. Azure CycleCloud supports SELinux by default, but to support a number of HPC applications, CycleCloud modifies the SELinux environment for the administrator.
 
 ## HPC clusters and SELinux
 

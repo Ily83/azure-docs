@@ -1,13 +1,15 @@
 ---
 title: Edit App and Host Settings for Standard Logic Apps
 description: Learn how to change runtime and environment settings for Standard logic apps in single-tenant Azure Logic Apps.
-services: logic-apps
 ms.suite: integration
 ms.reviewer: estfan, azla
 ms.topic: how-to
-ms.date: 06/18/2025
-ms.custom: fasttrack-edit
-# Customer intent: As a logic app workflow developer, I want to learn about application settings and host settings that I can edit to customize the way that my Standard workflows run.
+ms.date: 08/01/2026
+ms.custom:
+  - fasttrack-edit
+  - sfi-image-nochange
+  - sfi-ropc-nochange
+# Customer intent: As a workflow developer who works with Azure Logic Apps Standard, I want to learn about application settings and host settings that I can edit to customize the way that my Standard logic app workflows run.
 ---
 
 # Edit app and host settings for Standard logic apps in single-tenant Azure Logic Apps
@@ -180,30 +182,32 @@ These settings affect the throughput and capacity for single-tenant Azure Logic 
 | `Jobs.BackgroundJobs.NumWorkersPerProcessorCount` | `192` dispatcher worker instances | Sets the number of *dispatcher worker instances* or *job dispatchers* to have per processor core. This value affects the number of workflow runs per core. |
 | `Jobs.BackgroundJobs.StatelessNumWorkersPerProcessorCount` | `192` dispatcher worker instances | Sets the number of *dispatcher worker instances* or *job dispatchers* to have per processor core, per stateless run. This value affects the number of concurrent workflow actions that are processed per run. |
 
-The following settings are used to manually stop and immediately delete the specified workflows in Standard logic app.
+The following settings let you manually stop and immediately delete specific workflows in a Standard logic app resource. You must use uppercase to specify any alphabetical characters.
 
 > [!NOTE]
 >
 > Use these settings with caution and only in nonproduction environments, such as load 
 > or performance test environments, as you can't undo or recover from these operations.
+>
+
 
 | Setting | Default value | Description |
 |---------|---------------|-------------|
-| `Jobs.CleanupJobPartition` | None | Immediately deletes all the run jobs for the specified workflows. |
-| `Jobs.SuspendedJobPartition` | None | Stops the run jobs for the specified workflows. |
-| `SequencerJobs.SuspendedSequencerPartition` | None | Stops the sequencer run jobs for the specified workflows. |
+| `Jobs.CleanupJobPartitionPrefix` | None | Immediately deletes all the run jobs for the specified workflows. |
+| `Jobs.SuspendedJobPartitionPrefix` | None | Stops the run jobs for the specified workflows. |
+| `SequencerJobs.SuspendedSequencerPartitionPrefix` | None | Stops the sequencer run jobs for the specified workflows. |
 
 To specify individual workflows, use the following syntax where each workflow ID is followed by a colon (`:`) and is separated by a semicolon (`;`):
 
 ```json
-"Jobs.CleanupJobPartition": "<workflow-ID-1>:;<workflow-ID-2>",
-"Jobs.SuspendedJobPartition": "<workflow-ID-1>:;<workflow-ID-2>:",
-"SequencerJobs.SuspendedSequencerPartition": "<workflow-ID-1>:;<workflow-ID-2>:"
+"Jobs.CleanupJobPartitionPrefix": "<workflow-ID-1>:;<workflow-ID-2>:",
+"Jobs.SuspendedJobPartitionPrefix": "<workflow-ID-1>:;<workflow-ID-2>:",
+"SequencerJobs.SuspendedSequencerPartitionPrefix": "<workflow-ID-1>:;<workflow-ID-2>:"
 ```
 
 To cancel a specific run, provide the run ID following the workflow ID with **2D** as the separator, for example:
 
-`"Jobs.SuspendedJobPartition": "<workflow-ID-1>:2D<run-ID>;",`
+`"Jobs.SuspendedJobPartition": "<workflow-ID-1>:2D<run-ID>",`
 
 <a name="recurrence-triggers"></a>
 
@@ -223,6 +227,7 @@ For a workflow that starts with a function-based trigger, you might try to [set 
 
 | Setting | Default value | Description |
 |---------|---------------|-------------|
+| `Runtime.FlowTriggerDispatchingJob.MessageProcessingConcurrencyLimit` | `1` message | Sets the maximum number of messages that can be processed concurrently during workflow trigger dispatching. |
 | `Runtime.Trigger.MaximumRunConcurrency` | `100` runs | Sets the maximum number of concurrent runs that a trigger can start. This value appears in the trigger's concurrency definition. |
 | `Runtime.Trigger.MaximumWaitingRuns` | `200` runs | Sets the maximum number of runs that can wait after concurrent runs meet the maximum. This value appears in the trigger's concurrency definition. For more information, see [Change waiting runs limit](logic-apps-workflow-actions-triggers.md#change-waiting-runs). |
 
@@ -241,7 +246,7 @@ For a workflow that starts with a function-based trigger, you might try to [set 
 
 | Setting | Default value | Description |
 |---------|---------------|-------------|
-| `Runtime.FlowRunRetryableActionJobCallback.ActionJobExecutionTimeout` | `00:10:00` <br>(10 minutes) | Sets the duration for a workflow action job to run before timing out and retrying. To change the default timeout for a built-in operation such as SAP, also set the **`functionTimeout`** host setting. For more information, see the next entry. |
+| `Runtime.FlowRunRetryableActionJobCallback.ActionJobExecutionTimeout` | `00:10:00` <br>(10 minutes) | Sets the duration for a workflow action job to run before timing out and retrying. The maximum duration is 2 hours (`02:00:00`). To change the default timeout for a built-in operation such as SAP, also set the `functionTimeout` host setting. For more information, see the next entry. |
 | `functionTimeout` | `00:30:00` <br>(30 minutes) | Sets the duration to run before timing out for calls from Azure Functions and some built-in operations, such as SAP, that work as function calls. Standard logic apps use the same underlying design as function apps. So, the **`functionTimeout`** host setting in Azure Functions also affects built-in operations that run as function calls. For more information, see [**functionTimeout**](/azure/azure-functions/functions-host-json#functiontimeout). <br><br>**Note**: In the **host.json** file, the **`functionTimeout`** setting exists at the same level as the **`extensions`** object where the host settings exist for a Standard logic app. For more information, see the example in this section: [Change timeout value for function-based built-in operations](#change-timeout-value-for-function-based-built-in-operations). |
 
 #### Change timeout value for function-based built-in operations
@@ -257,7 +262,7 @@ For built-in operations that run as function calls in Azure Functions, add both 
    },
    "extensions": {
       "workflow": {
-         "settings": {
+         "Settings": {
             "Runtime.FlowRunRetryableActionJobCallback.ActionJobExecutionTimeout": "01:00:00"
          }
       }
@@ -302,7 +307,7 @@ For built-in operations that run as function calls in Azure Functions, add both 
 |---------|---------------|-------------|
 | `Runtime.FlowRunEngine.ForeachMaximumItemsForContentInlining` | `20` items | When a `For each` loop is running, each item's value is stored either inline with other metadata in table storage or separately in blob storage. Sets the number of items to store inline with other metadata. |
 | `Runtime.FlowRunRetryableActionJobCallback.MaximumPagesForContentInlining` | `20` pages | Sets the maximum number of pages to store as inline content in table storage before storing in blob storage. |
-| `Runtime.FlowTriggerSplitOnJob.MaximumItemsForContentInlining` | `40` items | When the `SplitOn` setting debatches array items into multiple workflow instances, each item's value is stored either inline with other metadata in table storage or separately in blob storage. Sets the number of items to store inline. |
+| `Runtime.FlowTriggerSplitOnJob.MaximumItemsForContentInlining` | `40` items | When a trigger that supports debatching has the **Split on** or `splitOn` setting enabled, the trigger debatches array items into multiple workflow instances. Each array item's value is stored either inline with other metadata in table storage or separately in blob storage. Sets the number of items to store inline. |
 | `Runtime.ScaleUnit.MaximumCharactersForContentInlining` | `32384` characters | Sets the maximum number of operation input and output characters to store inline in table storage before storing in blob storage. |
 
 <a name="for-each-loop"></a>
@@ -312,7 +317,7 @@ For built-in operations that run as function calls in Azure Functions, add both 
 | Setting | Default value | Description |
 |---------|---------------|-------------|
 | `Runtime.Backend.FlowDefaultForeachItemsLimit` | `100000` array items | For a *stateful workflow*, sets the maximum number of array items to process in a `For each` loop. |
-| `Runtime.Backend.FlowDefaultSplitOnItemsLimit` | `100000` array items | Sets the maximum number of array items to debatch or split into multiple workflow instances based on the `SplitOn` setting. |
+| `Runtime.Backend.FlowDefaultSplitOnItemsLimit` | `100000` array items | Sets the maximum number of array items to debatch or split into multiple workflow instances based on the `splitOn` property. |
 | `Runtime.Backend.ForeachDefaultDegreeOfParallelism` | `20` iterations | Sets the default number of concurrent iterations, or degree of parallelism, in a `For each` loop. To run sequentially, set the value to `1`. |
 | `Runtime.Backend.Stateless.FlowDefaultForeachItemsLimit` | `100` items | For a *stateless workflow*, sets the maximum number of array items to process in a `For each` loop. |
 
@@ -500,7 +505,7 @@ To add a setting, follow these steps:
 
 1. If the **host.json** file is already open, return to the **host.json** file. Otherwise, follow the preceding steps to open the **host.json** file.
 
-1. Under the `extensionBundle` object, add the `extensions` object, which includes the `workflow` and `settings` objects, for example:
+1. Under the `extensionBundle` object, add the `extensions` object, which includes the `workflow` and `Settings` objects, for example:
 
    ```json
    {
@@ -511,14 +516,14 @@ To add a setting, follow these steps:
       },
       "extensions": {
          "workflow": {
-            "settings": {
+            "Settings": {
             }
          }
       }
    }
    ```
 
-1. In the `settings` object, add a flat list with the host settings that you want to use for all the workflows in your logic app, whether those workflows run locally or in Azure, for example:
+1. In the `Settings` object, add a flat list with the host settings that you want to use for all the workflows in your logic app, whether those workflows run locally or in Azure, for example:
 
    ```json
    {
@@ -529,7 +534,7 @@ To add a setting, follow these steps:
       },
       "extensions": {
          "workflow": {
-            "settings": {
+            "Settings": {
                "Runtime.Trigger.MaximumWaitingRuns": "100"
             }
          }
@@ -549,13 +554,13 @@ To review the host settings for your logic app in Visual Studio Code, follow the
 
 1. In your logic app project, at the root project level, find and open the **host.json** file.
 
-1. In the `extensions` object, under `workflows` and `settings`, review any host settings that were previously added for your logic app. Otherwise, the `extensions` object doesn't appear in the file.
+1. In the `extensions` object, under `workflows` and `Settings`, review any host settings that were previously added for your logic app. Otherwise, the `extensions` object doesn't appear in the file.
 
    For more information about host settings, see [Reference for host settings - host.json](#reference-host-json).
 
 To add a host setting, follow these steps:
 
-1. In the **host.json** file, under the `extensionBundle` object, add the `extensions` object, which includes the `workflow` and `settings` objects, for example:
+1. In the **host.json** file, under the `extensionBundle` object, add the `extensions` object, which includes the `workflow` and `Settings` objects, for example:
 
    ```json
    {
@@ -566,14 +571,14 @@ To add a host setting, follow these steps:
       },
       "extensions": {
          "workflow": {
-            "settings": {
+            "Settings": {
             }
          }
       }
    }
    ```
 
-1. In the `settings` object, add a flat list with the host settings that you want to use for all the workflows in your logic app, whether those workflows run locally or in Azure, for example:
+1. In the `Settings` object, add a flat list with the host settings that you want to use for all the workflows in your logic app, whether those workflows run locally or in Azure, for example:
 
    ```json
    {
@@ -584,7 +589,7 @@ To add a host setting, follow these steps:
       },
       "extensions": {
          "workflow": {
-            "settings": {
+            "Settings": {
                "Runtime.Trigger.MaximumWaitingRuns": "100"
             }
          }

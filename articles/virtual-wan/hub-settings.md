@@ -2,16 +2,17 @@
 title: 'About virtual hub settings'
 titleSuffix: Azure Virtual WAN
 description: This article answers common questions about virtual hub settings and routing infrastructure units.
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.topic: concept-article
 ms.date: 08/24/2023
-ms.author: cherylmc
+ms.author: duau
+ms.custom: sfi-image-nochange
 ---
 
 # About virtual hub settings
 
-This article helps you understand the various settings available for virtual hubs. A virtual hub is a Microsoft-managed virtual network that contains various service endpoints to enable connectivity. The virtual hub is the core of your network in a region. Multiple virtual hubs can be created in the same region.
+This article helps you understand the various settings available for virtual hubs. A virtual hub is a Microsoft-managed virtual network that contains various service endpoints to enable connectivity. The virtual hub is the core of your network in a region. Multiple virtual hubs can be created in the same region. A Virtual WAN acts like a "container" for the virtual hubs, connecting all hubs in the Virtual WAN in a full mesh when using a Standard Virtual WAN.
 
 A virtual hub can contain gateways for site-to-site VPN, ExpressRoute, or point-to-site User VPN. For example, when using Virtual WAN, you don't create a site-to-site connection from your on-premises site directly to your VNet. Instead, you create a site-to-site connection to the virtual hub. The traffic always goes through the virtual hub gateway. This means that your VNets don't need their own virtual network gateway. Virtual WAN lets your VNets take advantage of scaling easily through the virtual hub and the virtual hub gateway. For more information about gateways, see [Gateway settings](gateway-settings.md). A virtual hub gateway isn't the same as a virtual network gateway that you use for ExpressRoute and VPN Gateway.
 
@@ -113,19 +114,27 @@ Previously, there wasn't a configuration option for you to use to influence rout
 For more information, see [About virtual hub routing preference](about-virtual-hub-routing-preference.md).
 
 ## <a name = "addressspace"></a>Virtual hub address space
-The recommended address space for a Virtual WAN hub is **/23**. It's important to note that the hub address space **cannot be modified after the hub is created**. To change the hub address space, you must redeploy the virtual hub, which can result in downtime.
+
+The Virtual WAN hub address space **can't be modified after the hub is created**.  Use the following information to select the proper hub address size for your deployment:
+* To accommodate future scalability and architectural needs, while the minimum address space for a Virtual WAN hub is **/24**, it is recommended to specify a **/23 address space** or larger during hub creation.
+* If you are using an Azure Firewall within Virtual WAN, a minimum hub address space of **/22** is required to ensure Azure Firewall is able to allocate sufficient IP addresses to scale to maximum throughput.
+* If you are using Network Virtual Appliances in the Virutal WAN hub, the size of your Virtual WAN hub determines the number of usable IP addresses allocated to NVAs. See [NVA documentation](about-nva-hub.md#hubspace) for the mapping between hub address space and alloctable IP addresses to NVAs.
+  
 
 The Virtual WAN hub automatically assigns subnets from the specified address space to various Azure services, including:
 
 - Virtual Hub Router
-- ExpressRoute
-- Site-to-site VPN
-- Point-to-site VPN
-- Azure Firewall
+- [ExpressRoute](virtual-wan-expressroute-about.md)
+- [Site-to-site VPN](virtual-wan-site-to-site-portal.md)
+- [Point-to-site VPN](point-to-site-concepts.md)
+- [Azure Firewall](howto-firewall.md)
+- [Network Virtual Appliances](about-nva-hub.md)
 
-For scenarios where Network Virtual Appliances (NVAs) are deployed inside the virtual hub, an additional subnet is allocated for the NVA instances. Typically, a **/28 subnet** is assigned for a small number of NVAs. However, if multiple NVAs are provisioned, a **/27 subnet** might be allocated.
+A Virtual WAN hub's address space should **not** overlap with:
 
-To accommodate future scalability and architectural needs, while the minimum address space for a Virtual WAN hub is **/24**, it is recommended to specify a **/23 address space** during hub creation.
+- Other Virtual Hub private address spaces in the same Virtual WAN
+- Any on-premises network address spaces
+- Any other virtual network/subnet address spaces connected to the virtual hub
 
 For more information related to the Virtual WAN hub address space, see [Virtual WAN FAQ](virtual-wan-faq.md)
 
@@ -144,11 +153,11 @@ The virtual WAN type (Basic or Standard) determines the types of resources that 
 
 The following table shows the configurations available for each virtual WAN type:
 
-[!INCLUDE [Basic and Standard](../../includes/virtual-wan-standard-basic-include.md)]
+[!INCLUDE [Basic and Standard](../networking/includes/virtual-wan/standard-basic.md)]
 
 ## <a name="router-status"></a>Virtual hub router status
 
-[!INCLUDE [virtual hub router status](../../includes/virtual-wan-hub-router-status.md)]
+[!INCLUDE [virtual hub router status](../networking/includes/virtual-wan/hub-router-status.md)]
 
 ## Next steps
 

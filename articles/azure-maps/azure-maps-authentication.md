@@ -4,8 +4,8 @@ titleSuffix: Azure Maps
 description: "Learn about two ways of authenticating requests in Azure Maps: shared key authentication and Microsoft Entra authentication."
 author: pbrasil
 ms.author: peterbr 
-ms.date: 07/05/2023
-ms.topic: conceptual
+ms.date: 08/28/2026
+ms.topic: concept-article
 ms.service: azure-maps
 ms.subservice: authentication
 ms.custom: mvc
@@ -127,11 +127,7 @@ Some Azure Maps services require elevated privileges to perform write or delete 
 
 | Azure Maps service                 | Azure Maps Role Definition  |
 | :----------------------------------| :-------------------------- |
-| [Creator] (Deprecated<sup>1</sup>) | Azure Maps Data Contributor |
-| [Spatial] (Deprecated<sup>1</sup>) | Azure Maps Data Contributor |
 | Batch [Search] and [Route]         | Azure Maps Data Contributor |
-
-<sup>1</sup> Azure Maps Creator, and the Data registry and Spatial services are now deprecated and will be retired on 9/30/25.
 
 For information about viewing your Azure RBAC settings, see [How to configure Azure RBAC for Azure Maps].
 
@@ -147,8 +143,6 @@ Here are some example scenarios where custom roles can improve application secur
 | :----------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
 | A public facing or interactive sign-in web page with base map tiles and no other REST APIs.| `Microsoft.Maps/accounts/services/render/read`                                                  |
 | An application, which only requires reverse geocoding and no other REST APIs.              | `Microsoft.Maps/accounts/services/search/read`                                                  |
-| A role for a security principal, which requests a reading of Azure Maps Creator based map data and base map tile REST APIs. | `Microsoft.Maps/accounts/services/data/read`, `Microsoft.Maps/accounts/services/render/read` |
-| A role for a security principal, which requires reading, writing, and deleting of Creator based map data. Defined as a map data editor role that doesn't allow access to other REST API like base map tiles. | `Microsoft.Maps/accounts/services/data/read`, `Microsoft.Maps/accounts/services/data/write`, `Microsoft.Maps/accounts/services/data/delete` |
 
 ### Understand scope
 
@@ -211,13 +205,13 @@ For example, a single SAS token with a `maxRatePerSecond` of 10 can be used to l
 
 Consider the application topology where the endpoint `https://us.atlas.microsoft.com` routes to the same US locations that the Azure Maps services are hosted, such as `East US`, `West Central US`, or `West US 2`. The same idea applies to other geographical endpoints such as `https://eu.atlas.microsoft.com` between `West Europe` and `North Europe`. To prevent unexpected authorization denials, use a SAS token that uses the same Azure locations that the application consumes. The endpoint location is defined using the Azure Maps Management REST API.
 
-#### Default rate limits take precedent over SAS token rate limits
+#### Default rate limits take precedence over SAS token rate limits
 
 As described in [Azure Maps QPS rate limits](azure-maps-qps-rate-limits.md), the rate limits for individual service offerings are enforced collectively at the account level.
 
-Consider the case of **Search service - Non-Batch Reverse**, with its limit of 250 queries per second (QPS) for the following tables. Each table represents estimated total successful transactions from example usage.
+Consider the case of **Search service - single request reverse**, with its limit of 250 queries per second (QPS) for the following tables. Each table represents estimated total successful transactions from example usage.
 
-The first table shows one token that has a maximum request per second of 500, and actual usage of the application is 500 request per second for a duration of 60 seconds. **Search service - Non-Batch Reverse** has a rate limit of 250, meaning of the total 30,000 requests made in the 60 seconds; 15,000 of those requests are billable transactions. The remaining requests result in status code `429 (TooManyRequests)`.
+The first table shows one token that has a maximum request per second of 500, and actual usage of the application is 500 request per second for a duration of 60 seconds. **Search service - single request reverse** has a rate limit of 250, meaning of the total 30,000 requests made in the 60 seconds; 15,000 of those requests are billable transactions. The remaining requests result in status code `429 (TooManyRequests)`.
 
 | Name  | Approximate Maximum Rate Per Second | Actual Rate Per Second | Duration of sustained rate in seconds | Approximate total successful transactions |
 | :---- | :---------------------------------- | :--------------------- | :------------------------------------ | :---------------------------------------- |
@@ -295,9 +289,9 @@ After the application receives a SAS token, the Azure Maps SDK and/or applicatio
 [CORS] is an HTTP protocol that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as [same-origin policy] that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. Using the Azure Maps account resource, you can configure which origins are allowed to access the Azure Maps REST API from your applications.
 
 > [!IMPORTANT]
-> CORS isn't an authorization mechanism. Requests made to a map account using REST API, when CORS is enabled, also needs a valid map account authentication scheme such as Shared Key, Microsoft Entra ID, or SAS token.
+> CORS isn't an authorization mechanism. Requests made to a map account by using REST API, when CORS is enabled, also need a valid map account authentication scheme such as Shared Key, Microsoft Entra ID, or SAS token.
 >
-> CORS is supported for all map account pricing tiers, data-plane endpoints, and locations.
+> CORS is supported for all Azure Maps accounts, data-plane endpoints, and locations.
 
 ### Prerequisites
 
@@ -427,11 +421,8 @@ To learn more about authenticating the Azure Maps Control with Microsoft Entra I
 [Azure services that can use managed identities to access other services]: ../active-directory/managed-identities-azure-resources/managed-identities-status.md
 [Authentication flows and application scenarios]: ../active-directory/develop/authentication-flows-app-scenarios.md
 [Azure role-based access control (Azure RBAC)]: ../role-based-access-control/overview.md
-[Assign Azure roles using the Azure portal]: ../role-based-access-control/role-assignments-portal.yml
+[Assign Azure roles using the Azure portal]: /azure/role-based-access-control/role-assignments-portal
 
-[Data]: /rest/api/maps/data
-[Creator]: /rest/api/maps-creator/
-[Spatial]: /rest/api/maps/spatial
 [Search]: /rest/api/maps/search?view=rest-maps-1.0&preserve-view=true
 [Route]: /rest/api/maps/route
 

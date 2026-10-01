@@ -1,15 +1,19 @@
 ---
 title: Connect Azure Functions to Azure SQL Database using Visual Studio Code
 description: Learn how to connect Azure Functions to Azure SQL Database by adding an output binding to your Visual Studio Code project.
-ms.date: 12/29/2024
+ms.date: 02/26/2026
 ms.topic: quickstart
 author: dzsquared
 ms.author: drskwier
 ms.reviewer: glenga
 zone_pivot_groups: programming-languages-set-functions-temp
 ms.devlang: csharp
+ms.custom:
+  - devx-track-extended-java
+  - devx-track-js
+  - devx-track-python
+  - sfi-image-nochange
 # ms.devlang: csharp, javascript
-ms.custom: devx-track-extended-java, devx-track-js, devx-track-python
 ---
 
 # Connect Azure Functions to Azure SQL Database using Visual Studio Code
@@ -22,7 +26,7 @@ This article shows you how to use Visual Studio Code to connect [Azure SQL Datab
 Before you begin, you must complete the [quickstart: Create a C# function in Azure using Visual Studio Code](how-to-create-function-vs-code.md?pivot=programming-language-csharp). If you already cleaned up resources at the end of that article, go through the steps again to recreate the function app and related resources in Azure.
 ::: zone-end
 ::: zone pivot="programming-language-javascript"  
-Before you begin, you must complete the [quickstart: Create a JavaScript function in Azure using Visual Studio Code](how-to-create-function-vs-code.md?pivot=programming-language-javascript?pivot=nodejs-model-v3). If you already cleaned up resources at the end of that article, go through the steps again to recreate the function app and related resources in Azure.  
+Before you begin, you must complete the [quickstart: Create a JavaScript function in Azure using Visual Studio Code](how-to-create-function-vs-code.md?pivot=programming-language-javascript). If you already cleaned up resources at the end of that article, go through the steps again to recreate the function app and related resources in Azure.  
 ::: zone-end
 ::: zone pivot="programming-language-python"  
 Before you begin, you must complete the [quickstart: Create a Python function in Azure using Visual Studio Code](how-to-create-function-vs-code.md?pivot=programming-language-python). If you already cleaned up resources at the end of that article, go through the steps again to recreate the function app and related resources in Azure.  
@@ -99,13 +103,7 @@ dotnet add package Microsoft.Azure.Functions.Worker.Extensions.Sql
 ::: zone-end  
 ::: zone pivot="programming-language-javascript,programming-language-python"  
 
-Your project has been configured to use [extension bundles](extension-bundles.md), which automatically installs a predefined set of extension packages. 
-
-Extension bundles usage is enabled in the host.json file at the root of the project, which appears as follows:
-
-:::code language="json" source="~/functions-docs-javascript/functions-add-output-binding-sql-cli-v4-programming-model/host.json":::
-
-:::
+[!INCLUDE [functions-extension-bundles-json-v4-element](../../includes/functions-extension-bundles-json-v4-element.md)]
 
 ::: zone-end
 
@@ -113,15 +111,13 @@ Now, you can add the Azure SQL output binding to your project.
 
 ## Add an output binding
 
-In Functions, each type of binding requires a `direction`, `type`, and a unique `name` to be defined in the function.json file. The way you define these attributes depends on the language of your function app.
-
 ::: zone pivot="programming-language-csharp"
 
 Open the *HttpExample.cs* project file and add the following `ToDoItem` class, which defines the object that is written to the database:
 
 :::code language="csharp" source="~/functions-sql-todo-sample/ToDoModel.cs" range="6-16":::
 
-In a C# class library project, the bindings are defined as binding attributes on the function method. The *function.json* file required by Functions is then auto-generated based on these attributes.
+In a C# class library project, you define the bindings as binding attributes on the function method.
 
 Open the *HttpExample.cs* project file and add the following output type class, which defines the combined objects that will be output from our function for both the HTTP response and the SQL output:
 
@@ -154,7 +150,7 @@ Add the following properties to the binding configuration:
 ::: zone-end
 
 ::: zone pivot="programming-language-python"  
-Binding attributes are defined directly in the *function_app.py* file. You use the `generic_output_binding` decorator to add an [Azure SQL output binding](./functions-reference-python.md#outputs):
+Binding attributes are defined directly in the *function_app.py* file. You use the `generic_output_binding` decorator to add an [Azure SQL output binding](./functions-bindings-azure-sql-output.md?programming-language=python):
 
 ```python
 @app.generic_output_binding(arg_name="toDoItems", type="sql", CommandText="dbo.ToDo", ConnectionStringSetting="SqlConnectionString"
@@ -220,7 +216,7 @@ At this point, your function should look as follows:
 
 
 ::: zone pivot="programming-language-python"  
-Update *HttpExample\\function_app.py* to match the following code. Add the `toDoItems` parameter to the function definition and `toDoItems.set()` under the `if name:` statement:
+Update *function_app.py* to match the following code. Add the `toDoItems` parameter to the function definition and `toDoItems.set()` under the `if name:` statement:
 
 ```python
 import azure.functions as func
@@ -231,7 +227,7 @@ import uuid
 app = func.FunctionApp()
 
 @app.function_name(name="HttpTrigger1")
-@app.route(route="hello", auth_level=func.AuthLevel.ANONYMOUS)
+@app.route(route="hello", auth_level=func.AuthLevel.FUNCTION)
 @app.generic_output_binding(arg_name="toDoItems", type="sql", CommandText="dbo.ToDo", ConnectionStringSetting="SqlConnectionString",data_type=DataType.STRING)
 def test_function(req: func.HttpRequest, toDoItems: func.Out[func.SqlRow]) -> func.HttpResponse:
      logging.info('Python HTTP trigger function processed a request.')
@@ -289,7 +285,7 @@ def test_function(req: func.HttpRequest, toDoItems: func.Out[func.SqlRow]) -> fu
 
 1. Choose the function app that you created in the first article. Because you're redeploying your project to the same app, select **Deploy** to dismiss the warning about overwriting files.
 
-1. After deployment completes, you can again use the **Execute Function Now...** feature to trigger the function in Azure.
+1. After deployment completes, you can again use the **Execute Function Now...** feature to trigger the function in Azure. This command automatically retrieves the function access key and uses it when calling the HTTP trigger endpoint.
 
 1. Again [check the data written to your Azure SQL Database](#verify-that-information-has-been-written-to-the-database) to verify that the output binding again generates a new JSON document.
 

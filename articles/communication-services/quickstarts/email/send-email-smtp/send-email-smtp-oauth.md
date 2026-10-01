@@ -12,11 +12,13 @@ ms.custom: devx-track-dotnet
 ---
 # Send email with SMTP and XOAuth2 using .NET
 
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article describes how to use XOAuth2 for authentication when sending emails using the Simple Mail Transfer Protocol (SMTP) and Azure Communication Services.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). 
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). 
 - The latest version [.NET Core client library](https://dotnet.microsoft.com/download/dotnet-core) for your operating system.
 - An Azure Communication Email Resource created and ready with a provisioned domain [Get started with Creating Email Communication Resource](../create-email-communication-resource.md).
 - An active Azure Communication Services Resource connected with Email Domain and a Connection String. [Get started by Connecting Email Resource with a Communication Resource](../connect-email-communication-resource.md).

@@ -7,6 +7,7 @@ ms.service: azure-dns
 ms.topic: concept-article
 ms.date: 03/21/2025
 ms.author: allensu
+ms.custom: sfi-image-nochange
 #Customer intent: As an administrator, I want to understand components of the Azure DNS Private Resolver.
 # Customer intent: "As a network administrator, I want to understand the components and configuration of Azure DNS Private Resolver, so that I can effectively implement and manage DNS resolution across my virtual networks."
 ---
@@ -61,7 +62,7 @@ Rulesets have the following associations:
 - A ruleset can have up to 1000 DNS forwarding rules. 
 - A ruleset can be linked to up to 500 virtual networks in the same region.
 
-A ruleset can't be linked to a virtual network in another region. For more information about ruleset and other private resolver limits, see [What are the usage limits for Azure DNS?](dns-faq.yml#what-are-the-usage-limits-for-azure-dns-).
+A ruleset can't be linked to a virtual network in another region. For more information about ruleset and other private resolver limits, see [What are the usage limits for Azure DNS?](dns-faq.yml#what-are-the-usage-limits-for-azure-dns-)
 
 ### Ruleset links
 

@@ -15,6 +15,8 @@ ms.custom: mode-other
 
 # View calling events
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 [!INCLUDE [Public Preview](../../includes/public-preview-include-document.md)]
 
 You can use Azure Event Grid to handle Communication Services voice and video calling events.
@@ -25,7 +27,7 @@ You can use Azure Event Grid to handle Communication Services voice and video ca
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An Azure Communication Service resource. For more information, see [Create an Azure Communication Services resource](../create-communication-resource.md).
 - An Azure Communication Services voice and video calling enabled client. [Add voice calling to your app](../voice-video-calling/getting-started-with-calling.md).
 
@@ -47,7 +49,7 @@ It might take a moment for the registration to finish. Select **Refresh** to upd
 
 ### Event Grid Viewer deployment
 
-In this article, we use the [Azure Event Grid Viewer Sample](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/) to view events in near-real time. This  provides the user with the experience of a real-time feed. In addition, the payload of each event should be available for inspection as well.
+In this article, you use the [Azure Event Grid Viewer Sample](/azure/event-grid/) to view events in near-real time. This solution provides the user with the experience of a real-time feed. In addition, the payload of each event is available for inspection.
 
 ## Subscribe to voice and video calling events using web hooks
 
@@ -73,7 +75,7 @@ Select **Web Hook** for **Endpoint type**.
 
 For **Endpoint**, click **Select an endpoint**, and enter the URL of your web app.
 
-In this case, we use the URL from the [Azure Event Grid Viewer Sample](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/) we set up earlier in the quickstart. The URL for the sample uses the format: `https://{{site-name}}.azurewebsites.net/api/updates`
+In this case, use the URL from the [Azure Event Grid Viewer Sample](/azure/event-grid/) you set up earlier in the quickstart. The URL for the sample uses the format: `https://{{site-name}}.azurewebsites.net/api/updates`
 
 Then select **Confirm Selection**.
 
@@ -94,7 +96,7 @@ Check out the full list of [events supported by Azure Communication Services](..
 
 ### Receive voice and video calling events
 
-Once you complete either action of the previous actions, you notice voice and video calling events are sent to your endpoint. These events show up in the [Azure Event Grid Viewer Sample](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/) we set up at the beginning. You can press the eye icon next to the event to see the entire payload.
+When you complete either action from the previous section, you see that the system sends voice and video calling events to your endpoint. These events show up in the [Azure Event Grid Viewer Sample](/azure/event-grid/) you set up at the beginning. You can press the eye icon next to the event to see the entire payload.
 
 Learn more about the [event schemas and other eventing concepts](../../../event-grid/event-schema-communication-services.md).
 

@@ -7,13 +7,15 @@ services: azure-communication-services
 
 ms.author: amagginetti
 ms.date: 02/04/2025
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 
 # Call metrics log schema
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 This document explains the ACSCallingMetrics logs available to you through Azure Monitor in the form of [Resource Logs](/azure/azure-monitor/data-sources#azure-resources). 
 

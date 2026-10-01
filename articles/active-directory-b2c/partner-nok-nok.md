@@ -5,7 +5,7 @@ description: Configure Nok Nok S3 Authentication Suite with Azure AD B2C to enab
 author: gargi-sinha
 manager: martinco
 ms.reviewer: kengaderdus
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.topic: how-to
 ms.date: 12/09/2024
 ms.author: gasinh
@@ -25,7 +25,7 @@ Learn more at [Nok Nok](https://noknok.com/).
 
 To get started, you need:
 
-* An Azure subscription. If you don't have one, get an [Azure free account](https://azure.microsoft.com/free/).
+* An Azure subscription. If you don't have one, get an [Azure free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 * An Azure AD B2C tenant linked to the Azure subscription. Learn how to [Create an Azure AD B2C tenant](tutorial-create-tenant.md).
 * A Nok Nok Cloud evaluation tenant for FIDO registration and authentication.
 

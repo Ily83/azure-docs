@@ -6,9 +6,9 @@ ms.topic: reference
 ms.date: 08/07/2025
 ms.service: azure-app-testing
 ms.subservice: playwright-workspaces
-author: ninallam
-ms.author: ninallam
-ms.custom: playwright-workspaces-preview
+author: johnsta
+ms.author: johnsta
+ms.custom: playwright-workspaces
 ---
 
 # Service limits in Playwright Workspaces
@@ -20,16 +20,13 @@ Azure uses limits and quotas to prevent budget overruns due to fraud, and to hon
 - Supported operating systems and browsers
 - Requesting quota increases.
 
-> [!IMPORTANT]
-> Playwright Workspaces is currently in preview. For legal terms that apply to Azure features that are in beta, in preview, or otherwise not yet released into general availability, see the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
-
 ## Default resource quotas
 
-While the service is in preview, the following limits apply on a per-subscription basis.
+The following limits apply on a per-subscription basis.
 
 | Resource  | Limit |
 |---------|---------|
-| Workspaces per region per subscription | 2 |
+| Workspaces per region per subscription | 5 |
 | Parallel workers per workspace | 100 |
 | Access tokens per user per workspace | 10 |
 
@@ -58,10 +55,13 @@ This section lists the outbound IP address ranges that Playwright Workspaces req
 
 | Azure region | IP address range |
 |--------------|------------------|
-| East US      | 52.190.15.208/28 |
-| West US3     | 20.172.9.112/28  |
-| East Asia    | 20.24.220.64/28  |
-| West Europe  | 98.71.172.224/28 |
+| East US      | 52.190.15.208/28, 48.211.3.96/27 |
+| West US3     | 20.172.9.112/28, 4.149.23.64/27 |
+| East Asia    | 20.24.220.64/28, 72.145.176.32/27 |
+| West Europe  | 98.71.172.224/28, 4.252.148.64/27 |
+| Australia East  | 4.237.175.160/27  |
+| Japan East  | 48.210.1.160/27  |
+| Switzerland North  | 51.107.243.192/27, 172.161.231.216/29 |
 
 ## Related content
 

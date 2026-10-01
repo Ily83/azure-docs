@@ -4,11 +4,12 @@ description: In this tutorial, learn how to cable your Azure Data Box, connect A
 services: databox
 author: stevenmatthew
 
-ms.service: azure-databox
+ms.service: azure-data-box
 ms.topic: tutorial
 ms.date: 02/16/2023
 ms.author: shaas
 zone_pivot_groups: data-box-sku
+ms.custom: sfi-image-nochange
 
 # Customer intent: As an IT admin, I need to be able to set up Data Box to upload on-premises data from my server onto Azure.
 ---

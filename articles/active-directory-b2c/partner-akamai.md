@@ -5,7 +5,7 @@ description: Configure Akamai Web Application Protector with Azure AD B2C
 author: gargi-sinha
 manager: martinco
 ms.reviewer: kengaderdus
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.topic: how-to
 ms.date: 01/26/2024
 ms.author: gasinh
@@ -36,7 +36,7 @@ KSD: [Kona Site Defender](https://www.akamai.com/us/en/products/security/kona-si
 ## Prerequisites
 
 * An Azure subscription
-  * If you don't have one, get an [Azure free account](https://azure.microsoft.com/free/)
+  * If you don't have one, get an [Azure free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 * An Azure AD B2C tenant linked to your Azure subscription
   * See, [Tutorial: Create an Azure Active Directory B2C tenant](tutorial-create-tenant.md) 
 * An Akamai WAP account

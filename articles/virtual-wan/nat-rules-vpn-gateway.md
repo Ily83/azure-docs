@@ -3,17 +3,18 @@ title: 'Configure VPN NAT rules for your gateway'
 titleSuffix: Azure Virtual WAN
 description: Learn how to configure NAT rules for your VWAN VPN gateway.
 services: virtual-wan
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.topic: how-to
-ms.date: 10/16/2024
-ms.author: cherylmc
+ms.date: 08/27/2026
+ms.author: duau
+ms.custom: sfi-image-nochange
 
 ---
 
 # Configure NAT rules for your Virtual WAN VPN gateway
 
-You can configure your Virtual WAN VPN gateway with static one-to-one NAT rules. A NAT rule provides a mechanism to set up one-to-one translation of IP addresses. NAT can be used to interconnect two IP networks that have incompatible or overlapping IP addresses. A typical scenario is branches with overlapping IPs that want to access Azure VNet resources.
+You can configure your Virtual WAN VPN gateway with static or dynamic NAT rules. A NAT rule translates IP addresses so you can connect two IP networks that have incompatible or overlapping IP addresses. Static NAT uses a fixed one-to-one address mapping, while dynamic NAT assigns a target IP address and port based on availability. This method lets a larger internal range share a smaller external range. A typical scenario is branches with overlapping IPs that want to access Azure VNet resources.
 
 This configuration uses a flow table to route traffic from an external (host) IP Address to an internal IP address associated with an endpoint inside a virtual network (virtual machine, computer, container, etc.).
 
@@ -98,7 +99,7 @@ The following diagram shows the projected result:
    For instance, if the on-premises BGP IP address is 10.30.0.133 and there is an **Ingress NAT Rule** that translates 10.30.0.0/24 to 172.30.0.0/24, the VPN site's **Link Connection BGP Address** must be configured to be the translated address (172.30.0.133).
 * In Dynamic NAT, on-premises BGP peer IP can't be part of the pre-NAT address range (**Internal Mapping**) as IP and port translations aren't fixed. If there is a need to translate the on-premises BGP peering IP, please create a separate **Static NAT Rule** that translates BGP Peering IP address only.
 
-   For instance, if the on-premises network has an address space of 10.0.0.0/24 with an on-premises BGP peer IP of 10.0.0.1 and there is an **Ingress Dynamic NAT Rule** to translate 10.0.0.0/24 to 192.198.0.0/32, a separate **Ingress Static NAT Rule** translating 10.0.0.1/32 to 192.168.0.02/32 is required and the corresponding VPN site's **Link Connection BGP address** must be updated to the NAT-translated address (part of the External Mapping).
+   For instance, if the on-premises network has an address space of 10.0.0.0/24 with an on-premises BGP peer IP of 10.0.0.1 and there is an **Ingress Dynamic NAT Rule** to translate 10.0.0.0/24 to 192.198.0.0/24, a separate **Ingress Static NAT Rule** translating 10.0.0.1/32 to 192.168.0.1/32 is required and the corresponding VPN site's **Link Connection BGP address** must be updated to the NAT-translated address (part of the External Mapping).
 
 ### Ingress SNAT (VPN site with statically configured routes)
 

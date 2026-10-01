@@ -1,12 +1,14 @@
 ---
 title: Connect to SQL Databases from Workflows
-description: Learn how to connect to SQL databases from workflows in Azure Logic Apps by using the SQL Server connector.
+description: Connect to SQL databases from workflows in Azure Logic Apps.
 services: logic-apps
 ms.suite: integration
 ms.reviewer: estfan, azla
 ms.topic: how-to
-ms.date: 06/19/2025
-## As a developer, I want to access my SQL database from my logic app workflow.
+ms.update-cycle: 1095-days
+ms.date: 07/10/2026
+ms.custom: sfi-image-nochange
+#Customer intent: As an automation and integration developer who works with Azure Logic Apps, I want to access my SQL database from my workflow.
 ---
 
 # Connect to SQL databases from workflows in Azure Logic Apps
@@ -46,13 +48,17 @@ For more information, review the [SQL Server managed connector reference](/conne
 
 ## Prerequisites
 
-* An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+* An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 * [SQL Server database](/sql/relational-databases/databases/create-a-database), [Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart), or [SQL Managed Instance](/azure/azure-sql/managed-instance/instance-create-quickstart).
 
   The SQL Server connector requires that your tables contain data so that the connector operations can return results when called. For example, if you use Azure SQL Database, you can use the included sample databases to try the SQL Server connector operations.
 
-* The information required to create a SQL database connection, such as your SQL server and database name. If you're using Windows Authentication or SQL Server Authentication to authenticate access, you also need your user name and password. You can usually find this information in the connection string.
+* The information required to create a SQL database connection, such as your SQL server and database name. If you're using Windows Authentication or SQL Server Authentication to authenticate access, you also need your username and password. You can usually find this information in the connection string.
+
+  > [!IMPORTANT]
+  >
+  > Make sure you or other users have only the minimum permissions for the logic app workflow to successfully perform the required operations on the database, such as permissions to read and write the relevant tables and execute any required stored procedures. To support change tracking, you need permissions such as `VIEW CHANGE TRACKING` and any permissions to create or use the `az_func` schema and `GlobalState` objects. Assign the `db_owner` role only if required for troubleshooting. 
 
   > [!IMPORTANT]
   >
@@ -254,7 +260,7 @@ In the connection information box, complete the following steps:
    | Authentication | Description |
    |----------------|-------------|
    | **Connection string** | Supported only in Standard workflows with the SQL Server built-in connector. <br><br>Requires the connection string to your SQL server and database. |
-   | **Active Directory OAuth** | Supported only in Standard workflows with the SQL Server built-in connector. For more information, see the following documentation: <br><br>- [Authentication for SQL Server connector](/connectors/sql/#authentication) <br>- [Enable OAuth 2.0 with Microsoft Entra ID](../logic-apps/logic-apps-securing-a-logic-app.md#enable-oauth) |
+   | **Active Directory OAuth** | Supported only in Standard workflows with the SQL Server built-in connector. For more information, see the following documentation: <br><br>- [Authentication for SQL Server connector](/connectors/sql/#authentication) <br>- [Enable OAuth 2.0 with Microsoft Entra ID](../logic-apps/set-up-security-permissions.md#enable-oauth) |
    | **Logic Apps Managed Identity** | Supported with the SQL Server managed connector. In Standard workflows, this authentication type is available for the SQL Server built-in connector, but the option is named **Managed identity** instead. <br><br>Requires the following items: <br><br>- A valid managed identity that's [enabled on your logic app resource](../logic-apps/authenticate-with-managed-identity.md) and has access to your database. <br><br>- **SQL DB Contributor** role access to the SQL Server resource <br><br>--- **Contributor** access to the resource group that includes the SQL Server resource. <br><br>For more information, see the following documentation: <br><br>- [Managed identity authentication for SQL Server connector](/connectors/sql/#managed-identity-authentication) <br>- [Server-Level Roles](/sql/relational-databases/security/authentication-access/server-level-roles) |
    | **Service principal (Microsoft Entra application)** | Supported with the SQL Server managed connector. <br><br>Requires a Microsoft Entra application and service principal. For more information, see [Create a Microsoft Entra application and service principal that can access resources using the Azure portal](../active-directory/develop/howto-create-service-principal-portal.md). |
    | [**Microsoft Entra integrated**](/azure/azure-sql/database/authentication-aad-overview) | Supported with the SQL Server managed connector. <br><br>Requires a valid managed identity in Microsoft Entra that's [enabled on your logic app resource](../logic-apps/authenticate-with-managed-identity.md) and has access to your database. For more information, see these articles: <br><br>- [Azure SQL Security Overview - Authentication](/azure/azure-sql/database/security-overview#authentication) <br>- [Authorize database access to Azure SQL - Authentication and authorization](/azure/azure-sql/database/logins-create-manage#authentication-and-authorization) <br>- [Microsoft Entra authentication for Azure SQL](/azure/azure-sql/database/authentication-aad-overview) |

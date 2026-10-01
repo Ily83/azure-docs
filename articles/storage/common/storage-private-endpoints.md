@@ -11,7 +11,9 @@ ms.date: 07/08/2025
 ms.author: normesta
 ms.reviewer: santoshc
 ms.subservice: storage-common-concepts
-ms.custom: engagement-fy23
+ms.custom:
+  - engagement-fy23
+  - sfi-image-nochange
 # Customer intent: As a network administrator, I want to configure private endpoints for Azure Storage, so that I can securely connect clients on a virtual network to storage resources while controlling access and minimizing exposure to the public internet.
 ---
 
@@ -47,6 +49,8 @@ Storage account owners can manage consent requests and the private endpoints thr
 
 You can secure your storage account to only accept connections from your virtual network by [configuring the storage firewall](storage-network-security-set-default-access.md) to deny access through its public endpoint by default. You don't need a firewall rule to allow traffic from a virtual network that has a private endpoint, since the storage firewall only controls access through the public endpoint. Private endpoints instead rely on the consent flow for granting subnets access to the storage service.
 
+Additionally, when a private endpoint is configured, traffic from the associated virtual network is always allowed, even if public network access is disabled on the storage account.
+
 > [!NOTE]
 > When copying blobs between storage accounts, your client must have network access to both accounts. So if you choose to use a private link for only one account (either the source or the destination), make sure that your client has network access to the other account. To learn about other ways to configure network access, see [Configure Azure Storage firewalls and virtual networks](storage-network-security.md?toc=/azure/storage/blobs/toc.json).
 
@@ -54,7 +58,7 @@ You can secure your storage account to only accept connections from your virtual
 
 ## Creating a private endpoint
 
-To create a private endpoint by using the Azure Portal, see [Connect privately to a storage account from the Storage Account experience in the Azure portal](../../private-link/tutorial-private-endpoint-storage-portal.md).
+To create a private endpoint by using the Azure portal, see [Connect privately to a storage account from the Storage Account experience in the Azure portal](../../private-link/tutorial-private-endpoint-storage-portal.md).
 
 To create a private endpoint by using PowerShell or the Azure CLI, see either of these articles. Both of them feature an Azure web app as the target service, but the steps to create a private link are the same for an Azure Storage account.
 

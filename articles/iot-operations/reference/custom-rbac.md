@@ -3,8 +3,9 @@ title: Custom RBAC Roles
 description: Use the Azure portal to secure access to Azure IoT Operations resources such as data flows and assets by using Azure role-based access control.
 author: dominicbetts
 ms.author: dobett
+ms.service: azure-iot-operations
 ms.topic: reference
-ms.date: 04/16/2025
+ms.date: 09/15/2026
 
 #CustomerIntent: As an IT administrator, I want configure Azure RBAC custom roles on resources in my Azure IoT Operations instance to control access to them.
 ---
@@ -15,7 +16,7 @@ To define custom roles that grant specific permissions to users, you can use Azu
 
 To learn more about custom roles in Azure RBAC, see [Azure custom roles](/azure/role-based-access-control/custom-roles).
 
-Azure IoT operations also offers built-in roles designed to simplify and secure access management for Azure IoT Operations resources. For more information, see [Built-in RBAC roles for IoT Operations](../secure-iot-ops/built-in-rbac.md).
+Azure IoT operations also offers built-in roles designed to simplify and secure access management for Azure IoT Operations resources. For more information, see [Built-in RBAC roles for IoT Operations](../deploy-iot-ops/overview-deploy.md#built-in-rbac-roles).
 
 ## Examples of custom roles
 
@@ -40,12 +41,11 @@ You can define different *Viewer* roles that grant read-only access to the Azure
 | ----------- | ----------- |
 | [Instance viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Instance%20Viewer.json) | This role allows the user to view the Azure IoT Operations instance. |
 | [Asset viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Asset%20Viewer.json) | This role allows the user to view the assets in the Azure IoT Operations instance. |
-| [Asset endpoint viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Asset%20Endpoint%20Viewer.json) | This role allows the user to view the asset endpoints in the Azure IoT Operations instance. |
+| [Device viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Device%20Viewer.json) | This role allows the user to view the devices in the Azure IoT Operations instance. |
 | [Data flow viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Data%20Flow%20Viewer.json) | This role allows the user to view the data flows in the Azure IoT Operations instance. |
 | [Data flow destination viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Data%20Flow%20Destination%20Viewer.json) | This role allows the user to view the data flow destinations in the Azure IoT Operations instance. |
 | [MQ viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/MQ%20Viewer.json) | This role allows the user to view the MQTT broker in the Azure IoT Operations instance. |
-| [Viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Viewer.json) | This role allows the user to view the Azure IoT Operations instance. This role is a combination of the **Instance viewer**, **Asset viewer**, **Asset endpoint viewer**, **Data flow viewer**, **Data flow destination viewer**, and **MQ viewer** roles. |
-
+| [Viewer](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Viewer.json) | This role allows the user to view the Azure IoT Operations instance. This role is a combination of the **Instance viewer**, **Asset viewer**, **Device viewer**, **Data flow viewer**, **Data flow destination viewer**, and **MQ viewer** roles. |
 ### Administrator roles
 
 You can define different *Administrator* roles that grant full access to the Azure IoT Operations instance and its resources. These roles are useful for users who need to manage the instance and its resources.
@@ -54,12 +54,11 @@ You can define different *Administrator* roles that grant full access to the Azu
 | ----------- | ----------- |
 | [Instance administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Instance%20Administrator.json) | This is privileged role. The user can deploy an instance. The role includes permissions to create and update instances, brokers, authentications, listeners, dataflow profiles, dataflow endpoints, schema registries, and user assigned identities. The role also includes permission to delete instances. |
 | [Asset administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Asset%20Administrator.json) | The user can create and manage assets in the Azure IoT Operations instance. |
-| [Asset endpoint administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Asset%20Endpoint%20Administrator.json) | The user can create and manage asset endpoints in the Azure IoT Operations instance. |
+| [Device administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Device%20Administrator.json) | The user can create and manage devices in the Azure IoT Operations instance. |
 | [Data flow administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Data%20Flow%20Administrator.json) | The user can create and manage data flows in the Azure IoT Operations instance. |
 | [Data flow destination administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Data%20Flow%20Destination%20Administrator.json) | The user can create and manage data flow destinations in the Azure IoT Operations instance. |
 | [MQ administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/MQ%20Administrator.json) | The user can create and manage the MQTT broker in the Azure IoT Operations instance. |
-| [Administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Administrator.json) | This is privileged role. The user can create and manage the Azure IoT Operations instance. This role is a combination of the **Instance administrator**, **Asset administrator**, **Asset endpoint administrator**, **Data flow administrator**, **Data flow destination administrator**, and **MQ administrator** roles. |
-
+| [Administrator](https://github.com/Azure-Samples/explore-iot-operations/blob/main/samples/custom-rbac/Administrator.json) | This is privileged role. The user can create and manage the Azure IoT Operations instance. This role is a combination of the **Instance administrator**, **Asset administrator**, **Device administrator**, **Data flow administrator**, **Data flow destination administrator**, and **MQ administrator** roles. |
 > [!NOTE]
 > The example _Assets endpoint administrator_ and _Data flow destination administrator_ roles have access to Azure Key Vault and the **Manage secrets** page in the operations experience web UI. However, even if these custom roles are assigned at the subscription level, users can only see the list of key vaults from the specific resource group. Access to schema registries is also restricted to the resource group level.
 
@@ -107,3 +106,21 @@ To assign the custom role to a user at the resource group level using the Azure 
 1. Select the user or users you want to assign the role to. You can search for users by name or email address.
 
 1. Select **Review + assign** to review the role assignment. If everything looks good, select **Assign**.
+
+## Manage an identity's access to Azure IoT Operations
+
+You must manage access to an Azure IoT Operations instance and its child resources together with access to the associated Azure Arc custom location. The Azure IoT Operations resources run on the Azure Arc-enabled cluster that the custom location specifies.
+
+When granting access, grant permissions to both:
+
+- The Azure IoT Operations instance and its child resources.
+- The associated Azure Arc custom location.
+
+Don't grant access to the Azure IoT Operations resources without also granting access to the associated custom location. Doing so can allow a user to make changes to the resource provider resources without having access to the custom location, which can circumvent permissions. Any change to the Azure IoT Operations resources applies to the associated custom location, regardless of whether the identity making the change has access to it.
+
+When removing access, remove Azure RBAC role assignments for both:
+
+- The Azure IoT Operations instance and its child resources.
+- The associated Azure Arc custom location.
+
+Don't rely on removing access to either the custom location or the Azure IoT Operations resources alone. Both paths can allow access to the underlying Azure IoT Operations cluster.

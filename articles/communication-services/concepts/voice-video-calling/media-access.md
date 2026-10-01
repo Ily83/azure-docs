@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: laithrodan
 ms.date: 06/24/2025
-ms.topic: conceptual
+ms.topic: overview
 ms.service: azure-communication-services
 ms.subservice: calling
 ---
 
 # Media access overview
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 [!INCLUDE [Public Preview](../../includes/public-preview-include-document.md)]
 

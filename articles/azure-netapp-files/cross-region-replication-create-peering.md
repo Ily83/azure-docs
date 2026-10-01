@@ -7,6 +7,7 @@ ms.service: azure-netapp-files
 ms.topic: how-to
 ms.date: 05/12/2025
 ms.author: anfdocs
+ms.custom: sfi-image-nochange
 # Customer intent: "As a cloud administrator, I want to set up volume replication for Azure NetApp Files, so that I can ensure data protection and resiliency across regions or zones in my cloud infrastructure."
 ---
 # Create volume replication for Azure NetApp Files
@@ -21,29 +22,6 @@ Setting up replication peering enables you to asynchronously replicate data from
 Replication is permitted between different subscriptions under the same tenant ID. Replication across tenants isn't supported. Replication is supported with capacity pools of the same and different service levels. For example, the source volume can be in an Ultra service level capacity pool, and the destination volume can be in a Standard service level capacity pool. You can use this flexibility to reduce cost for the recovery volume if a lower service level is acceptable. If the recovery volume requires a higher service level, you can dynamically move the volume to a capacity pool with a higher service level without interruption to the service. 
 
 Before you begin, review the [requirements and considerations for cross-region and cross-zone replication](replication-requirements.md).
-
-## Register for cross-subscription replication 
-
-Cross-subscription replication is supported in all regions that support [availability zones](../reliability/regions-list.md) and is subject to the regional pairings for [cross-region replication](replication.md#supported-region-pairs).
-
-Before using cross-subscription replication, you must register for the feature. Feature registration can take up to 60 minutes to complete.
-
-1. Register the feature
-
-    ```azurepowershell-interactive
-    Register-AzProviderFeature -ProviderNamespace Microsoft.NetApp -FeatureName ANFCrossSubscriptionReplication
-    ```
-
-2. Check the status of the feature registration: 
-
-    > [!NOTE]
-    > The **RegistrationState** might remain in the `Registering` state for up to 60 minutes before changing to `Registered`. Wait until the status is `Registered` before continuing.
-
-    ```azurepowershell-interactive
-    Get-AzProviderFeature -ProviderNamespace Microsoft.NetApp -FeatureName ANFCrossSubscriptionReplication
-    ```
-
-You can also use [Azure CLI commands](/cli/azure/feature) `az feature register` and `az feature show` to register the feature and display the registration status. 
 
 ## Locate the source volume resource ID  
 

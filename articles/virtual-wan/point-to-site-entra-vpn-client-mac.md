@@ -5,8 +5,8 @@ description: Learn how to configure the Azure VPN Client on macOS for Virtual WA
 ms.service: azure-virtual-wan
 ms.topic: how-to
 ms.date: 03/07/2025
-ms.author: cherylmc
-author: cherylmc
+ms.author: duau
+author: duongau
 ---
 
 # Configure Azure VPN Client - Microsoft Entra ID authentication - macOS
@@ -17,7 +17,7 @@ This article helps you configure your macOS client computer to connect to an Azu
 
 Verify that you are on the correct article. The following table shows the configuration articles available for Azure Virtual WAN point-to-site (P2S) VPN clients. Steps differ, depending on the authentication type, tunnel type, and the client OS.
 
-[!INCLUDE [P2S client configuration articles](../../includes/virtual-wan-vpn-client-install-articles.md)]
+[!INCLUDE [P2S client configuration articles](../networking/includes/virtual-wan/vpn-client-install-articles.md)]
 
 ## Prerequisites
 

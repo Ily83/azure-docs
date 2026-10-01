@@ -4,11 +4,12 @@ description: In this tutorial, learn how to connect to and copy data from your h
 services: databox
 author: stevenmatthew
 
-ms.service: azure-databox
+ms.service: azure-data-box
 ms.topic: tutorial
 ms.date: 03/25/2024
 ms.author: shaas
 zone_pivot_groups: data-box-sku
+ms.custom: sfi-image-nochange
 
 # Customer intent: As an IT admin, I need to be able to copy data to Data Box to upload on-premises data from my server onto Azure.
 ---

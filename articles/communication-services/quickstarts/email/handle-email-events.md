@@ -10,15 +10,18 @@ ms.date: 03/31/2023
 ms.topic: quickstart
 ms.service: azure-communication-services
 ms.subservice: email
+ms.custom: sfi-image-nochange
 ---
 
 # Handle Email events
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Get started with Azure Communication Services by using Azure Event Grid to handle Communication Services Email events. After subscribing to Email events such as delivery reports and engagement reports, you generate and receive these events. Completing this quickstart incurs a small cost of a few USD cents or less in your Azure account.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - A Communication Services resource. For detailed information, see [Create an Azure Communication Services resource](../create-communication-resource.md).
 - An Email resource with a provisioned domain. [Create an Email Resource](../email/create-email-communication-resource.md).
 
@@ -47,7 +50,7 @@ It might take a moment for the registration to finish. Select **Refresh** to upd
 
 For this quickstart, we use an Event Grid viewer to view events in near-real time. The viewer provides the user with the experience of a real-time feed. Also, the payload of each event should be available for inspection.
 
-To set up the viewer, follow the steps in [Azure Event Grid Viewer](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/).
+To set up the viewer, follow the steps in [Azure Event Grid Viewer](/azure/event-grid/).
 
 ## Subscribe to Email events by using web hooks
 
@@ -75,7 +78,7 @@ You can subscribe to specific events to provide Event Grid with information abou
 
 1. For **Endpoint**, select **Select an endpoint**, and then enter the URL of your web app.
 
-   In this case, we use the URL from the [Event Grid viewer](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/) that we set up earlier in the quickstart. The URL for the sample has this format: `https://{{site-name}}.azurewebsites.net/api/updates`
+   In this case, use the URL from the [Event Grid viewer](/azure/event-grid/) that you set up earlier in the quickstart. The URL for the sample has this format: `https://{{site-name}}.azurewebsites.net/api/updates`
 
 1. Select **Confirm Selection**.
 
@@ -97,7 +100,7 @@ Check out the full list of [events that Communication Services supports](../../.
 
 ### Receive Email events
 
-After you generate an event, notice that `Email Delivery Report Received` and `Email Engagement Tracking Report Received` events are sent to your endpoint. These events show up in the [Event Grid viewer](/samples/azure-samples/azure-event-grid-viewer/azure-event-grid-viewer/) that we set up at the beginning of this quickstart. Select the eye icon next to the event to see the entire payload. Events should look similar to the following data:
+After you generate an event, the `Email Delivery Report Received` and `Email Engagement Tracking Report Received` events are sent to your endpoint. These events show up in the [Event Grid viewer](/azure/event-grid/) that you set up at the beginning of this quickstart. Select the eye icon next to the event to see the entire payload. Events should look similar to the following data:
 
 #### Microsoft.Communication.EmailDeliveryReportReceived event
 :::image type="content" source="./media/handle-email-events/email-delivery-report-received.png" alt-text="Screenshot of the Azure Event Grid viewer that shows the Event Grid schema for an EMAIL delivery report received event.":::

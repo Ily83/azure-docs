@@ -7,12 +7,15 @@ ms.author: makromer
 ms.reviewer: whhender
 ms.subservice: orchestration
 ms.custom: synapse
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 03/20/2025
 ---
 
 # ForEach activity in Azure Data Factory and Azure Synapse Analytics
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+> [!TIP]
+> For the equivalent activity in Data Factory in Microsoft Fabric, see [ForEach activity](/fabric/data-factory/foreach-activity).
 
 The ForEach Activity defines a repeating control flow in an Azure Data Factory or Synapse pipeline. This activity is used to iterate over a collection and executes specified activities in a loop. The loop implementation of this activity is similar to Foreach looping structure in programming languages.
 
@@ -20,7 +23,7 @@ The ForEach Activity defines a repeating control flow in an Azure Data Factory o
 
 To use a ForEach activity in a pipeline, complete the following steps:
 
-1. You can use any array type variable or [outputs from other activities](how-to-expression-language-functions.md#examples-of-using-parameters-in-expressions) as the input for your ForEach activity.  To create an array variable, select the background of the pipeline canvas and then select the **Variables** tab to add an array type variable as shown below.
+1. You can use any array type variable or [outputs from other activities](how-to-expression-language-functions.md#expressions-with-parameters) as the input for your ForEach activity.  To create an array variable, select the background of the pipeline canvas and then select the **Variables** tab to add an array type variable as shown below.
 
    :::image type="content" source="media/control-flow-activities-common/pipeline-array-variable.png" alt-text="Shows an empty pipeline canvas with an array type variable added to the pipeline.":::
 

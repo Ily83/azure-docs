@@ -1,13 +1,13 @@
 ---
 title: Monitor module twins - Azure IoT Edge
 description: How to interpret device twins and module twins to determine connectivity and health.
-author: PatAltimore
-
-ms.author: patricka
-ms.date: 06/09/2025
+author: sethmanheim
+ms.author: sethm
+ms.date: 04/01/2026
 ms.topic: how-to
 ms.service: azure-iot-edge
 services: iot-edge
+ms.custom: sfi-image-nochange
 ---
 # Monitor module twins
 
@@ -102,7 +102,7 @@ Check these properties when you troubleshoot:
     | running | The module is running. |
     | unhealthy | A health-probe check failed or timed out. |
     | stopped | The module exited successfully (with a zero exit code). |
-    | failed | The module exited with a failure exit code (non-zero). The module can go back to backoff from this state depending on the restart policy. This state means the module has an unrecoverable error. Failure happens when the Microsoft Monitoring Agent (MMA) can't restart the module, requiring a new deployment. |
+    | failed | The module exited with a failure exit code (non-zero). The module can go back to backoff from this state depending on the restart policy. This state means the module has an unrecoverable error. Failure happens when the IoT Edge agent can't restart the module, requiring a new deployment. |
 
 For details, see [EdgeAgent reported properties](module-edgeagent-edgehub.md#edgeagent-reported-properties).
 

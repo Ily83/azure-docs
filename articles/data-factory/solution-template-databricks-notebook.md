@@ -3,14 +3,17 @@ title: Transformation with Azure Databricks
 description:  Learn how to use a solution template to transform data by using a Databricks notebook in Azure Data Factory.
 ms.author: abnarain
 author: nabhishek
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 01/15/2025
 ms.subservice: orchestration
+ms.custom: sfi-image-nochange
 ---
 
 # Transformation with Azure Databricks
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 In this tutorial, you create an end-to-end pipeline that contains the **Validation**, **Copy data**, and **Notebook** activities in Azure Data Factory.
 

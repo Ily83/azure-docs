@@ -2,16 +2,17 @@
 title: Prepare the DPM server to back up workloads
 description: In this article, learn how to prepare for System Center Data Protection Manager (DPM) backups to Azure, using the Azure Backup service.
 ms.topic: overview
-ms.date: 07/16/2025
+ms.date: 02/11/2026
 ms.service: azure-backup
 author: AbhishekMallick-MS
 ms.author: v-mallicka
+ms.custom: sfi-image-nochange
 # Customer intent: As a systems administrator, I want to prepare the DPM server for backups to Azure using the Azure Backup service, so that I can ensure data protection and disaster recovery for my workloads efficiently.
 ---
 
 # Prepare to back up workloads to Azure with System Center DPM
 
-This article explains how to prepare for System Center Data Protection Manager (DPM) backups to Azure, using the Azure Backup service.
+This article explains how to prepare for [System Center Data Protection Manager (DPM)](/system-center/dpm/dpm-overview) backups to Azure, using the Azure Backup service.
 
 The article provides:
 

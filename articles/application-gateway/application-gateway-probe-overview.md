@@ -5,9 +5,11 @@ services: application-gateway
 author: mbender-ms
 ms.service: azure-application-gateway
 ms.topic: concept-article
-ms.date: 04/09/2025
+ms.date: 08/03/2026
 ms.author: mbender 
-ms.custom: devx-track-azurepowershell
+ms.custom:
+  - devx-track-azurepowershell
+  - sfi-image-nochange
 # Customer intent: As a cloud architect, I want to configure and manage health probes for my Azure Application Gateway, so that I can ensure only healthy backend servers receive traffic and maintain application availability.
 ---
 
@@ -80,6 +82,10 @@ The following table provides definitions for the properties of a custom health p
 | Interval |Probe interval in seconds. This value is the time interval between two consecutive probes |
 | Time-out |Probe time-out in seconds. If a valid response isn't received within this time-out period, the probe is marked as failed  |
 | Unhealthy threshold |Probe retry count. The backend server is marked down after the consecutive probe failure count reaches the unhealthy threshold |
+| MinServers |Minimum number of servers that are always marked healthy. Default value is 0, which means health probe results determine the health status of all backend servers. When set to a value greater than 0, the specified number of servers are always marked as healthy regardless of probe results. This property is only configurable via PowerShell, Azure CLI, or ARM templates (not available in Azure portal).|
+
+> [!WARNING]
+> Use the **MinServers** parameter with caution. When MinServers is set to a value greater than 0, Application Gateway always marks that minimum number of backend servers as healthy, even if their health probes are failing. This can result in traffic being sent to unhealthy servers, potentially causing 502 Bad Gateway errors or other connectivity issues for clients. Only configure MinServers if you have specific availability requirements and understand the implications of overriding health probe results.
 
 ### Probe matching
 
@@ -104,11 +110,14 @@ Match criteria can be attached to probe configuration using a `-Match` operator 
 - If a backend server allows access to only authenticated users, the application gateway probes will receive a 403 response code instead of 200. As the clients (users) are bound to authenticate themselves for the live traffic, you can configure the probe traffic to accept 403 as an expected response.
 - When a backend server has a wildcard certificate (*.contoso.com) installed to serve different sub-domains, you can use a Custom probe with a specific hostname (required for SNI) that is accepted to establish a successful TLS probe and report that server as healthy. With "override hostname" in the Backend Setting set to NO, the different incoming hostnames (subdomains) will be passed as is to the backend.
 
+> [!NOTE]
+> An incorrectly configured custom probe **Path** commonly causes backend servers to become unhealthy and clients to receive 502 Bad Gateway errors. If backend health checks fail after you configure a custom probe, see [Invalid or improper configuration of custom health probes](/troubleshoot/azure/application-gateway/application-gateway-troubleshooting-502#invalid-or-improper-configuration-of-custom-health-probes). This article helps you validate the probe path, response code, and SNI fallback certificate settings.
+
 ## NSG considerations
 
-Fine grain control over the Application Gateway subnet via NSG rules is possible in public preview. More details can be found [here](application-gateway-private-deployment.md#network-security-group-control).
+The NSG requirements in this section apply to Application Gateway deployments that don't have Network Isolation enabled. Gateways with Network Isolation enabled, including private-only deployments, no longer require the GatewayManager inbound rule or outbound Internet access. For those deployments, the only required rule is to allow inbound traffic from the **AzureLoadBalancer** tag. For details, see [Private Application Gateway deployment](application-gateway-private-deployment.md#network-security-group-control).
 
-With current functionality there are some restrictions:
+For deployments that don't have Network Isolation enabled, the following restrictions apply:
 
 You must allow incoming Internet traffic on TCP ports 65503-65534 for the Application Gateway v1 SKU, and TCP ports 65200-65535 for the v2 SKU with the destination subnet as **Any** and source as **GatewayManager** service tag. This port range is required for Azure infrastructure communication.
 

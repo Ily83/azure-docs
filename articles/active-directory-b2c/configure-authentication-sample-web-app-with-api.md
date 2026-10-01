@@ -4,13 +4,15 @@ description:  This article discusses using Azure Active Directory B2C to sign in
 
 author: kengaderdus
 manager: CelesteDG
-ms.service: azure-active-directory
+ms.service: entra-id
 
 ms.topic: reference
 ms.date: 01/11/2024
 ms.author: kengaderdus
 ms.subservice: b2c
-ms.custom: "b2c-support"
+ms.custom:
+  - "b2c-support"
+  - sfi-image-nochange
 
 
 #Customer intent: As a developer building a web application that calls a web API, I want to configure authentication using Azure AD B2C, so that I can securely sign users in to my application and call a secure web API.

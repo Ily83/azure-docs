@@ -1,20 +1,21 @@
 ---
-title: Deploy Azure Site Recovery replication appliance - Modernized
+title: Deploy Azure Site Recovery Replication Appliance - Modernized
 description: This article describes how to replicate appliance for VMware disaster recovery to Azure with Azure Site Recovery - Modernized.
 ms.service: azure-site-recovery
 ms.topic: how-to
-ms.date: 01/24/2025
-ms.author: jsuri
-author: jyothisuri
+ms.date: 09/21/2026
+ms.author: v-gajeronika
+author: Jeronika-MS
+ms.custom:
+  - sfi-image-nochange
+  - sfi-ga-nochange
 # Customer intent: As a system administrator, I want to deploy the Azure Site Recovery replication appliance for VMware, so that I can ensure effective disaster recovery of my on-premises VMs to Azure.
 ---
 
 # Deploy Azure Site Recovery replication appliance - Modernized
 
 >[!NOTE]
-> The information in this article applies to Azure Site Recovery - Modernized. For information about configuration server requirements in Classic releases, [see this article](vmware-azure-configuration-server-requirements.md).
->
-> Ensure you create a new and exclusive Recovery Services vault for setting up the ASR replication appliance. Don't use an existing vault.
+>Ensure you create a new and exclusive Recovery Services vault for setting up the ASR replication appliance. Don't use an existing vault.
 
 > [!IMPORTANT]
 > Microsoft recommends that you use roles with the fewest permissions. This helps improve security for your organization. Global Administrator is a highly privileged role that should be limited to emergency scenarios when you can't use an existing role. 
@@ -147,7 +148,7 @@ If there are any organizational restrictions, you can manually set up the Site R
 
 4. After saving connectivity details, select **Continue** to proceed to registration with Microsoft Azure.
 
-5. Ensure the [prerequisites](./replication-appliance-support-matrix.md#pre-requisites) are met, proceed with registration.
+5. Ensure the [prerequisites](./replication-appliance-support-matrix.md#prerequisites) are met, proceed with registration.
 
     :::image type="Register appliance" source="./media/deploy-vmware-azure-replication-appliance-modernized/app-setup-register.png" alt-text="Screenshot showing register appliance.":::
 

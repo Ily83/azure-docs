@@ -3,7 +3,7 @@ title: Understand the roles required to perform common tasks in Azure Synapse
 description: Understand which Synapse RBAC (role-based access control) roles or Azure RBAC roles you need to get work done in Synapse Studio.
 author: meenalsri
 ms.service: azure-synapse-analytics
-ms.topic: conceptual
+ms.topic: concept-article
 ms.subservice: security
 ms.date: 01/31/2025
 ms.author: mesrivas
@@ -85,7 +85,7 @@ All Synapse RBAC permissions/actions shown in the table are prefixed with `Micro
 |Run a SQL script on a dedicated SQL pool|SQL permissions on the pool (granted automatically to a Synapse Administrator)|none|
 |Publish a new or updated, or deleted SQL script|Synapse Artifact Publisher or Synapse Contributor|sqlScripts/write, delete|
 |Commit changes to a SQL script to the Git repo|Requires Git permissions on the repo| |
-|Assign Active Directory Admin on the workspace (via workspace properties in the Azure Portal)|Azure Owner or Contributor on the workspace| |
+|Assign Active Directory Admin on the workspace (via workspace properties in the Azure portal)|Azure Owner or Contributor on the workspace| |
 |DATA EXPLORER POOLS|
 |Create a Data Explorer pool |Azure Owner or Contributor on the resource group|none|
 |Manage (pause or scale, or delete) a Data Explorer pool|Azure Owner or Contributor on the Data Explorer pool or workspace|none|
@@ -128,6 +128,7 @@ All Synapse RBAC permissions/actions shown in the table are prefixed with `Micro
 |ACCESS MANAGEMENT|
 |Review Synapse RBAC role assignments at any scope|Synapse User|read|
 |Assign and remove Synapse RBAC role assignments for users, groups, and service principals| Synapse Administrator at the workspace or at a specific workspace item scope|roleAssignments/write, delete|
+|View dedicated SQL pool data warehouse query details| Azure role assignment that grants access to query details APIs, such as a custom role that includes the _Microsoft.Synapse/workspaces/sqlPools/dataWarehouseQueries/read_ DataAction. | |
 
 ## Related content
 

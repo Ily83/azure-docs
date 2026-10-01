@@ -7,8 +7,13 @@ ms.date: 09/13/2024
 ms.service: azure-blob-storage
 ms.topic: quickstart
 ms.devlang: javascript
-ms.custom: devx-track-js, mode-api, passwordless-js, devx-track-extended-azdevcli
 zone_pivot_groups: azure-blob-storage-quickstart-options
+ms.custom:
+  - devx-track-js
+  - mode-api
+  - passwordless-js
+  - devx-track-extended-azdevcli
+  - sfi-ropc-nochange
 # Customer intent: "As a JavaScript developer, I want to quickly set up and manage Azure Blob Storage, so that I can efficiently store and retrieve unstructured data within my applications."
 ---
 
@@ -49,7 +54,7 @@ In this article, you use the [Azure Developer CLI](/azure/developer/azure-develo
 
 ::: zone pivot="blob-storage-quickstart-scratch"
 
-- Azure account with an active subscription - [create an account for free](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)
+- Azure account with an active subscription - [create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 - Azure Storage account - [Create a storage account](../common/storage-account-create.md)
 - [Node.js LTS](https://nodejs.org/en/download/package-manager/)
 
@@ -57,7 +62,7 @@ In this article, you use the [Azure Developer CLI](/azure/developer/azure-develo
 
 ::: zone pivot="blob-storage-quickstart-template"
 
-- Azure subscription - [create one for free](https://azure.microsoft.com/free/)
+- Azure subscription - [create one for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 - [Node.js LTS](https://nodejs.org/en/download/package-manager/)
 - [Azure Developer CLI](/azure/developer/azure-developer-cli/install-azd)
 
@@ -302,7 +307,7 @@ You can authorize access to data in your storage account using the following ste
 A connection string includes the storage account access key and uses it to authorize requests. Always be careful to never expose the keys in an unsecure location.
 
 > [!NOTE]
-> To authorize data access with the storage account access key, you'll need permissions for the following Azure RBAC action: [Microsoft.Storage/storageAccounts/listkeys/action](../../role-based-access-control/resource-provider-operations.md#microsoftstorage). The least privileged built-in role with permissions for this action is [Reader and Data Access](../../role-based-access-control/built-in-roles.md#reader-and-data-access), but any role which includes this action will work.
+> To authorize data access with the storage account access key, you'll need permissions for the following Azure RBAC action: [Microsoft.Storage/storageAccounts/listkeys/action](../../role-based-access-control/permissions/storage.md#microsoftstorage). The least privileged built-in role with permissions for this action is [Reader and Data Access](../../role-based-access-control/built-in-roles.md#reader-and-data-access), but any role which includes this action will work.
 
 [!INCLUDE [retrieve credentials](../../../includes/retrieve-credentials.md)]
 

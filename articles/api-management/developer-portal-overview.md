@@ -3,12 +3,11 @@ title: Overview of the developer portal in Azure API Management
 titleSuffix: Azure API Management
 description: Learn about the developer portal in API Management - a customizable website where API consumers can explore your APIs.
 services: api-management
-author: dlepow
 
 ms.service: azure-api-management
 ms.topic: concept-article
 ms.date: 06/04/2025
-ms.author: danlep 
+ms.custom: sfi-image-nochange
 ---
 
 # Overview of the developer portal
@@ -246,7 +245,7 @@ If you want to discard all changes you've made to the developer portal, you can 
 
 > [!NOTE]
 > * Resetting the developer portal doesn't delete the published version of the developer portal.
-> * Resetting the portal could update the portal to a newer version of the developer portal codebase with updated components. The placeholder content that appears might also be changed. Developer portal features and customization options remain consistent. 
+> * For portals that were created before June 2025, resetting the portal could update the portal to a newer version of the developer portal codebase with updated components. The placeholder content that appears might also be changed. Developer portal features and customization options remain consistent.
 
 To reset the developer portal:
 

@@ -3,7 +3,7 @@ title: Best practices for Azure Maps Route service in Microsoft Azure Maps
 description: Learn how to route vehicles by using Route service from Microsoft Azure Maps.
 author: farazgis
 ms.author: fsiddiqui
-ms.date: 10/28/2021
+ms.date: 09/30/2026
 ms.topic: best-practice
 ms.service: azure-maps
 ms.subservice: routing
@@ -30,7 +30,7 @@ The Route Directions and Route Matrix APIs in Azure Maps [Route service] can be 
 
 For more information about the coverage of the Route service, see [Routing Coverage].
 
-You can use any API development environment such as [Postman] or [bruno] to run the HTTP request samples shown in this article or to build REST calls.
+You can use any API development environment such as [Postman] or [Bruno] to run the HTTP request samples shown in this article or to build REST calls.
 
 ## Choose between Route Directions and Matrix Routing
 
@@ -262,13 +262,7 @@ The following image is an example of rendering alternative routes with specified
 
 ## Use the Routing service in a web app
 
-The Azure Maps Web SDK provides a [Service module]. This module is a helper library that makes it easy to use the Azure Maps REST APIs in web or Node.js applications, using JavaScript or TypeScript. The Service module can be used to render the returned routes on the map. The module automatically determines which API to use with GET and POST requests.
-
-> [!NOTE]
->
-> **Azure Maps Web SDK Service Module retirement**
->
-> The Azure Maps Web SDK Service Module is now deprecated and will be retired on 9/30/26. To avoid service disruptions, we recommend migrating to the Azure Maps JavaScript REST SDK by 9/30/26. For more information, see [JavaScript/TypeScript REST SDK Developers Guide (preview)](how-to-dev-guide-js-sdk.md).
+Use the [Azure Maps Route REST client library for JavaScript] to call the Azure Maps Route APIs from JavaScript, TypeScript, or Node.js applications. You can render route coordinates returned by the client on a map by using the Azure Maps Web SDK. For installation, authentication, and client examples, see the [JavaScript/TypeScript REST SDK developer guide].
 
 ## Next steps
 
@@ -278,19 +272,16 @@ To learn more, please see:
 > [Azure Maps Route service]
 
 > [!div class="nextstepaction"]
-> [How to use the Service module]
+> [JavaScript/TypeScript REST SDK developer guide]
 
 > [!div class="nextstepaction"]
 > [Show route on the map]
 
-> [!div class="nextstepaction"]
-> [Azure Maps npm Package]
-
 [Azure Maps account]: quick-demo-map-app.md#create-an-azure-maps-account
-[Azure Maps npm Package]: https://www.npmjs.com/package/azure-maps-rest
+[Azure Maps Route REST client library for JavaScript]: https://www.npmjs.com/package/@azure-rest/maps-route
 [Azure Maps Route service]: /rest/api/maps/route
-[bruno]: https://www.usebruno.com/
-[How to use the Service module]: how-to-use-services-module.md
+[Bruno]: https://www.usebruno.com/
+[JavaScript/TypeScript REST SDK developer guide]: how-to-dev-guide-js-sdk.md
 [Point of Interest]: /rest/api/maps/search/getsearchpoi?view=rest-maps-1.0&preserve-view=true
 [Post Route Directions API documentation]: /rest/api/maps/route/postroutedirections#supportingpoints
 [Post Route Directions]: /rest/api/maps/route/postroutedirections
@@ -298,6 +289,5 @@ To learn more, please see:
 [Route service]: /rest/api/maps/route
 [RouteType]: /rest/api/maps/route/postroutedirections#routetype
 [Routing Coverage]: routing-coverage.md
-[Service module]: /javascript/api/azure-maps-rest/
 [Show route on the map]: map-route.md
 [subscription key]: quick-demo-map-app.md#get-the-subscription-key-for-your-account

@@ -5,7 +5,7 @@ description: Learn to integrate Azure AD B2C with Haventec Authenticate for mult
 author: gargi-sinha
 manager: martinco
 ms.reviewer: kengaderdus
-ms.service: azure-active-directory
+ms.service: entra-id
 ms.topic: how-to
 ms.date: 06/21/2024
 
@@ -56,7 +56,7 @@ To get started, you need:
 
 * An Azure subscription
 
-  * If you don't have one, get an [Azure free account](https://azure.microsoft.com/free/)
+  * If you don't have one, get an [Azure free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 * An Azure AD B2C tenant linked to the Azure subscription
   * see, [Tutorial: Create an Azure Active Directory B2C tenant](tutorial-create-tenant.md)
 * A Haventec Authenticate demo environment

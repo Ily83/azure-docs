@@ -6,13 +6,19 @@ author: whhender
 ms.subservice: data-movement
 ms.author: whhender 
 ms.topic: quickstart
-ms.custom: subject-armqs, mode-arm, devx-track-bicep
 ms.date: 06/06/2025
+ms.custom:
+  - subject-armqs
+  - mode-arm
+  - devx-track-bicep
+  - sfi-image-nochange
 ---
 
 # Quickstart: Create an Azure Data Factory using Bicep
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This quickstart describes how to use Bicep to create an Azure data factory. The pipeline you create in this data factory **copies** data from one folder to another folder in an Azure blob storage. For a tutorial on how to **transform** data using Azure Data Factory, see [Tutorial: Transform data using Spark](transform-data-using-spark.md).
 
@@ -25,7 +31,7 @@ This quickstart describes how to use Bicep to create an Azure data factory. The 
 
 ### Azure subscription
 
-If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/) before you begin.
+If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 ## Review the Bicep file
 

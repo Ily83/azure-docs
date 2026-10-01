@@ -7,13 +7,15 @@ manager: chpalm
 services: azure-communication-services
 ms.author: nmurav
 ms.date: 06/20/2025
-ms.topic: conceptual
+ms.topic: best-practice
 ms.service: azure-communication-services
 ms.subservice: calling
 ms.custom: devx-track-js
 ---
 
 # Network recommendations
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes how the network environment affects voice and video calling quality. Many factors contribute to the quality of Azure Communication Services real-time media including audio, video, and application sharing. Some of the factors include network quality and bandwidth, firewall, host, and device configurations.
 

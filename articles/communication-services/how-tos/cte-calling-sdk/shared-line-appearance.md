@@ -10,13 +10,15 @@ ms.date: 02/04/2025
 
 # Teams Shared Line Appearance
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article describes how to implement Microsoft Teams Shared Line Appearance with Azure Communication Services. Shared line appearance lets a user choose a delegate to make or handle calls on their behalf. This feature is helpful if a user has an administrative assistant who regularly handles the user's calls.
 
 In the context of shared line appearance, a manager is a Teams user who authorizes a delegate to make or receive calls on their behalf. A delegate is a Microsoft 365 user who can make or receive calls on behalf of the delegator. For more information, see [Share line appearance](/microsoftteams/shared-line-appearance).
 
 ## Prerequisites
 
-- An Azure account with an active subscription. See [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). 
+- An Azure account with an active subscription. See [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). 
 - A deployed Communication Services resource. See [Create a Communication Services resource](../../quickstarts/create-communication-resource.md).
 - A user access token to enable the calling client. For more information, see [Create and manage access tokens](../../quickstarts/identity/access-tokens.md).
 - Licensing requirements for delegator and delegates. See [Teams Phone license](/microsoftteams/shared-line-appearance#license-required).

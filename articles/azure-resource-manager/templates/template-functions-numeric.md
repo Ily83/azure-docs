@@ -3,7 +3,7 @@ title: Template functions - numeric
 description: Describes the functions to use in an Azure Resource Manager template (ARM template) to work with numbers.
 ms.topic: reference
 ms.custom: devx-track-arm-template
-ms.date: 08/01/2025
+ms.date: 06/26/2026
 ---
 
 # Numeric functions for ARM templates
@@ -133,7 +133,7 @@ The following example shows a copy loop and the index value included in the name
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2022-09-01",
+      "apiVersion": "2025-06-01",
       "name": "[format('{0}storage{1}', range(0, parameters('storageCount'))[copyIndex()], uniqueString(resourceGroup().id))]",
       "location": "[parameters('location')]",
       "sku": {

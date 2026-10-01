@@ -2,14 +2,17 @@
 title: Troubleshoot Azure RBAC
 description: Troubleshoot issues with Azure role-based access control (Azure RBAC).
 services: azure-portal
-author: jenniferf-skc
+author: rolyon
 manager: pmwongera
 ms.assetid: df42cca2-02d6-4f3c-9d56-260e1eb7dc44
 ms.service: role-based-access-control
 ms.topic: troubleshooting
-ms.date: 05/27/2025
-ms.author: jfields
-ms.custom: seohack1, devx-track-azurecli
+ms.date: 05/06/2026
+ms.author: rolyon
+ms.custom:
+  - seohack1
+  - devx-track-azurecli
+  - sfi-ga-nochange
 ---
 # Troubleshoot Azure RBAC
 
@@ -232,7 +235,7 @@ You deleted a security principal that had a role assignment. If you assign a rol
 
 **Solution 2**
 
-It's a good practice to remove any role assignments that aren't being used. You can remove these role assignments using steps that are similar to other role assignments. For information about how to remove role assignments, see [Remove Azure role assignments](role-assignments-remove.yml).
+It's a good practice to remove any role assignments that aren't being used. You can remove these role assignments using steps that are similar to other role assignments. For information about how to remove role assignments, see [Remove Azure role assignments](/azure/role-based-access-control/role-assignments-remove).
 
 In PowerShell, if you try to remove the role assignments using the object ID and role definition name, and more than one role assignment matches your parameters, you'll get the error message: `The provided information does not map to a role assignment`. The following output shows an example of the error message:
 
@@ -459,7 +462,7 @@ Check that you're currently signed in with a user that is assigned a role that h
 
 The currently signed in user has a role assignment with the following criteria:
 
-- Role includes a [Microsoft.Storage](resource-provider-operations.md#microsoftstorage) data action
+- Role includes a [Microsoft.Storage](permissions/storage.md#microsoftstorage) data action
 - Role assignment includes an ABAC condition that uses a [GUID comparison operators](conditions-format.md#guid-comparison-operators)
 
 **Solution 2**
@@ -615,13 +618,10 @@ If you're a Microsoft Entra Global Administrator and you don't have access to a 
 
 ## Classic subscription administrators
 
-> [!IMPORTANT]
-> As of **August 31, 2024**, Azure classic administrator roles (along with Azure classic resources and Azure Service Manager) are retired and no longer supported. Starting on **April 30, 2025**, any Co-Administrator or Service Administrator role assignments will lose access. If you still have active Co-Administrator or Service Administrator role assignments, convert these role assignments to Azure RBAC immediately.
->
-> For more information, see [Azure classic subscription administrators](classic-administrators.md).
+[!INCLUDE [classic-administrators-retirement-note](./includes/classic-administrators-retirement-note.md)]
 
 ## Next steps
 
 - [Troubleshoot for external users](role-assignments-external-users.md#troubleshoot)
-- [Assign Azure roles using the Azure portal](role-assignments-portal.yml)
+- [Assign Azure roles using the Azure portal](/azure/role-based-access-control/role-assignments-portal)
 - [View activity logs for Azure RBAC changes](change-history-report.md)

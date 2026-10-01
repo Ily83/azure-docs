@@ -5,13 +5,15 @@ ms.subservice: ci-cd
 author: kromerm
 ms.author: makromer
 ms.reviewer: whhender
-ms.topic: conceptual
+ms.topic: how-to
 ms.date: 01/29/2025
 ---
 
 # Automate continuous integration using Azure Pipelines releases
 
 [!INCLUDE[appliesto-adf-xxx-md](includes/appliesto-adf-xxx-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 The following is a guide for setting up an Azure Pipelines release that automates the deployment of a data factory to multiple environments.
 

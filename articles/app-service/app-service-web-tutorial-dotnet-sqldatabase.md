@@ -5,10 +5,16 @@ ms.assetid: 03c584f1-a93c-4e3d-ac1b-c82b50c75d3e
 ms.devlang: csharp
 ms.topic: tutorial
 ms.date: 06/26/2025
-ms.custom: devx-track-csharp, mvc, devcenter, vs-azure, AppServiceConnectivity
 author: cephalin
 ms.author: cephalin
 ms.service: azure-app-service
+ms.custom:
+  - devx-track-csharp
+  - mvc
+  - devcenter
+  - vs-azure
+  - AppServiceConnectivity
+  - sfi-image-nochange
 ---
 
 # Tutorial: Deploy an ASP.NET app with Azure SQL database to Azure
@@ -17,7 +23,7 @@ ms.service: azure-app-service
 
 When you finish the tutorial, you have an ASP.NET app connected to an Azure SQL database running in Azure. The following example shows the app interface.
 
-![Screenshot that shows a published ASP.NET application in Azure App Service.](./media/app-service-web-tutorial-dotnet-sqldatabase/azure-app-in-browser.png)
+![Screenshot that shows a published ASP.NET to-do list application running in Azure App Service.](./media/app-service-web-tutorial-dotnet-sqldatabase/azure-app-in-browser.png)
 
 In this tutorial, you:
 
@@ -52,7 +58,7 @@ The sample project contains a basic [ASP.NET MVC](https://www.asp.net/mvc) creat
 
 1. In the app, select **Create New** and create a couple of *to-do* items.
 
-   ![Screenshot that shows the ASP.NET web app.](media/app-service-web-tutorial-dotnet-sqldatabase/local-app-in-browser.png)
+   ![Screenshot that shows the ASP.NET to-do list web app running locally in development.](media/app-service-web-tutorial-dotnet-sqldatabase/local-app-in-browser.png)
 
 1. Test the **Edit**, **Details**, and **Delete** links.
 
@@ -80,7 +86,7 @@ To publish the app to Azure, you create and configure a Publish profile that has
 
 1. On the **App Service (Windows)** screen, configure the App Service **Name**, **Resource group**, and **Hosting Plan**.
 
-   ![Screenshot that shows creating an App Service plan.](./media/app-service-web-tutorial-dotnet-sqldatabase/new_rg2.png)
+   ![Screenshot that shows configuring the App Service (Windows) with name, resource group, and hosting plan settings.](./media/app-service-web-tutorial-dotnet-sqldatabase/new_rg2.png)
 
 1. Under **Name**, you can keep the generated web app name, or change it to another name with characters `a-z`, `0-9`, and `-`. The web app name must be unique across all Azure apps.
 
@@ -139,7 +145,7 @@ Before you can create a database, you need a [logical SQL server](/azure/azure-s
 
 1. On the **Connect to Azure SQL Database** screen, select **Finish**.
 
-   ![Screenshot of the screen with messagea about configuring managed identity for the connection to work.](./media/app-service-web-tutorial-dotnet-sqldatabase/connect-warning.png)
+   ![Screenshot of the screen with messages about configuring managed identity for the connection to work.](./media/app-service-web-tutorial-dotnet-sqldatabase/connect-warning.png)
 
    > [!NOTE]
    > If you see **Local user secrets files** instead, make sure you used the **Publish** page, not the **Connected Services** page, to configure SQL Database.
@@ -212,7 +218,7 @@ The Entity Framework 6 provider replaces the built-in `System.Data.SqlClient` SQ
 
 1. To test the app, add a few to-do items.
 
-   ![Screenshot that shows the published ASP.NET application in Azure App Service.](./media/app-service-web-tutorial-dotnet-sqldatabase/azure-app-in-browser.png)
+   ![Screenshot that shows a published ASP.NET to-do list application running in Azure App Service.](./media/app-service-web-tutorial-dotnet-sqldatabase/azure-app-in-browser.png)
 
 Congratulations! Your data-driven ASP.NET application is running live in Azure App Service.
 

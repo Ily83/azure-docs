@@ -3,11 +3,12 @@ title: Release Notes for AppCAT 7
 description: Azure Migrate application and code assessment tool - release notes.
 author: KarlErickson
 ms.author: karler
-ms.reviewer: brborges
-ms.service: azure
+ms.reviewer: seal
+ms.service: azure-java
+ms.subservice: java-fundamentals
 ms.custom: devx-track-java, build-2025
 ms.topic: overview
-ms.date: 06/27/2025
+ms.date: 06/24/2026
 #customer intent: As a developer, I want to assess my Java application so that I can understand its readiness for migration to Azure.
 ---
 
@@ -16,6 +17,64 @@ ms.date: 06/27/2025
 This article provides the release notes for Azure Migrate application and code assessment for Java (AppCAT 7). It includes information about new features, bug fixes, and known issues.
 
 ## Release history
+
+### 7.7.0.11
+
+This release contains the following enhancement:
+- Updated outdated Azure migration recommendations across the rulesets.
+
+### 7.7.0.10
+
+This release contains the following features and enhancements:
+- Add openjdk25 capability entry.
+- Strip pre-release label before dependency version check.
+- Fix transitive dependency location resolution.
+
+### 7.7.0.9
+
+This release contains the following features:
+- Replaced Code Impact with Story Points in the static report.
+- Added detection for the legacy Azure SDK for Java.
+
+### 7.7.0.8
+
+This release contains the following features:
+- Added incremental report generation support.
+- Improved performance for builtin rules.
+
+### 7.7.0.7
+
+This release contains the following fixes and enhancements:
+- Fixed a potential deadlock during Eclipse Java Development Tools Language Server (JDTLS) search.
+- Added rule support for Jakarta EE and other migration scenarios.
+- Improved XML match fallback when location resolution fails.
+
+### 7.7.0.6
+
+This release contains the following features and fixes:
+- Add a new issue-only analysis mode that detects issues only and doesn't discover the technologies used by the project.
+- Fail fast when the underlying analysis service times out, instead of getting stuck.
+
+### 7.7.0.4
+
+This release contains the following new features and enhancements:
+
+- **Enhanced command parameters**: Added new parameters to the `appcat analyze` command:
+  - `--list-capabilities`: Display available migration capabilities.
+  - `--list-os`: Display available migration target operating systems.
+  - `--capability`: Specify capability technologies for analysis.
+  - `--os`: Specify operating systems for analysis.
+- **Improved target specification**: Refined the `--targets` parameter by removing OS and capability values, which are now handled by dedicated parameters.
+- **Unified output format**: Introduced a new consolidated **report.json** output file.
+
+### 7.7.0.3
+
+This release contains the following fixes and enhancements:
+
+- Refine issue domain names and category names.
+- Move **.appcat-ignore** into user home path instead of the AppCAT installation folder.
+- Remove unnecessary temporary files during analysis, such as Eclipse-specific configuration.
+- Return error message directly for non-Java projects.
 
 ### 7.7.0.2
 
@@ -125,6 +184,44 @@ This release is based on a different set of components of the Konveyor project.
 - A new engine based on the [Konveyor Analyzer LSP](https://github.com/konveyor/analyzer-lsp) project, with a CLI based on the [Konveyor Kantra](https://github.com/konveyor/kantra/) project.
 
 ## Known issues
+
+### 7.7.0.11
+
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
+
+### 7.7.0.10
+
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
+
+### 7.7.0.9
+
+- Rules issues:
+  - The `azure-system-config-01000` rules aren't being triggered.
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
+
+### 7.7.0.7
+
+- Rules issues:
+  - The `azure-system-config-01000` rules aren't being triggered.
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
+
+### 7.7.0.6
+
+- Rules issues:
+  - The `azure-system-config-01000` rules aren't being triggered.
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
+
+### 7.7.0.4
+
+- Rules issues:
+  - The `azure-system-config-01000` rules aren't being triggered.
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
+
+### 7.7.0.3
+
+- Rules issues:
+  - The `azure-system-config-01000` rules aren't being triggered.
+- An error in the **Watcher Error** channel on Windows: `Windows system assumed buffer larger than it is, events have likely been missed`. This error message appears on the command line during long-running jobs on Windows.
 
 ### 7.7.0.2
 

@@ -6,7 +6,7 @@ author: dcstwh
 ms.author: weetok
 ms.reviewer: whhender
 ms.subservice: orchestration
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 04/08/2025
 ms.custom: synapse
 ---
@@ -14,6 +14,8 @@ ms.custom: synapse
 # Pipeline execution and triggers in Azure Data Factory or Azure Synapse Analytics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 A _pipeline run_ in Azure Data Factory and Azure Synapse defines an instance of a pipeline execution. For example, say you have a pipeline that executes at 8:00 AM, 9:00 AM, and 10:00 AM. In this case, there are three separate runs of the pipeline or pipeline runs. Each pipeline run has a unique pipeline run ID. A run ID is a GUID that uniquely defines that particular pipeline run.
 
@@ -396,7 +398,7 @@ For more information about event-based triggers, see [Storage Event Trigger](how
 The tumbling window trigger and the schedule trigger both operate on time heartbeats. How are they different?
 
 > [!NOTE]
-> The tumbling window trigger run *waits for the triggered pipeline run* to finish. Its run state reflects the state of the triggered pipeline run. For example, if a triggered pipeline run is cancelled, the corresponding tumbling window trigger run is marked cancelled. This is different from the "fire and forget" behavior of the schedule trigger, which is marked successful as long as a pipeline run started.
+> The tumbling window trigger run *waits for the triggered pipeline run* to finish. Its run state reflects the state of the triggered pipeline run. For example, if a triggered pipeline run is canceled, the corresponding tumbling window trigger run is marked canceled. This is different from the "fire and forget" behavior of the schedule trigger, which is marked successful as long as a pipeline run started.
 
 The following table provides a comparison of the tumbling window trigger and schedule trigger:
 

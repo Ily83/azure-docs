@@ -1,62 +1,73 @@
 ---
-title: AFD/CDN Classic Migration FAQ
-description: Frequently asked questions about migrating from AFD/CDN Classic to AFD Standard or Premium.
-author: jainsabal
-ms.author: jainsabal
+title: Migration FAQ
+titleSuffix: Azure Front Door
+description: Frequently asked questions about migrating from Front Door (classic) and CDN Standard from Microsoft (classic) to Front Door Standard or Premium.
+author: halkazwini
+ms.author: halkazwini
 ms.service: azure-frontdoor
-ms.topic: overview
-ms.date: 08/06/2025
-
-#CustomerIntent: As a <type of user>, I want <what?> so that <why?>.
+ms.topic: concept-article
+ms.date: 08/26/2026
 ---
 
-# AFD and CDN Classic Migration FAQ
+# Azure Front Door (classic) and CDN Standard from Microsoft (classic) migration FAQ
 
-This document provides answers to frequently asked questions regarding the migration from Azure Front Door (AFD) Classic and CDN Classic to AFD Standard/Premium.
+**Applies to:** :heavy_check_mark: Front Door (classic) :heavy_check_mark: CDN Standard from Microsoft (classic)
 
-### Will there be downtime during migration?
+This article provides answers to frequently asked questions about migrating from Azure Front Door (classic) and CDN Standard from Microsoft (classic) to Front Door Standard or Premium.
 
-No, there is no downtime during the migration. This is a control plane-only migration, meaning traffic delivery is unaffected.
+[!INCLUDE [Azure Front Door (classic) retirement notice](../../includes/front-door-classic-retirement.md)]
 
-During migration, the classic Azure Front Door (AFD) endpoint mydomain.azurefd.net is created as a dummy custom domain on AFD standard/premium that is CNAMEd to AFD standard/premium endpoint mydomain.randomstring.z01.azurefd.net. It continues to receive traffic until you update the DNS record of AFD custom domain (www.mydomain.com) to mydomain.randomstring.z01.azurefd.net directly. It is highly recommended to change the CNAME from classic endpoint to AFD standard/premium endpoint after verification.
+[!INCLUDE [Azure Front Door (classic) retirement notice](../../includes/cdn-classic-retirement.md)]
+
+## Does the migration cause any downtime?
+
+No, the migration process doesn't cause any downtime. It's a control plane-only migration, so traffic delivery isn't affected.
+
+During migration, the Azure Front Door (classic) endpoint `mydomain.azurefd.net` is created as a dummy custom domain on Front Door standard or premium. Both classic endpoint and standard or premium endpoints point to the same Front Door IP, so the final resolution stays the same before and after DNS propagation. The endpoint keeps receiving traffic until you update the DNS record of the Front Door custom domain `www.mydomain.com` to `mydomain.randomstring.z01.azurefd.net` directly. Change the CNAME from classic endpoint to Front Door standard or premium endpoint after verification.
 
 Even in rare cases where the migration fails, traffic delivery continues to work as expected.
 
-There is no rollback support, please reach out to the support team for help if migration fails.
+The migration process doesn't support rollback. If migration fails, contact the support team for help.
 
+## What should I do after migration?
 
+After migration, follow these steps:
 
-### What should I do after migration?
+1. Verify that traffic delivery continues to work.
 
-After migration:
-
-1. Verify traffic delivery continues to work.
-
-1. Update the DNS CNAME record for your custom domain to point to the AFD Standard/Premium endpoint (exampledomain-hash.z01.azurefd.net) instead of the classic endpoint (exampledomain.azurefd.net for classic AFD or exampledomain.azureedge.net). Wait for the DNS update propagation until DNS TTL expires, depending on how long TTL is configured on DNS provider.
+1. Update the DNS CNAME record for your custom domain to point to the Front Door Standard or Premium endpoint `exampledomain-hash.z01.azurefd.net` instead of the classic endpoint (`exampledomain.azurefd.net` for Front Door (classic) or `exampledomain.azureedge.net`). Wait for the DNS update to propagate until DNS TTL expires, depending on how long TTL is configured on DNS provider.
 
 1. Verify again that traffic works in the custom domain.
 
-1. Once confirmed, delete the pseudo custom domain (i.e., the classic endpoint that was pointing to the AFD Standard/Premium endpoint) from the AFD Standard/Premium profile.
+1. Once confirmed, delete the pseudo custom domain (that is, the classic endpoint that was pointing to the Front Door Standard or Premium endpoint) from the Front Door Standard or Premium profile.
 
 1. Then delete the classic resource. 
 
-### When I change my DNS CNAME from classic AFD endpoint to AFD standard/premium endpoint, does DNS propagation cause downtime?
+## When I change my DNS CNAME from Front Door (classic) endpoint to Front Door Standard/Premium endpoint, does DNS propagation cause downtime?
 
-No, both classic endpoint and Std/premium endpoints point to the same IP, so the final resolution remains the same before and after DNS propagation.
+No, both classic endpoint and Standard/Premium endpoints point to the same IP, so the final resolution remains the same before and after DNS propagation.
 
-### When should I delete the classic SKU?
+## When would the classic endpoint stop working?
+Starting April 1, 2028, classic endpoints are no longer supported and might stop functioning. Custom domains, applications, or clients that still depend on a classic endpoint might stop receiving traffic. You must complete the following post-migration action depending on your scenario by March 31, 2028:
 
-For AFD Classic: After verifying that traffic works and the DNS record has been updated to point to the AFD Standard/Premium endpoint, you can safely delete the classic resource.
+- Custom domains: Update the DNS record to point to the new Azure Front Door Standard/Premium endpoint.
 
-For CDN Classic: You do not need to delete the classic resource. Migration is treated as a SKU upgrade, and the classic resource can remain.
+- Direct use of the classic default endpoint: Replace the classic hostname with the new endpoint hostname in your applications, clients, and integrations.
 
-### Do I need to update my DevOps pipeline?
+Both endpoints remain functional during the transition, so you can make and validate this change without downtime.
 
-Yes. After migration, make sure to update your DevOps pipeline to reflect the new AFD Standard or Premium configuration and endpoints. [Learn more](post-migration-dev-ops-experience.md).
+## When should I delete the classic tier?
 
-## Next step
+For Front Door (classic): After verifying that traffic works and the DNS record is updated to point to the Front Door Standard or Premium endpoint, you can safely delete the classic resource.
 
-* Understand the [settings mapping between Azure Front Door tiers](tier-mapping.md).
-* Learn how to [migrate from Azure Front Door (classic) to Standard or Premium tier](migrate-tier.md) using the Azure portal.
-* Learn how to [migrate from Azure Front Door (classic) to Standard or Premium tier](migrate-tier-powershell.md) using Azure PowerShell.
-* Learn how to [migrate from Azure CDN from Microsoft (classic)](migrate-tier.md) to Azure Front Door using the Azure portal.
+For CDN Standard from Microsoft (classic): You don't need to delete the classic resource. Migration is treated as a tier upgrade, and the classic resource can remain.
+
+## Do I need to update my DevOps pipeline?
+
+Yes. After migration, make sure to update your DevOps pipeline to reflect the new Front Door Standard or Premium configuration and endpoints. [Learn more](post-migration-dev-ops-experience.md).
+
+## Related content
+
+- [Settings mapping between Azure Front Door tiers](tier-mapping.md)
+- Migrate from Azure Front Door (classic) to Standard or Premium tier using the [Azure portal](migrate-tier.md) or [Azure PowerShell](migrate-tier-powershell.md)
+- [Migrate from Azure CDN from Microsoft (classic) to Standard or Premium tier using the Azure portal](migrate-tier.md)

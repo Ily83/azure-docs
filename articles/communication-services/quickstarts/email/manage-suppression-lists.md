@@ -13,11 +13,13 @@ ms.service: azure-communication-services
 
 # Manage domain suppression lists in the Azure portal
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 This article describes how to manage suppression lists for an Azure Communication Email Domain using the Azure portal.
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/dotnet/).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An Azure Email Communication Services Resource ready to provision domains. [Create an Email Communication Resource](./create-email-communication-resource.md).
 - An [Azure Managed Domain](./add-azure-managed-domains.md) or [Custom Domain](./add-custom-verified-domains.md) provisioned and ready to send emails.
 

@@ -2,11 +2,11 @@
 title: Configure User VPN P2S clients - certificate authentication - Windows native client
 titleSuffix: Azure Virtual WAN
 description: Learn how to configure the native VPN client on a Windows computer for User VPN (point-to-site) certificate authentication connections.
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.topic: how-to
 ms.date: 02/07/2025
-ms.author: cherylmc
+ms.author: duau
 ---
 
 # Configure native VPN client for User VPN P2S certificate authentication connections - Windows
@@ -19,7 +19,7 @@ The VPN client configuration files that you generate are specific to the P2S Use
 
 This article applies to Windows operating system clients. Before beginning client configuration steps, verify that you're on the correct VPN client configuration article. The following table shows the configuration articles available for User VPN clients. Steps differ, depending on the authentication type, tunnel type, and the client OS.
 
-[!INCLUDE [P2S client configuration articles](../../includes/virtual-wan-vpn-client-install-articles.md)]
+[!INCLUDE [P2S client configuration articles](../networking/includes/virtual-wan/vpn-client-install-articles.md)]
 
 ### Prerequisites
 

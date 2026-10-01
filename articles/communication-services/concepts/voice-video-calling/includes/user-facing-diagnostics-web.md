@@ -6,7 +6,7 @@ author: sloanster
 ms.author: micahvivion
 
 services: azure-communication-services
-ms.date: 06/27/2025
+ms.date: 09/03/2025
 ms.topic: include
 ms.service: azure-communication-services
 ms.subservice: calling
@@ -15,10 +15,8 @@ ms.subservice: calling
 ## Local vs Remote User Facing Diagnostics
 User Facing Diagnostics (UFD) are enabled to expose user-impacting events happening on a users calling device via a programmatic API. Within Azure Communication Services, there are two methods for consuming and generating UFDs: **local UFDs** and **remote UFDs**. **Local UFDs** are generated on the local user's phone browser or desktop browser. **Remote UFDs** are events occurring in a remote participant's environment, which enables a local user to consume and view those remote user impacting events locally.
 
-[!INCLUDE [Public Preview Disclaimer](../../../includes/private-preview-include.md)]
-
 > [!NOTE]  
-> [Version 1.34.1-beta.2](https://www.npmjs.com/package/@azure/communication-calling/v/1.34.1-beta.2) and higher of the public preview calling SDK support sending Remote UFDs from the WebJS calling SDK. Local UFDs emitted by the calling SDK are in general availability (GA).
+> [Version 1.38.1](https://www.npmjs.com/package/@azure/communication-calling/v/1.38.1) and higher of the general availability and [Version 1.34.1-beta.2](https://www.npmjs.com/package/@azure/communication-calling/v/1.34.1-beta.2) calling SDK support sending Remote UFDs from the WebJS calling SDK. Local UFDs emitted by the calling SDK are in general availability (GA).
 
 User Facing Diagnostics (UFD) enable you to see when local or remote participants are experiencing issues that affect audio-video call quality. UFD provides real-time diagnostics on network conditions, device functionality, and media performance. This diagnostic information helps developers identify problems such as poor connectivity, muted microphones, or low bandwidth. While UFDs doesn't automatically fix these issues, it enables applications to offer proactive feedback to users, suggesting solutions like checking their internet connection or adjusting device settings. Based on this data, users can either correct the issue themselves (such as turn-off video when the network is weak) or display the information through the User Interface.
 
@@ -39,7 +37,7 @@ The following user-facing diagnostics are available:
 | networkReconnect | The connection was lost and the client is reconnecting to the network. | - Set to`Bad` when the network is disconnected <br/> - Set to `Poor`when the media transport connectivity is lost <br/> - Set to `Good` when a new session is connected. | Local <br/> Remote | Low bandwidth, no internet | Ensure that the call has a reliable internet connection that can sustain a voice call. For more information, see the [Network bandwidth requirement](../network-requirements.md#network-bandwidth) section. |
 | networkReceiveQuality | An indicator regarding incoming stream quality. | - Set to `Bad` when there's a severe problem with receiving the stream. <br/> - Set to `Poor` when there's a mild problem with receiving the stream. <br/> - Set to `Good` when there's no problem with receiving the stream. | Local <br/> Remote | Low bandwidth | Ensure that the call has a reliable internet connection that can sustain a voice call. For more information, see the [Network bandwidth requirement](../network-requirements.md#network-bandwidth) section. Suggest that the end user turn-off their camera to conserve available internet bandwidth. |
 | networkSendQuality | An indicator regarding outgoing stream quality. | - Set to `Bad` when there's a severe problem with sending the stream. <br/> - Set to `Poor` when there's a mild problem with sending the stream. <br/> - Set to `Good` when there's no problem with sending the stream. | Local <br/> Remote | Low bandwidth | Ensure that the call has a reliable internet connection that can sustain a voice call. For more information, see the [Network bandwidth requirement](../network-requirements.md#network-bandwidth) section. Also, suggest that the end user turn-off their camera to conserve available internet bandwidth. |
-| serverConnection | It shows whether a remote participant has unexpectedly disconnected from the call due to server loosing connection to client. | - Set to `Bad` when there's a severe problem with sending the stream. <br/> - Set to `Good` when there's no problem with sending the stream. | Remote | No internet connection between client and server infrastructure | Ensure that the call has a reliable internet connection that can sustain a voice call. For more information, see the [Network bandwidth requirement](../network-requirements.md#network-bandwidth) section.|
+| serverConnection | It shows whether a remote participant has unexpectedly disconnected from the call due to server losing connection to client. | - Set to `Bad` when there's a severe problem with sending the stream. <br/> - Set to `Good` when there's no problem with sending the stream. | Remote | No internet connection between client and server infrastructure | Ensure that the call has a reliable internet connection that can sustain a voice call. For more information, see the [Network bandwidth requirement](../network-requirements.md#network-bandwidth) section.|
 
 ### Audio values
 | Name | Description | Possible values | Location | Use cases | Mitigation steps |

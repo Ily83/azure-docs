@@ -112,7 +112,7 @@ Before you run this command, replace `<YOUR-GITHUB-USERNAME>` with your actual G
     containerAppName: my-container-app
     resourceGroup: my-container-app-rg
     imageToDeploy: ghcr.io/<YOUR-GITHUB-USERNAME>/myimage:latest
-    registryServer: ghcr.io
+    registryUrl: ghcr.io
 ```
 Before deploying, configure your container app to pull from GHCR:
 
@@ -134,7 +134,7 @@ If the image is private, you must provide authentication credentials in your Git
     containerAppName: my-container-app
     resourceGroup: my-container-app-rg
     imageToDeploy: ghcr.io/<YOUR-GITHUB-USERNAME>/myimage:${{ github.sha }}
-    registryServer: ghcr.io
+    registryUrl: ghcr.io
     registryUsername: ${{ secrets.GHCR_USERNAME }}
     registryPassword: ${{ secrets.GHCR_TOKEN }}
 ```
@@ -169,7 +169,7 @@ You take the following steps to configure a GitHub Actions workflow to deploy to
 
 | Requirement | Instructions |
 |--|--|
-| Azure account | If you don't have one, [create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F). You need the *Contributor* or *Owner* permission on the Azure subscription to proceed. Refer to [Assign Azure roles using the Azure portal](../role-based-access-control/role-assignments-portal.yml?tabs=current) for details. |
+| Azure account | If you don't have one, [create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn). You need the *Contributor* or *Owner* permission on the Azure subscription to proceed. Refer to [Assign Azure roles using the Azure portal](/azure/role-based-access-control/role-assignments-portal?tabs=current) for details. |
 | GitHub Account | Sign up for [free](https://github.com/join). |
 | Azure CLI | Install the [Azure CLI](/cli/azure/install-azure-cli).|
 

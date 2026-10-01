@@ -11,9 +11,12 @@ ms.date: 6/30/2021
 ms.topic: overview
 ms.service: azure-communication-services
 ms.subservice: chat
+ms.custom: sfi-ropc-nochange
 ---
 
 # Get started with the chat hero sample
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 > [!IMPORTANT]
 > [This sample is available **on GitHub**.](https://github.com/Azure-Samples/communication-services-web-chat-hero)
@@ -52,7 +55,7 @@ Complete the following prerequisites and steps to set up the sample.
 
 - [Visual Studio Code (Stable Build)](https://code.visualstudio.com/download).
 - [Node.js (16.14.2 and above)](https://nodejs.org/en/download/package-manager/).
-- Create an Azure account with an active subscription. For details, see [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- Create an Azure account with an active subscription. For details, see [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - Create an Azure Communication Services resource. For details, see [Create an Azure Communication Resource](../quickstarts/create-communication-resource.md). Record your resource **connection string** for this quickstart.
 
 ## Before running the sample for the first time

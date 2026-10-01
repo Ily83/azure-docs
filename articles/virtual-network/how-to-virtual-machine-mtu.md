@@ -28,15 +28,15 @@ The following table shows the largest MTU size supported on the Azure Network In
 | Operating System | Network Interface | Largest MTU for inter virtual network traffic |
 |------------------|-------------------|-----------------------------------------------|
 | Windows Server | Mellanox Cx-3, Cx-4, Cx-5 | 3900 </br> **When setting the MTU value with `Set-NetAdapterAdvancedProperty`, use the value `4088`.**. **To persist reboots, the value returned by `Test-Connection` must also be set with `Set-NetIPInterface`.** |
-| Windows Server | (Preview) Microsoft Azure Network Adapter MANA | 9000 </br> **When setting the MTU value with `Set-NetAdapterAdvancedProperty`, use the value `9014`.** **To persist reboots, the value returned by `Test-Connection` must also be set with `Set-NetIPInterface`.** | 
+| Windows Server | Microsoft Azure Network Adapter MANA | 9000 </br> **When setting the MTU value with `Set-NetAdapterAdvancedProperty`, use the value `9014`.** **To persist reboots, the value returned by `Test-Connection` must also be set with `Set-NetIPInterface`.** | 
 | Linux | Mellanox Cx-3, Cx-4, Cx-5 | 3900 |
-| Linux | (Preview) Microsoft Azure Network Adapter | 9000 | 
+| Linux | Microsoft Azure Network Adapter | 9000 | 
 
 ## Prerequisites
 
 # [Linux](#tab/linux)
 
-- An Azure account with an active subscription. [Create one for free](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio).
+- An Azure account with an active subscription. [Create one for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - Two Linux virtual machines in the same virtual network in Azure. For more information about creating a Linux virtual machine, see [Create a Linux virtual machine in the Azure portal](/azure/virtual-machines/linux/quick-create-portal). Remote access to the virtual machines is required for completion of the article. For more information about connecting to Azure Virtual Machines securely, see [What is Azure Bastion?](/azure/bastion/bastion-overview)
 
@@ -44,7 +44,7 @@ The following table shows the largest MTU size supported on the Azure Network In
 
 # [Windows](#tab/windows)
 
-- An Azure account with an active subscription. [Create one for free](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio).
+- An Azure account with an active subscription. [Create one for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 - Two Windows Server virtual machines in the same virtual network in Azure. For more information about creating a Windows Server virtual machine, see [Create a Windows virtual machine in the Azure portal](/azure/virtual-machines/windows/quick-create-portal). Remote access to the virtual machines is required for completion of the article. For more information about connecting to Azure Virtual Machines securely, see [What is Azure Bastion?](/azure/bastion/bastion-overview)
 
@@ -83,7 +83,7 @@ Use the following steps to set a larger MTU size on a source and destination vir
 
 The shell script is available in the Azure samples gallery. Download the script for Linux from the following link and save to **vm-1** and **vm-2**.
 
-- [GetPathMTU - Path MTU Discovery Sample Script](/samples/azure-samples/getpathmtu/getpathmtu/)
+- [GetPathMTU - Path MTU Discovery Sample Script](https://github.com/Azure-Samples/GetPathMTU)
 
 Use the following steps to change the MTU size on a Linux virtual machine:
 

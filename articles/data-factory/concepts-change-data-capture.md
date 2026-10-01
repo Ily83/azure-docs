@@ -7,13 +7,15 @@ ms.author: makromer
 ms.reviewer: whhender
 ms.subservice: data-movement
 ms.custom: synapse
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 02/13/2025
 ---
 
 # Change data capture in Azure Data Factory and Azure Synapse Analytics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
+
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
 
 This article describes change data capture (CDC) in Azure Data Factory.
 

@@ -7,12 +7,14 @@ services: azure-communication-services
 
 ms.author: amagginetti
 ms.date: 03/08/2021
-ms.topic: conceptual
+ms.topic: how-to
 ms.service: azure-communication-services
 ms.subservice: data
 ---
 
 # Insights dashboard
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
 
 This article describes insights available from the Insights dashboard. Use these insights to monitor logs and metrics.
 

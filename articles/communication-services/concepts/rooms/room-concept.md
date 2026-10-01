@@ -2,16 +2,18 @@
 title: Rooms API for structured meetings
 titleSuffix: An Azure Communication Services article
 description: This article describes Azure Communication Services Rooms API for structured meetings.
-author: farrukhghaffar
+author: kirmadi
 manager: cassidyfein
 services: azure-communication-services
 
-ms.author: FAGHAFFA
+ms.author: jorgegarc
 ms.date: 05/15/2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ---
 # Rooms API for structured meetings
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 Virtual Rooms empower developers with essential security and control capabilities to build well-structured communication experiences such as virtual appointments and group communications. Developers can use virtual rooms to conduct voice, video, and PSTN calls. Security and controls in rooms can be classified as follows.
 

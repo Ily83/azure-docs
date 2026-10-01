@@ -2,7 +2,7 @@
 title: Restore Azure PostgreSQL-Flexible server as Files using Azure portal
 description: Learn about how to restore Azure PostgreSQL-Flexible server as Files.
 ms.topic: how-to
-ms.date: 05/12/2025
+ms.date: 09/25/2026
 ms.service: azure-backup
 ms.custom:
   - ignite-2024
@@ -11,9 +11,9 @@ ms.author: v-mallicka
 # Customer intent: "As a database administrator, I want to restore Azure PostgreSQL Flexible server backups as files, so that I can ensure data recovery for compliance and manage database configurations effectively."
 ---
 
-# Restore Azure PostgreSQL-Flexible server as Files using Azure portal
+# Restore Azure Database for PostgreSQL flexible server as files by using the Azure portal
 
-This article describes how to restore an Azure PostgreSQL-Flexible server as Files backed up using Azure portal.
+This article describes how to restore an Azure Database for PostgreSQL flexible server as files by using the Azure portal.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Before you restore from Azure Database for PostgreSQL Flexible server backups, r
 
 - Ensure that you have the required [permissions for the restore operation](backup-azure-database-postgresql-flex-overview.md#permissions-for-backup).
 
-- Backup data is stored in the Backup vault as a blob within the Microsoft tenant. During a restore operation, the backup data is copied from one storage account to another across tenants. Ensure that the target storage account for the restore has the **AllowCrossTenantReplication** property set to **true**.
+- Backup data is stored in the Backup vault as a blob within the Microsoft tenant. During a restore operation, the backup data is copied from one storage account to another across tenants. Ensure that the target storage account for the restore has the **AllowCrossTenantReplication** property set to **true** and the **Permitted scope for copy operations** property set to **From any storage account**.
 
 - Ensure the target storage account for restoring backup as a file is accessible via a public network. If the storage account uses a private endpoint, [update its public network access settings](backup-azure-database-postgresql-flex-manage.md#enable-public-network-access-for-the-database-storage-account) before executing a restore operation.
 
@@ -30,13 +30,16 @@ Before you restore from Azure Database for PostgreSQL Flexible server backups, r
 >[!Note]
 >Restore operation is a two step process: 
 >1. Restore the backup from Backup vault to a storage container.  
->2. Restore the backup files from storage container to a new or existing flexible server. 
+> 2. Restore the backup files from storage container to a new or existing flexible server.
 
-To restore Azure PostgreSQL-Flexible database, Follow these steps:
+> [!TIP]
+> [Azure Backup for PostgreSQL flexible server and elastic cluster (v2)](backup-azure-postgresql-flex-server-elastic-cluster-v2-overview.md) is currently in preview, provides **Restore as Server** to restore a recovery point directly to a target flexible server in a single step.
+
+To restore Azure Database for PostgreSQL flexible database, follow these steps:
 
 1. Go to **Backup vault** > **Backup Instances**. Select the PostgreSQL - Flexible server to be restored and select **Restore**.
 
-   Alternatively, go to [Backup center](./backup-center-overview.md) and select **Restore**.	  
+   Alternatively, go to [Resiliency](../resiliency/resiliency-overview.md) and select **Restore**.	  
   
 1. Select the point in time you would like to restore by using **Select restore point**. Change the date range by selecting **Time period**.
 
@@ -73,10 +76,16 @@ To restore the backup files from storage container to a new or existing PostgreS
    >To create the database, use the `CREATE DATABASE Database_name` command.
 
 1. Restore the database using the `database.sql file` as the target admin user.
-1.After the target database is created, restore the data in this database (from the dump file) from an Azure storage account by running the following command:
+1. After the target database is created, download the dump file from an Azure Storage account by running the following command:
 
    ```azurecli-interactive
-   az storage blob download --container-name <container-name> --name <blob-name> --account-name <storage-account-name> --account-key <storage-account-key> --file - | pg_restore -h <postgres-server-url> -p <port> -U <username> -d <database-name> --no-owner -v – 
+   az storage blob download --container-name <container-name> --name <blob-name> --account-name <storage-account-name> --account-key <storage-account-key> --file <file-name>
+   ```
+
+1. Then, restore the data in this database from the dump file by running the following command:
+
+   ```azurecli-interactive
+   pg_restore -h <postgres-server-url> -p <port> -U <username> -d <database-name> --no-owner -v <File Name>
    ```
    
    - `--account-name`: Name of the Target Storage Account. 
@@ -87,6 +96,9 @@ To restore the backup files from storage container to a new or existing PostgreS
    - `-j`: The number of jobs. 
    - `-C`: Begin the output with a command to create the database itself and then reconnect to it. 
  
+    >[!Note]
+    >If the command doesn't execute as expected, specify the complete file path instead of using only the file name.
+
    Alternatively, you can download the backup file and run the restore directly. 
 
 1. Restore only the required roles and privileges, and ignore the [common errors](backup-azure-database-postgresql-flex-support-matrix.md#restore-limitations). Skip this step if you're performing the restoration for compliance requirements and data retrieval, as a local admin.
@@ -111,7 +123,8 @@ Here are the key considerations:
 - **Remove Superuser-Only Attributes**: On Flexible server, there's no superuser privileges. So, remove attributes, such as `NOSUPERUSER` and `NOBYPASSRLS` from the roles dump. 
 - **Exclude Service-Specific Users**: Exclude users specific to Flexible Server services (` azure_su`, `azure_pg_admin`, `replication`, `localadmin`, `Entra Admin`). These specific service roles are automatically recreated when administrators are added to the new Flexible server. 
 
-Before you restore the database objects, ensure that you properly dump and clean up the roles. To perform this action, download the `roles.sql`script from your storage container and create all required logins. 
+Before you restore the database objects, ensure that you properly dump and clean up the roles. To perform this action, download the `roles.sql` script from your storage container and create all required logins. 
+
 - **Create Non-Entra Roles**: Use a local admin account to run the role creation scripts. 
 - **Create Microsoft Entra Roles**: If you need to create roles for Microsoft Entra users, use a Microsoft Entra administrator account to run the necessary scripts. 
 

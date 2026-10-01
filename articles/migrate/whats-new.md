@@ -4,9 +4,10 @@ description: Learn about what's new and recent updates in the Azure Migrate serv
 ms.topic: overview
 author: Vikram1988
 ms.author: vibansa
-ms.manager: abhemraj
+ms.manager: ronai
 ms.service: azure-migrate
-ms.date: 02/24/2025
+ms.reviewer: v-gajeronika
+ms.date: 05/07/2026
 ms.custom: mvc, engagement-fy25
 # Customer intent: As a cloud architect, I want to stay updated on the latest features and enhancements in Azure Migrate, so that I can optimize on-premises migration strategies and ensure successful transitions to the Azure platform.
 ---
@@ -15,7 +16,134 @@ ms.custom: mvc, engagement-fy25
 
 [Azure Migrate](migrate-services-overview.md) helps you discover, assess, and migrate on-premises servers, apps, and data to the Azure cloud platform. This article summarizes new releases and features in Azure Migrate.
 
-## Update (August 2025)
+
+## Update (September 2026)
+
+- Public preview: Auto Wave Planning (Preview) is now available in Azure Migrate. Use Auto Wave Planning to automatically generate recommended migration waves based on workload inventory, assessment data, application mappings, and dependencies. The feature helps sequence migrations by applying planning conditions and providing priority, confidence, and risk indicators for each wave. [Learn more](automatic-wave-planning-architecture.md).
+
+- Public preview: Azure Migrate now supports network assessments for VMware environments, including those integrated with NSX. You can assess application-associated network resources and receive recommendations for Azure networking components such as virtual networks, subnets, Network Security Groups (NSGs), Azure Firewall, load balancers, and Azure Virtual Network Manager configurations. The assessment also provides migration readiness insights, estimated network costs, and sustainability metrics to help you plan application migrations to Azure. A new assessment report experience lets you review recommended network resources, cost estimates, and migration considerations before migration. [Learn more](network-assessment.md).
+
+
+## Update (August 2026)
+
+- Public preview: Azure Migrate now supports the discovery of networking resources in VMware and VMware environments that use NSX. During discovery, Azure Migrate collects network inventory information, including subnets, VLANs, NSX segments, VMware port groups, load balancers, firewall policies, and NAT policies. You can view discovered network resources on the Network tab under Infrastructure. This view helps you understand network inventory and the relationships between network resources and virtual machines before you plan your migration.
+
+  The dependency map is also enhanced to display network-aware relationships and workload communication paths. By using network discovery, Azure Migrate extends beyond compute-focused discovery to support network-aware migration planning. [Learn more](tutorial-discover-vmware.md#start-continuous-discovery).
+
+## Update (June 2026)
+
+- Public preview: Azure Migrate now **integrates with GitHub Copilot modernization CLI** (public preview) to deliver **at scale code insights**. This capability brings together Azure Migrate’s portfolio-level discovery and assessment with GitHub Copilot’s context-aware code analysis. The shared workflow helps migration admins and app developers collaborate more effectively while adhering to organizational security guidelines. Teams can assess multiple applications at once, evaluate Azure compatibility, and make informed refactor-versus-replatform decisions. They can also act on code-fix recommendations and effort estimates to plan modernization with greater confidence and predictability. [Learn more](/azure/migrate/add-copilot-code-insights)
+
+
+## Update (May 2026)
+
+- Public preview: Azure Migrate now supports **automatic discovery of applications** by grouping workloads discovered through the Collector, Appliance, or CSV import. Each application represents a logical grouping of servers and their workloads. Azure Migrate identifies these groups using server naming patterns, inferred environments, and server roles. [Learn more](define-manage-applications.md#auto-discover-applications).
+
+
+## Update (April 2026)
+ 
+- Public preview: Azure Migrate now supports **Reserved tags** that help enrich discovered data with business context, such as **environment** and **migration intent**. You can use the Environment reserved tag to classify workloads as Prod, Dev, Test, and UAT. You can also use the Migration Intent reserved tag to indicate the intended action for workloads, such as Migrate, Retain, or Retire. Reserved tags influence how Azure Migrate performs assessments, calculates target SKUs, estimates pricing and sizing, and plans workloads for migration to Azure. You can apply reserved tags from:
+    - The inventory pane in the Azure portal.
+    - Dedicated columns during CSV export and import.
+    - Natural language interactions with the Azure Copilot migration agent.
+
+If no tags are applied, workloads default to Production for the environment type and Migrate for the migration intent. [Learn more](resource-tagging.md).
+
+- Public preview: Azure Migrate now offers MongoDB assessments with readiness and right-sizing recommendations, configuration-based sizing, and target guidance for Azure Document DB or MongoDB on Azure VMs, along with estimated monthly costs to help plan and optimize migrations to Azure. [Learn more](tutorial-assess-mongodb.md)
+
+## Update (March 2026)
+
+- Public preview: Azure Migrate now offers **Reports** a new experience that helps you generate executive-level insights for migration and modernization planning. Reports include migration and modernization executive summaries, security insights, and business case insights for workloads discovered in Azure Migrate. You can tailor reports to different migration strategies, such as modernizing to **PaaS (AI‑ready), migrating to Azure Virtual Machines**, or rehosting to **Azure VMware Solution (AVS)**. Reports help you assess your application and infrastructure landscape by providing readiness analysis, target recommendations, and cost guidance, including TCO and ROI comparisons between on‑premises environments and Azure. Reports also deliver security insights and cost optimization recommendations, such as savings through Azure Hybrid Benefit, Reserved Instances, and dev/test pricing, and recommend related services like Azure Backup, Azure Site Recovery, and Microsoft Defender for Cloud. [Learn more](reports-overview.md).
+
+- General Availability: Azure Migrate now supports migrating Generation 2 VMs to Trusted Launch Azure VMs. Trusted Launch helps protect workloads from boot-level by threats using UEFI-based Secure Boot and vTPM, ensuring that only trusted, signed components during startup. [Learn more](migrate-to-trusted-launch-virtual-machines-with-azure-migrate.md).
+
+- Public preview: Azure Migrate now offers Azure Copilot migration agent, which provides a conversational experience to help you plan and analyze VMware migrations using Azure Migrate data. You can use natural language prompts to explore inventory, assess readiness, and evaluate migration strategies and business cases, while migration execution continues in the Azure Migrate portal. [Learn more](azure-copilot-migration-agent.md).
+
+- Public preview update: Security insights provide customers with a workload‑level view of risks in their on‑premises environment during migration planning. In addition to Servers and Software, it also assesses security risks in discovered Web apps and Databases. You can now identify web apps built on runtimes that are end of support and with vulnerabilities. Likewise, you can detect database instances with end of support platform and with vulnerabilities. [Learn more](insights-overview.md)
+
+
+## Update (November 2025)
+
+- Azure Migrate now offers three built-in roles for role-based access control (RBAC), enabling you to implement least privilege access for your Azure Migrate projects. These new roles replace the previous requirement for Contributor or Owner permissions at the subscription level and allow you to grant only the necessary permissions for each migration phase.
+
+  The three new built-in roles are:
+  - **[Azure Migrate Owner](prepare-azure-accounts.md#azure-migrate-owner)**: Permissions to perform end-to-end operations across all migration phases (Decide, Plan, and Execute). A user must be assigned the Azure Migrate Owner role or a higher privileged role to create an Azure Migrate project.
+  - **[Azure Migrate Decide & Plan Expert](prepare-azure-accounts.md#azure-migrate-decide-and-plan-expert)**: Provides limited permissions to perform scoped operations in the Decide and Plan phases of migration.
+  - **[Azure Migrate Execute Expert](prepare-azure-accounts.md#azure-migrate-execute-expert)**: Permissions for executing migrations and monitoring progress during the Execute phase.
+
+  This enhanced security model follows Azure security best practices and enables organizations to implement granular access control for their migration teams.
+
+- Public preview: Azure Migrate now enables **Windows Server redeployment to Azure using Infrastructure as Code (IaC)**. Generate IaC templates for assessed workloads, deploy application landing zones, and integrate disk configurations for complete, repeatable migrations—reducing manual effort and improving consistency. [Learn more](server-redeploy.md).
+
+- Public preview: Azure Migrate now supports adding code insights using GitHub Copilot assessment to enhance web app assessments. This capability helps you evaluate migration readiness more accurately and get the recommended migration strategy for Azure Kubernetes Service (AKS) or Azure App Service. You can add code insights by either uploading a ZIP file of reports or requesting a report through a GitHub connection. [Learn more](add-copilot-code-insights.md).
+
+- Public preview: Azure Migrate now supports Arc-based discovery, enabling you to assess on-premises servers and SQL Server instances that are already Azure Arc-enabled—without deploying additional infrastructure. This integration accelerates migration planning by leveraging existing Arc data to generate business cases and assessments within an hour. [Learn more](concepts-arc-resource-discovery.md). 
+    - The VM extension is an optional component that collects performance data from Arc-enabled servers to provide right sized recommendations in assessments and business cases. [Learn more](migrate-virtual-machine-extension-reference.md).
+
+- Public preview: Wave Planning in Azure Migrate provides a structured approach to cloud migration and modernization. It helps organizations break down large-scale migrations into manageable **waves** of workloads and applications. This capability accelerates timelines, reduces uncertainty, and minimizes risks through phased execution and logical grouping. [Learn more](overview.md).
+
+    - Distribute workloads and applications into waves for high-fidelity planning, leveraging Azure Migrate’s discovery and assessment information. 
+
+    - Sequence and prioritize migration waves based on business criticality, complexity of applications ensuring efficient and risk-mitigated execution. 
+
+    - Visualize execution plans and timelines across all waves, providing clear visibility into migration progress and sequence. 
+ 
+    - Execute and centrally track migrations using integrated tools, for example, Server Migration for unified tracking. 
+
+    - Monitor progress as migrations proceed, with status updates.
+
+    - Support both automated and manual migration scenarios, allowing for flexible execution and tracking regardless of workload type or migration tool. 
+
+Wave Planning in Azure Migrate provides a scalable, transparent, and risk-aware migration experience, enabling organizations to modernize infrastructure with confidence and control. 
+
+
+## Update (October 2025)
+
+- Public preview: Azure Migrate offers integrated **Security insights**, allowing customers to assess potential risks within their on-premises environment. The solution delivers actionable recommendations to effectively mitigate these risks as part of the migration planning. It uses improved Software inventory to identify use of multiple security tools and suggests consolidation with Microsoft Defender for Cloud. [Learn more](insights-overview.md).
+ 
+Notable aspects of the solution:
+
+ - Built-in dashboard view summarizing security risks in discovered Servers and Software.
+ - Auto-detects security risks such as unsupported operating systems and software, pending security and critical updates, known vulnerabilities (CVEs) associated with software versions currently in use, and servers lacking security or patch management software.
+ - Recommends mitigation strategies for secure migration by configuring Microsoft Defender for Cloud and Azure Update Manager.
+ - Highlights fragmentation in security tooling in the environment through [classification](/previous-versions/azure/migrate/how-to-discover-applications#software-classification--potential-targets).
+
+- Public preview: Software inventory enhancements will help improve the usability of the inventory and assist customers in planning for the migration of this software as part of their overall migration planning for their workloads. [Learn more](how-to-discover-applications.md)
+
+    - **Review software discovery across the project:** The enhancement enables users to review the software discovered across all servers, discovered from their datacenter.
+    - **Sanitized and classified software inventory:** The software inventory metadata is sanitized and classified into Categories & Subcategories that help you easily review key software & their insights across categories of Security, Monitoring, IT Management, Web hosting, Data platforms, Business Applications etc.
+    - **Software insights:** In addition to the software metadata you can now find software insights such as Support status and Vulnerabilities for all software discovered from your datacenter.
+    - **Potential Azure Targets:** You can also review the list of Potential Targets that have been suggested (mapped to a subcategory of software) to plan the migration of their software to the Azure 1P services or 3P ISV services available as [Azure Native integrations](/azure/partner-solutions/partners) through Azure Marketplace.
+    - **Security insights**: These enhancements power key security insights which help customers understand their overall security posture. [Learn more](insights-overview.md)
+    - **Scoping and filtering capabilities:** Users can search and filter with software metadata and insights to easily scope the inventory for analysis, export and migration planning.
+
+- Public preview: Dependency visualization across multiple servers. You can use this capability to:
+    - **Visualize network dependencies across servers:** This feature enables you to visualize network dependencies between discovered across different appliances. This comprehensive helps you understand how servers communicate within your datacenter. [Learn more](how-to-create-group-machine-dependencies-agentless.md#visualize-dependencies-across-servers)
+    - **Navigate easily with user-friendly controls:** The visualization layout is designed with intuitive controls that make it easy for you to move through the dependency map. This helps you efficiently explore server dependencies for scale environments without complexity.
+    - **Interact with nodes for server insights:** You can interact directly with nodes within the visualization to access detailed server information. This includes viewing immediate dependents and connection details, allowing for a deeper understanding of each server’s properties and dependencies.
+    - **Scope and filter visualization:** You can search by server names and apply filters using netstat data, such as process and port information, enabling scoped analysis of network connections.
+    - **Switch to per server view:** For more granular analysis, you can switch the visualization to a per-server view. This mode allows analyzing network connections at the process and port levels for individual servers. [Learn more](how-to-create-group-machine-dependencies-agentless.md#visualize-individual-server-dependencies). 
+    - **Identify and group high-affinity servers:** The visualization makes it easy to identify servers that are tightly coupled and exhibit high affinity. You can multiselect these servers and tag them as application groups, supporting logical organization and application-centric migration planning.
+
+## Update (September 2025)
+
+Public preview: Azure Migrate now supports discovery and assessment of PostgreSQL instances. 
+You can use this capability to:
+
+- Discover PostgreSQL instances and their attributes within your environment. 
+- Assess the readiness of these instances for migration to Azure Database for PostgreSQL flexible server.
+- Obtain recommendations on suitable compute and storage options, along with the associated costs.
+- Analyze configuration compatibility including server parameters, extensions, and authentication methods.
+- Review migration blockers and receive remediation guidance for seamless migration.
+
+  Key features include:
+
+    - **Configuration-based assessment**: Analyzes PostgreSQL configuration metadata to provide migration recommendations
+    - **Comprehensive discovery**: Identifies PostgreSQL instances across VMware, Hyper-V, physical servers, and other cloud environments
+    - **Cost estimation**: Provides detailed monthly cost breakdowns for compute and storage in Azure
+    - **Migration readiness**: Categorizes instances as Ready, Ready with conditions, Not ready, or Unknown with detailed remediation steps. 
+[Learn more](tutorial-assess-postgresql.md).
+
 
 - General availability: Azure Migrate enhances resiliency by supporting migration to [ZRS Disks](/azure/virtual-machines/disks-deploy-zrs?tabs=portal) during Migration. **Zone-Redundant Storage (ZRS)** for Azure Disks synchronously replicates data across three physically separate availability zones within a region – each with independent power, cooling, and networking – enhancing Disk availability and resiliency.
 
@@ -25,15 +153,15 @@ ms.custom: mvc, engagement-fy25
 
 ## Update (June 2025)
 
-- Public preview: Azure Migrate supports end-to-end migration of Gen2 VMs—(VM with UEFI boot type)—to Trusted Launch virtual machines (TVMs). This is available for all migration scenarios (VMware, Hyper-V, and Physical). Users can now assess their Gen2 VMs for TVM readiness and perform direct migrations to TVMs using Azure Migrate. It includes full support for  Secure boot, **test migrations** and **scaled migrations**, enabling a seamless and secure transition to Trusted Launch VMs. [Learn more](tutorial-migrate-hyper-v.md#replicate-hyper-v-vms).
+- Public preview: Azure Migrate supports end-to-end migration of Gen2 VMs—(VM with UEFI boot type)—to Trusted Launch virtual machines (TVMs). This is available for all migration scenarios (VMware, Hyper-V, and Physical). Users can now assess their Gen2 VMs for TVM readiness and perform direct migrations to TVMs using Azure Migrate. It includes full support for  Secure boot, **test migrations** and **scaled migrations**, enabling a seamless and secure transition to Trusted Launch VMs. [Learn more](migrate-to-trusted-launch-virtual-machines-with-azure-migrate.md).
 
 - Public preview: Azure Migrate supports sustainability efforts by offering Sustainability insights in its Business Case. It empowers IT, finance, and sustainability teams estimate on-premises emissions, compare them with Azure emissions, track yearly reductions, and show both cost and environmental benefits in a single view. This enables customers to make smart migration choices that reduce carbon emissions and support their organization’s ESG goals. [Learn more](how-to-build-a-business-case.md).
 
 
 ## Update (May 2025)
 
-- General availability: Azure Migrate enhances support for [Premium v2 SSD Disks](/azure/virtual-machines/disks-deploy-premium-v2?tabs=azure-cli). This offers a seamless experience to migrate their on-premises workloads to Azure and benefit from the advanced disk options that offer greater flexibility and enhanced performance of Pv2 disks in Azure. 
-- Public preview: Azure Migrate expands support for migrations with [Ultra SSD](/azure/virtual-machines/disks-enable-ultra-ssd?tabs=azure-portal).This enables customers to seamlessly migrate their on-premises workloads to Azure while taking advantage of Ultra Disk’s cutting-edge performance and scalability.
+- General availability: Azure Migrate enhances support for [Premium SSD v2 disks](/azure/virtual-machines/disks-deploy-premium-v2?tabs=azure-cli). This offers a seamless experience to migrate their on-premises workloads to Azure and benefit from the advanced disk options that offer greater flexibility and enhanced performance of Pv2 disks in Azure. 
+- Public preview: Azure Migrate expands support for migrations with [Ultra Disk](/azure/virtual-machines/disks-enable-ultra-ssd?tabs=azure-portal). This enables customers to seamlessly migrate their on-premises workloads to Azure while taking advantage of Ultra Disk’s cutting-edge performance and scalability.
 - Public preview: Azure Migrate enhances resiliency by supporting migration to [ZRS Disks](/azure/virtual-machines/disks-deploy-zrs?tabs=portal) during Migration only. **Zone-Redundant Storage (ZRS)** for Azure Disks synchronously replicates data across three physically separate availability zones within a region – each with independent power, cooling, and networking – enhancing Disk availability and resiliency.
 
 - General availability: Azure Migrate now supports a simplified experience through its upgraded version of the agent-based migration stack. This stack offers a streamlined experience for customers and is set to replace the classic experience over the next three years. [Learn more](simplified-experience-for-azure-migrate.md).
@@ -119,7 +247,7 @@ The RVTools XLSX (preview) file import now reads storage data, when available, f
 ## Update (June 2023)
 
 - Envision security cost savings with [Microsoft Defender for Cloud](https://www.microsoft.com/security/business/cloud-security/microsoft-defender-cloud) by using an Azure Migrate business case.
-- Resolve problems that affect the collection of performance data and the accuracy of Azure VM and Azure VMware Solution assessment recommendations, and improve the confidence ratings of assessments. [Learn more](common-questions-discovery-assessment.md).
+- Resolve problems that affect the collection of performance data and the accuracy of Azure VM and Azure VMware Solution assessment recommendations and improve the confidence ratings of assessments. [Learn more](common-questions-discovery-assessment.md).
 
 ## Update (May 2023)
 
@@ -144,7 +272,7 @@ The RVTools XLSX (preview) file import now reads storage data, when available, f
 
 ## Update (January 2023)
 
-- Envision savings with the [Azure savings plan for compute](https://azure.microsoft.com/pricing/offers/savings-plan-compute) option. An Azure savings plan for compute is now available for an Azure Migrate business case, Azure VM assessment, Azure SQL assessment, and Azure App Service assessment.
+- Envision savings with the [Azure savings plan for compute](https://azure.microsoft.com/pricing/offers/savings-plans?cid=msft_learn) option. An Azure savings plan for compute is now available for an Azure Migrate business case, Azure VM assessment, Azure SQL assessment, and Azure App Service assessment.
 - Support is available for the export of a business case report into an .xlsx workbook from the portal. [Learn more](common-questions-business-case.md#how-can-i-export-the-business-case).
 - Azure Migrate is now supported in Sweden geography. [Learn more](supported-geographies.md#public-cloud).
 
@@ -232,7 +360,7 @@ The RVTools XLSX (preview) file import now reads storage data, when available, f
 ## Update (August 2021)
 
 - At-scale discovery and assessment of ASP.NET web apps running on IIS servers in your VMware environment, now in preview. [Learn more](concepts-azure-webapps-assessment-calculation.md). To get started, refer to the [discovery](tutorial-discover-vmware.md) and [assessment](tutorial-assess-webapps.md) tutorials.
-- Support for Azure [ultra disks](/azure/virtual-machines/disks-types#ultra-disks) in Azure VM assessment recommendations.
+- Support for Azure [Ultra Disks](/azure/virtual-machines/disks-types#ultra-disks) in Azure VM assessment recommendations.
 - General availability of at-scale software inventory and agentless dependency analysis for VMware virtual machines.
 - Azure Migrate appliance updates:
   - Ability of users to diagnose and solve appliance problems.
@@ -307,7 +435,6 @@ Azure Migrate supports deployments in Microsoft Azure Government:
 - You can migrate VMware VMs, Hyper-V VMs, and physical servers to Azure.
 - For VMware migration, you can use agentless or agent-based migration. [Learn more](server-migrate-overview.md).
 - You can [review supported geographies and regions](supported-geographies.md#azure-government) for Azure Government.
-- [Agent-based dependency analysis](concepts-dependency-visualization.md#agent-based-analysis) isn't supported in Azure Government.
 - Features in preview are supported in Azure Government, [agentless dependency analysis](concepts-dependency-visualization.md#agentless-analysis), and [application discovery](how-to-discover-applications.md).
 
 ## Update (March 2020)
@@ -333,7 +460,7 @@ New assessment and migration tools were added to Azure Migrate:
 - **RackWare**: Offers cloud migration.
 - **Movere**: Offers assessment.
 
-For more information about using tools and SDC offerings for assessment and migration in Azure Migrate, see [What is Azure Migrate?](migrate-services-overview.md).
+For more information about using tools and SDC offerings for assessment and migration in Azure Migrate, see [What is Azure Migrate?](migrate-services-overview.md)
 
 ## Azure Migrate current version
 

@@ -2,20 +2,26 @@
 title: Create a Communication Services resource in Azure Communication Services
 titleSuffix: An Azure Communication Services article
 description: This article describes how to create and manage your first Azure Communication Services resource.
-author: tophpalmer
+author: sundiraman
 manager: chpalm
 services: azure-communication-services
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 06/30/2021
 ms.topic: quickstart
 ms.service: azure-communication-services
 ms.subservice: arm
 zone_pivot_groups: acs-plat-azp-azcli-net-ps
-ms.custom: mode-other, devx-track-azurecli, devx-track-azurepowershell
 ms.devlang: azurecli 
+ms.custom:
+  - mode-other
+  - devx-track-azurecli
+  - devx-track-azurepowershell
+  - sfi-ropc-nochange
 ---
 
 # Create an Communication Services resource
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 Get started with Azure Communication Services by provisioning your first Communication Services resource. You can provision Communication Services resources through the [Azure portal](https://portal.azure.com) or using the .NET management SDK. The management SDK and the Azure portal enable you to create, configure, update, and delete your resources and interface using the deployment and management service: [Azure Resource Manager](../../azure-resource-manager/management/overview.md). All functions available in the SDKs are available in the Azure portal.
 

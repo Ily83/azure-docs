@@ -15,6 +15,8 @@ ms.custom: mode-other
 ---
 # Apply for a short code
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 [!INCLUDE [Short code eligibility notice](../../includes/public-preview-include-short-code-eligibility.md)]
 
 > [!TIP]
@@ -22,7 +24,7 @@ ms.custom: mode-other
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - [An active Communication Services resource](../create-communication-resource.md).
 
 ## Get a short code

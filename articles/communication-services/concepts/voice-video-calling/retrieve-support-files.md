@@ -5,11 +5,13 @@ description: This article describes how to provide effective user feedback.
 author:      ahammer
 ms.author:   adamhammer
 ms.service:  azure-communication-services
-ms.topic:    conceptual
+ms.topic:    concept-article
 ms.date:     06/28/2025
 ---
 
 # Collecting user feedback in native calling scenarios
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 ## Introduction
 

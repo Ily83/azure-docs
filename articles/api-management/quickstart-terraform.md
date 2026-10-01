@@ -5,8 +5,6 @@ ms.topic: quickstart
 ms.service: azure-api-management
 ms.date: 08/04/2025
 ms.custom: devx-track-terraform, devx-track-azurecli, devx-track-azurepowershell
-author: TomArcherMsft
-ms.author: tarcher
 content_well_notification: 
   - AI-contribution
 ai-usage: ai-assisted
@@ -32,7 +30,7 @@ In this article, you learn how to:
 
 ## Prerequisites
 
-- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) before you begin.
 
 - [Install and configure Terraform](/azure/developer/terraform/quickstart-configure)
 

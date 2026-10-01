@@ -1,9 +1,9 @@
 ---
 title: Template functions in scoped deployments
 description: Describes how template functions are resolved in scoped deployments. The scope can be a tenant, management groups, subscriptions, and resource groups.
-ms.topic: conceptual
+ms.topic: article
 ms.custom: devx-track-arm-template
-ms.date: 08/05/2025
+ms.date: 08/06/2026
 ---
 
 # ARM template functions in deployment scopes
@@ -33,12 +33,12 @@ Consider the following when deploying to different scopes:
   "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]"
   ```
 
-* Use the [`extensionResourceId()`](template-functions-resource.md#extensionresourceid) function for resources that implement as extensions of the management group. Custom policy definitions that are deployed to the management group are extensions of the management group.
+* Use the [`extensionResourceId()`](template-functions-resource.md#extensionresourceid) function for resources that are implemented as extensions of the management group. Custom policy definitions that you deploy to the management group are extensions of the management group. The first argument to `extensionResourceId()` must be the fully qualified resource ID of the management group.
 
   To get the resource ID for a custom policy definition at the management-group level, use:
 
   ```json
-  "policyDefinitionId": "[extensionResourceId(variables('mgScope'), 'Microsoft.Authorization/policyDefinitions', parameters('policyDefinitionID'))]"
+  "policyDefinitionId": "[extensionResourceId(tenantResourceId('Microsoft.Management/managementGroups', parameters('managementGroupName')), 'Microsoft.Authorization/policyDefinitions', parameters('policyDefinitionID'))]"
   ```
 
 * Use the [`tenantResourceId()`](template-functions-resource.md#tenantresourceid) function to get the ID for a resource deployed at the tenant. Built-in policy definitions are tenant-level resources. When assigning a built-in policy at the management-group level, use the `tenantResourceId` function.
@@ -74,7 +74,7 @@ The following [example template](https://github.com/Azure/azure-docs-json-sample
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2022-09-01",
+      "apiVersion": "2025-04-01",
       "name": "defaultScopeTemplate",
       "resourceGroup": "inlineGroup",
       "properties": {
@@ -95,7 +95,7 @@ The following [example template](https://github.com/Azure/azure-docs-json-sample
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2022-09-01",
+      "apiVersion": "2025-04-01",
       "name": "innerScopeTemplate",
       "resourceGroup": "inlineGroup",
       "properties": {
@@ -119,7 +119,7 @@ The following [example template](https://github.com/Azure/azure-docs-json-sample
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2022-09-01",
+      "apiVersion": "2025-04-01",
       "name": "linkedTemplate",
       "resourceGroup": "linkedGroup",
       "properties": {
@@ -221,3 +221,4 @@ The output from the preceding example is:
 - To learn more about defining parameters in your template, see [the structure and syntax of ARM templates](./syntax.md).
 - For tips on resolving common deployment errors, see how to [troubleshoot common Azure deployment errors with Azure Resource Manager](common-deployment-errors.md).
 - For information about deploying a template that requires an SAS token, see how to [deploy private ARM template with SAS token](secure-template-with-sas-token.md).
+

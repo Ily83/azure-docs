@@ -2,10 +2,10 @@
 title: Build a custom event management platform with Microsoft Teams, Microsoft Graph and Azure Communication Services
 titleSuffix: An Azure Communication Services tutorial
 description: Learn how to use Microsoft Teams, Graph, and Azure Communication Services to build a custom event management platform.
-author: tophpalmer
+author: sundiraman
 manager: chpalm
 services: azure-communication-services
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 03/31/2022
 ms.topic: tutorial
 ms.service: azure-communication-services
@@ -13,6 +13,8 @@ ms.subservice: teams-interop
 ---
 
 # Build a custom event management platform with Microsoft Teams, Microsoft Graph and Azure Communication Services
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 The goal of this document is to reduce the time it takes for Event Management Platforms to apply the power of Microsoft Teams Webinars through integration with Microsoft Graph APIs and Azure Communication Services UI Library. The target audience is developers and decision makers. To achieve the goal, this document provides the following two functions: 1) an aid to help event management platforms quickly decide what level of integration would be right for them, and 2) a step-by-step end-to-end QuickStart to speed up implementation. 
 

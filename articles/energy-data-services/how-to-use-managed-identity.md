@@ -6,7 +6,9 @@ ms.author: sancha
 ms.service: azure-data-manager-energy
 ms.topic: how-to
 ms.date: 01/04/2023
-ms.custom: template-how-to
+ms.custom:
+  - template-how-to
+  - sfi-image-nochange
 #Customer intent: As a developer, I want to use a managed identity to access Azure Data Manager for Energy from other Azure services, such as Azure Functions.
 ---
 
@@ -30,7 +32,7 @@ There are two types of managed identities:
 - *System-assigned* managed identities have their lifecycle tied to the resource that created them. 
 - *User-assigned* managed identities can be used on multiple resources. 
 
-To learn more about managed identities, see [What are managed identities for Azure resources?](../active-directory/managed-identities-azure-resources/overview.md).
+To learn more about managed identities, see [What are managed identities for Azure resources?](../active-directory/managed-identities-azure-resources/overview.md)
 
 Currently, other services can connect to Azure Data Manager for Energy by using a system-assigned or user-assigned managed identity. However, Azure Data Manager for Energy doesn't support system-assigned managed identities.
 

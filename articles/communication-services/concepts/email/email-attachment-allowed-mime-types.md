@@ -7,11 +7,13 @@ manager: koagbakp
 services: azure-communication-services
 ms.author: natekimball
 ms.date: 03/31/2023
-ms.topic: conceptual
+ms.topic: reference
 ms.service: azure-communication-services
 ---
 
 # Supported attachment types
+
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
 
 The [SendMail operation](../../quickstarts/email/send-email.md) enables the option for the sender to add attachments to an outgoing email. Along with the content itself, the sender must include the file attachment type by using the Multipurpose Internet Mail Extensions (MIME) standard when making a request with an attachment. Many common file types are accepted, such as Word documents, Excel spreadsheets, image and video formats, contacts, and calendar invites.
 

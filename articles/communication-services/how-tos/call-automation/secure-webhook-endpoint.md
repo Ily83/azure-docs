@@ -17,6 +17,8 @@ zone_pivot_groups: acs-js-csharp-java-python
 
 # Secure webhook endpoints and WebSocket connections
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 Securing the delivery of messages from end to end is crucial for ensuring the confidentiality, integrity, and trustworthiness of sensitive information transmitted between systems. Your ability and willingness to trust information received from a remote system rely on the sender providing their identity. Call Automation has two ways of communicating events that can be secured: the shared `IncomingCall` event sent by Azure Event Grid and all other mid-call events sent by the Call Automation platform via webhook.
 
 ## Incoming call event
@@ -44,7 +46,17 @@ Azure Communication Services relies on Azure Event Grid subscriptions to deliver
 ::: zone-end
 
 > [!IMPORTANT]
-> Our service uses the default token standard described above. We do not support custom tokens or modified token formats.
+> Our service uses standard JSON Web Token in the authentication header, and only support OpenID Connect (OIDC) JWT validation.
+
+### Query Parameter Token Authentication
+
+Query Parameter Token Authentication is a simple method of securing webhook callbacks by appending a pre-shared secret token to the webhook endpoint URL as a query string parameter. This token acts as a lightweight authentication key, allowing your system to verify that webhook callback events originate from the Call Automation Service.
+
+```
+https://api.example.com/webhook?token=8f2d9c63a7b14d32b53c9e12a1f47fcb
+```
+
+When webhook callback events are received, the Call Automation Service includes the token exactly as you configured (see example above). Upon receiving the request, your system compares the token in the query parameter against a stored, trusted value. Requests without the token, or with an incorrect value, should be rejected.
 
 ## Call Automation WebSocket events
 

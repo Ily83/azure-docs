@@ -6,33 +6,36 @@ author: jacadd
 manager: chpalm
 services: azure-communication-services
 ms.author: jacadd
-ms.date: 05/20/2025
-ms.topic: conceptual
-ms.custom: public_preview
+ms.date: 09/01/2025
+ms.topic: reference
+ms.custom: general_availability
 ms.service: azure-communication-services
 ---
 
 # Microsoft Teams Phone capabilities in Calling and Call Automation SDKs
+
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
     
 This article describes which Microsoft Teams Phone capabilities Azure Communication Services Calling and Call Automation SDKs support for Teams Phone extensibility.
 
-[!INCLUDE [public-preview-notice.md](../../../includes/public-preview-include-document.md)]
 
 ## Prerequisites
 
 - Teams users must have a Teams Phone license.
 - Teams users must be Enterprise Voice enabled.
-- Agents in Azure Communication Services applications support the capabilities in the following table. Teams users aren't supported.
+- Dual Persona Agents in Azure Communication Services applications support the capabilities in the following table. Teams users aren't supported.
 
 ## Teams Phone capabilities
 
 The following list of capabilities is supported for scenarios where at least one phone number participates in 1:1 or group calls:
 
+**Legend:** ✔️ supported · ❌ not supported · N/A not applicable to that SDK.
+
 | **Group of features** | **Capability (from TPE perspective)** | **Client Calling SDK** | **Call Automation**  |
 | --- | --- | --- | --- |
-| Connectivity | Teams calling plans | ✔️ | ✔️ |
-| | Teams direct routings | ✔️ | ✔️ |
-| | Teams operator connect | ✔️ | ✔️ |
+| Connectivity | Teams Calling Plans | ✔️ | ✔️ |
+| | Direct Routing | ✔️ | ✔️ |
+| | Operator Connect | ✔️ | ✔️ |
 | Outbound Calling | Place outbound calls using Teams service phone number | ✔️ | ✔️ |
 | | Receive early media when placing outbound calls | ✔️ | N/A |
 | Inbound calling  | Support incoming PSTN call to Teams service phone number answered by call automation app and routed to agent | ✔️ | ✔️ |
@@ -40,15 +43,15 @@ The following list of capabilities is supported for scenarios where at least one
 | Mid-call actions (signaling)  | Leave a connected call (without terminating the call) | ✔️  | ✔️  |
 | | Terminate the entire call (ending the call for all participants) | ✔️ | ✔️ |
 | | Add an agent to an ongoing call | ✔️ | ✔️ |
-| | Add external phone number from an ongoing call | ✔️  | ✔️ |
-| | Add a Teams user to an ongoing call | ❌ | ❌ |
-| | Cancel an already initiated add participant request, as long as the the target agent / phone number has yet to accept the call invite | ❌ | ✔️ |
+| | Add external phone number to an ongoing call | ✔️  | ✔️ |
+| | Consult with a Teams Subject Matter Expert (SME) | ✔️ | ✔️ |
+| | Cancel an already initiated add participant request, as long as the target agent / phone number has yet to accept the call invite | ❌ | ✔️ |
 | | Remove a call participant from ongoing call | ✔️ | ✔️  |
 | | Dial out to same phone number multiple times in a call | ❌ | ❌ |
 | | Transfer the end user from ongoing 1:1 call to another agent or external phone number | ✔️ | ✔️ |
 | | Transfer the end user from ongoing group call to another agent or external phone number | ❌ | ✔️ |
-| | Transfer the end user from ongoing 1:1 call to a Teams user | ❌ | ❌ |
-| | Transfer the end user from ongoing group call to a Teams user | ❌ | ❌ |
+| | Transfer the end user from ongoing 1:1 call to a Teams user | ✔️ | ✔️ |
+| | Transfer the end user from ongoing group call to a Teams user | ✔️ | ✔️ |
 | | Retrieve call properties (`GetCall`) | N/A  | ✔️ |
 | | Send custom context as part of call invite  (AddParticipant and Transfer) | ✔️ | ✔️ |
 | | Receive custom context as part of call invite (AddParticipant and Transfer) | ✔️ | ✔️ |
@@ -63,8 +66,9 @@ The following list of capabilities is supported for scenarios where at least one
 | | Cancel all Media Operations | ❌ | ✔️ |
 | | Start continuous DTMF Recognition from end user | N/A  | ✔️ |
 | | Stream real-time transcript of the call to a WebSocket | N/A | ✔️ |
-| | Mute other VoIP participants (such as other agents) | ✔️ | ✔️ |
+| | Mute other VoIP participants (such as other agents) | ✔️ | ❌ |
 | | Mute other PSTN users | ❌ | ❌ |
+| | [Dial-pad commands](/microsoftteams/audio-conferencing-common-questions#what-in-meeting-dial-pad-commands-are-supported) for PSTN users | ❌ | ❌ |
 | | Place call on hold and take call off hold (1:1 call only) | ✔️ | ❌ |
 | | Play music to the participant put on hold | ❌ | ✔️ |
 | | Developer/agent can stream real-time audio out of the call to a WebSocket| N/A | ✔️ |
@@ -72,13 +76,13 @@ The following list of capabilities is supported for scenarios where at least one
 | Accessibility  | Agent can turn on Teams closed captions | ❌ | N/A |
 | Emergency calling  | Agent can make an emergency call | ✔️ | N/A |
 | | Honor Security desk policy for emergency calls | ✔️ | N/A |
-| | Provide a statically registered emergency address for Teams calling plans, Operator Connect, and Direct Routing for emergency calls | ✔️ | N/A |
+| | Provide a statically registered emergency address for Teams Calling Plans, Operator Connect, and Direct Routing for emergency calls | ✔️ | N/A |
 | Roster management  | List call participants | ✔️  | ✔️  |
 | | Adding Teams user honors Teams federation & external access configuration (tenant to tenant federation) | ❌ | ❌ |
 | Recording | Teams convenience and compliance recording | ❌  | ❌  |
 | | Azure Communication Services Recording | ✔️ | ✔️ |
-| Conversational AI | Developers can use the Recognize API to build conversational AI experiences in their IVRs or conversational AI bots. Recognize API uses Azure AI speech models for NLU | N/A | ✔️ |
-| | Developers can use their custom AI models when using the Recognize API so that industry/organization specific speech recognition can be used for conversational AI experiences. Recognize API would use custom AI speech models for NLU | N/A | ✔️  |
+| Conversational AI | Developers can use the Recognize API to build conversational AI experiences in their IVRs or conversational AI bots. Recognize API uses Azure AI Speech models for speech recognition (speech-to-text) | N/A | ✔️ |
+| | Developers can use their custom AI models when using the Recognize API so that industry/organization specific speech recognition can be used for conversational AI experiences. Recognize API would use custom AI Speech models for speech recognition (speech-to-text) | N/A | ✔️  |
 | | Developers can use Outbound Audio Streaming to connect their IVRs for conversational AI experiences | N/A | ✔️ |
 | | Developers can use Play API to play audio prompts for conversational AI experiences | N/A | ✔️ |
 | Advanced call routing | Does start a call and add user operations honor forwarding rules | ❌ | ❌ |
@@ -105,14 +109,12 @@ The following list of capabilities is supported for scenarios where at least one
 | Dial Plan | Outbound PSTN call from the Teams Resource account honors its assigned Dial plan policy in the Teams Admin Center | N/A | ✔️ |
 | | Outbound emergency call from the Teams user account honors its assigned dial plan policy in the Teams Admin center | ✔️ | N/A | -->
 
-\* Participants joining via phone number can't see video content. So actions involving video don't affect them but can apply when VoIP participants join.
-
 ## Next steps
 
 - [Microsoft Teams Phone overview](/microsoftteams/what-is-phone-system-in-office-365)
 - [Set up Microsoft Teams Phone in your organization](/microsoftteams/setting-up-your-phone-system)
-- [Access a user's Teams Phone separate from their Teams client](https://github.com/Azure/communication-preview/blob/master/Teams%20Phone%20Extensibility/teams-phone-extensibility-access-teams-phone.md)
-- [Answer Teams Phone calls from Call Automation](https://github.com/Azure/communication-preview/blob/master/Teams%20Phone%20Extensibility/teams-phone-extensibility-answer-teams-calls.md)
+- [Access a user's Teams Phone separate from their Teams client](../../../quickstarts/tpe/teams-phone-extensibility-access-teams-phone.md)
+- [Answer Teams Phone calls from Call Automation](../../../quickstarts/tpe/teams-phone-extensibility-answer-teams-calls.md)
 
 ## Related articles
 

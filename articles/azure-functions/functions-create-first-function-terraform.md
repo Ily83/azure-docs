@@ -8,7 +8,7 @@ ms.service: azure-functions
 #customer intent: As a Terraform user, I want to learn how to create a function app in a Flex Consumption plan along with required storage account and blob storage container used for deployments.
 content_well_notification: 
   - AI-contribution
-zone_pivot_groups: programming-languages-set-functions
+zone_pivot_groups: programming-languages-set-functions-no-go
 ---
 
 # Quickstart: Create and deploy Azure Functions resources from Terraform
@@ -28,7 +28,7 @@ In this quickstart, you use Terraform to create a function app in a Flex Consump
 
 ## Prerequisites
 
-- Create an Azure account with an active subscription. You can [create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- Create an Azure account with an active subscription. You can [create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - [Install and configure Terraform](/azure/developer/terraform/quickstart-configure).
 - [Install the Azure CLI](/cli/azure/install-azure-cli) to obtain the subscription ID or run in [Azure Cloud Shell](/azure/cloud-shell/overview).
 
@@ -73,7 +73,7 @@ terraform plan -out main.tfplan -var="runtime_name=dotnet-isolated" -var="runtim
 ::: zone-end  
 ::: zone pivot="programming-language-powershell" 
 ```console
-terraform plan -out main.tfplan -var="runtime_name=powershell" -var="runtime_version=7.4"
+terraform plan -out main.tfplan -var="runtime_name=powershell" -var="runtime_version=7.6"
 ```
 ::: zone-end 
 ::: zone pivot="programming-language-python" 
@@ -91,6 +91,7 @@ terraform plan -out main.tfplan -var="runtime_name=java" -var="runtime_version=2
 terraform plan -out main.tfplan -var="runtime_name=node" -var="runtime_version=20"
 ```
 ::: zone-end  
+
 
 Make sure that `runtime_version` matches the language stack version you verified locally. Select your preferred language stack at the [top](#top) of the article.
 

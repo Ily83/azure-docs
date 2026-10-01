@@ -7,7 +7,7 @@ ms.custom:
   - devx-track-azurecli
   - ignite-2023
   - ignite-2024
-ms.date: 06/18/2025
+ms.date: 03/20/2026
 author: AbhishekMallick-MS
 ms.author: v-mallicka
 # Customer intent: "As a cloud administrator, I want to manage backups for Azure Kubernetes Service clusters using Azure Backup, so that I can ensure data protection and recovery for my applications and services."
@@ -123,17 +123,30 @@ However, if the number of resources in the cluster exceeds 1000, the extension p
 
 #### Resolving OOMKilled Errors by Increasing CPU and Memory
 
-To ensure successful backup and restore operations, manually update the resource settings for the extension pods by following these steps:
+An OOMKilled event typically occurs when a container exceeds its configured memory limit or is selected as a victim during node-level memory pressure. 
+
+To verify whether the issue was caused by an OOMKilled event, review the memory usage of the Velero container in the `dataprotection-microsoft-kubernetes-agent` pod using your monitoring solution, if available. Reviewing the container's memory consumption can help determine whether it was terminated due to memory exhaustion. It is also recommended to check the memory utilization of the node hosting the pod.
+	
+Alternatively, you can confirm whether the agent pod was terminated with an Out of Memory (OOM) condition.
+```azurecli
+$ kubectl describe pod [The full name of the agent pod] -n dataprotection-microsoft
+...
+ "reason": "OOMKilled",
+ "exitCode": 137,
+...
+```
+
+If the root cause is confirmed to be an OOMKilled event, manually update the resource settings for the extension pods by following these steps to help ensure successful backup and restore operations.
 
 1. Open the AKS cluster in the Azure portal.
 
-    ![Screenshot shows AKS cluster in Azure portal.](./media/azure-kubernetes-service-cluster-manage-backups/aks-cluster.png)
+    :::image type="content" source="./media/azure-kubernetes-service-cluster-manage-backups/aks-cluster.png" alt-text="Screenshot shows AKS cluster in Azure portal." lightbox="./media/azure-kubernetes-service-cluster-manage-backups/aks-cluster.png":::
 
 1. Navigate to Extensions + Applications under Settings in the left-hand pane.
 
     ![Screenshot shows how to select Extensions + Applications.](./media/azure-kubernetes-service-cluster-manage-backups/aks-cluster-extension-applications.png)
 
-1. Click on the extension titled "azure-aks-backup".
+1. Select on the extension titled "azure-aks-backup".
 
     ![Screenshot shows how to open Backup extension settings.](./media/azure-kubernetes-service-cluster-manage-backups/aks-cluster-extension-azure-aks-backup.png)
 
@@ -145,20 +158,20 @@ To ensure successful backup and restore operations, manually update the resource
 
 > [!NOTE]
 >
-> If the node where the extension pod is provisioned doesn't have the required CPU or memory, and you've only updated the resource limits, the pod may be repeatedly killed. To resolve this, update the configuration settings using `resources.requests.cpu` and `resources.requests.memory`. This ensures the pod is scheduled on a node that meets the requested resource requirements.
+> If the node where the extension pod is provisioned doesn't have the required CPU or memory, and you've only updated the resource limits, the pod may be repeatedly killed. To resolve this, update the configuration settings using `resources.requests.cpu` and `resources.requests.memory`. It is recommended setting same value of requests and limits if the pod resource usage is high. This prevents pods from being scheduled on nodes that do not have enough available resources to satisfy their resource limits.
 
  
 #### Verifying the Changes
 
-After applying the changes, either wait for a scheduled backup to run or initiate an on-demand backup. If you still experience an OOMKilled failure, repeat the steps above and gradually increase memory limits and if it still persists increase `resources.limits.cpu` parameter also.
+After you update the settings, check whether the resources of the `dataprotection-microsoft-kubernetes-agent` pod are applied correctly. Once the pod restarted after updating the settings and is applied successfully, wait for a scheduled backup to run or initiate an on-demand backup. If you still experience an OOMKilled failure, repeat the steps above and gradually increase memory limits and if it still persists increase `resources.limits.cpu` parameter also.
 
 ### Monitor a backup operation
 
 The Azure Backup service creates a job for scheduled backups or if you trigger on-demand backup operation for tracking. To view the backup job status:
 
-1. Go to the **Azure Business Continuity Center** and select **Protected Items** under **Protection Inventory**.
+1. Go to the **Resiliency** and select **Protected Items** under **Protection Inventory**.
 
-   The **Protected Items** blade shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
+   The **Protected Items** pane shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
 
    :::image type="content" source="./media/backup-managed-disks/jobs-dashboard.png" alt-text="Screenshot shows the jobs dashboard." lightbox="./media/backup-managed-disks/jobs-dashboard.png":::
 
@@ -176,21 +189,23 @@ The Azure Backup service creates a job for scheduled backups or if you trigger o
 
 After you trigger the restore operation, the backup service creates a job for tracking. Azure Backup displays notifications about the job in the portal. To view the restore job progress:
 
-1. Go to the **Azure Business Continuity Center** and select **Protected Items** under **Protection Inventory**.
+1. Go to the **Resiliency** and select **Protected Items** under **Protection Inventory**.
 
-   The **Protected Items** blade shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
+   The **Protected Items** pane shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
 
-   :::image type="content" source="./media/backup-managed-disks/jobs-dashboard.png" alt-text="Screenshot shows the jobs dashboard." lightbox="./media/backup-managed-disks/jobs-dashboard.png":::
+   :::image type="content" source="./media/azure-kubernetes-service-cluster-manage-backups/protected-items-dashboard.png" alt-text="Screenshot that shows the Protected items dashboard." lightbox="./media/azure-kubernetes-service-cluster-manage-backups/protected-items-dashboard.png":::
 
 1. Now select on the **Associated Items** to open up the dashboard for the backup instance. Here you can see the backup jobs for the last seven days. 
 
 1. To view the status of the restore operation, select **View all** to show ongoing and past jobs of this backup instance.
 
-    ![Screenshot shows how to select View all.](./media/restore-managed-disks/view-all.png)
+1. On the **Backup jobs** pane, review the list of backup and restore jobs and their status. Select a restore job from the list of jobs to view job details.
 
-1. Review the list of backup and restore jobs and their status. Select a job from the list of jobs to view job details.
+    :::image type="content" source="./media/azure-kubernetes-service-cluster-manage-backups/view-all-jobs.png" alt-text="Screenshot that shows the list of backup jobs." lightbox="./media/azure-kubernetes-service-cluster-manage-backups/view-all-jobs.png":::
 
-    ![Screenshot shows the list of jobs.](./media/restore-managed-disks/list-of-jobs.png)
+1. On the **Restore** pane, review the selected restore job details.
+
+    :::image type="content" source="./media/azure-kubernetes-service-cluster-manage-backups/restore-job-details.png" alt-text="Screenshot that shows the restore job details." lightbox="./media/azure-kubernetes-service-cluster-manage-backups/restore-job-details.png":::
 
 
 ### Monitor backup and restore jobs with the completed with warnings status
@@ -242,11 +257,37 @@ There are three ways by which you can stop protecting an Azure Disk:
 >
 > Even if AKS Backup is stopped or backups fail, the last restore point is always retained beyond the defined retention period, ensuring at least one restore point remains available.
 
+### Modify backup configuration
+
+AKS Backup now allows you to modify the configuration of an existing backup instance, including the namespaces to protect, label-based inclusion or exclusion of resources, API groups, secrets, and supported volume types such as Azure Disks and Azure Files.  
+
+
+1. In the [Azure portal](https://portal.azure.com), go to your Backup vault.
+
+1. Select **Backup instances** under **Manage**.
+
+1. Find your AKS cluster backup instance, open it and click on **Edit backup instance** on top.
+
+    :::image type="content" source="./media/quick-backup-aks/start-edit-backup-instance.png" alt-text="Screenshot showing how to open the edit backup instance experience." lightbox="./media/quick-backup-aks/start-edit-backup-instance.png":::
+
+1. On the new screen, options are available to modify the backup policy, managed identity being used by backup vault and the backup instance configuration. Select on **Select** in the **Modify backup instance** section.
+
+    :::image type="content" source="./media/quick-backup-aks/modify-backup-instance.png" alt-text="Screenshot showing how to initiate editing backup configuration." lightbox="./media/quick-backup-aks/modify-backup-instance.png":::
+
+1. On the right hand side pane, to include Files based volumes to backup, open the dropdown **Select Volume Types** and select the checkbox for **Azure SMB Fileshares**. Additionally select the checkbox **Include Secrets**. You can use this pane, to update any other existing backup configurations including labels. Then click on **Select**.
+
+    :::image type="content" source="./media/quick-backup-aks/select-backup-instance.png" alt-text="Screenshot showing how to select resources including Azure Files volumes." lightbox="./media/quick-backup-aks/select-backup-instance.png":::
+
+1. After updating the backup configuration, click **Validate** to ensure all prerequisites for using Azure Files are met. If required roles are missing for the Backup vault identity, a role assignment error will appear. If you have the necessary permissions on the relevant resources, you can resolve this by clicking **Grant Permissions**.
+
+1. Select on **Apply** to finish off the modification of backup instance configuration. 
+
+
 #### Stop Protection and Retain Data
 
-1. Go to the **Azure Business Continuity Center** and select **Protected Items** under **Protection Inventory**.
+1. Go to the **Resiliency** and select **Protected Items** under **Protection Inventory**.
 
-   The **Protected Items** blade shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
+   The **Protected Items** pane shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
 
    :::image type="content" source="./media/backup-managed-disks/jobs-dashboard.png" alt-text="Screenshot shows the jobs dashboard." lightbox="./media/backup-managed-disks/jobs-dashboard.png":::
 
@@ -273,9 +314,9 @@ There are three ways by which you can stop protecting an Azure Disk:
 
 #### Stop Protection and Delete Data
 
-1. Go to the **Azure Business Continuity Center** and select **Protected Items** under **Protection Inventory**.
+1. Go to the **Resiliency** and select **Protected Items** under **Protection Inventory**.
 
-   The **Protected Items** blade shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
+   The **Protected Items** pane shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
 
    :::image type="content" source="./media/backup-managed-disks/jobs-dashboard.png" alt-text="Screenshot shows the jobs dashboard." lightbox="./media/backup-managed-disks/jobs-dashboard.png":::
 
@@ -304,9 +345,9 @@ If you have selected the **Stop Protection and Retain data** option, you can res
 
 Use the following steps:
 
-1. Go to the **Azure Business Continuity Center** and select **Protected Items** under **Protection Inventory**.
+1. Go to the **Resiliency** and select **Protected Items** under **Protection Inventory**.
 
-   The **Protected Items** blade shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
+   The **Protected Items** pane shows all the backup instances created across the subscriptions. Use the filters to access the backup instance you would like to take a look at. Select on the protected item and open it.
 
    :::image type="content" source="./media/backup-managed-disks/jobs-dashboard.png" alt-text="Screenshot shows the jobs dashboard." lightbox="./media/backup-managed-disks/jobs-dashboard.png":::
 

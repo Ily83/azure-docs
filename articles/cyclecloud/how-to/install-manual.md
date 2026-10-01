@@ -2,7 +2,8 @@
 title: CycleCloud Manual Installation
 description: Review instructions on installing CycleCloud manually. Get information about system requirements, SSH keys, installation, configuration, and updating.
 author: adriankjohnson
-ms.date: 07/01/2025
+ms.date: 06/19/2026
+ms.topic: how-to
 ms.author: adjohnso
 ---
 
@@ -51,7 +52,7 @@ If the `/etc/redhat-release` file exists, its contents show if your distribution
 First, download the Microsoft signing key and add it to Apt's trusted keyring:
 
 ```bash
-sudo apt-get -qq update && sudo apt-get -y -qq install curl gnupg2
+sudo apt update && sudo apt -y install curl gnupg2
 sudo mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://packages.microsoft.com/keys/microsoft.asc |
   gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
@@ -64,7 +65,7 @@ Then, configure Apt to pull from the CycleCloud repository:
 ```bash
 echo "deb [signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/cyclecloud stable main" |
   sudo tee /etc/apt/sources.list.d/cyclecloud.list > /dev/null
-sudo apt-get -qq update 
+sudo apt update 
 ```
 
 Finally, install CycleCloud with `apt`:
@@ -77,7 +78,7 @@ sudo apt -y install cyclecloud
 
 ::: moniker range="=cyclecloud-8"
 ```bash
-sudo apt-get -y -q install cyclecloud8
+sudo apt -y install cyclecloud8
 ```
 ::: moniker-end
 
@@ -108,7 +109,7 @@ sudo yum -y install cyclecloud
 
 ::: moniker range="=cyclecloud-8"
 ```bash
-sudo yum -y -qq install cyclecloud8
+sudo yum -y install cyclecloud8
 ```
 ::: moniker-end
 
@@ -148,12 +149,19 @@ These instructions switch to only using Insiders builds. To switch back, follow 
 To install the Insiders build on Debian or Ubuntu, run the following command:
 
 ```bash
-echo "deb [signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/cyclecloud-insiders stable main" |
+echo "deb [signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/cyclecloud insiders main" |
   sudo tee /etc/apt/sources.list.d/cyclecloud.list > /dev/null
-sudo apt-get -qq update 
+sudo apt update 
 ```
 
-This command is the same as the [standard installation steps](#installing-on-debian-or-ubuntu) but uses [https://packages.microsoft.com/repos/cyclecloud-insiders/pool/main/c/cyclecloud8/](https://packages.microsoft.com/repos/cyclecloud-insiders/pool/main/c/cyclecloud8/) instead.
+This command is the same as the [standard installation steps](#installing-on-debian-or-ubuntu) but uses the `insiders` channel instead.
+
+NOTE: If you previously set up your cyclecloud.list file with `cyclecloud-insiders stable main` you should update it to the new `cyclecloud insiders main` value. The old repository has been deprecated and will eventually be removed. The following command can update a previously created list file:
+
+```bash
+sudo sed -i 's/cyclecloud-insiders stable main/cyclecloud insiders main/' /etc/apt/sources.list.d/cyclecloud.list
+sudo apt-get -qq update
+```
 
 ### Enterprise Linux
 

@@ -1,12 +1,13 @@
 ---
 title: Import an update to Azure Device Update for IoT Hub
 description: Learn how to import update files into Azure Device Update for IoT Hub by using the Azure portal, Azure CLI, or programmatically.
-author: andrewbrownmsft
-ms.author: andbrown
+author: sethmanheim
+ms.author: sethm
 ms.date: 01/08/2025
 ms.topic: how-to
 ms.service: azure-iot-hub
 ms.subservice: device-update
+ms.custom: sfi-image-nochange
 ---
 
 # Import an update to Azure Device Update for IoT Hub
@@ -165,7 +166,7 @@ az iot du update list \
 You can also import an update programmatically by using any of the following methods:
 
 - The Device Update APIs in the Azure SDKs for [.NET](/dotnet/api/azure.iot.deviceupdate), [Java](/java/api/com.azure.iot.deviceupdate), [JavaScript](/javascript/api/@azure/iot-device-update), or [Python](/python/api/azure-mgmt-deviceupdate/azure.mgmt.deviceupdate)
-- The Device Update [Import Update](/rest/api/deviceupdate/dataplane/updates/import-update) REST API
+- The Device Update [Import Update](/rest/api/deviceupdate/dataplane/duiothub/device-update/import-update) REST API
 - Sample [PowerShell modules](https://github.com/Azure/iot-hub-device-update/tree/main/tools/AduCmdlets) (requires [PowerShell 5](/powershell/scripting/install/installing-powershell) or later for Linux, macOS, or Windows)
 
 > [!NOTE]

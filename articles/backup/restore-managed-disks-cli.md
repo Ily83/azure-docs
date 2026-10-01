@@ -3,7 +3,7 @@ title: Restore Azure Managed Disks via Azure CLI
 description: Learn how to restore Azure Managed Disks using Azure CLI.
 ms.topic: how-to
 ms.custom: devx-track-azurecli
-ms.date: 06/11/2025
+ms.date: 02/13/2026
 author: AbhishekMallick-MS
 ms.author: v-mallicka
 # Customer intent: "As a cloud administrator, I want to restore Azure Managed Disks using Azure CLI commands, so that I can efficiently recover data from backups to new disks in my chosen resource groups."
@@ -20,6 +20,8 @@ Currently, the Original-Location Recovery (OLR) option of restoring by replacing
 
 Here, let's use an existing Backup vault _TestBkpVault_, under the resource group _testBkpVaultRG_ in the examples.
 
+To view the supported Azure Disk backup and restore scenarios, region availability, and limitations, see the [support matrix](disk-backup-support-matrix.md). For common questions, see the [frequently asked questions](disk-backup-faq.yml).
+
 ## Restore to create a new disk
 
 ### Setting up permissions
@@ -28,7 +30,7 @@ Backup vault uses managed identity to access other Azure resources. To restore f
 
 Backup vault uses a system-assigned managed identity, which is restricted to one per resource and is tied to the lifecycle of this resource. You can grant permissions to the managed identity by using the Azure role-based access control (Azure RBAC). Managed identity is a service principal of a special type that may only be used with Azure resources. Learn more about [Managed Identities](../active-directory/managed-identities-azure-resources/overview.md).
 
-Assign the relevant permissions for vault's system-assigned managed identity on the target resource group where the disks should be restored/created as mentioned [here](restore-managed-disks.md#restore-to-create-a-new-disk).
+Assign the relevant permissions for vault's system-assigned managed identity on the target resource group where the disks should be restored/created as mentioned [here](restore-managed-disks.md#restore-a-new-disk-from-a-recovery-point).
 
 ### Fetching the relevant recovery point
 
@@ -243,4 +245,5 @@ az dataprotection job list-from-resourcegraph --datasource-type AzureDisk --oper
 
 ## Next steps
 
-[Azure Disk Backup FAQ](./disk-backup-faq.yml)
+- [Azure Disk Backup FAQ](./disk-backup-faq.yml).
+- [Troubleshoot Azure Disk backup](disk-backup-troubleshoot.md).

@@ -2,22 +2,30 @@
 title: Copy data from Amazon Redshift
 description: Learn how to copy data from Amazon Redshift to supported sink data stores using Azure Data Factory or Synapse Analytics pipelines.
 titleSuffix: Azure Data Factory & Azure Synapse
-ms.author: jianleishen
-author: jianleishen
+ms.author: tinglee
+author: simplywilson
 ms.subservice: data-movement
-ms.custom: synapse
-ms.topic: conceptual
-ms.date: 07/11/2025
+ms.topic: how-to
+ms.date: 05/12/2026
+ms.custom:
+  - synapse
+  - sfi-image-nochange
 ---
 
 # Copy data from Amazon Redshift using Azure Data Factory or Synapse Analytics
 
 [!INCLUDE[appliesto-adf-asa-md](includes/appliesto-adf-asa-md.md)]
 
+[!INCLUDE [Migrate to Data Factory in Microsoft Fabric](includes/migrate-to-fabric.md)]
+
 This article outlines how to use the Copy Activity in Azure Data Factory and Synapse Analytics pipelines to copy data from an Amazon Redshift. It builds on the [copy activity overview](copy-activity-overview.md) article that presents a general overview of copy activity.
 
+> [!NOTE]
+> This connector is also available in [Data Factory in Microsoft Fabric](/fabric/data-factory/data-factory-overview). For Fabric-specific configuration and features, see the [Fabric Amazon Redshift connector documentation](/fabric/data-factory/connector-amazon-redshift-overview).
+
+
 > [!IMPORTANT]
-> The Amazon Redshift version 2.0 (Preview) provides improved native Amazon Redshift support. If you are using the Amazon Redshift version 1.0 in your solution, you are recommended to [upgrade your Amazon Redshift connector](#upgrade-the-amazon-redshift-connector) at your earliest convenience. Refer to this [section](#differences-between-amazon-redshift-connector-version-20-and-version-10) for details on the difference between version 2.0 (Preview) and version 1.0.
+> The Amazon Redshift connector version 1.0 is at [removal stage](connector-release-stages-and-timelines.md). You are recommended to [upgrade the Amazon Redshift connector](#differences-between-amazon-redshift-connector-version-20-and-version-10) from version 1.0 to 2.0.
 
 ## Supported capabilities
 
@@ -25,14 +33,14 @@ This Amazon Redshift connector is supported for the following capabilities:
 
 | Supported capabilities|IR |
 |---------| --------|
-|[Copy activity](copy-activity-overview.md) (source/-)|&#9312; (only for version 1.0) &#9313;|
-|[Lookup activity](control-flow-lookup-activity.md)|&#9312; (only for version 1.0) &#9313;|
+|[Copy activity](copy-activity-overview.md) (source/-)|&#9312;  &#9313;|
+|[Lookup activity](control-flow-lookup-activity.md)|&#9312;  &#9313;|
 
 *&#9312; Azure integration runtime &#9313; Self-hosted integration runtime*
 
 For a list of data stores that are supported as sources or sinks by the copy activity, see the [Supported data stores](copy-activity-overview.md#supported-data-stores-and-formats) table.
 
-For version 2.0 (Preview), you need to [install the Amazon Redshift ODBC driver](#install-amazon-redshift-odbc-driver-for-the-version-20) manually. For version 1.0, the service provides a built-in driver to enable connectivity, therefore you don't need to manually install any driver. 
+The service provides a built-in driver to enable connectivity, therefore you don't need to manually install any driver. 
 
 The Amazon Redshift connector supports retrieving data from Redshift using query or built-in Redshift UNLOAD support.
 
@@ -43,19 +51,13 @@ The connector supports the Windows versions in this [article](create-self-hosted
 
 ## Prerequisites
 
-If you are copying data to an on-premises data store using [Self-hosted Integration Runtime](create-self-hosted-integration-runtime.md), grant Integration Runtime (use IP address of the machine) the access to Amazon Redshift cluster. See [Authorize access to the cluster](https://docs.aws.amazon.com/redshift/latest/gsg/rs-gsg-authorize-cluster-access.html) for instructions. For version 2.0, your self-hosted integration runtime version should be 5.54.0.0 or above.
+If you are copying data to an on-premises data store using [Self-hosted Integration Runtime](create-self-hosted-integration-runtime.md), grant Integration Runtime (use IP address of the machine) the access to Amazon Redshift cluster. See [Authorize access to the cluster](https://docs.aws.amazon.com/redshift/latest/gsg/rs-gsg-authorize-cluster-access.html) for instructions. For version 2.0, your self-hosted integration runtime version should be 5.60 or above.
 
 If you are copying data to an Azure data store, see [Azure Data Center IP Ranges](https://www.microsoft.com/download/details.aspx?id=41653) for the Compute IP address and SQL ranges used by the Azure data centers.
 
-### For version 1.0
-
-If your data store is a managed cloud data service, you can use the Azure Integration Runtime. If the access is restricted to IPs that are approved in the firewall rules, you can add [Azure Integration Runtime IPs](azure-integration-runtime-ip-addresses.md) to the allowlist.
+If your data store is a managed cloud data service, you can use the Azure Integration Runtime. If the access is restricted to IPs that are approved in the firewall rules, you can add [Azure Integration Runtime IPs](azure-integration-runtime-ip-addresses.md) to the allow list.
 
 You can also use the [managed virtual network integration runtime](tutorial-managed-virtual-network-on-premise-sql-server.md) feature in Azure Data Factory to access the on-premises network without installing and configuring a self-hosted integration runtime.
-
-### Install Amazon Redshift ODBC driver for the version 2.0
-
-To use Amazon Redshift connector with version 2.0, [install the Amazon Redshift ODBC driver](https://docs.aws.amazon.com/redshift/latest/mgmt/odbc20-install-win.html) on the machine running the self-hosted Integration runtime.
 
 ## Getting started
 
@@ -94,15 +96,19 @@ The following properties are supported for Amazon Redshift linked service:
 | Property | Description | Required |
 |:--- |:--- |:--- |
 | type | The type property must be set to: **AmazonRedshift** | Yes |
-| version | The version that you specify.  | Yes for version 2.0 (Preview). |
+| version | The version that you specify.  | Yes for version 2.0. |
 | server |IP address or host name of the Amazon Redshift server. |Yes |
 | port |The number of the TCP port that the Amazon Redshift server uses to listen for client connections. |No, default is 5439 |
 | database |Name of the Amazon Redshift database. |Yes |
 | username |Name of user who has access to the database. |Yes |
 | password |Password for the user account. Mark this field as a SecureString to store it securely, or [reference a secret stored in Azure Key Vault](store-credentials-in-key-vault.md). |Yes |
-| connectVia | The [Integration Runtime](concepts-integration-runtime.md) to be used to connect to the data store. <br>If you select version 2.0 (Preview), you can only use the self-hosted integration runtime and its version should be 5.54.0.0 or above.<br>If you select version 1.0, you can use Azure Integration Runtime or Self-hosted Integration Runtime (if your data store is located in private network). If not specified, it uses the default Azure Integration Runtime. |No |
+| sslmode | The SSL certificate verification mode to use when connecting to Amazon Redshift. This property is only supported in version 2.0. <br/>- **Verify_full**: Connect only using SSL, a trusted certificate authority, and a server name that matches the certificate.<br/>- **Verify_ca**: Connect only using SSL and a trusted certificate authority.<br/>- **Required**: Connect only using SSL.<br/>- **Preferred**: Connect using SSL if available. Otherwise, connect without using SSL.<br/>- **Allowed**: By default, connect without using SSL. If the server requires SSL connections, then use SSL.<br/>- **Disabled**: Connect without using SSL. <br/>Options: `verify-full` (**Default**) / `verify-ca` / `require` / `prefer` / `allow` / `disable` | No, default is `verify-full` |
+| connectVia | The [Integration Runtime](concepts-integration-runtime.md) to be used to connect to the data store. You can use Azure Integration Runtime or Self-hosted Integration Runtime (if your data store is located in private network). If not specified, it uses the default Azure Integration Runtime. |No |
 
-**Example: version 2.0 (Preview)**
+> [!Note]
+> Version 2.0 supports Azure Integration Runtime and Self-hosted Integration Runtime version 5.60 or above. Driver installation is no longer needed with Self-hosted Integration Runtime version 5.60 or above.
+
+**Example: version 2.0**
 
 ```json
 {
@@ -280,7 +286,7 @@ For this sample use case, copy activity unloads data from Amazon Redshift to Ama
 
 When you copy data from Amazon Redshift, the following mappings apply from Amazon Redshift's data types to the internal data types used by the service. To learn about how the copy activity maps the source schema and data type to the sink, see [Schema and data type mappings](copy-activity-schema-and-type-mapping.md).
 
-| Amazon Redshift data type | Interim service data type (for version 2.0 (Preview)) | Interim service data type (for version 1.0) |
+| Amazon Redshift data type | Interim service data type (for version 2.0) | Interim service data type (for version 1.0) |
 |:--- |:--- |:--- |
 | BIGINT |Int64 |Int64 |
 | BOOLEAN |Boolean |String |
@@ -306,16 +312,16 @@ The following table shows the release stage and change logs for different versio
 
 | Version | Release stage | Change log |
 | :----------- | :------- | :------- |
-| Version 1.0 | GA version available | / |
-| Version 2.0 (Preview) | Preview version available | • Only support the self-hosted integration runtime with version 5.54.0.0 or above. <br><br>• BOOLEAN is read as Boolean data type.  |
+| Version 1.0 | End of support announced | / |
+| Version 2.0 | GA version available | • Supports Azure Integration Runtime and Self-hosted Integration Runtime version 5.60 or above. Driver installation is no longer needed with Self-hosted Integration Runtime version 5.60 or above. <br><br>• BOOLEAN is read as Boolean data type. <br><br>• Support `sslmode` in the linked service. |
 
-### <a name="upgrade-the-amazon-redshift-connector"></a> Upgrade the Amazon Redshift connector from version 1.0 to version 2.0 (Preview)
+### <a name="upgrade-the-amazon-redshift-connector"></a> Upgrade the Amazon Redshift connector from version 1.0 to version 2.0
 
-1. In **Edit linked service** page, select version 2.0 (Preview) and configure the linked service by referring to [linked service properties](#linked-service-properties).
+1. In **Edit linked service** page, select version 2.0 and configure the linked service by referring to [linked service properties](#linked-service-properties).
 
-2. The data type mapping for the Amazon Redshift linked service version 2.0 (Preview) is different from that for the version 1.0. To learn the latest data type mapping, see [Data type mapping for Amazon Redshift](#data-type-mapping-for-amazon-redshift).
+2. The data type mapping for the Amazon Redshift linked service version 2.0 is different from that for the version 1.0. To learn the latest data type mapping, see [Data type mapping for Amazon Redshift](#data-type-mapping-for-amazon-redshift).
 
-3. Apply a self-hosted integration runtime with version 5.54.0.0 or above. Azure integration runtime is not supported by version 2.0 (Preview).
+3. Apply a self-hosted integration runtime with version 5.60 or above. Driver installation is no longer needed with Self-hosted Integration Runtime version 5.60 or above.
 
 ## Related content
 For a list of data stores supported as sources and sinks by the copy activity, see [supported data stores](copy-activity-overview.md#supported-data-stores-and-formats).

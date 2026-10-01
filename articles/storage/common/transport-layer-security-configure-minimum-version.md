@@ -1,5 +1,5 @@
 ---
-title: Enforce a minimum required version of Transport Layer Security (TLS) for incoming requests
+title: Enforce a Minimum Required Version of Transport Layer Security (TLS)
 titleSuffix: Azure Storage
 description: Configure a storage account to require a minimum version of Transport Layer Security (TLS) for clients making requests against Azure Storage.
 services: storage
@@ -7,7 +7,7 @@ author: normesta
 
 ms.service: azure-storage
 ms.topic: how-to
-ms.date: 03/22/2024
+ms.date: 01/28/2026
 ms.author: normesta
 ms.reviewer: fryu
 ms.subservice: storage-common-concepts
@@ -20,12 +20,12 @@ ms.devlang: azurecli
 
 Communication between a client application and an Azure Storage account is encrypted using Transport Layer Security (TLS). TLS is a standard cryptographic protocol that ensures privacy and data integrity between clients and services over the Internet. For more information about TLS, see [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security).
 
-Azure Storage currently supports three versions of the TLS protocol: 1.0, 1.1, and 1.2. Azure Storage uses TLS 1.2 on public HTTPS endpoints, but TLS 1.0 and TLS 1.1 are still supported for backward compatibility.
+Azure Storage supports two versions of the TLS protocol: 1.2 and 1.3. While TLS 1.3 is now supported, the ability to enforce it as the minimum TLS version for Azure Storage accounts isn't currently supported. The recommended minimum TLS version is TLS 1.2. Clients using the latest TLS versions will automatically negotiate to use TLS 1.3 if available.
 
 > [!TIP]
-> Azure Storage relies on Windows implementation of SSL that is not based on OpenSSL and therefore is not exposed to OpenSSL related vulnerabilities.
+> Azure Storage relies on Windows implementation of SSL that isn't based on OpenSSL and therefore isn't exposed to OpenSSL related vulnerabilities.
 
-Azure Storage accounts permit clients to send and receive data with the oldest version of TLS, TLS 1.0, and above. To enforce stricter security measures, you can configure your storage account to require that clients send and receive data with a newer version of TLS. If a storage account requires a minimum version of TLS, then any requests made with an older version will fail.
+Azure Storage accounts permit clients to send and receive data with TLS versions 1.2 and above. When a storage account requires a minimum TLS version, any request that uses an older version will fail.
 
 This article describes how to use a DRAG (Detection-Remediation-Audit-Governance) framework to continuously manage secure TLS for your storage accounts.
 

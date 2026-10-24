@@ -363,7 +363,7 @@
             href: python-memory-profiler-reference.md
       - name: Python SDK API reference
         href: /python/api/azure-functions/azure.functions
-  - name: Go (Preview)
+  - name: Go
     displayName: golang
     href: functions-reference-go.md
 - name: How-to guides
@@ -674,6 +674,9 @@
     - name: Overview
       displayName: AI, agent, agentic, hosted skills, event-driven AI, Foundry, MCP, connectors
       href: functions-hosted-skills.md
+    - name: Canvas quickstart
+      displayName: AI, agent, agentic, hosted skills, GitHub Copilot, canvas, local development
+      href: functions-hosted-skills-canvas.md
     - name: Dynamic workflows overview
       displayName: AI, agent, agentic, hosted skills, durable workflows, dynamic workflows
       href: functions-hosted-skills-dynamic-workflows.md
